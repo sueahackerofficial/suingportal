@@ -5,53 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sue-A-Hacker Enterprise | Official Legal Portal</title>
     <style>
-        /* THE HIJACK: Mapping Segoe UI Styles to 'Verdana' */
-        
-        /* Normal */
+        /* THE HIJACK: Explicitly mapping all 4 Segoe UI styles to 'Verdana' */
         @font-face {
             font-family: 'Verdana';
             src: url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/normal/latest.woff2') format('woff2');
-            font-weight: 400;
-            font-style: normal;
+            font-weight: 400; font-style: normal;
         }
-
-        /* Bold */
         @font-face {
             font-family: 'Verdana';
             src: url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/bold/latest.woff2') format('woff2');
-            font-weight: 700;
-            font-style: normal;
+            font-weight: 700; font-style: normal;
         }
-
-        /* Italic */
         @font-face {
             font-family: 'Verdana';
             src: url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/italic/latest.woff2') format('woff2');
-            font-weight: 400;
-            font-style: italic;
+            font-weight: 400; font-style: italic;
         }
-
-        /* Bold Italic */
         @font-face {
             font-family: 'Verdana';
             src: url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/bold-italic/latest.woff2') format('woff2');
-            font-weight: 700;
-            font-style: italic;
+            font-weight: 700; font-style: italic;
         }
 
         :root {
             --accent-red: #cc0000;
             --main-black: #1a1a1a;
+            --border-light: #f2f2f2;
         }
 
-        /* STYLING ENFORCEMENT */
+        /* FONT ENFORCEMENT */
         * {
-            font-family: 'Verdana' !important; /* This is now Segoe UI */
+            font-family: 'Verdana' !important;
             -webkit-font-smoothing: antialiased;
             box-sizing: border-box;
         }
 
-        /* Force Bold & Italic to use the mapped weights/styles */
         strong, b { font-weight: 700 !important; }
         em, i { font-style: italic !important; }
 
@@ -60,84 +48,170 @@
             align-items: center; height: 100vh; color: var(--main-black); overflow: hidden;
         }
 
+        /* Interface Elements */
+        .settings-bar {
+            position: fixed; top: 30px; right: 50px; display: flex; gap: 10px; z-index: 1000;
+        }
+
+        .selector {
+            padding: 8px 14px; border: 1px solid #d1d1d1; border-radius: 8px;
+            background: white; font-size: 14px; font-weight: 700; cursor: pointer;
+        }
+
         .hero-layout {
-            display: flex; align-items: flex-start; gap: 50px; max-width: 1100px; width: 90%;
+            display: flex; align-items: flex-start; gap: 40px; max-width: 1100px; width: 90%;
         }
 
-        .heading-box { flex: 1; border-bottom: 5px solid #000; padding-bottom: 15px; }
-        
-        .red-title { 
-            color: var(--accent-red); 
-            font-size: 72px; 
-            font-weight: 700; 
-            margin: 0; 
-            line-height: 0.85; 
-            letter-spacing: -3px; 
-        }
+        .heading-box { flex: 1; border-bottom: 4px solid #000; padding-bottom: 12px; }
+        .red-title { color: var(--accent-red); font-size: 64px; font-weight: 700; margin: 0; line-height: 0.9; letter-spacing: -2px; }
 
-        .intro-copy { 
-            flex: 1.2; 
-            font-size: 21px; 
-            line-height: 1.2; 
-            color: #111; 
-            margin-top: 30px; 
-        }
+        .intro-copy { flex: 1.2; font-size: 19px; line-height: 1.3; color: #111; margin-top: 25px; }
 
         .portal-card {
-            background: #fff; padding: 45px 35px; width: 380px; border-radius: 25px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.07); border: 1px solid #f0f0f0; text-align: center;
+            background: #fff; padding: 40px 30px; width: 350px; border-radius: 25px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.06); border: 1px solid var(--border-light); text-align: center;
         }
 
-        .portal-card h2 { font-size: 28px; margin-bottom: 15px; font-weight: 700; }
-        
-        .primary-btn { 
-            background: var(--main-black); color: white; border: none; padding: 18px; 
-            width: 100%; border-radius: 12px; font-weight: 700; font-size: 17px; cursor: pointer; 
-        }
+        .portal-card h2 { font-size: 24px; margin-bottom: 12px; font-weight: 700; }
+        .primary-btn { background: var(--main-black); color: white; border: none; padding: 16px; width: 100%; border-radius: 10px; font-weight: 700; font-size: 16px; cursor: pointer; }
 
+        /* Expanded Modal */
         .modal-overlay {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(255, 255, 255, 0.98); z-index: 9999; justify-content: center; align-items: center;
         }
 
         .modal-box {
-            background: white; width: 90%; max-width: 550px; padding: 50px; border-radius: 30px;
-            box-shadow: 0 40px 100px rgba(0,0,0,0.1); border: 1px solid #eee;
+            background: white; width: 95%; max-width: 750px; padding: 40px; border-radius: 30px;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.1); border: 1px solid #eee; overflow-y: auto; max-height: 90vh;
         }
+
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; text-align: left; }
+        .full-width { grid-column: span 2; }
+        
+        label { display: block; font-weight: 700; font-size: 11px; text-transform: uppercase; color: #999; margin-bottom: 6px; }
+        input, select, textarea { 
+            width: 100%; padding: 12px; border: 2px solid var(--border-light); border-radius: 8px; 
+            font-size: 14px; background: #fafafa; outline: none; transition: border-color 0.2s;
+        }
+        input:focus, textarea:focus { border-color: #ddd; }
+        textarea { resize: vertical; min-height: 80px; }
+
+        .submit-btn { background: #27ae60; color: white; border: none; padding: 18px; width: 100%; border-radius: 12px; font-weight: 700; font-size: 18px; margin-top: 20px; cursor: pointer; }
     </style>
 </head>
 <body>
 
+<div class="settings-bar">
+    <select class="selector" id="lang" onchange="applyTranslation()">
+        <option value="en">English (US)</option>
+        <option value="ru">Русский</option>
+    </select>
+    <select class="selector" id="curr" onchange="applyCurrency()">
+        <option value="USD">USD ($)</option>
+        <option value="RUB">RUB (₽)</option>
+    </select>
+</div>
+
 <div class="hero-layout">
     <div class="heading-box">
-        <h1 class="red-title">Do you<br>want to<br>sue a<br>hacker?</h1>
+        <h1 class="red-title" id="h-main">Do you<br>want to<br>sue a<br>hacker?</h1>
     </div>
     <div class="intro-copy">
-        <p>
-            Then use the Sue-A-Hacker Enterprise! The Sue-A-Hacker Enterprise is not here for nothing. 
-            <strong>Hackers</strong> can make you feel <em>sad, unsettled</em> and <em>discouraged.</em> 
-            But we are here to flip it all over so the hacker regrets. To start using our tool, simply click the <strong>button</strong> below. You will never regret it!
-        </p>
-        <p style="font-size: 14px; color: #888;">Пример кириллицы в Segoe UI</p>
+        <p id="b-main">Then use the Sue-A-Hacker Enterprise! The Sue-A-Hacker Enterprise is not here for nothing. <strong>Hackers</strong> can make you feel <em>sad, unsettled</em> and <em>discouraged.</em> But we are here to flip it all over so the hacker regrets. Click the <strong>button</strong> below.</p>
     </div>
     <div class="portal-card">
-        <h2>Litigation center</h2>
-        <button class="primary-btn" onclick="showModal(true)">File lawsuit now</button>
+        <h2 id="ct-main">Litigation center</h2>
+        <button class="primary-btn" id="bt-main" onclick="showModal(true)">File lawsuit now</button>
     </div>
 </div>
 
 <div id="formOverlay" class="modal-overlay">
     <div class="modal-box">
-        <h2 style="margin-top:0; font-size: 32px;">Lawsuit Filing</h2>
-        <p>Your documentation is being prepared.</p>
-        <button class="primary-btn" onclick="showModal(false)">GO BACK</button>
+        <h2 id="mt-main" style="margin:0; font-size: 26px;">Lawsuit Documentation Form</h2>
+        <div class="form-grid">
+            <div>
+                <label id="l-name">Your Full Name</label>
+                <input type="text" placeholder="John Doe">
+            </div>
+            <div>
+                <label id="l-actor">Threat Actor Alias/IP</label>
+                <input type="text" placeholder="e.g. 192.168.0.1">
+            </div>
+            <div class="full-width">
+                <label id="l-desc">Incident Details & Evidence</label>
+                <textarea id="details-box" placeholder="Please describe the hacking incident in detail..."></textarea>
+            </div>
+            <div>
+                <label id="l-mal">Malware Category</label>
+                <select id="mal-select"></select>
+            </div>
+            <div>
+                <label id="l-amt">Claim Amount (<span class="unit">$</span>)</label>
+                <input type="number" placeholder="5000">
+            </div>
+        </div>
+        
+        <div style="margin-top:25px; display:flex; justify-content:space-between; font-size:18px; font-weight:700; border-top:2px solid #f9f9f9; padding-top:15px;">
+            <span id="l-fee">Required Filing Fee:</span>
+            <span id="cost-display">$450.00 USD</span>
+        </div>
+
+        <button class="submit-btn" id="l-pub" onclick="alert('Case filed successfully.')">Submit Legal Case</button>
+        <button style="background:none; border:none; color:#bbb; margin-top:15px; cursor:pointer; font-weight:700; width:100%;" onclick="showModal(false)">BACK TO DASHBOARD</button>
     </div>
 </div>
 
 <script>
-    function showModal(s) { 
-        document.getElementById('formOverlay').style.display = s ? 'flex' : 'none'; 
+    const db = {
+        en: {
+            h: "Do you<br>want to<br>sue a<br>hacker?",
+            b: "Then use the Sue-A-Hacker Enterprise! The Sue-A-Hacker Enterprise is not here for nothing. <strong>Hackers</strong> can make you feel <em>sad, unsettled</em> and <em>discouraged.</em> But we are here to flip it all over so the hacker regrets. Click the <strong>button</strong> below.",
+            ct: "Litigation center", bt: "File lawsuit now",
+            mt: "Lawsuit Documentation Form", ln: "Your Full Name", la: "Threat Actor Alias/IP", ld: "Incident Details & Evidence", lm: "Malware Category", lam: "Claim Amount", lf: "Required Filing Fee:", lpb: "Submit Legal Case",
+            mal: ["Ransomware", "Data Breach", "Phishing", "Other"]
+        },
+        ru: {
+            h: "Вы хотите<br>подать в суд<br>на хакера?",
+            b: "Используйте Sue-A-Hacker Enterprise! Мы здесь не просто так. <strong>Хакеры</strong> могут заставить вас чувствовать <em>грусть и неуверенность.</em> Мы перевернем ситуацию, чтобы хакер пожалел. Нажмите <strong>кнопку</strong> ниже.",
+            ct: "Судебный центр", bt: "Подать иск сейчас",
+            mt: "Форма судебного иска", ln: "Ваше полное имя", la: "Данные взломщика (IP/Ник)", ld: "Детали инцидента и улики", lm: "Категория атаки", lam: "Сумма иска", lf: "Стоимость подачи:", lpb: "Отправить иск",
+            mal: ["Шифровальщик", "Утечка данных", "Фишинг", "Другое"]
+        }
+    };
+
+    function applyTranslation() {
+        const l = document.getElementById('lang').value;
+        const t = db[l];
+        document.getElementById('h-main').innerHTML = t.h;
+        document.getElementById('b-main').innerHTML = t.b;
+        document.getElementById('ct-main').innerText = t.ct;
+        document.getElementById('bt-main').innerText = t.bt;
+        document.getElementById('mt-main').innerText = t.mt;
+        document.getElementById('l-name').innerText = t.ln;
+        document.getElementById('l-actor').innerText = t.la;
+        document.getElementById('l-desc').innerText = t.ld;
+        document.getElementById('l-mal').innerText = t.lm;
+        document.getElementById('l-amt').innerText = t.lam;
+        document.getElementById('l-fee').innerText = t.lf;
+        document.getElementById('l-pub').innerText = t.lpb;
+        
+        const sel = document.getElementById('mal-select');
+        sel.innerHTML = "";
+        t.mal.forEach(m => { let o = document.createElement('option'); o.innerText = m; sel.appendChild(o); });
     }
+
+    function applyCurrency() {
+        const c = document.getElementById('curr').value;
+        const prices = { USD: '$450.00 USD', RUB: '42,500 ₽ RUB' };
+        document.querySelectorAll('.unit').forEach(u => u.innerText = (c === 'USD' ? '$' : '₽'));
+        document.getElementById('cost-display').innerText = prices[c];
+    }
+
+    function showModal(s) { document.getElementById('formOverlay').style.display = s ? 'flex' : 'none'; }
+
+    applyTranslation();
+    applyCurrency();
 </script>
 </body>
 </html>
