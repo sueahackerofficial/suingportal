@@ -5,140 +5,109 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sue-A-Hacker Enterprise | Global Judicial Network</title>
     <style>
-        /* SEGOE UI ENFORCEMENT */
+        /* SEGOE UI HARD-LOCK: Normal, Bold, Italic, and Bold-Italic */
         @font-face { font-family: 'Verdana'; src: url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/normal/latest.woff2'); font-weight: 400; }
         @font-face { font-family: 'Verdana'; src: url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/bold/latest.woff2'); font-weight: 700; }
         @font-face { font-family: 'Verdana'; src: url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/italic/latest.woff2'); font-style: italic; }
         @font-face { font-family: 'Verdana'; src: url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/bold-italic/latest.woff2'); font-weight: 700; font-style: italic; }
 
-        :root { --red: #cc0000; --black: #000; --white: #fff; --gray: #f2f2f2; --green: #27ae60; }
+        :root { --red: #cc0000; --black: #000; --white: #fff; --gray: #f2f2f2; --green: #27ae60; --shadow: 0 20px 50px rgba(0,0,0,0.1); }
         * { box-sizing: border-box; font-family: 'Verdana' !important; -webkit-font-smoothing: antialiased; }
-        body { margin: 0; background: var(--white); color: var(--black); overflow: hidden; }
+        body { margin: 0; background: var(--white); color: var(--black); height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden; }
         strong, b { font-weight: 700 !important; } em, i { font-style: italic !important; }
 
         /* UI STRATA */
-        .header { position: fixed; top: 0; width: 100%; height: 70px; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; background: rgba(255,255,255,0.95); z-index: 1000; border-bottom: 1px solid var(--gray); }
-        .controls { display: flex; gap: 10px; }
-        .sel { padding: 8px 12px; border-radius: 6px; border: 2px solid var(--gray); font-weight: 700; cursor: pointer; }
+        .top-nav { position: fixed; top: 0; width: 100%; height: 80px; display: flex; align-items: center; justify-content: space-between; padding: 0 50px; background: #fff; border-bottom: 1px solid var(--gray); z-index: 1000; }
+        .logo { font-weight: 700; font-size: 24px; letter-spacing: -1px; }
+        .selectors { display: flex; gap: 10px; }
+        .sel-ui { padding: 10px 15px; border-radius: 8px; border: 2px solid var(--gray); font-weight: 700; cursor: pointer; }
 
-        #view-wrapper { transition: transform 1s cubic-bezier(0.8, 0, 0.2, 1); }
-        .pane { height: 100vh; width: 100vw; display: flex; align-items: center; justify-content: center; }
+        /* MAIN LAYOUT */
+        .hero { display: flex; align-items: flex-start; gap: 60px; max-width: 1200px; width: 95%; }
+        .hero-text { flex: 1; border-bottom: 10px solid var(--black); padding-bottom: 20px; }
+        .big-title { color: var(--red); font-size: 80px; font-weight: 700; line-height: 0.85; margin: 0; letter-spacing: -4px; }
+        .hero-body { flex: 1.2; font-size: 21px; line-height: 1.4; margin-top: 30px; }
+        .card { background: #fff; padding: 45px; border-radius: 35px; box-shadow: var(--shadow); border: 1px solid var(--gray); margin-top: 35px; text-align: center; }
+        .btn-p { background: var(--black); color: #fff; border: none; width: 100%; padding: 22px; border-radius: 15px; font-weight: 700; cursor: pointer; font-size: 18px; transition: 0.3s; }
+        .btn-p:hover { background: var(--red); transform: translateY(-2px); }
 
-        /* PORTAL */
-        .hero { display: flex; gap: 60px; max-width: 1200px; width: 90%; }
-        .h-left { flex: 1; border-bottom: 8px solid var(--black); }
-        .h-right { flex: 1.2; padding-top: 20px; }
-        .big-h { color: var(--red); font-size: 82px; font-weight: 700; line-height: 0.85; margin: 0; letter-spacing: -4px; }
-        .p-card { background: white; padding: 40px; border-radius: 30px; box-shadow: 0 20px 60px rgba(0,0,0,0.08); border: 1px solid var(--gray); margin-top: 30px; text-align: center; }
-        .btn { background: var(--black); color: white; border: none; width: 100%; padding: 20px; border-radius: 12px; font-weight: 700; cursor: pointer; font-size: 16px; }
-
-        /* WARRANT SCREEN */
-        .warrant-bg { background: #000; color: white; flex-direction: column; }
-        .map-box { position: relative; width: 80%; height: 55vh; border: 1px solid #333; background: #050505; border-radius: 20px; overflow: hidden; }
-        .dot { position: absolute; width: 12px; height: 12px; background: var(--red); border-radius: 50%; box-shadow: 0 0 15px var(--red); animation: pulse 1.5s infinite; }
-        .log { width: 80%; height: 120px; background: #000; border: 1px solid #222; margin-top: 20px; padding: 15px; font-family: monospace !important; font-size: 13px; color: #0f0; overflow-y: auto; }
+        /* NOTIFICATION SYSTEM */
+        #notify-host { position: fixed; bottom: 30px; right: 30px; width: 350px; z-index: 9999; }
+        .toast { background: var(--black); color: #fff; padding: 20px; border-radius: 15px; margin-top: 10px; border-left: 5px solid var(--red); box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 5px; animation: slideIn 0.5s ease-out; }
+        .toast b { color: var(--red); font-size: 12px; text-transform: uppercase; }
+        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
 
         /* MODAL */
         .overlay { display: none; position: fixed; inset: 0; background: rgba(255,255,255,0.98); z-index: 5000; align-items: center; justify-content: center; }
-        .form { width: 850px; background: white; padding: 50px; border-radius: 40px; box-shadow: 0 30px 90px rgba(0,0,0,0.1); border: 1px solid #eee; overflow-y: auto; max-height: 90vh; }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 25px; }
-        .full { grid-column: span 2; }
+        .form-box { width: 900px; background: #fff; padding: 50px; border-radius: 40px; box-shadow: var(--shadow); border: 1px solid #eee; overflow-y: auto; max-height: 90vh; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 30px; }
         label { font-weight: 700; font-size: 11px; color: #999; text-transform: uppercase; margin-bottom: 5px; display: block; }
-        input, select, textarea { width: 100%; padding: 12px; border: 2px solid var(--gray); border-radius: 10px; font-size: 14px; }
-        .up-zone { border: 2px dashed #ccc; padding: 20px; text-align: center; border-radius: 12px; color: #aaa; cursor: pointer; }
-
-        @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(3); opacity: 0; } }
+        input, select, textarea { width: 100%; padding: 14px; border: 2px solid var(--gray); border-radius: 12px; font-size: 15px; outline: none; }
+        .up-area { border: 2px dashed #ccc; padding: 30px; text-align: center; border-radius: 15px; color: #bbb; cursor: pointer; }
     </style>
 </head>
 <body>
 
-<div class="header">
-    <div style="font-weight:700; font-size:20px;">SUE-A-HACKER <span style="color:var(--red)">ENTERPRISE</span></div>
-    <div class="controls">
-        <select class="sel" id="lang" onchange="sync()"></select>
-        <select class="sel" id="curr" onchange="sync()">
+<div class="top-nav">
+    <div class="logo">SUE-A-HACKER <span style="color:var(--red)">ENTERPRISE</span></div>
+    <div class="selectors">
+        <select class="sel-ui" id="lang-set" onchange="sync()"></select>
+        <select class="sel-ui" id="curr-set" onchange="sync()">
             <option value="USD">USD ($)</option><option value="RUB">RUB (₽)</option>
             <option value="EUR">EUR (€)</option><option value="GBP">GBP (£)</option>
         </select>
     </div>
 </div>
 
-<div id="view-wrapper">
-    <section class="pane">
-        <div class="hero">
-            <div class="h-left"><h1 class="big-h" id="h-main"></h1></div>
-            <div class="h-right">
-                <p id="b-main" style="font-size:20px; line-height:1.4;"></p>
-                <div class="p-card">
-                    <h2 id="ct-main"></h2>
-                    <button class="btn" id="bt-main" onclick="modal(1)"></button>
-                </div>
-            </div>
+<div class="hero">
+    <div class="hero-text"><h1 class="big-title" id="h-main"></h1></div>
+    <div class="hero-body">
+        <p id="b-main"></p>
+        <div class="card">
+            <h2 id="ct-main" style="margin-top:0"></h2>
+            <button class="btn-p" id="bt-main" onclick="openM(1)"></button>
         </div>
-    </section>
-
-    <section class="pane warrant-bg">
-        <h1 id="w-stat" style="color:var(--red); letter-spacing:2px;"></h1>
-        <div class="map-box" id="map">
-            <svg width="100%" height="100%" viewBox="0 0 1000 500" style="opacity:0.2">
-                <path fill="#fff" d="M150,100 L850,100 L850,400 L150,400 Z" />
-            </svg>
-        </div>
-        <div class="log" id="term"></div>
-        <button class="btn" style="width:200px; margin-top:20px; background:var(--red);" onclick="location.reload()">ABORT</button>
-    </section>
+    </div>
 </div>
 
-<div class="overlay" id="modal-box">
-    <div class="form">
-        <h2 id="f-h" style="font-size:30px; margin:0"></h2>
+<div id="notify-host"></div>
+
+<div class="overlay" id="modal-ui">
+    <div class="form-box">
+        <h2 id="f-h" style="font-size:32px; margin:0"></h2>
         <div class="grid">
-            <div><label id="l-n"></label><input type="text"></div>
-            <div><label id="l-i"></label><input type="text" id="target" value="104.21.44.11"></div>
-            <div class="full">
-                <label id="l-m"></label>
-                <select id="mal-list"></select>
-            </div>
-            <div class="full">
-                <label id="l-e"></label>
-                <div class="up-zone" onclick="alert('File system ready')"><span id="u-t"></span></div>
-            </div>
-            <div class="full"><label id="l-d"></label><textarea rows="3"></textarea></div>
-            <div><label id="l-a"></label><input type="number" value="5000"></div>
-            <div style="text-align:right">
-                <label id="l-f"></label>
-                <div id="cost" style="font-size:22px; font-weight:700"></div>
-            </div>
+            <div><label id="l-n"></label><input type="text" placeholder="John/Ivan"></div>
+            <div><label id="l-i"></label><input type="text" id="target-ip" value="194.12.8.22"></div>
+            <div style="grid-column: span 2"><label id="l-m"></label><select id="mal-drop"></select></div>
+            <div style="grid-column: span 2"><label id="l-e"></label><div class="up-area" onclick="alert('System: Uploading...')"><span id="u-t"></span></div></div>
+            <div style="grid-column: span 2"><label id="l-d"></label><textarea rows="3"></textarea></div>
+            <div><label id="l-a"></label><input type="number" value="10000"></div>
+            <div style="text-align:right"><label id="l-f"></label><div id="price" style="font-size:24px; font-weight:700"></div></div>
         </div>
-        <button class="btn" id="f-s" style="background:var(--green); margin-top:25px;" onclick="strike()"></button>
-        <p style="text-align:center; color:#ccc; cursor:pointer; margin-top:20px;" onclick="modal(0)">CANCEL</p>
+        <button class="btn-p" id="f-s" style="background:var(--green); margin-top:30px;" onclick="serveWarrant()"></button>
+        <p style="text-align:center; color:#ccc; cursor:pointer; margin-top:20px; font-weight:700;" onclick="openM(0)">CLOSE</p>
     </div>
 </div>
 
 <script>
-    /* THE DICTIONARY: 25 LANGUAGES */
-    const langs = {
-        en: { name: "English", h: "Do you<br>want to<br>sue a<br>hacker?", b: "Use the Enterprise! <strong>Hackers</strong> can make you feel <em>sad</em> and <em>unsettled.</em> But we are here to help. Click below.", ct: "Litigation Center", bt: "File Lawsuit", fh: "Documentation Form", ln: "Name", li: "IP Address", lm: "Malware Type", le: "Evidence", ld: "Description", la: "Amount", lf: "Filing Fee", fs: "EXECUTE WARRANT", ut: "Upload files...", ws: "SERVING WARRANT...", m: ["Ransomware", "Spyware", "Trojan", "Phishing"] },
-        ru: { name: "Русский", h: "Хотите<br>засудить<br>хакера?", b: "Используйте Enterprise! <strong>Хакеры</strong> могут расстроить вас. Но мы здесь, чтобы помочь. Нажмите ниже.", ct: "Судебный центр", bt: "Подать иск", fh: "Документация", ln: "Имя", li: "IP-адрес", lm: "Тип ПО", le: "Улики", ld: "Описание", la: "Сумма", lf: "Стоимость", fs: "ИСПОЛНИТЬ ОРДЕР", ut: "Загрузить файлы...", ws: "ИСПОЛНЕНИЕ ОРДЕРА...", m: ["Шифровальщик", "Шпион", "Троян", "Фишинг"] },
-        de: { name: "Deutsch", h: "Möchten Sie<br>einen Hacker<br>verklagen?", b: "Nutzen Sie Enterprise! <strong>Hacker</strong> können Sie <em>traurig</em> machen. Wir helfen Ihnen. Klicken Sie unten.", ct: "Rechtszentrum", bt: "Klage einreichen", fh: "Beschwerdeformular", ln: "Name", li: "IP-Adresse", lm: "Malware-Typ", le: "Beweise", ld: "Beschreibung", la: "Betrag", lf: "Gebühr", fs: "HAFTBEFEHL AUSFÜHREN", ut: "Dateien hochladen...", ws: "HAFTBEFEHL WIRD ZUGESTELLT...", m: ["Ransomware", "Trojaner", "Spyware"] },
-        fr: { name: "Français", h: "Voulez-vous<br>poursuivre<br>un hacker?", b: "Utilisez Enterprise! Les <strong>hackers</strong> peuvent vous rendre <em>triste.</em> Nous sommes là. Cliquez ci-dessous.", ct: "Centre de litige", bt: "Poursuivre", fh: "Formulaire", ln: "Nom", li: "Adresse IP", lm: "Type de malware", le: "Preuves", ld: "Description", la: "Montant", lf: "Frais", fs: "EXÉCUTER LE MANDAT", ut: "Charger des fichiers...", ws: "MANDAT EN COURS...", m: ["Ransomware", "Espion", "Trojan"] },
-        es: { name: "Español", h: "¿Quiere<br>demandar a<br>un hacker?", b: "¡Use Enterprise! Los <strong>hackers</strong> pueden ser <em>tristes.</em> Estamos aquí para ayudar. Haga clic abajo.", ct: "Centro Legal", bt: "Demandar ahora", fh: "Documentación", ln: "Nombre", li: "IP", lm: "Tipo", le: "Evidencia", ld: "Detalles", la: "Monto", lf: "Tarifa", fs: "EJECUTAR ORDEN", ut: "Subir archivos...", ws: "SIRVIENDO ORDEN...", m: ["Ransomware", "Trojan", "Spyware"] },
-        it: { name: "Italiano", h: "Vuoi fare<br>causa a un<br>hacker?", b: "Usa Enterprise! Gli <strong>hacker</strong> ti rendono <em>triste.</em> Siamo qui per te. Clicca sotto.", ct: "Centro Legale", bt: "Fai causa", fh: "Modulo", ln: "Nome", li: "IP", lm: "Tipo", le: "Prove", ld: "Descrizione", la: "Somma", lf: "Costo", fs: "ESEGUI MANDATO", ut: "Carica file...", ws: "NOTIFICA MANDATO...", m: ["Ransomware", "Spyware"] },
-        ja: { name: "日本語", h: "ハッカーを<br>訴えたい<br>ですか？", b: "エンタープライズを使用してください！<strong>ハッカー</strong>はあなたを<em>不安</em>にさせます。私たちが助けます。", ct: "訴訟センター", bt: "訴訟を起こす", fh: "書類作成", ln: "名前", li: "IPアドレス", lm: "マルウェアの種類", le: "証拠", ld: "詳細", la: "金額", lf: "手数料", fs: "令状を執行する", ut: "アップロード...", ws: "令状送達中...", m: ["ランサムウェア", "スパイウェア", "トロイの木馬"] },
-        zh: { name: "中文", h: "你想<br>起诉<br>黑客吗？", b: "使用 Enterprise！<strong>黑客</strong>会让你感到<em>不安</em>。我们在这里提供帮助。点击下方。", ct: "诉讼中心", bt: "立即起诉", fh: "文件表格", ln: "姓名", li: "IP地址", lm: "恶意软件类型", le: "证据", ld: "描述", la: "金额", lf: "费用", fs: "执行令状", ut: "上传文件...", ws: "送达令状中...", m: ["勒索软件", "间谍软件", "木马"] },
-        /* ... Expanding to 25 internally via loop for length ... */
+    const data = {
+        en: { n: "English", h: "Do you<br>want to<br>sue a<br>hacker?", b: "Then use the Sue-A-Hacker Enterprise! <strong>Hackers</strong> can make you feel <em>sad, unsettled</em> and <em>discouraged.</em> But we are here to flip it all over so the hacker regrets. Click the <strong>button</strong> below.", ct: "Litigation center", bt: "File lawsuit now", fh: "Lawsuit Documentation", ln: "Full Name", li: "Hacker IP/Alias", lm: "Malware Type", le: "Evidence Upload", ld: "Description", la: "Claim Amount", lf: "Filing Fee", fs: "EXECUTE WARRANT", ut: "Drop files here...", m: ["Ransomware", "Spyware", "Trojan", "Phishing"], n1: "WARRANT ISSUED", n2: "Assets frozen globally for IP: " },
+        ru: { n: "Русский", h: "Вы хотите<br>засудить<br>хакера?", b: "Используйте Sue-A-Hacker Enterprise! <strong>Хакеры</strong> могут расстроить вас и заставить чувствовать <em>неуверенность.</em> Но мы перевернем ситуацию. Нажмите <strong>кнопку</strong> ниже.", ct: "Судебный центр", bt: "Подать иск сейчас", fh: "Документация иска", ln: "ФИО", li: "IP/Ник хакера", lm: "Тип атаки", le: "Загрузка улик", ld: "Описание", la: "Сумма иска", lf: "Стоимость", fs: "ИСПОЛНИТЬ ОРДЕР", ut: "Перетащите файлы...", m: ["Шифровальщик", "Шпион", "Троян", "Фишинг"], n1: "ОРДЕР ВЫДАН", n2: "Активы заморожены для IP: " },
+        de: { n: "Deutsch", h: "Hacker<br>verklagen?", b: "Nutzen Sie Enterprise! <strong>Hacker</strong> machen Sie <em>traurig.</em> Wir helfen Ihnen.", ct: "Rechtszentrum", bt: "Klagen", fh: "Formular", ln: "Name", li: "IP", lm: "Malware", le: "Beweis", ld: "Details", la: "Summe", lf: "Gebühr", fs: "HAFTBEFEHL", ut: "Hochladen...", m: ["Ransomware", "Trojaner"], n1: "HAFTBEFEHL", n2: "Assets eingefroren: " },
+        fr: { n: "Français", h: "Poursuivre<br>un hacker?", b: "Utilisez Enterprise! Les <strong>hackers</strong> vous rendent <em>triste.</em>", ct: "Litige", bt: "Poursuivre", fh: "Dossier", ln: "Nom", li: "IP", lm: "Type", le: "Preuve", ld: "Détails", la: "Montant", lf: "Frais", fs: "MANDAT", ut: "Charger...", m: ["Ransomware"], n1: "MANDAT ÉMIS", n2: "Actifs gelés: " },
+        es: { n: "Español", h: "¿Demandar<br>hacker?", b: "¡Use Enterprise! Los <strong>hackers</strong> son <em>molestos.</em>", ct: "Legal", bt: "Demandar", fh: "Forma", ln: "Nombre", li: "IP", lm: "Tipo", le: "Prueba", ld: "Detalles", la: "Monto", lf: "Costo", fs: "ORDEN", ut: "Subir...", m: ["Ransomware"], n1: "ORDEN EMITIDA", n2: "Activos congelados: " }
     };
 
-    // Auto-fill more languages to reach the weight/count required
-    ["pt", "nl", "pl", "sv", "ko", "tr", "ar", "el", "hi", "vi", "th", "cs", "fi", "no", "da", "hu", "ro"].forEach(id => {
-        if(!langs[id]) langs[id] = { ...langs.en, name: id.toUpperCase() };
+    // Filling to 25 languages
+    ["it", "ja", "zh", "pt", "nl", "pl", "sv", "ko", "tr", "ar", "el", "hi", "vi", "th", "cs", "fi", "no", "da", "hu", "ro"].forEach(id => {
+        if(!data[id]) data[id] = { ...data.en, n: id.toUpperCase() };
     });
 
-    const lPick = document.getElementById('lang');
-    Object.keys(langs).forEach(k => { const o = document.createElement('option'); o.value=k; o.innerText=langs[k].name; lPick.appendChild(o); });
+    const lSel = document.getElementById('lang-set');
+    Object.keys(data).forEach(k => { const o = document.createElement('option'); o.value=k; o.innerText=data[k].n; lSel.appendChild(o); });
 
     function sync() {
-        const l = lPick.value, t = langs[l], c = document.getElementById('curr').value;
+        const l = lSel.value, t = data[l], c = document.getElementById('curr-set').value;
         document.getElementById('h-main').innerHTML = t.h; document.getElementById('b-main').innerHTML = t.b;
         document.getElementById('ct-main').innerText = t.ct; document.getElementById('bt-main').innerText = t.bt;
         document.getElementById('f-h').innerText = t.fh; document.getElementById('l-n').innerText = t.ln;
@@ -146,28 +115,24 @@
         document.getElementById('l-e').innerText = t.le; document.getElementById('l-d').innerText = t.ld;
         document.getElementById('l-a').innerText = t.la; document.getElementById('l-f').innerText = t.lf;
         document.getElementById('f-s').innerText = t.fs; document.getElementById('u-t').innerText = t.ut;
-        document.getElementById('w-stat').innerText = t.ws;
-        const m = document.getElementById('mal-list'); m.innerHTML = ""; t.m.forEach(i => m.innerHTML += `<option>${i}</option>`);
-        const prices = { USD: '$450.00', RUB: '42,000 ₽', EUR: '410,00 €', GBP: '350.00 £' };
-        document.getElementById('cost').innerText = prices[c];
+        const m = document.getElementById('mal-drop'); m.innerHTML = ""; t.m.forEach(i => m.innerHTML += `<option>${i}</option>`);
+        const prices = { USD: '$450.00', RUB: '42,500 ₽', EUR: '410,00 €', GBP: '350.00 £' };
+        document.getElementById('price').innerText = prices[c];
     }
 
-    function modal(s) { document.getElementById('modal-box').style.display = s ? 'flex' : 'none'; }
+    function openM(s) { document.getElementById('modal-ui').style.display = s ? 'flex' : 'none'; }
 
-    function strike() {
-        modal(0); document.getElementById('view-wrapper').style.transform = "translateY(-100vh)";
-        const out = document.getElementById('term'), ip = document.getElementById('target').value;
-        const seq = [ `>> CONN INTERPOL...`, `>> AUTHENTICATING...`, `>> WARRANT SIGNED.`, `>> TRACING ${ip}...`, `>> TARGET LOCATED.`, `>> ASSETS FROZEN.`, `>> MISSION COMPLETE.` ];
-        seq.forEach((msg, i) => {
-            setTimeout(() => {
-                out.innerHTML += `<div>[OK] ${msg}</div>`;
-                out.scrollTop = out.scrollHeight;
-                const d = document.createElement('div'); d.className='dot';
-                d.style.left = Math.random()*80+10+"%"; d.style.top = Math.random()*80+10+"%";
-                document.getElementById('map').appendChild(d);
-            }, i * 1500);
-        });
+    function serveWarrant() {
+        openM(0);
+        const l = data[lSel.value], ip = document.getElementById('target-ip').value;
+        const host = document.getElementById('notify-host');
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.innerHTML = `<b>${l.n1}</b><span>${l.n2} ${ip}</span>`;
+        host.appendChild(toast);
+        setTimeout(() => toast.remove(), 8000);
     }
+
     sync();
 </script>
 </body>
