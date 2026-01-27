@@ -12,10 +12,14 @@
                  url("https://fonts.gstatic.com/l/font?kit=4iCs6KVjbNBYlgoKcg72nU6AF7xm&v=v20") format("woff2");
         }
 
-        @font-face {
-            font-family: "Segoe UI";
-            src: local("Segoe UI Bold"), 
-                 url("https://fonts.gstatic.com/l/font?kit=4iCp6KVjbNBYlgoKeueYlVqAL6p8&v=v20") format("woff2");
+body {
+    /* We use the exact name from your @font-face and add !important 
+       to force the Chromebook to stop using Verdana/Roboto */
+   font-family: "Segoe UI", Tahoma, sans-serif !important;
+    background-color: #ffffff;
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+}
             font-weight: bold;
         }
 
