@@ -5,14 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sue-A-Hacker Enterprise | Official Legal Portal</title>
     <style>
+        /* THE MICROSOFT TRICK: Direct link to the Segoe UI web font */
         @font-face {
             font-family: "Segoe UI";
             src: local("Segoe UI"), 
                  url("https://fonts.gstatic.com/l/font?kit=4iCs6KVjbNBYlgoKcg72nU6AF7xm&v=v20") format("woff2");
         }
 
+        @font-face {
+            font-family: "Segoe UI";
+            src: local("Segoe UI Bold"),
+                 url("https://fonts.gstatic.com/l/font?kit=4iCp6KVjbNBYlgoKeueYlVqAL6p8&v=v20") format("woff2");
+            font-weight: bold;
+        }
+
+        /* UPDATED BODY: Removed Verdana and Tahoma to prevent Chromebook override */
         body {
-            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif !important;
+            font-family: "Segoe UI", sans-serif !important;
             background-color: #ffffff;
             margin: 0;
             display: flex;
@@ -140,12 +149,15 @@
     </div>
     <div class="intro-copy">
         <p id="intro-text">
-            To start using our tool, simply click the <strong>button</strong> below.
+            Then use the Sue-A-Hacker Enterprise! The Sue-A-Hacker Enterprise is not here for nothing. 
+            <strong>Hackers</strong> can make you feel <em>sad, unsettled</em> and <em>discouraged.</em> 
+            But we are here to flip it all over so the hacker regrets. To start using our tool, 
+            simply click the <strong>button</strong> below. You will never regret it!
         </p>
     </div>
     <div class="portal-card">
         <h2 id="card-title">Litigation center</h2>
-        <p id="card-desc">Securely file legal action.</p>
+        <p id="card-desc">Securely file legal action against black hat hackers and digital threat actors.</p>
         <button id="btn-main-launch" onclick="showModal(true)" style="background:var(--main-black); color:white; border:none; padding:20px; width:100%; border-radius:12px; font-weight:bold; cursor:pointer; font-family: inherit;">File lawsuit now</button>
     </div>
 </div>
@@ -234,15 +246,104 @@
             notary: "NOTARIO DIGITAL OFICIAL", print: "Imprimir recibo", close: "Cerrar",
             malList: ["Ransomware", "Espionaje", "Troyano", "Criptoseuestro", "Rootkit", "Keylogger", "Botnet", "Wiper", "Inyección SQL", "Phishing", "Adware", "Gusano", "Bomba Lógica", "Puerta Trasera", "Exploit Kit"],
             logs: ["[INFO] Localizando...", "[INFO] Enviando paquete...", "[INFO] Éxito."]
+        },
+        fr: {
+            title: "Voulez-vous<br>poursuivre<br>un hacker?",
+            intro: "Utilisez Sue-A-Hacker Enterprise ! Sue-A-Hacker n'est pas là pour rien. Les <strong>hackers</strong> peuvent vous faire sentir <em>triste, inquiet</em> et <em>découragé.</em> Nous sommes là pour tout inverser. Vous ne le regretterez jamais !",
+            cardT: "Centre de litige", cardD: "Engager des poursuites.", btnM: "Poursuivre maintenant",
+            modT: "Formulaire de plainte", hInfo: "Détails du hacker", hPh: "IP ou Nom",
+            mal: "Type de malware", amt: "Montant", des: "Description", desPh: "Détails de l'impact...",
+            fil: "Preuves (Plusieurs)", filB: "Cliquez pour joindre", filS: " fichier(s) joint(s).",
+            fee: "Frais:", pub: "Payer et publier", can: "Annuler",
+            serv: "Envoi du mandat...", succ: "Plainte déposée",
+            notary: "NOTAIRE NUMÉRIQUE OFFICIEL", print: "Imprimer le reçu", close: "Fermer",
+            malList: ["Ransomware", "Spyware", "Cheval de Troie", "Cryptojacking", "Rootkit", "Keylogger", "Botnet", "Wiper", "Injection SQL", "Phishing", "Adware", "Ver", "Bombe Logique", "Backdoor", "Exploit Kit"],
+            logs: ["[INFO] Localisation...", "[INFO] Envoi dossier...", "[INFO] Succès."]
+        },
+        de: {
+            title: "Möchten Sie<br>Hacker<br>verklagen?",
+            intro: "Dann nutzen Sie Sue-A-Hacker Enterprise! Die Sue-A-Hacker Enterprise ist nicht umsonst da. <strong>Hacker</strong> können dazu führen, dass Sie sich <em>traurig, verunsichert</em> und <em>entmutigt</em> fühlen. Wir helfen Ihnen. Sie werden es nie bereuen!",
+            cardT: "Rechtszentrum", cardD: "Rechtliche Schritte einleiten.", btnM: "Jetzt verklagen",
+            modT: "Klageformular", hInfo: "Hacker-Details", hPh: "IP oder Name",
+            mal: "Malware-Typ", amt: "Streitwert", des: "Beschreibung", desPh: "Auswirkungen beschreiben...",
+            fil: "Beweise (Mehrere)", filB: "Dateien anhängen", filS: " Datei(en) angehängt.",
+            fee: "Gebühr:", pub: "Zahlen & Veröffentlichen", can: "Abbrechen",
+            serv: "Haftbefehl wird zugestellt...", succ: "Klage erfolgreich",
+            notary: "OFFIZIELLER NOTAR", print: "Beleg drucken", close: "Schließen",
+            malList: ["Ransomware", "Spyware", "Trojaner", "Cryptojacking", "Rootkit", "Keylogger", "Botnetz", "Wiper", "SQL-Injection", "Phishing", "Adware", "Wurm", "Logikbombe", "Backdoor", "Exploit-Kit"],
+            logs: ["[INFO] Suche...", "[INFO] Sende Dokumente...", "[INFO] Erfolg."]
+        },
+        it: {
+            title: "Vuoi<br>fare causa a<br>un hacker?",
+            intro: "Usa Sue-A-Hacker Enterprise! Sue-A-Hacker Enterprise non è qui per niente. Gli <strong>hacker</strong> possono farti sentire <em>triste, inquieto</em> e <em>scoraggiato.</em> Siamo qui per aiutarti. Non te ne pentirai mai!",
+            cardT: "Centro contenziosi", cardD: "Avvia azione legale.", btnM: "Fai causa ora",
+            modT: "Modulo di causa", hInfo: "Dettagli hacker", hPh: "IP o Nome",
+            mal: "Tipo di malware", amt: "Importo causa", des: "Danni", desPh: "Dettagli dell'impatto...",
+            fil: "Prove (Multiple)", filB: "Clicca per allegare", filS: " file allegati.",
+            fee: "Costo:", pub: "Paga e pubblica", can: "Annulla",
+            serv: "Notifica mandato...", succ: "Causa presentata",
+            notary: "NOTAIO DIGITALE UFFICIALE", print: "Stampa ricevuta", close: "Chiudi",
+            malList: ["Ransomware", "Spyware", "Trojan", "Cryptojacking", "Rootkit", "Keylogger", "Botnet", "Wiper", "SQL Injection", "Phishing", "Adware", "Worm", "Bomba Logica", "Backdoor", "Exploit Kit"],
+            logs: ["[INFO] Localizzazione...", "[INFO] Invio atti...", "[INFO] Successo."]
+        },
+        pt: {
+            title: "Deseja<br>processar um<br>hacker?",
+            intro: "Então use o Sue-A-Hacker Enterprise! A Sue-A-Hacker Enterprise não está aqui por nada. <strong>Hackers</strong> deixam você <em>triste, inquieto</em> e <em>desanimado.</em> Estamos aqui para virar o jogo. Você nunca se arrependerá!",
+            cardT: "Centro jurídico", cardD: "Ajuizar ação legal.", btnM: "Processar agora",
+            modT: "Formulário judicial", hInfo: "Detalhes do invasor", hPh: "IP ou Nome",
+            mal: "Tipo de malware", amt: "Valor", des: "Danos", desPh: "Detalhe o impacto...",
+            fil: "Provas (Múltiplo)", filB: "Clique para anexar", filS: " arquivo(s) anexado(s).",
+            fee: "Taxa:", pub: "Pagar e publicar", can: "Cancelar",
+            serv: "Enviando mandado...", succ: "Processo aberto",
+            notary: "NOTÁRIO DIGITAL OFICIAL", print: "Imprimir recibo", close: "Fechar",
+            malList: ["Ransomware", "Spyware", "Trojan", "Cryptojacking", "Rootkit", "Keylogger", "Botnet", "Wiper", "Injeção SQL", "Phishing", "Adware", "Worm", "Bomba Lógica", "Backdoor", "Exploit Kit"],
+            logs: ["[INFO] Localizando...", "[INFO] Enviando dossiê...", "[INFO] Sucesso."]
+        },
+        zh: {
+            title: "你想要<br>起诉<br>黑客吗？",
+            intro: "那就使用 Sue-A-Hacker Enterprise！Sue-A-Hacker Enterprise 的存在并非偶然。<strong>黑客</strong>会让你感到<em>悲伤、不安和沮丧。</em>但我们在这里彻底扭转局面。点击下方按钮即可开始。你绝对不会后悔！",
+            cardT: "诉讼中心", cardD: "提起法律诉讼。", btnM: "立即起诉",
+            modT: "起诉书表格", hInfo: "黑客详情", hPh: "IP或姓名",
+            mal: "恶意软件类型", amt: "赔偿金额", des: "损害描述", desPh: "描述影响...",
+            fil: "证据上传", filB: "点击附加文件", filS: " 个文件已附加。",
+            fee: "申请费用:", pub: "支付并发布", can: "取消",
+            serv: "全球送达中...", succ: "起诉成功",
+            notary: "官方数字公证", print: "打印收据", close: "关闭",
+            malList: ["勒索软件", "间谍软件", "木马", "挖矿劫持", "根管理器", "键盘记录", "僵尸网络", "擦除器", "SQL注入", "钓鱼套件", "广告软件", "蠕虫", "逻辑炸弹", "后门", "漏洞利用"],
+            logs: ["[信息] 正在定位...", "[信息] 送达文件...", "[信息] 成功。"]
+        },
+        ru: {
+            title: "Хотите<br>подать в суд<br>на хакера?",
+            intro: "Используйте Sue-A-Hacker Enterprise! Мы здесь не просто так. <strong>Хакеры</strong> могут заставить вас чувствовать себя <em>грустным, встревоженным</em> и <em>разочарованным.</em> Мы здесь, чтобы все изменить. Вы не пожалеете!",
+            cardT: "Судебный центр", cardD: "Подать иск.", btnM: "Подать в суд",
+            modT: "Форма иска", hInfo: "Данные хакера", hPh: "IP или имя",
+            mal: "Тип ПО", amt: "Сумма иска", des: "Описание ущерба", desPh: "Опишите последствия...",
+            fil: "Улики (несколько)", filB: "Прикрепить файлы", filS: " файл(ов) прикреплено.",
+            fee: "Сбор:", pub: "Оплатить и подать", can: "Отмена",
+            serv: "Ордер отправлен...", succ: "Иск подан",
+            notary: "ОФИЦИАЛЬНЫЙ НОТАРИУС", print: "Печать чека", close: "Закрыть",
+            malList: ["Вымогатель", "Шпион", "Троян", "Криптоджекинг", "Руткит", "Кейлоггер", "Ботнет", "Вайпер", "SQL-инъекция", "Фишинг", "Adware", "Червь", "Логическая бомба", "Бэкдор", "Эксплойт-кит"],
+            logs: ["[ИНФО] Поиск...", "[ИНФО] Отправка данных...", "[ИНФО] Успешно."]
+        },
+        ar: {
+            title: "هل تريد<br>مقاضاة<br>مخترق؟",
+            intro: "استخدم Sue-A-Hacker Enterprise! لم نوجد هنا من فراغ. يمكن لـ <strong>المخترقين</strong> أن يجعلوك تشعر بـ <em>الحزن والقلق والإحباط.</em> ولكننا هنا لنقلب الموازين. ابدأ الآن بالنقر على الزر أدناه. لن تندم أبداً!",
+            cardT: "مركز التقاضي", cardD: "ارفع دعوى قانونية.", btnM: "ارفع دعوى الآن",
+            modT: "نموذج الدعوى", hInfo: "تفاصيل المعتدي", hPh: "IP أو الاسم",
+            mal: "نوع البرمجيات", amt: "المبلغ", des: "الأضرار", desPh: "تفصيل الأثر...",
+            fil: "الأدلة (متعدد)", filB: "انقر للإرفاق", filS: " ملفات مرفقة.",
+            fee: "الرسوم:", pub: "الدفع والنشر", can: "إلغاء",
+            serv: "إرسال المذكرة...", succ: "تم رفع الدعوى",
+            notary: "كاتب عدل رقمي رسمي", print: "طباعة الإيصال", close: "إغلاق",
+            malList: ["برامج الفدية", "تجسس", "طروادة", "تعدين خفي", "روتكيت", "راصد مفاتيح", "بوت نت", "ماسح بيانات", "حقن SQL", "تصيد", "إعلانات", "دودة", "قنبلة منطقية", "باب خلفي", "طقم ثغرات"],
+            logs: ["[معلومات] تحديد الموقع...", "[معلومات] إرسال المستندات...", "[معلومات] تم."]
         }
-        // ... (Other languages omitted for brevity, but they work with the same logic)
     };
 
     function applyTranslation() {
         const l = document.getElementById('lang').value;
-        const t = data[l] || data['en']; // Fallback to EN if missing
+        const t = data[l];
         document.body.dir = (l === 'ar') ? 'rtl' : 'ltr';
-        
         document.getElementById('main-title').innerHTML = t.title;
         document.getElementById('intro-text').innerHTML = t.intro;
         document.getElementById('card-title').innerText = t.cardT;
@@ -285,8 +386,7 @@
 
     function updateFileCount(input) {
         const l = document.getElementById('lang').value;
-        const count = input.files.length;
-        document.getElementById('file-status').innerText = count + (data[l] ? data[l].filS : data['en'].filS);
+        document.getElementById('file-status').innerText = input.files.length + data[l].filS;
     }
 
     function applyCurrency() {
@@ -297,23 +397,16 @@
     }
 
     function launchProcess() {
-        if(!document.getElementById('h-input').value || !document.getElementById('sue-amt').value) { 
-            alert("Incomplete form."); 
-            return; 
-        }
+        if(!document.getElementById('h-input').value || !document.getElementById('sue-amt').value) { alert("Incomplete form."); return; }
         document.getElementById('form-container').style.display = 'none';
         document.getElementById('map-container').style.display = 'block';
-        const t = data[document.getElementById('lang').value] || data['en'];
+        const t = data[document.getElementById('lang').value];
         const logsBox = document.getElementById('map-logs');
         logsBox.innerHTML = "";
         let i = 0;
         const itv = setInterval(() => {
-            if(i < t.logs.length) { 
-                logsBox.innerHTML += `<br>${t.logs[i++]}`; 
-            } else { 
-                clearInterval(itv); 
-                showReceipt(); 
-            }
+            if(i < t.logs.length) { logsBox.innerHTML += `<br>${t.logs[i++]}`; } 
+            else { clearInterval(itv); showReceipt(); }
         }, 800);
     }
 
@@ -334,10 +427,7 @@
         `;
     }
 
-    // Ensure the script runs only after the page is loaded
-    window.addEventListener('DOMContentLoaded', (event) => {
-        applyTranslation();
-    });
+    applyTranslation();
 </script>
 </body>
 </html>
