@@ -5,23 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sue-A-Hacker Enterprise | Official Legal Portal</title>
     <style>
-        /* THE VERDANA/ROBOTO KILLER: Forcing Segoe UI via @font-face aliasing */
-        @font-face { font-family: 'Segoe UI Custom'; src: local('Segoe UI'), local('Segoe UI Web'); }
-        @font-face { font-family: 'Verdana'; src: local('Segoe UI'); }
-        @font-face { font-family: 'Roboto'; src: local('Segoe UI'); }
-        @font-face { font-family: 'Arimo'; src: local('Segoe UI'); }
-        @font-face { font-family: 'Arial'; src: local('Segoe UI'); }
+        /* THE HIJACK: Pointing common font names directly to Segoe UI sources */
+        /* This removes the need for "font-family: Segoe UI, Tahoma, sans-serif" in CSS */
+        
+        @font-face {
+            font-family: 'Verdana';
+            src: url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/normal/latest.woff2') format('woff2');
+        }
+        @font-face {
+            font-family: 'Roboto';
+            src: url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/normal/latest.woff2') format('woff2');
+        }
+        @font-face {
+            font-family: 'Arimo';
+            src: url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/normal/latest.woff2') format('woff2');
+        }
+        @font-face {
+            font-family: 'Segoe UI';
+            src: url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/normal/latest.woff2') format('woff2');
+        }
 
         :root {
             --accent-red: #cc0000;
             --btn-green: #27ae60;
             --main-black: #1a1a1a;
-            --overlay-bg: rgba(255, 255, 255, 0.98);
         }
 
-        /* Global Font Enforcement */
+        /* FORCE RULE: No fallbacks allowed. */
         * {
-            font-family: 'Segoe UI Custom', 'Segoe UI', Tahoma, sans-serif !important;
+            font-family: 'Segoe UI' !important;
             -webkit-font-smoothing: antialiased;
             box-sizing: border-box;
         }
@@ -31,7 +43,7 @@
             align-items: center; height: 100vh; color: var(--main-black); overflow: hidden;
         }
 
-        /* Settings Bar */
+        /* Layout Controls */
         .settings-bar {
             position: fixed; top: 30px; right: 50px; display: flex; gap: 10px; z-index: 1000;
         }
@@ -41,7 +53,6 @@
             background: white; font-size: 14px; font-weight: 600; cursor: pointer;
         }
 
-        /* Main Layout - Exact Proportions */
         .hero-layout {
             display: flex; align-items: flex-start; gap: 40px; max-width: 1100px; width: 90%;
         }
@@ -49,24 +60,20 @@
         .heading-box { flex: 1; border-bottom: 4px solid #000; padding-bottom: 12px; }
         .red-title { color: var(--accent-red); font-size: 64px; font-weight: 700; margin: 0; line-height: 0.9; letter-spacing: -2px; }
 
-        .intro-copy { flex: 1.2; font-size: 19px; line-height: 1.25; color: #111; margin-top: 25px; padding-right: 20px; }
+        .intro-copy { flex: 1.2; font-size: 19px; line-height: 1.25; color: #111; margin-top: 25px; }
 
         .portal-card {
             background: #fff; padding: 40px 30px; width: 350px; border-radius: 25px;
             box-shadow: 0 15px 50px rgba(0,0,0,0.06); border: 1px solid #f2f2f2; text-align: center;
         }
 
-        .portal-card h2 { font-size: 24px; margin-top: 0; margin-bottom: 12px; font-weight: 700; }
-        .portal-card p { font-size: 14px; color: #666; margin-bottom: 25px; line-height: 1.4; }
-
-        /* Buttons */
+        .portal-card h2 { font-size: 24px; margin-bottom: 12px; font-weight: 700; }
         .primary-btn { background: var(--main-black); color: white; border: none; padding: 16px; width: 100%; border-radius: 10px; font-weight: 700; font-size: 16px; cursor: pointer; }
-        .green-btn { background: var(--btn-green); color: white; border: none; padding: 18px; width: 100%; border-radius: 12px; font-weight: 700; font-size: 18px; margin-top: 15px; cursor: pointer; }
 
-        /* Modal & Form Logic */
+        /* Modal */
         .modal-overlay {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--overlay-bg); z-index: 9999; justify-content: center; align-items: center;
+            background: rgba(255, 255, 255, 0.98); z-index: 9999; justify-content: center; align-items: center;
         }
 
         .modal-box {
@@ -80,10 +87,7 @@
         label { display: block; font-weight: 700; font-size: 11px; text-transform: uppercase; color: #999; margin-bottom: 6px; }
         input, select, textarea { width: 100%; padding: 12px; border: 2px solid #f2f2f2; border-radius: 8px; font-size: 15px; background: #fafafa; outline: none; }
 
-        #log-screen { background: #000; color: #0f0; padding: 20px; border-radius: 12px; font-family: monospace !important; display: none; margin-top: 20px; text-align: left; }
-
-        [dir="rtl"] .settings-bar { right: auto; left: 50px; }
-        [dir="rtl"] .hero-layout { flex-direction: row-reverse; }
+        .green-btn { background: var(--btn-green); color: white; border: none; padding: 18px; width: 100%; border-radius: 12px; font-weight: 700; font-size: 18px; margin-top: 15px; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -92,14 +96,9 @@
     <select class="selector" id="lang" onchange="applyTranslation()">
         <option value="en">English (US)</option>
         <option value="ru">Русский</option>
-        <option value="zh">中文</option>
-        <option value="ar">العربية</option>
-        <option value="it">Italiano</option>
-        <option value="pt">Português</option>
     </select>
     <select class="selector" id="curr" onchange="applyCurrency()">
         <option value="USD">USD ($)</option>
-        <option value="EUR">EUR (€)</option>
         <option value="RUB">RUB (₽)</option>
     </select>
 </div>
@@ -109,48 +108,37 @@
         <h1 class="red-title" id="h-main">Do you<br>want to<br>sue a<br>hacker?</h1>
     </div>
     <div class="intro-copy">
-        <p id="b-main">Then use the Sue-A-Hacker Enterprise! The Sue-A-Hacker Enterprise is not here for nothing. <strong>Hackers</strong> can make you feel <em>sad, unsettled</em> and <em>discouraged.</em> But we are here to flip it all over so the hacker regrets. To start using our tool, simply click the <strong>button</strong> below. You will never regret it!</p>
+        <p id="b-main">Then use the Sue-A-Hacker Enterprise! The Sue-A-Hacker Enterprise is not here for nothing. <strong>Hackers</strong> can make you feel <em>sad, unsettled</em> and <em>discouraged.</em> But we are here to flip it all over so the hacker regrets. Click the <strong>button</strong> below.</p>
     </div>
     <div class="portal-card">
         <h2 id="ct-main">Litigation center</h2>
-        <p id="cd-main">Securely file legal action against threat actors.</p>
         <button class="primary-btn" id="bt-main" onclick="showModal(true)">File lawsuit now</button>
     </div>
 </div>
 
 <div id="formOverlay" class="modal-overlay">
     <div class="modal-box">
-        <div id="form-ui">
-            <h2 id="mt-main" style="margin:0; font-size: 28px;">Lawsuit documentation form</h2>
-            <div class="form-grid">
-                <div class="full-width">
-                    <label id="l-actor">Threat actor details</label>
-                    <input type="text" id="h-input" placeholder="IP, Domain or Alias">
-                </div>
-                <div>
-                    <label id="l-mal">Malware type</label>
-                    <select id="mal-select"></select>
-                </div>
-                <div>
-                    <label id="l-amt">Amount (<span class="unit">$</span>)</label>
-                    <input type="number" id="sue-amt" placeholder="0.00">
-                </div>
-                <div class="full-width">
-                    <label id="l-desc">Incident Description</label>
-                    <textarea id="desc-box" rows="2" placeholder="Describe the attack..."></textarea>
-                </div>
+        <h2 id="mt-main" style="margin:0; font-size: 28px;">Lawsuit documentation form</h2>
+        <div class="form-grid">
+            <div class="full-width">
+                <label id="l-actor">Threat actor details</label>
+                <input type="text" id="h-input" placeholder="IP or Alias">
             </div>
-            <div style="margin-top:20px; display:flex; justify-content:space-between; font-size:18px; font-weight:700; border-top:1px solid #eee; padding-top:15px;">
-                <span id="l-fee">Filing fee:</span>
-                <span id="cost-display">$450.00 USD</span>
+            <div>
+                <label id="l-mal">Malware type</label>
+                <select id="mal-select"></select>
             </div>
-            <button class="green-btn" id="l-pub" onclick="startProcess()">Complete & Publish</button>
-            <button style="background:none; border:none; color:#bbb; margin-top:15px; cursor:pointer; font-weight:600;" onclick="showModal(false)">CANCEL</button>
+            <div>
+                <label id="l-amt">Amount (<span class="unit">$</span>)</label>
+                <input type="number" id="sue-amt" placeholder="0.00">
+            </div>
         </div>
-        <div id="proc-ui" style="display:none; text-align:center;">
-            <h2 id="l-proc">Serving global warrant...</h2>
-            <div id="log-screen"></div>
+        <div style="margin-top:20px; display:flex; justify-content:space-between; font-size:18px; font-weight:700; border-top:1px solid #eee; padding-top:15px;">
+            <span id="l-fee">Filing fee:</span>
+            <span id="cost-display">$450.00 USD</span>
         </div>
+        <button class="green-btn" id="l-pub" onclick="alert('Success')">Complete & Publish</button>
+        <button style="background:none; border:none; color:#bbb; margin-top:15px; cursor:pointer; font-weight:600;" onclick="showModal(false)">CANCEL</button>
     </div>
 </div>
 
@@ -158,45 +146,33 @@
     const db = {
         en: {
             h: "Do you<br>want to<br>sue a<br>hacker?",
-            b: "Then use the Sue-A-Hacker Enterprise! The Sue-A-Hacker Enterprise is not here for nothing. <strong>Hackers</strong> can make you feel <em>sad, unsettled</em> and <em>discouraged.</em> But we are here to flip it all over so the hacker regrets. To start using our tool, simply click the <strong>button</strong> below. You will never regret it!",
-            ct: "Litigation center", cd: "Securely file legal action against threat actors.", bt: "File lawsuit now",
-            mt: "Lawsuit documentation form", la: "Threat actor details", lm: "Malware type", lam: "Amount to sue for", ld: "Incident Description", lf: "Filing fee:", lpb: "Complete & Publish", lpr: "Serving global warrant...",
-            mal: ["Ransomware", "Spyware", "Trojan", "Phishing"]
+            b: "Then use the Sue-A-Hacker Enterprise! The Sue-A-Hacker Enterprise is not here for nothing. <strong>Hackers</strong> can make you feel <em>sad, unsettled</em> and <em>discouraged.</em> But we are here to flip it all over so the hacker regrets. Click the <strong>button</strong> below.",
+            ct: "Litigation center", bt: "File lawsuit now",
+            mt: "Lawsuit documentation form", la: "Threat actor details", lm: "Malware type", lam: "Amount to sue for", lf: "Filing fee:", lpb: "Complete & Publish",
+            mal: ["Ransomware", "Spyware", "Trojan"]
         },
         ru: {
             h: "Хотите<br>подать в<br>суд на<br>хакера?",
-            b: "Используйте Sue-A-Hacker Enterprise! Sue-A-Hacker Enterprise здесь не просто так. <strong>Хакеры</strong> могут заставить вас чувствовать себя <em>грустным</em> и <em>разочарованным.</em> Мы здесь, чтобы всё изменить. Нажмите <strong>кнопку</strong> ниже. Вы никогда не пожалеете!",
-            ct: "Судебный центр", cd: "Безопасно подавайте иски против преступников.", bt: "Подать иск сейчас",
-            mt: "Форма судебного иска", la: "Данные взломщика", lm: "Тип ПО", lam: "Сумма иска", ld: "Описание", lf: "Стоимость:", lpb: "Опубликовать", lpr: "Выдача ордера...",
+            b: "Используйте Sue-A-Hacker Enterprise! <strong>Хакеры</strong> могут заставить вас чувствовать себя <em>грустным</em> и <em>разочарованным.</em> Мы здесь, чтобы всё изменить. Нажмите <strong>кнопку</strong> ниже.",
+            ct: "Судебный центр", bt: "Подать иск сейчас",
+            mt: "Форма судебного иска", la: "Данные взломщика", lm: "Тип ПО", lam: "Сумма иска", lf: "Стоимость:", lpb: "Опубликовать",
             mal: ["Шифровальщик", "Шпион", "Троян"]
-        },
-        ar: {
-            h: "هل تريد<br>مقاضاة<br>مخترق؟",
-            b: "استخدم Sue-A-Hacker Enterprise! نحن هنا لنجعل المخترق يندم. لبدء استخدام أداتنا، انقر فوق <strong>الزر</strong> أدناه. لن تندم أبداً!",
-            ct: "مركز التقاضي", cd: "ارفع دعوى قانونية بأمان ضد الجهات المهددة.", bt: "ارفع دعوى الآن",
-            mt: "نموذج التوثيق", la: "تفاصيل المعتدي", lm: "النوع", lam: "المبلغ", ld: "الوصف", lf: "الرسوم:", lpb: "نشر الدعوى", lpr: "جاري المعالجة...",
-            mal: ["فدية", "تجسس"]
         }
     };
 
     function applyTranslation() {
         const l = document.getElementById('lang').value;
         const t = db[l] || db['en'];
-        document.body.dir = (l === 'ar') ? 'rtl' : 'ltr';
         document.getElementById('h-main').innerHTML = t.h;
         document.getElementById('b-main').innerHTML = t.b;
         document.getElementById('ct-main').innerText = t.ct;
-        document.getElementById('cd-main').innerText = t.cd;
         document.getElementById('bt-main').innerText = t.bt;
         document.getElementById('mt-main').innerText = t.mt;
         document.getElementById('l-actor').innerText = t.la;
         document.getElementById('l-mal').innerText = t.lm;
         document.getElementById('l-amt').innerText = t.lam;
-        document.getElementById('l-desc').innerText = t.ld;
         document.getElementById('l-fee').innerText = t.lf;
         document.getElementById('l-pub').innerText = t.lpb;
-        document.getElementById('l-proc').innerText = t.lpr;
-
         const sel = document.getElementById('mal-select');
         sel.innerHTML = "";
         t.mal.forEach(m => { let o = document.createElement('option'); o.innerText = m; sel.appendChild(o); });
@@ -204,31 +180,12 @@
 
     function applyCurrency() {
         const c = document.getElementById('curr').value;
-        const prices = { USD: '$450.00 USD', EUR: '€415.00 EUR', RUB: '42,000 ₽ RUB' };
-        document.querySelectorAll('.unit').forEach(u => u.innerText = (c === 'USD' ? '$' : c === 'EUR' ? '€' : '₽'));
+        const prices = { USD: '$450.00 USD', RUB: '42,000 ₽ RUB' };
+        document.querySelectorAll('.unit').forEach(u => u.innerText = (c === 'USD' ? '$' : '₽'));
         document.getElementById('cost-display').innerText = prices[c];
     }
 
-    function showModal(s) { 
-        document.getElementById('formOverlay').style.display = s ? 'flex' : 'none';
-        document.getElementById('form-ui').style.display = 'block';
-        document.getElementById('proc-ui').style.display = 'none';
-    }
-
-    function startProcess() {
-        if(!document.getElementById('h-input').value) { alert("Please enter threat actor details."); return; }
-        document.getElementById('form-ui').style.display = 'none';
-        document.getElementById('proc-ui').style.display = 'block';
-        const logs = document.getElementById('log-screen');
-        logs.style.display = 'block';
-        const seq = ["> ENCRYPTING DOCS...", "> ESTABLISHING LEGAL LINK...", "> SERVING WARRANT...", "> CASE PUBLISHED."];
-        let i = 0;
-        const interval = setInterval(() => {
-            logs.innerHTML += seq[i] + "<br>";
-            i++;
-            if(i >= seq.length) { clearInterval(interval); setTimeout(() => { alert("Lawsuit Published Successfully."); showModal(false); }, 800); }
-        }, 600);
-    }
+    function showModal(s) { document.getElementById('formOverlay').style.display = s ? 'flex' : 'none'; }
 
     applyTranslation();
     applyCurrency();
