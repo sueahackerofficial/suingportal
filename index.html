@@ -5,11 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sue-A-Hacker Enterprise | Official Legal Portal</title>
     <style>
-        /* Forces the browser to load a Segoe-compatible font from the web */
+        /* This pulls the actual Segoe UI font files so they work on ChromeOS */
         @font-face {
             font-family: 'Segoe UI';
-            src: local('Segoe UI'),
-                 url('https://themes.googleusercontent.com/static/fonts/opensans/v6/cJZKeOuBrn4kERxqtaUH3T8E0i7KZn-EPnyo3HZu7kw.woff') format('woff');
+            src: url('https://db.onlinewebfonts.com/t/01f1396a8637731999974558509a25b2.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'Segoe UI';
+            src: url('https://db.onlinewebfonts.com/t/2069c9b6399a6174a7536d54203a7489.woff2') format('woff2');
+            font-weight: bold;
+            font-style: normal;
         }
 
         :root {
@@ -21,7 +28,7 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, sans-serif;
             background-color: #ffffff;
             margin: 0;
             display: flex;
@@ -29,6 +36,11 @@
             align-items: center;
             min-height: 100vh;
             color: var(--main-black);
+        }
+
+        /* Ensuring all inputs, buttons, and selects use Segoe UI */
+        input, select, textarea, button, .selector {
+            font-family: 'Segoe UI', sans-serif !important;
         }
 
         .settings-bar {
@@ -49,7 +61,6 @@
             font-weight: bold;
             cursor: pointer;
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            font-family: inherit;
         }
 
         .hero-layout {
@@ -89,7 +100,6 @@
         input, select, textarea {
             width: 100%; padding: 16px; border: 2px solid #edf2f7; border-radius: 12px; 
             font-size: 16px; box-sizing: border-box; background: #f8fafc;
-            font-family: inherit;
         }
 
         .file-drop-zone {
@@ -103,8 +113,8 @@
             margin: 20px 0; border: 1px solid #333;
         }
 
-        .primary-btn { background: var(--btn-green); color: white; border: none; padding: 22px; width: 100%; border-radius: 12px; font-weight: 800; font-size: 18px; cursor: pointer; font-family: inherit; }
-        .secondary-btn { background: #e2e8f0; color: #4a5568; border: none; padding: 15px; width: 100%; border-radius: 12px; margin-top: 15px; cursor: pointer; font-weight: bold; font-family: inherit; }
+        .primary-btn { background: var(--btn-green); color: white; border: none; padding: 22px; width: 100%; border-radius: 12px; font-weight: 800; font-size: 18px; cursor: pointer; }
+        .secondary-btn { background: #e2e8f0; color: #4a5568; border: none; padding: 15px; width: 100%; border-radius: 12px; margin-top: 15px; cursor: pointer; font-weight: bold; }
 
         .receipt-container { display: none; }
         .notary-seal {
@@ -150,7 +160,7 @@
     <div class="portal-card">
         <h2 id="card-title">Litigation center</h2>
         <p id="card-desc">Securely file legal action against black hat hackers and digital threat actors.</p>
-        <button id="btn-main-launch" onclick="showModal(true)" style="background:var(--main-black); color:white; border:none; padding:20px; width:100%; border-radius:12px; font-weight:bold; cursor:pointer; font-family:inherit;">File lawsuit now</button>
+        <button id="btn-main-launch" onclick="showModal(true)" style="background:var(--main-black); color:white; border:none; padding:20px; width:100%; border-radius:12px; font-weight:bold; cursor:pointer;">File lawsuit now</button>
     </div>
 </div>
 
@@ -255,7 +265,7 @@
         },
         de: {
             title: "Möchten Sie<br>Hacker<br>verklagen?",
-            intro: "Dann nutzen Sie Sue-A-Hacker Enterprise! Die Sue-A-Hacker Enterprise ist nicht umsonst da. <strong>Hacker</strong> können dazu führen, dass Sie sich <em>traurig, verunsichert</em> und <em>entmutigt</em> fühlen. Wir helfen Ihnen. Sie werden es nie bereuen!",
+            intro: "Dann nutzen Sie Sue-A-Hacker Enterprise! Die Sue-A-Hacker Enterprise ist not umsonst da. <strong>Hacker</strong> können dazu führen, dass Sie sich <em>traurig, verunsichert</em> und <em>entmutigt</em> fühlen. Wir helfen Ihnen. Sie werden es nie bereuen!",
             cardT: "Rechtszentrum", cardD: "Rechtliche Schritte einleiten.", btnM: "Jetzt verklagen",
             modT: "Klageformular", hInfo: "Hacker-Details", hPh: "IP oder Name",
             mal: "Malware-Typ", amt: "Streitwert", des: "Beschreibung", desPh: "Auswirkungen beschreiben...",
@@ -327,7 +337,7 @@
             fil: "الأدلة (متعدد)", filB: "انقر للإرفاق", filS: " ملفات مرفقة.",
             fee: "الرسوم:", pub: "الدفع والنشر", can: "إلغاء",
             serv: "إرسال المذكرة...", succ: "تم رفع الدعوى",
-            notary: "كاتب عدل رقمي رسمي", print: "طباعة الإيصال", close: "إالاق",
+            notary: "كاتب عدل رقمي رسمي", print: "طباعة الإيصال", close: "إغلاق",
             malList: ["برامج الفدية", "تجسس", "طروادة", "تعدين خفي", "روتكيت", "راصد مفاتيح", "بوت نت", "ماسح بيانات", "حقن SQL", "تصيد", "إعلانات", "دودة", "قنبلة منطقية", "باب خلفي", "طقم ثغرات"],
             logs: ["[معلومات] تحديد الموقع...", "[معلومات] إرسال المستندات...", "[معلومات] تم."]
         }
