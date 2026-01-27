@@ -3,25 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sue-A-Hacker Enterprise</title>
+    <title>Sue-A-Hacker Enterprise | Secure Portal</title>
     <style>
-        /* FONT BLOCKADE: Redirecting all common intruders to Segoe UI */
+        /* GLOBAL FONT LOCKDOWN */
+        /* This forces the browser to map EVERY generic and common font name to Segoe UI */
         @font-face { font-family: 'Arimo'; src: local('Segoe UI'); }
         @font-face { font-family: 'Roboto'; src: local('Segoe UI'); }
         @font-face { font-family: 'Verdana'; src: local('Segoe UI'); }
         @font-face { font-family: 'Arial'; src: local('Segoe UI'); }
         @font-face { font-family: 'Helvetica'; src: local('Segoe UI'); }
+        @font-face { font-family: 'Noto Sans'; src: local('Segoe UI'); }
+        @font-face { font-family: 'Microsoft YaHei'; src: local('Segoe UI'); }
+        @font-face { font-family: 'Malgun Gothic'; src: local('Segoe UI'); }
 
         :root {
             --segoe: "Segoe UI", "Segoe UI Web", Tahoma, sans-serif;
             --accent-red: #cc0000;
         }
 
-        /* The Ultimate Override */
+        /* Direct Hijack of all elements */
         * { 
             font-family: var(--segoe) !important; 
             box-sizing: border-box; 
             -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
         }
 
         body {
@@ -35,73 +40,77 @@
             overflow: hidden;
         }
 
-        /* Top Bar Selectors */
-        .header-controls {
-            position: absolute; top: 30px; right: 50px; display: flex; gap: 10px;
+        /* Top Bar Navigation */
+        .nav-container {
+            position: absolute; top: 35px; right: 55px; display: flex; gap: 12px;
         }
 
-        .select-box {
-            padding: 6px 12px; border: 1px solid #d1d1d1; border-radius: 4px;
-            font-size: 14px; font-weight: 400; cursor: pointer; background: #fff;
+        .dropdown-menu {
+            padding: 7px 14px; border: 1px solid #dcdcdc; border-radius: 5px;
+            font-size: 14px; cursor: pointer; background: #fff; outline: none;
         }
 
-        /* Content Layout */
-        .main-wrapper {
-            display: flex; align-items: flex-start; gap: 40px; max-width: 1050px; width: 90%;
+        /* Hero Layout - Exact Image Proportions */
+        .content-frame {
+            display: flex; align-items: flex-start; gap: 45px; max-width: 1080px; width: 92%;
         }
 
-        .title-side { flex: 1; border-bottom: 5px solid #000; padding-bottom: 15px; }
-        .red-h1 { color: var(--accent-red); font-size: 64px; font-weight: 700; margin: 0; line-height: 0.9; letter-spacing: -2.5px; }
-
-        .text-side { flex: 1.2; font-size: 18px; line-height: 1.25; color: #1a1a1a; margin-top: 25px; }
-
-        /* Litigation Center Card */
-        .litigation-card {
-            background: #fff; padding: 45px 35px; width: 350px; border-radius: 25px;
-            box-shadow: 0 15px 45px rgba(0,0,0,0.06); border: 1px solid #f2f2f2; text-align: center;
+        .title-column { flex: 1; border-bottom: 5px solid #000; padding-bottom: 15px; }
+        .hero-heading { 
+            color: var(--accent-red); font-size: 66px; font-weight: 700; 
+            margin: 0; line-height: 0.92; letter-spacing: -2.8px; 
         }
 
-        .litigation-card h2 { font-size: 24px; margin-top: 0; margin-bottom: 12px; font-weight: 700; }
-        .litigation-card p { font-size: 14px; color: #666; margin-bottom: 25px; line-height: 1.4; }
+        .description-column { 
+            flex: 1.3; font-size: 19px; line-height: 1.28; color: #111; margin-top: 30px; 
+        }
 
-        .btn-black {
-            background: #1a1a1a; color: white; border: none; padding: 16px; width: 100%;
-            border-radius: 10px; font-weight: 700; font-size: 16px; cursor: pointer;
+        /* Litigation Center UI */
+        .action-card {
+            background: #fff; padding: 45px 38px; width: 360px; border-radius: 26px;
+            box-shadow: 0 18px 50px rgba(0,0,0,0.07); border: 1px solid #f0f0f0; text-align: center;
+        }
+
+        .action-card h2 { font-size: 26px; margin-top: 0; margin-bottom: 14px; font-weight: 700; }
+        .action-card p { font-size: 15px; color: #5a5a5a; margin-bottom: 28px; line-height: 1.45; }
+
+        .btn-primary {
+            background: #1a1a1a; color: white; border: none; padding: 18px; width: 100%;
+            border-radius: 11px; font-weight: 700; font-size: 17px; cursor: pointer;
         }
 
         /* Documentation Form Modal */
-        .overlay {
+        .modal-shade {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(255,255,255,0.9); z-index: 1000; justify-content: center; align-items: center;
-            backdrop-filter: blur(5px);
+            background: rgba(255,255,255,0.92); z-index: 2000; justify-content: center; align-items: center;
+            backdrop-filter: blur(6px);
         }
 
-        .modal {
-            background: white; width: 650px; padding: 50px; border-radius: 30px;
-            box-shadow: 0 30px 70px rgba(0,0,0,0.1); border: 1px solid #eee;
+        .form-container {
+            background: white; width: 680px; padding: 55px; border-radius: 32px;
+            box-shadow: 0 35px 80px rgba(0,0,0,0.12); border: 1px solid #eee;
         }
 
-        .modal h2 { margin-top: 0; font-size: 28px; margin-bottom: 30px; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; text-align: left; }
+        .span-all { grid-column: span 2; }
 
-        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; text-align: left; }
-        .span-2 { grid-column: span 2; }
-
-        label { display: block; font-size: 11px; font-weight: 700; text-transform: uppercase; color: #aaa; margin-bottom: 6px; }
-        input, select { 
-            width: 100%; padding: 12px; border: 2px solid #f4f4f4; border-radius: 8px; 
-            font-size: 15px; background: #fafafa; outline: none;
+        .field-label { display: block; font-size: 11px; font-weight: 700; text-transform: uppercase; color: #9a9a9a; margin-bottom: 7px; }
+        .input-style { 
+            width: 100%; padding: 14px; border: 2px solid #f2f2f2; border-radius: 9px; 
+            font-size: 16px; background: #fafafa; outline: none;
         }
 
-        .publish-btn { background: #27ae60; color: white; border: none; padding: 18px; width: 100%; border-radius: 12px; font-weight: 700; font-size: 18px; margin-top: 25px; cursor: pointer; }
+        .btn-submit { background: #27ae60; color: white; border: none; padding: 20px; width: 100%; border-radius: 14px; font-weight: 700; font-size: 19px; margin-top: 30px; cursor: pointer; }
 
-        [dir="rtl"] .header-controls { right: auto; left: 50px; }
-        [dir="rtl"] .main-wrapper { flex-direction: row-reverse; }
+        [dir="rtl"] .nav-container { right: auto; left: 55px; }
+        [dir="rtl"] .content-frame { flex-direction: row-reverse; }
+        [dir="rtl"] .grid-2 { text-align: right; }
     </style>
 </head>
 <body>
 
-<div class="header-controls">
-    <select class="select-box" id="lang" onchange="translate()">
+<div class="nav-container">
+    <select class="dropdown-menu" id="lang-switch" onchange="applyGlobalContent()">
         <option value="en">English (US)</option>
         <option value="ru">Русский</option>
         <option value="zh">中文</option>
@@ -109,52 +118,54 @@
         <option value="es">Español</option>
         <option value="fr">Français</option>
         <option value="de">Deutsch</option>
+        <option value="it">Italiano</option>
+        <option value="pt">Português</option>
     </select>
-    <select class="select-box"><option>USD ($)</option></select>
+    <select class="dropdown-menu"><option>USD ($)</option></select>
 </div>
 
-<div class="main-wrapper">
-    <div class="title-side">
-        <h1 class="red-h1" id="h">Do you<br>want to<br>sue a<br>hacker?</h1>
+<div class="content-frame">
+    <div class="title-column">
+        <h1 class="hero-heading" id="ui-header">Do you<br>want to<br>sue a<br>hacker?</h1>
     </div>
-    <div class="text-side" id="b"></div>
-    <div class="litigation-card">
-        <h2 id="ct">Litigation center</h2>
-        <p id="cd">Securely file legal action against threat actors.</p>
-        <button class="btn-black" id="bt" onclick="openForm(true)">File lawsuit now</button>
+    <div class="description-column" id="ui-body"></div>
+    <div class="action-card">
+        <h2 id="ui-card-title">Litigation center</h2>
+        <p id="ui-card-desc">Securely file legal action against threat actors.</p>
+        <button class="btn-primary" id="ui-btn" onclick="toggleForm(true)">File lawsuit now</button>
     </div>
 </div>
 
-<div class="overlay" id="form">
-    <div class="modal">
-        <h2 id="mt">Lawsuit documentation form</h2>
-        <div class="form-row">
-            <div class="span-2">
-                <label id="l1">Threat actor details</label>
-                <input type="text" placeholder="Identity or IP">
+<div class="modal-shade" id="form-modal">
+    <div class="form-container">
+        <h2 id="ui-modal-title" style="margin-top:0; font-size: 30px; margin-bottom: 35px;">Lawsuit documentation form</h2>
+        <div class="grid-2">
+            <div class="span-all">
+                <label class="field-label" id="ui-label-1">Threat actor details</label>
+                <input type="text" class="input-style" placeholder="Identity or IP Address">
             </div>
             <div>
-                <label id="l2">Malware type</label>
-                <select id="m-select"></select>
+                <label class="field-label" id="ui-label-2">Malware type</label>
+                <select class="input-style" id="malware-options"></select>
             </div>
             <div>
-                <label id="l3">Amount to sue for</label>
-                <input type="number" placeholder="0.00">
+                <label class="field-label" id="ui-label-3">Amount to sue for</label>
+                <input type="number" class="input-style" placeholder="0.00">
             </div>
         </div>
-        <button class="publish-btn" id="l4">Publish Lawsuit</button>
-        <button style="background:none; border:none; color:#bbb; margin-top:15px; cursor:pointer; font-weight:600;" onclick="openForm(false)">Cancel</button>
+        <button class="btn-submit" id="ui-btn-submit">Publish Lawsuit</button>
+        <button style="background:none; border:none; color:#ccc; margin-top:20px; cursor:pointer; font-weight:600; font-size: 14px;" onclick="toggleForm(false)">CANCEL FILING</button>
     </div>
 </div>
 
 <script>
-    const content = {
+    const dictionary = {
         en: {
             h: "Do you<br>want to<br>sue a<br>hacker?",
             b: "Then use the Sue-A-Hacker Enterprise! The Sue-A-Hacker Enterprise is not here for nothing. <strong>Hackers</strong> can make you feel <em>sad, unsettled</em> and <em>discouraged.</em> But we are here to flip it all over so the hacker regrets. To start using our tool, simply click the <strong>button</strong> below. You will never regret it!",
             ct: "Litigation center", cd: "Securely file legal action against threat actors.", bt: "File lawsuit now",
             mt: "Lawsuit documentation form", l1: "Threat actor details", l2: "Malware type", l3: "Amount to sue for", l4: "Publish Lawsuit",
-            ml: ["Ransomware", "Spyware", "Trojan", "Phishing"]
+            ml: ["Ransomware", "Spyware", "Trojan", "Phishing", "Adware"]
         },
         ru: {
             h: "Хотите<br>подать в<br>суд на<br>хакера?",
@@ -167,41 +178,48 @@
             h: "你想要<br>起诉<br>黑客吗？",
             b: "那就使用 Sue-A-Hacker Enterprise！Sue-A-Hacker Enterprise 的存在并非毫无意义。<strong>黑客</strong>会让你感到<em>悲伤、不安</em>和<em>沮丧。</em> 但我们在这里是为了扭转局面，让黑客感到后悔。只需点击下方的<strong>按钮</strong>。你绝不会后悔！",
             ct: "诉讼中心", cd: "安全地针对威胁行为者提起法律诉讼。", bt: "立即提交",
-            mt: "起诉书表格", l1: "黑客详情", l2: "软件类型", l3: "起诉金额", l4: "完成发布",
-            ml: ["勒索软件", "木马", "钓鱼"]
+            mt: "起诉书表格", l1: "黑客详情", l2: "软件类型", l3: "起诉金额", l4: "完成发布项目",
+            ml: ["勒索软件", "木马", "钓鱼攻击"]
         },
         ar: {
             h: "هل تريد<br>مقاضاة<br>مخترق؟",
             b: "إذن استخدم Sue-A-Hacker Enterprise! إن Sue-A-Hacker Enterprise لم توجد هنا من فراغ. يمكن لـ <strong>المخترقين</strong> أن يجعلوك تشعر بـ <em>الحزن والقلق والإحباط.</em> ولكننا هنا لنقلب الموازين. لبدء استخدام أداتنا، ما عليك سوى النقر فوق <strong>الزر</strong> أدناه. لن تندم أبداً!",
             ct: "مركز التقاضي", cd: "ارفع دعوى قانونية بأمان ضد الجهات المهددة.", bt: "ارفع دعوى الآن",
-            mt: "نموذج التوثيق", l1: "المعتدي", l2: "النوع", l3: "المبلغ", l4: "نشر",
+            mt: "نموذج التوثيق", l1: "تفاصيل المعتدي", l2: "نوع البرمجيات", l3: "مبلغ التعويض", l4: "نشر الدعوى",
             ml: ["برامج الفدية", "تجسس", "احتيال"]
         }
     };
 
-    function translate() {
-        const lang = document.getElementById('lang').value;
-        const c = content[lang] || content['en'];
+    function applyGlobalContent() {
+        const lang = document.getElementById('lang-switch').value;
+        const data = dictionary[lang] || dictionary['en'];
+        
         document.body.dir = (lang === 'ar') ? 'rtl' : 'ltr';
-        document.getElementById('h').innerHTML = c.h;
-        document.getElementById('b').innerHTML = c.b;
-        document.getElementById('ct').innerText = c.ct;
-        document.getElementById('cd').innerText = c.cd;
-        document.getElementById('bt').innerText = c.bt;
-        document.getElementById('mt').innerText = c.mt;
-        document.getElementById('l1').innerText = c.l1;
-        document.getElementById('l2').innerText = c.l2;
-        document.getElementById('l3').innerText = c.l3;
-        document.getElementById('l4').innerText = c.l4;
+        document.getElementById('ui-header').innerHTML = data.h;
+        document.getElementById('ui-body').innerHTML = data.b;
+        document.getElementById('ui-card-title').innerText = data.ct;
+        document.getElementById('ui-card-desc').innerText = data.cd;
+        document.getElementById('ui-btn').innerText = data.bt;
+        document.getElementById('ui-modal-title').innerText = data.mt;
+        document.getElementById('ui-label-1').innerText = data.l1;
+        document.getElementById('ui-label-2').innerText = data.l2;
+        document.getElementById('ui-label-3').innerText = data.l3;
+        document.getElementById('ui-btn-submit').innerText = data.l4;
 
-        const sel = document.getElementById('m-select');
-        sel.innerHTML = "";
-        c.ml.forEach(m => { let o = document.createElement('option'); o.innerText = m; sel.appendChild(o); });
+        const select = document.getElementById('malware-options');
+        select.innerHTML = "";
+        data.ml.forEach(m => {
+            let opt = document.createElement('option');
+            opt.innerText = m;
+            select.appendChild(opt);
+        });
     }
 
-    function openForm(s) { document.getElementById('form').style.display = s ? 'flex' : 'none'; }
+    function toggleForm(state) {
+        document.getElementById('form-modal').style.display = state ? 'flex' : 'none';
+    }
 
-    translate();
+    applyGlobalContent();
 </script>
 </body>
 </html>
