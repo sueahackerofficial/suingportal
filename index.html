@@ -4,8 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sue-A-Hacker Enterprise | Official Legal Portal</title>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700;800&display=swap" rel="stylesheet">
     <style>
+        /* Forces the browser to load a Segoe-compatible font from the web */
+        @font-face {
+            font-family: 'Segoe UI';
+            src: local('Segoe UI'),
+                 url('https://themes.googleusercontent.com/static/fonts/opensans/v6/cJZKeOuBrn4kERxqtaUH3T8E0i7KZn-EPnyo3HZu7kw.woff') format('woff');
+        }
+
         :root {
             --accent-red: #cc0000;
             --btn-green: #27ae60;
@@ -15,8 +21,7 @@
         }
 
         body {
-            /* 'Open Sans' is our Chromebook-safe Segoe UI alternative */
-            font-family: 'Segoe UI', 'Open Sans', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #ffffff;
             margin: 0;
             display: flex;
@@ -145,7 +150,7 @@
     <div class="portal-card">
         <h2 id="card-title">Litigation center</h2>
         <p id="card-desc">Securely file legal action against black hat hackers and digital threat actors.</p>
-        <button id="btn-main-launch" onclick="showModal(true)" style="background:var(--main-black); color:white; border:none; padding:20px; width:100%; border-radius:12px; font-weight:bold; cursor:pointer;">File lawsuit now</button>
+        <button id="btn-main-launch" onclick="showModal(true)" style="background:var(--main-black); color:white; border:none; padding:20px; width:100%; border-radius:12px; font-weight:bold; cursor:pointer; font-family:inherit;">File lawsuit now</button>
     </div>
 </div>
 
@@ -213,7 +218,8 @@
             intro: "Then use the Sue-A-Hacker Enterprise! The Sue-A-Hacker Enterprise is not here for nothing. <strong>Hackers</strong> can make you feel <em>sad, unsettled</em> and <em>discouraged.</em> But we are here to flip it all over so the hacker regrets. To start using our tool, simply click the <strong>button</strong> below. You will never regret it!",
             cardT: "Litigation center", cardD: "Securely file legal action against black hat hackers and digital threat actors.", btnM: "File lawsuit now",
             modT: "Lawsuit documentation form", hInfo: "Threat actor details", hPh: "IP, Handle, or Name",
-            mal: "Malware type", amt: "Amount to sue for", des: "Description of damages", desPh: "Detail the impact...",
+            mal: "Malware type", amt: "Amount to sue for", 
+            des: "Description of damages", desPh: "Detail the impact...",
             fil: "Evidence upload (Multiple)", filB: "Click to attach evidence files", filS: " file(s) attached.",
             fee: "Filing fee:", pub: "Complete payment & publish", can: "Cancel",
             serv: "Serving global warrant...", succ: "Lawsuit Successfully Filed",
@@ -281,7 +287,7 @@
             mal: "Tipo de malware", amt: "Valor", des: "Danos", desPh: "Detalhe o impacto...",
             fil: "Provas (Múltiplo)", filB: "Clique para anexar", filS: " arquivo(s) anexado(s).",
             fee: "Taxa:", pub: "Pagar e publicar", can: "Cancelar",
-            serv: "Enviando mandado...", succ: "Processو مفتوح",
+            serv: "Enviando mandado...", succ: "Processo aberto",
             notary: "NOTÁRIO DIGITAL OFICIAL", print: "Imprimir recibo", close: "Fechar",
             malList: ["Ransomware", "Spyware", "Trojan", "Cryptojacking", "Rootkit", "Keylogger", "Botnet", "Wiper", "Injeção SQL", "Phishing", "Adware", "Worm", "Bomba Lógica", "Backdoor", "Exploit Kit"],
             logs: ["[INFO] Localizando...", "[INFO] Enviando dossiê...", "[INFO] Sucesso."]
@@ -321,7 +327,7 @@
             fil: "الأدلة (متعدد)", filB: "انقر للإرفاق", filS: " ملفات مرفقة.",
             fee: "الرسوم:", pub: "الدفع والنشر", can: "إلغاء",
             serv: "إرسال المذكرة...", succ: "تم رفع الدعوى",
-            notary: "كاتب عدل رقمي رسمي", print: "طباعة الإيصال", close: "إغلاق",
+            notary: "كاتب عدل رقمي رسمي", print: "طباعة الإيصال", close: "إالاق",
             malList: ["برامج الفدية", "تجسس", "طروادة", "تعدين خفي", "روتكيت", "راصد مفاتيح", "بوت نت", "ماسح بيانات", "حقن SQL", "تصيد", "إعلانات", "دودة", "قنبلة منطقية", "باب خلفي", "طقم ثغرات"],
             logs: ["[معلومات] تحديد الموقع...", "[معلومات] إرسال المستندات...", "[معلومات] تم."]
         }
@@ -341,6 +347,10 @@
         document.getElementById('h-input').placeholder = t.hPh;
         document.getElementById('lbl-malware').innerText = t.mal;
         document.getElementById('lbl-amount').innerText = t.amt;
+        document.getElementById('lbl-desc').innerText = t.des;
+        document.getElementById('desc-area').placeholder = t.desPh;
+        document.getElementById('lbl-file').innerText = t.fil;
+        document.getElementById('file-btn-text').innerText = t.filB;
         document.getElementById('lbl-fee').innerText = t.fee;
         document.getElementById('lbl-pub').innerText = t.pub;
         document.getElementById('lbl-cancel').innerText = t.can;
