@@ -5,19 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sue-A-Hacker Enterprise | Official Legal Portal</title>
     
-    <link rel="preload" href="https://fonts.gstatic.com/l/font?kit=4iCs6KVjbNBYlgoKcg72nU6AF7xm&v=v20" as="font" type="font/woff2" crossorigin>
-
     <style>
+        /* FORCING SEGOE UI: Using a direct WOFF2 bypass */
         @font-face {
-            font-family: "Segoe UI";
-            src: local("Segoe UI"), 
-                 url("https://fonts.gstatic.com/l/font?kit=4iCs6KVjbNBYlgoKcg72nU6AF7xm&v=v20") format("woff2");
+            font-family: "Segoe UI Custom";
+            src: url("https://db.onlinewebfonts.com/t/40306169004863346d0a7905d68832a8.woff2") format("woff2"),
+                 url("https://fastly.fonts.net/t/1.css?api_key=your-key&project_id=your-id") format("woff2");
+            font-weight: normal;
+            font-style: normal;
             font-display: swap;
         }
 
-        /* The stricter font stack: No Arial, No Verdana */
+        @font-face {
+            font-family: "Segoe UI Custom";
+            src: url("https://db.onlinewebfonts.com/t/62095f939331f47c9454178619d0a6f8.woff2") format("woff2");
+            font-weight: bold;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        /* STRICT CSS: 
+           We call it "Segoe UI Custom" to ensure the Chromebook 
+           doesn't try to find a system version it doesn't have.
+        */
         body {
-            font-family: "Segoe UI", sans-serif !important;
+            font-family: "Segoe UI Custom", "Segoe UI", sans-serif !important;
             background-color: #ffffff;
             margin: 0;
             display: flex;
@@ -37,23 +49,18 @@
 
         .settings-bar { position: fixed; top: 25px; right: 25px; display: flex; gap: 12px; z-index: 10000; }
         .selector { padding: 10px 15px; border-radius: 8px; border: 2px solid #eee; background: white; font-weight: bold; cursor: pointer; font-family: inherit; }
-        
         .hero-layout { display: flex; align-items: center; gap: 60px; max-width: 1200px; width: 90%; }
         .heading-box { flex: 1; border-bottom: 5px solid #000; padding-bottom: 20px; }
-        .red-title { color: var(--accent-red); font-size: 56px; font-weight: 900; margin: 0; line-height: 1; }
+        .red-title { color: var(--accent-red); font-size: 56px; font-weight: 900; margin: 0; line-height: 1.1; }
         .intro-copy { flex: 1.5; font-size: 20px; line-height: 1.7; color: #333; }
-        
         .portal-card { background: #fff; padding: 40px; width: 360px; border-radius: 20px; box-shadow: 0 30px 60px rgba(0,0,0,0.12); border: 1px solid #f0f0f0; }
-        
+
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--overlay-bg); z-index: 9999; justify-content: center; align-items: center; backdrop-filter: blur(10px); }
         .modal-box { background: white; width: 95%; max-width: 850px; padding: 45px; border-radius: 25px; max-height: 90vh; overflow-y: auto; }
-        
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-top: 20px; }
         .full-width { grid-column: span 2; }
-        
         label { display: block; font-weight: 800; margin-bottom: 10px; font-size: 14px; color: #444; text-transform: uppercase; }
         input, select, textarea { width: 100%; padding: 16px; border: 2px solid #edf2f7; border-radius: 12px; font-size: 16px; box-sizing: border-box; background: #f8fafc; font-family: inherit; }
-        
         .primary-btn { background: var(--btn-green); color: white; border: none; padding: 22px; width: 100%; border-radius: 12px; font-weight: 800; font-size: 18px; cursor: pointer; font-family: inherit; }
         .secondary-btn { background: #e2e8f0; color: #4a5568; border: none; padding: 15px; width: 100%; border-radius: 12px; margin-top: 15px; cursor: pointer; font-family: inherit; }
         
@@ -69,19 +76,20 @@
         <option value="zh">中文 (Chinese)</option>
         <option value="ru">Русский (Russian)</option>
         <option value="ar">العربية (Arabic)</option>
-        <option value="es">Español</option>
-        <option value="fr">Français</option>
-        <option value="de">Deutsch</option>
     </select>
-    <select class="selector" id="curr" onchange="applyCurrency()">
+    <select class="selector" id="curr">
         <option value="USD">USD ($)</option>
         <option value="EUR">EUR (€)</option>
     </select>
 </div>
 
 <div class="hero-layout">
-    <div class="heading-box"><h1 class="red-title" id="main-title">Do you<br>want to<br>sue a<br>hacker?</h1></div>
-    <div class="intro-copy"><p id="intro-text">...</p></div>
+    <div class="heading-box">
+        <h1 class="red-title" id="main-title">Do you<br>want to<br>sue a<br>hacker?</h1>
+    </div>
+    <div class="intro-copy">
+        <p id="intro-text">Loading...</p>
+    </div>
     <div class="portal-card">
         <h2 id="card-title">Litigation center</h2>
         <p id="card-desc">Securely file legal action.</p>
@@ -96,63 +104,33 @@
             <div class="form-grid">
                 <div class="full-width">
                     <label id="lbl-hinfo">Threat actor details</label>
-                    <input type="text" id="h-input" placeholder="...">
-                </div>
-                <div class="full-width">
-                    <label id="lbl-malware">Malware type</label>
-                    <select id="malware-select"></select>
+                    <input type="text" id="h-input" placeholder="IP or Handle">
                 </div>
             </div>
             <button class="primary-btn" id="lbl-pub" onclick="launchProcess()" style="margin-top:20px;">Complete & Publish</button>
-            <button class="secondary-btn" id="lbl-cancel" onclick="showModal(false)">Cancel</button>
+            <button class="secondary-btn" onclick="showModal(false)">Cancel</button>
         </div>
         <div id="receipt-container" class="receipt-container" style="text-align:center;">
             <h2 id="lbl-success">Success</h2>
-            <div id="receipt-data" style="text-align:left; background:#f8fafc; padding:20px; font-family:monospace;"></div>
-            <button class="secondary-btn" id="lbl-close" onclick="showModal(false)">Close</button>
+            <div id="receipt-data" style="padding:20px; font-family:monospace; border:1px solid #ddd;"></div>
+            <button class="secondary-btn" onclick="showModal(false)">Close</button>
         </div>
     </div>
 </div>
 
 <script>
-    const fontConfig = {
-        zh: { family: "Noto Sans SC", url: "https://fonts.gstatic.com/s/notosanssc/v26/k3kXo84MPtRZxe-mOcnW6RS633U.woff2" },
-        ru: { family: "Roboto", url: "https://fonts.gstatic.com/s/roboto/v30/KFOmCnqEu92Fr1Mu4mxK.woff2" },
-        ar: { family: "Noto Sans Arabic", url: "https://fonts.gstatic.com/s/notosansarabic/v18/n8AUmZve9Xy3Gevy07zpV1sqaSkW-S_YbrPrQcw.woff2" }
-    };
-
     const data = {
-        en: { title: "Do you<br>want to<br>sue a<br>hacker?", intro: "The Sue-A-Hacker Enterprise is not here for nothing. Hackers can make you feel sad, unsettled and discouraged. But we are here to flip it all over so the hacker regrets.", cardT: "Litigation center", cardD: "Securely file legal action.", btnM: "File lawsuit now", modT: "Lawsuit documentation form", hInfo: "Threat actor details", mal: "Malware type", pub: "Complete payment & publish", can: "Cancel", succ: "Lawsuit Successfully Filed", close: "Close", malList: ["Ransomware", "Spyware", "Trojan"] },
-        zh: { title: "你想要<br>起诉<br>黑客吗？", intro: "那就使用 Sue-A-Hacker Enterprise！黑客会让你感到悲伤、不安和沮丧。但我们在这里彻底扭转局面。", cardT: "诉讼中心", cardD: "提起法律诉讼。", btnM: "立即起诉", modT: "起诉书表格", hInfo: "黑客详情", mal: "恶意软件类型", pub: "支付并发布", can: "取消", succ: "起诉成功", close: "关闭", malList: ["勒索软件", "木马", "间谍软件"] },
-        ru: { title: "Хотите<br>подать в суд<br>на хакера?", intro: "Используйте Sue-A-Hacker Enterprise! Хакеры могут заставить вас чувствовать себя грустным. Мы здесь, чтобы все изменить.", cardT: "Судебный центр", cardD: "Подать иск.", btnM: "Подать в суд", modT: "Форма иска", hInfo: "Данные хакера", mal: "Тип ПО", pub: "Оплатить и подать", can: "Отмена", succ: "Иск подан", close: "Закрыть", malList: ["Вымогатель", "Троян", "Шпион"] },
-        ar: { title: "هل تريد<br>مقاضاة<br>مخترق؟", intro: "نحن هنا لمساعدتك في الحصول على العدالة ضد المخترقين الذين يسببون القلق.", cardT: "مركز التقاضي", cardD: "ارفع دعوى قانونية.", btnM: "ارفع دعوى الآن", modT: "نموذج الدعوى", hInfo: "تفاصيل المعتدي", mal: "نوع البرمجيات", pub: "الدفع والنشر", can: "إلغاء", succ: "تم رفع الدعوى بنجاح", close: "إغلاق", malList: ["برامج الفدية", "طروادة", "تجسس"] }
+        en: { title: "Do you<br>want to<br>sue a<br>hacker?", intro: "The Sue-A-Hacker Enterprise is here to help you get justice. Hackers make you feel unsettled, but we are here to help you fight back.", cardT: "Litigation center", cardD: "Securely file legal action.", btnM: "File lawsuit now", modT: "Lawsuit Form", hInfo: "Actor Details", pub: "Complete & Publish", succ: "Filed Successfully" },
+        zh: { title: "你想要<br>起诉<br>黑客吗？", intro: "Sue-A-Hacker Enterprise 在这里帮助您获得正义。", cardT: "诉讼中心", cardD: "提起法律诉讼。", btnM: "立即起诉", modT: "起诉书表格", hInfo: "黑客详情", pub: "发布", succ: "起诉成功" },
+        ru: { title: "Хотите<br>подать в суд<br>на хакера?", intro: "Sue-A-Hacker Enterprise поможет вам добиться справедливости.", cardT: "Судебный центр", cardD: "Подать иск.", btnM: "Подать в суд", modT: "Форма иска", hInfo: "Данные хакера", pub: "Подать", succ: "Иск подан" },
+        ar: { title: "هل تريد<br>مقاضاة<br>مخترق؟", intro: "نحن هنا لمساعدتك في الحصول على العدالة.", cardT: "مركز التقاضي", cardD: "ارفع دعوى قانونية.", btnM: "ارفع دعوى الآن", modT: "نموذج الدعوى", hInfo: "تفاصيل المعتدي", pub: "نشر", succ: "تم بنجاح" }
     };
 
-    async function handleLanguageChange() {
+    function handleLanguageChange() {
         const l = document.getElementById('lang').value;
-        
-        // Clear previous dynamic font if it exists to prevent overlap
-        if (fontConfig[l]) {
-            const { family, url } = fontConfig[l];
-            const font = new FontFace(family, `url(${url})`);
-            try {
-                const loadedFont = await font.load();
-                document.fonts.add(loadedFont);
-                document.body.style.fontFamily = `"${family}", "Segoe UI", sans-serif`;
-            } catch (e) {
-                document.body.style.fontFamily = '"Segoe UI", sans-serif';
-            }
-        } else {
-            // Revert to pure Segoe UI for Western languages
-            document.body.style.fontFamily = '"Segoe UI", sans-serif';
-        }
-
-        applyTranslation(l);
-    }
-
-    function applyTranslation(l) {
-        const t = data[l] || data['en'];
         document.body.dir = (l === 'ar') ? 'rtl' : 'ltr';
+        
+        const t = data[l];
         document.getElementById('main-title').innerHTML = t.title;
         document.getElementById('intro-text').innerText = t.intro;
         document.getElementById('card-title').innerText = t.cardT;
@@ -160,29 +138,17 @@
         document.getElementById('btn-main-launch').innerText = t.btnM;
         document.getElementById('modal-title').innerText = t.modT;
         document.getElementById('lbl-hinfo').innerText = t.hInfo;
-        document.getElementById('lbl-malware').innerText = t.mal;
         document.getElementById('lbl-pub').innerText = t.pub;
-        document.getElementById('lbl-cancel').innerText = t.can;
         document.getElementById('lbl-success').innerText = t.succ;
-        document.getElementById('lbl-close').innerText = t.close;
-
-        const mSelect = document.getElementById('malware-select');
-        mSelect.innerHTML = "";
-        t.malList.forEach(m => {
-            const opt = document.createElement('option');
-            opt.innerText = m;
-            mSelect.appendChild(opt);
-        });
     }
 
     function showModal(s) { document.getElementById('formOverlay').style.display = s ? 'flex' : 'none'; }
     function launchProcess() { 
         document.getElementById('form-container').style.display = 'none';
         document.getElementById('receipt-container').style.display = 'block';
-        document.getElementById('receipt-data').innerText = "CASE ID: SH-" + Math.random().toString(36).toUpperCase().substring(2, 8);
+        document.getElementById('receipt-data').innerText = "CASE ID: SH-" + Math.random().toString(36).toUpperCase().substring(2, 10);
     }
 
-    // Run immediately on load
     handleLanguageChange();
 </script>
 </body>
