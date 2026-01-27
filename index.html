@@ -5,130 +5,121 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sue-A-Hacker Enterprise | Global Judicial Network</title>
     <style>
-        /* SEGOE UI HARD-LOCK: Supports Latin, Cyrillic, Greek, etc. */
-        @font-face { font-family: 'Verdana'; src: url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/normal/latest.woff2'); font-weight: 400; }
+        /* FORCED SEGOE UI: CYRILLIC & LATIN ENFORCEMENT */
+        @font-face { font-family: 'Verdana'; src: url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/normal/latest.woff2'); font-weight: 400; unicode-range: U+0000-052F, U+20A0-20CF, U+2100-218F; }
         @font-face { font-family: 'Verdana'; src: url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/bold/latest.woff2'); font-weight: 700; }
         @font-face { font-family: 'Verdana'; src: url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/italic/latest.woff2'); font-style: italic; }
-        @font-face { font-family: 'Verdana'; src: url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/bold-italic/latest.woff2'); font-weight: 700; font-style: italic; }
 
         :root { --red: #cc0000; --black: #000; --white: #fff; --gray: #f2f2f2; --green: #27ae60; }
-        * { box-sizing: border-box; font-family: 'Verdana' !important; -webkit-font-smoothing: antialiased; }
+        * { box-sizing: border-box; font-family: 'Verdana', 'Segoe UI', sans-serif !important; -webkit-font-smoothing: antialiased; }
         body { margin: 0; background: var(--white); color: var(--black); height: 100vh; overflow: hidden; }
         strong, b { font-weight: 700 !important; } em, i { font-style: italic !important; }
 
-        /* UI STRATA */
-        .top-nav { position: fixed; top: 0; width: 100%; height: 80px; display: flex; align-items: center; justify-content: space-between; padding: 0 50px; background: #fff; border-bottom: 1px solid var(--gray); z-index: 1000; }
-        .selectors { display: flex; gap: 10px; }
-        .sel-ui { padding: 10px 15px; border-radius: 8px; border: 2px solid var(--gray); font-weight: 700; cursor: pointer; }
+        /* INTERFACE */
+        .top-nav { position: fixed; top: 0; width: 100%; height: 70px; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; background: #fff; border-bottom: 1px solid var(--gray); z-index: 1000; }
+        .main-view { display: flex; height: 100vh; padding-top: 70px; }
+        .content { flex: 1; padding: 50px; display: flex; flex-direction: column; justify-content: center; }
+        .map-side { flex: 1.3; background: #080808; position: relative; border-left: 2px solid #1a1a1a; }
 
-        /* HERO & MAP SECTION */
-        .main-container { display: flex; height: 100vh; padding-top: 80px; }
-        .left-content { flex: 1; padding: 60px; display: flex; flex-direction: column; justify-content: center; }
-        .right-map { flex: 1.2; background: #050505; position: relative; border-left: 1px solid #222; overflow: hidden; }
-        
-        .big-title { color: var(--red); font-size: 70px; font-weight: 700; line-height: 0.85; margin: 0; letter-spacing: -4px; }
-        .hero-body { font-size: 20px; line-height: 1.4; margin: 30px 0; max-width: 500px; }
-        
-        /* THE MAP */
-        .map-svg { width: 100%; height: 100%; opacity: 0.2; }
-        .ip-ping { position: absolute; width: 10px; height: 10px; background: var(--red); border-radius: 50%; box-shadow: 0 0 15px var(--red); animation: ping 2s infinite; }
-        @keyframes ping { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(4); opacity: 0; } }
+        .big-h { color: var(--red); font-size: 68px; font-weight: 700; line-height: 0.9; margin: 0; letter-spacing: -3px; text-transform: uppercase; }
+        .sub-p { font-size: 19px; line-height: 1.3; margin: 25px 0; max-width: 480px; }
 
-        /* MODAL */
+        /* THE MAP & IP TRACKER */
+        .map-overlay { position: absolute; inset: 0; opacity: 0.15; background: url('https://www.transparenttextures.com/patterns/carbon-fibre.png'); }
+        .ping { position: absolute; width: 8px; height: 8px; background: var(--red); border-radius: 50%; box-shadow: 0 0 12px var(--red); animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(5); opacity: 0; } }
+
+        /* FORM MODAL */
         .overlay { display: none; position: fixed; inset: 0; background: rgba(255,255,255,0.98); z-index: 5000; align-items: center; justify-content: center; }
-        .form-box { width: 900px; background: #fff; padding: 50px; border-radius: 40px; box-shadow: 0 30px 90px rgba(0,0,0,0.1); border: 1px solid #eee; overflow-y: auto; max-height: 90vh; }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 25px; }
-        label { font-weight: 700; font-size: 11px; color: #999; text-transform: uppercase; display: block; margin-bottom: 5px; }
-        input, select, textarea { width: 100%; padding: 12px; border: 2px solid var(--gray); border-radius: 10px; }
-        
-        .btn-p { background: var(--black); color: #fff; border: none; padding: 20px; border-radius: 12px; font-weight: 700; cursor: pointer; font-size: 17px; width: 100%; }
-        .btn-p:hover { background: var(--red); }
+        .modal { width: 850px; background: #fff; padding: 45px; border-radius: 30px; box-shadow: 0 25px 80px rgba(0,0,0,0.1); border: 1px solid #eee; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 25px; }
+        label { font-weight: 700; font-size: 11px; color: #999; text-transform: uppercase; display: block; margin-bottom: 4px; }
+        input, select, textarea { width: 100%; padding: 12px; border: 2px solid var(--gray); border-radius: 10px; font-size: 14px; }
+        .btn { background: var(--black); color: #fff; border: none; padding: 18px; border-radius: 12px; font-weight: 700; cursor: pointer; width: 100%; transition: 0.2s; }
+        .btn:hover { background: var(--red); }
 
-        /* NOTIFICATIONS */
-        #notify { position: fixed; bottom: 30px; left: 30px; z-index: 6000; }
-        .toast { background: var(--black); color: #fff; padding: 15px 25px; border-radius: 10px; border-left: 5px solid var(--red); margin-top: 10px; animation: slide 0.4s ease; }
-        @keyframes slide { from { transform: translateX(-100%); } to { transform: translateX(0); } }
+        /* TOAST */
+        #toasts { position: fixed; bottom: 30px; left: 30px; z-index: 9999; }
+        .toast { background: var(--black); color: #fff; padding: 15px 25px; border-radius: 10px; margin-top: 10px; border-left: 4px solid var(--red); font-weight: 700; font-size: 13px; animation: slide 0.3s ease-out; }
+        @keyframes slide { from { transform: translateX(-100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
     </style>
 </head>
 <body>
 
 <div class="top-nav">
-    <div style="font-weight:700; font-size:22px;">SUE-A-HACKER <span style="color:var(--red)">ENTERPRISE</span></div>
-    <div class="selectors">
-        <select class="sel-ui" id="l-select" onchange="sync()"></select>
-        <select class="sel-ui" id="c-select" onchange="sync()">
-            <option value="USD">USD ($)</option><option value="RUB">RUB (₽)</option>
-            <option value="EUR">EUR (€)</option>
+    <div style="font-weight:700; font-size:20px;">SUE-A-HACKER <span style="color:var(--red)">ENTERPRISE</span></div>
+    <div style="display:flex; gap:10px;">
+        <select class="btn" id="l-select" onchange="syncUI()" style="width:160px; padding:8px;"></select>
+        <select class="btn" id="c-select" onchange="syncUI()" style="width:100px; padding:8px;">
+            <option value="USD">$ USD</option><option value="RUB">₽ RUB</option>
         </select>
     </div>
 </div>
 
-<div class="main-container">
-    <div class="left-content">
-        <h1 class="big-title" id="h-main"></h1>
-        <p class="hero-body" id="b-main"></p>
-        <button class="btn-p" id="bt-main" onclick="openM(1)" style="width:300px"></button>
+<div class="main-view">
+    <div class="content">
+        <h1 class="big-h" id="h-main"></h1>
+        <p class="sub-p" id="b-main"></p>
+        <button class="btn" id="bt-main" onclick="toggleM(1)" style="width:260px; height:60px; font-size:18px;"></button>
     </div>
-    <div class="right-map" id="map-area">
-        <svg class="map-svg" viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg">
-            <path fill="#fff" d="M150,100 L850,100 L850,400 L150,400 Z M300,150 Q400,100 500,150 T700,150" />
-        </svg>
+    <div class="map-side" id="map-world">
+        <div class="map-overlay"></div>
     </div>
 </div>
 
-<div id="notify"></div>
+<div id="toasts"></div>
 
-<div class="overlay" id="modal">
-    <div class="form-box">
-        <h2 id="f-h" style="font-size:30px; margin:0"></h2>
+<div class="overlay" id="modal-box">
+    <div class="modal">
+        <h2 id="f-h" style="margin:0; font-size:28px;"></h2>
         <div class="grid">
-            <div><label id="l-n"></label><input type="text"></div>
-            <div><label id="l-i"></label><input type="text" id="target-ip" value="185.22.14.90"></div>
+            <div><label id="l-n"></label><input type="text" id="inp-n"></div>
+            <div><label id="l-i"></label><input type="text" id="target-ip" value="185.158.113.4"></div>
             <div style="grid-column: span 2"><label id="l-m"></label><select id="mal-drop"></select></div>
             <div style="grid-column: span 2"><label id="l-e"></label><input type="file"></div>
             <div style="grid-column: span 2"><label id="l-d"></label><textarea rows="3"></textarea></div>
-            <div><label id="l-a"></label><input type="number" value="10000"></div>
-            <div style="text-align:right"><label id="l-f"></label><div id="price" style="font-size:24px; font-weight:700"></div></div>
+            <div><label id="l-a"></label><input type="number" value="15000"></div>
+            <div style="text-align:right"><label id="l-f"></label><div id="price" style="font-size:22px; font-weight:700"></div></div>
         </div>
-        <button class="btn-p" id="f-s" style="background:var(--green); margin-top:25px;" onclick="strike()"></button>
-        <p style="text-align:center; color:#ccc; cursor:pointer; margin-top:15px;" onclick="openM(0)">CANCEL</p>
+        <button class="btn" id="f-s" style="background:var(--green); margin-top:25px;" onclick="strike()"></button>
+        <p style="text-align:center; color:#ccc; cursor:pointer; margin-top:15px; font-weight:700" onclick="toggleM(0)">CANCEL</p>
     </div>
 </div>
 
 <script>
-    const data = {
-        en: { n: "English", h: "Do you<br>want to<br>sue a<br>hacker?", b: "Use the Enterprise! <strong>Hackers</strong> make you feel <em>sad.</em> We flip the script.", bt: "File Lawsuit", fh: "Documentation", ln: "Name", li: "IP Address", lm: "Malware", le: "Evidence", ld: "Description", la: "Amount", lf: "Fee", fs: "EXECUTE WARRANT", m: ["Ransomware", "Spyware", "Trojan"], n: "WARRANT SERVED: " },
-        ru: { n: "Русский", h: "Хотите<br>засудить<br>хакера?", b: "Используйте Enterprise! <strong>Хакеры</strong> расстраивают вас. Мы поможем.", bt: "Подать иск", fh: "Документация", ln: "Имя", li: "IP-адрес", lm: "Тип ПО", le: "Улики", ld: "Описание", la: "Сумма", lf: "Стоимость", fs: "ИСПОЛНИТЬ ОРДЕР", m: ["Шифровальщик", "Шпион", "Троян"], n: "ОРДЕР ИСПОЛНЕН: " },
-        de: { n: "Deutsch", h: "Hacker<br>verklagen?", b: "Nutzen Sie Enterprise! <strong>Hacker</strong> machen Sie <em>traurig.</em>", bt: "Klage einreichen", fh: "Unterlagen", ln: "Name", li: "IP-Adresse", lm: "Malware", le: "Beweise", ld: "Beschreibung", la: "Betrag", lf: "Gebühr", fs: "HAFTBEFEHL", m: ["Ransomware", "Spyware"], n: "HAFTBEFEHL ZUGESTELLT: " },
-        fr: { n: "Français", h: "Poursuivre<br>un hacker?", b: "Utilisez Enterprise! Les <strong>hackers</strong> vous rendent <em>triste.</em>", bt: "Poursuivre", fh: "Dossier", ln: "Nom", li: "IP", lm: "Malware", le: "Preuves", ld: "Description", la: "Montant", lf: "Frais", fs: "MANDAT", m: ["Ransomware", "Espion"], n: "MANDAT EXÉCUTÉ: " },
-        es: { n: "Español", h: "¿Demandar<br>hacker?", b: "¡Use Enterprise! Los <strong>hackers</strong> son <em>molestos.</em>", bt: "Demandar", fh: "Forma", ln: "Nombre", li: "IP", lm: "Malware", le: "Evidencia", ld: "Detalles", la: "Monto", lf: "Costo", fs: "ORDEN", m: ["Ransomware", "Trojan"], n: "ORDEN ENTREGADA: " },
-        it: { n: "Italiano", h: "Fare causa<br>hacker?", b: "Usa Enterprise! Gli <strong>hacker</strong> ti rendono <em>triste.</em>", bt: "Fai causa", fh: "Modulo", ln: "Nome", li: "IP", lm: "Malware", le: "Prove", ld: "Descrizione", la: "Somma", lf: "Costo", fs: "MANDATO", m: ["Ransomware", "Spyware"], n: "MANDATO ESEGUITO: " },
-        pt: { n: "Português", h: "Processar<br>hacker?", b: "Use a Enterprise! <strong>Hackers</strong> deixam você <em>triste.</em>", bt: "Processar", fh: "Documentos", ln: "Nome", li: "IP", lm: "Malware", le: "Provas", ld: "Descrição", la: "Valor", lf: "Taxa", fs: "MANDADO", m: ["Ransomware", "Trojan"], n: "MANDADO CUMPRIDO: " },
-        nl: { n: "Nederlands", h: "Hacker<br>aanklagen?", b: "Gebruik Enterprise! <strong>Hackers</strong> maken je <em>verdrietig.</em>", bt: "Aanklagen", fh: "Documentatie", ln: "Naam", li: "IP", lm: "Malware", le: "Bewijs", ld: "Beschrijving", la: "Bedrag", lf: "Kosten", fs: "BEVEL", m: ["Ransomware", "Spyware"], n: "BEVEL UITGEVOERD: " },
-        pl: { n: "Polski", h: "Pozwać<br>hackera?", b: "Użyj Enterprise! <strong>Hackerzy</strong> sprawiają <em>smutek.</em>", bt: "Pozwij teraz", fh: "Dokumentacja", ln: "Imię", li: "IP", lm: "Malware", le: "Dowody", ld: "Opis", la: "Kwota", lf: "Opłata", fs: "NAKAZ", m: ["Ransomware", "Trojan"], n: "NAKAZ DORĘCZONY: " },
-        sv: { n: "Svenska", h: "Stämma<br>hacker?", b: "Använd Enterprise! <strong>Hackers</strong> gör dig <em>ledsen.</em>", bt: "Stäm nu", fh: "Dokumentation", ln: "Namn", li: "IP", lm: "Malware", le: "Bevis", ld: "Beskrivning", la: "Belopp", lf: "Avgift", fs: "MANDAT", m: ["Ransomware", "Spyware"], n: "MANDAT UTFÖRT: " },
-        ko: { n: "한국어", h: "해커를<br>고소하고<br>싶나요?", b: "Enterprise를 사용하세요! <strong>해커</strong>는 당신을 <em>슬프게</em> 합니다.", bt: "고소하기", fh: "문서 양식", ln: "이름", li: "IP 주소", lm: "マルウェア", le: "증거", ld: "설명", la: "금액", lf: "수수료", fs: "영장 집행", m: ["랜섬웨어", "트로이 목마"], n: "영장 집행 완료: " },
-        ja: { n: "日本語", h: "ハッカーを<br>訴えますか？", b: "Enterpriseを使用！<strong>ハッカー</strong>はあなたを<em>不安</em>にします。", bt: "訴訟を起こす", fh: "書類作成", ln: "名前", li: "IPアドレス", lm: "マルウェア", le: "証拠", ld: "詳細", la: "金額", lf: "手数料", fs: "令状執行", m: ["ランサムウェア", "スパイウェア"], n: "令状送達完了: " },
-        zh: { n: "中文", h: "起诉<br>黑客？", b: "使用 Enterprise！<strong>黑客</strong>让你感到<em>难过</em>。我们帮你。", bt: "立即起诉", fh: "文档表格", ln: "姓名", li: "IP地址", lm: "恶意软件", le: "证据", ld: "描述", la: "金额", lf: "费用", fs: "执行令状", m: ["勒索软件", "木马"], n: "令状已送达: " },
-        ar: { n: "العربية", h: "مقاضاة<br>مخترق؟", b: "استخدم Enterprise! <strong>المخترقون</strong> يجعلونك <em>حزينًا.</em>", bt: "رفع دعوى", fh: "التوثيق", ln: "الاسم", li: "عنوان IP", lm: "البرمجيات الخبيثة", le: "الأدلة", ld: "الوصف", la: "المبلغ", lf: "الرسوم", fs: "تنفيذ الأمر", m: ["برامج الفدية", "تروجان"], n: "تم تنفيذ الأمر: " },
-        hi: { n: "हिन्दी", h: "हैकर्स पर<br>मुकदमा करें?", b: "Enterprise का उपयोग करें! <strong>हैकर्स</strong> आपको <em>दुखी</em> करते हैं।", bt: "मुकदमा करें", fh: "दस्तावेज़", ln: "नाम", li: "IP पता", lm: "मालवेयर", le: "सबूत", ld: "विवरण", la: "राशि", lf: "शुल्क", fs: "वारंट जारी करें", m: ["रैंसमवेयर", "स्पाइवेयर"], n: "वारंट तामील हुआ: " },
-        tr: { n: "Türkçe", h: "Hacker'ı<br>dava et?", b: "Enterprise kullanın! <strong>Hackerlar</strong> sizi <em>üzer.</em>", bt: "Dava Aç", fh: "Belgeler", ln: "İsim", li: "IP Adresi", lm: "Zararlı Yazılım", le: "Kanıt", ld: "Açıklama", la: "Tutar", lf: "Ücret", fs: "VARANT", m: ["Ransomware", "Spyware"], n: "VARANT TEBLİĞ EDİLDİ: " },
-        vi: { n: "Tiếng Việt", h: "Kiện<br>hacker?", b: "Sử dụng Enterprise! <strong>Hackers</strong> làm bạn <em>buồn.</em>", bt: "Kiện ngay", fh: "Tài liệu", ln: "Tên", li: "IP", lm: "Mã độc", le: "Bằng chứng", ld: "Mô tả", la: "Số tiền", lf: "Phí", fs: "THI HÀNH LỆNH", m: ["Mã độc tống tiền", "Trojan"], n: "ĐÃ THI HÀNH LỆNH: " },
-        el: { n: "Ελληνικά", h: "Μήνυση σε<br>hacker;", b: "Χρησιμοποιήστε το Enterprise! Οι <strong>hackers</strong> σας <em>λυπούν.</em>", bt: "Μήνυση", fh: "Έγγραφα", ln: "Όνομα", li: "IP", lm: "Malware", le: "Αποδεικτικά", ld: "Περιγραφή", la: "Ποσό", lf: "Τέλη", fs: "ΕΝΤΑΛΜΑ", m: ["Ransomware", "Trojan"], n: "ΤΟ ΕΝΤΑΛΜΑ ΕΠΙΔΟΘΗΚΕ: " },
-        he: { n: "עברית", h: "לתבוע<br>האקר?", b: "השתמשו ב-Enterprise! <strong>האקרים</strong> מעציבים אתכם.", bt: "תביעה", fh: "תיעוד", ln: "שם", li: "IP", lm: "נוזקה", le: "ראיות", ld: "תיאור", la: "סכום", lf: "עמלה", fs: "צו ביצוע", m: ["כופרה", "סוס טרויאני"], n: "הצו בוצע: " },
-        th: { n: "ไทย", h: "ฟ้องร้อง<br>แฮกเกอร์?", b: "ใช้ Enterprise! <strong>แฮกเกอร์</strong> ทำให้คุณ <em>เศร้า.</em>", bt: "ฟ้องร้อง", fh: "เอกสาร", ln: "ชื่อ", li: "IP", lm: "มัลแวร์", le: "หลักฐาน", ld: "รายละเอียด", la: "จำนวนเงิน", lf: "ค่าธรรมเนียม", fs: "ดำเนินการ", m: ["แรนซัมแวร์", "สปายแวร์"], n: "ดำเนินการสำเร็จ: " },
-        fi: { n: "Suomi", h: "Haasta<br>hacker?", b: "Käytä Enterprisea! <strong>Hackerit</strong> tekevät <em>surulliseksi.</em>", bt: "Haasta", fh: "Lomake", ln: "Nimi", li: "IP", lm: "Malware", le: "Todisteet", ld: "Kuvaus", la: "Summa", lf: "Maksu", fs: "MÄÄRÄYS", m: ["Kiristysohjelma", "Troijalainen"], n: "MÄÄRÄYS TOIMITETTU: " },
-        no: { n: "Norsk", h: "Saksøke<br>hacker?", b: "Bruk Enterprise! <strong>Hackere</strong> gjør deg <em>trist.</em>", bt: "Saksøk", fh: "Dokumentasjon", ln: "Navn", li: "IP", lm: "Malware", le: "Bevis", ld: "Beskrivelse", la: "Beløp", lf: "Gebyr", fs: "MANDAT", m: ["Ransomware", "Spyware"], n: "MANDAT UTFØRT: " },
-        hu: { n: "Magyar", h: "Perelje be<br>a hackert?", b: "Használja az Enterprise-t! A <strong>hackerek</strong> <em>szomorúvá</em> teszik.", bt: "Per indítása", fh: "Dokumentáció", ln: "Név", li: "IP", lm: "Malware", le: "Bizonyíték", ld: "Leírás", la: "Összeg", lf: "Díj", fs: "VÉGREHAJTÁS", m: ["Zsarolóprogram", "Trójai"], n: "VÉGREHAJTVA: " },
-        cs: { n: "Čeština", h: "Žalovat<br>hackera?", b: "Použijte Enterprise! <strong>Hackeři</strong> vás <em>rozesmutní.</em>", bt: "Žalovat", fh: "Dokumentace", ln: "Jméno", li: "IP", lm: "Malware", le: "Důkazy", ld: "Popis", la: "Částka", lf: "Poplatek", fs: "ZATYKAČ", m: ["Ransomware", "Trojan"], n: "ZATYKAČ DORUČEN: " },
-        da: { n: "Dansk", h: "Sagsøge<br>hacker?", b: "Brug Enterprise! <strong>Hackere</strong> gør dig <em>trist.</em>", bt: "Sagsøg", fh: "Dokumentation", ln: "Navn", li: "IP", lm: "Malware", le: "Bevis", ld: "Beskrivelse", la: "Beløb", lf: "Gebyr", fs: "MANDAT", m: ["Ransomware", "Spyware"], n: "MANDAT UDFØRT: " }
+    const db = {
+        en: { n: "English", h: "SUE A<br>HACKER?", b: "<strong>Hackers</strong> cause <em>distress.</em> We flip the script. Click below to initiate legal strike.", bt: "Start Lawsuit", fh: "Judicial Form", ln: "Client Name", li: "Subject IP", lm: "Violation", le: "Logs/Evidence", ld: "Summary", la: "Damages", lf: "Filing Fee", fs: "EXECUTE", m: ["Ransomware", "Data Theft", "DDOS"], ts: "WARRANT SERVED: " },
+        ru: { n: "Русский", h: "ЗАСУДИТЬ<br>ХАКЕРА?", b: "<strong>Хакеры</strong> несут <em>угрозу.</em> Мы поможем вам восстановить справедливость. Нажмите кнопку ниже.", bt: "Начать иск", fh: "Судебная форма", ln: "ФИО клиента", li: "IP субъекта", lm: "Нарушение", le: "Логи/Улики", ld: "Описание", la: "Ущерб", lf: "Стоимость", fs: "ИСПОЛНИТЬ", m: ["Шифровальщик", "Кража данных", "DDOS"], ts: "ОРДЕР ВРУЧЕН: " },
+        de: { n: "Deutsch", h: "HACKER<br>VERKLAGEN?", b: "<strong>Hacker</strong> verursachen <em>Not.</em> Wir helfen Ihnen bei der Klage.", bt: "Klage starten", fh: "Rechtsformular", ln: "Name", li: "IP-Adresse", lm: "Verstoß", le: "Beweise", ld: "Details", la: "Schaden", lf: "Gebühr", fs: "AUSFÜHREN", m: ["Ransomware", "Trojaner"], ts: "HAFTBEFEHL: " },
+        fr: { n: "Français", h: "POURSUIVRE<br>UN HACKER?", b: "Les <strong>hackers</strong> nuisent. Nous agissons. Cliquez pour lancer la procédure.", bt: "Lancer l'action", fh: "Formulaire", ln: "Nom", li: "Adresse IP", lm: "Violation", le: "Preuves", ld: "Résumé", la: "Dommages", lf: "Frais", fs: "EXÉCUTER", m: ["Ransomware", "Espionnage"], ts: "MANDAT ÉMIS: " },
+        es: { n: "Español", h: "¿DEMANDAR<br>HACKER?", b: "Los <strong>hackers</strong> causan <em>dolor.</em> Iniciamos la acción legal ahora mismo.", bt: "Iniciar demanda", fh: "Documentación", ln: "Nombre", li: "IP Sujeto", lm: "Infracción", le: "Evidencia", ld: "Resumen", la: "Daños", lf: "Tarifa", fs: "EJECUTAR", m: ["Ransomware", "Phishing"], ts: "ORDEN EMITIDA: " },
+        it: { n: "Italiano", h: "CAUSA A<br>UN HACKER?", b: "Gli <strong>hacker</strong> colpiscono. Noi rispondiamo. Clicca per agire legalmente.", bt: "Avvia causa", fh: "Modulo", ln: "Nome", li: "IP Soggetto", lm: "Violazione", le: "Prove", ld: "Sintesi", la: "Danni", lf: "Costo", fs: "ESEGUI", m: ["Ransomware", "Spyware"], ts: "MANDATO NOTIFICATO: " },
+        ja: { n: "日本語", h: "ハッカーを<br>訴えますか？", b: "<strong>ハッカー</strong>は害を与えます。法的手段で対抗しましょう。", bt: "訴訟を開始", fh: "法的書類", ln: "氏名", li: "対象IP", lm: "違反内容", le: "証拠書類", ld: "概要", la: "賠償金", lf: "手数料", fs: "執行する", m: ["ランサムウェア", "不正アクセス"], ts: "令状執行完了: " },
+        ko: { n: "한국어", h: "해커를<br>고소할까요?", b: "<strong>해커</strong>는 고통을 줍니다. 법적 조치를 시작하려면 아래를 클릭하십시오.", bt: "고소 시작", fh: "법적 양식", ln: "성명", li: "대상 IP", lm: "위반 사항", le: "증거 자료", ld: "요약", la: "손해액", lf: "수수료", fs: "영장 집행", m: ["랜섬웨어", "데이터 절도"], ts: "영장 집행: " },
+        zh: { n: "中文", h: "起诉<br>黑客？", b: "<strong>黑客</strong>造成损害。我们助您维权。点击下方发起诉讼。", bt: "发起诉讼", fh: "法律表格", ln: "姓名", li: "目标 IP", lm: "违规行为", le: "证据", ld: "描述", la: "赔偿额", lf: "费用", fs: "执行令状", m: ["勒索软件", "数据窃取"], ts: "令状已送达: " },
+        ar: { n: "العربية", h: "مقاضاة<br>مخترق؟", b: "<strong>المخترقون</strong> يسببون الضرر. نحن هنا للمساعدة. انقر للمقاضاة.", bt: "بدء الدعوى", fh: "نموذج قضائي", ln: "الاسم", li: "عنوان IP", lm: "المخالفة", le: "الأدلة", ld: "الوصف", la: "التعويض", lf: "الرسوم", fs: "تنفيذ", m: ["برامج الفدية", "التجسس"], ts: "تم تنفيذ الأمر: " },
+        hi: { n: "हिन्दी", h: "हैकर्स पर<br>मुकदमा?", b: "<strong>हैकर्स</strong> नुकसान पहुँचाते हैं। हम कानूनी कार्रवाई में आपकी मदद करेंगे।", bt: "मुकदमा शुरू करें", fh: "कानूनी फॉर्म", ln: "नाम", li: "IP पता", lm: "उल्लंघन", le: "सबूत", ld: "सारांश", la: "हर्जाना", lf: "शुल्क", fs: "जारी करें", m: ["रैंसमवेयर", "डेटा चोरी"], ts: "वारंट तामील: " },
+        pt: { n: "Português", h: "PROCESSAR<br>HACKER?", b: "<strong>Hackers</strong> causam danos. Nós agimos. Inicie o processo agora.", bt: "Iniciar processo", fh: "Formulário", ln: "Nome", li: "IP do Alvo", lm: "Violação", le: "Evidência", ld: "Resumo", la: "Danos", lf: "Taxa", fs: "EXECUTAR", m: ["Ransomware", "Trojan"], ts: "MANDADO CUMPRIDO: " },
+        nl: { n: "Nederlands", h: "HACKER<br>AANKLAGEN?", b: "<strong>Hackers</strong> richten schade aan. Wij helpen u met de rechtszaak.", bt: "Start proces", fh: "Formulier", ln: "Naam", li: "IP-adres", lm: "Overtreding", le: "Bewijs", ld: "Samenvatting", la: "Schade", lf: "Kosten", fs: "UITVOEREN", m: ["Ransomware", "Spyware"], ts: "BEVEL UITGEVOERD: " },
+        pl: { n: "Polski", h: "POZWAĆ<br>HACKERA?", b: "<strong>Hackerzy</strong> wyrządzają szkody. Pomagamy w walce o sprawiedliwość.", bt: "Złóż pozew", fh: "Formularz", ln: "Imię i nazwisko", li: "IP sprawcy", lm: "Naruszenie", le: "Dowody", ld: "Opis", la: "Odszkodowanie", lf: "Opłata", fs: "WYKONAJ", m: ["Ransomware", "Kradzież danych"], ts: "NAKAZ DORĘCZONY: " },
+        tr: { n: "Türkçe", h: "HACKER'A<br>DAVA?", b: "<strong>Hackerlar</strong> zarar verir. Yasal süreci hemen başlatın.", bt: "Davayı Başlat", fh: "Adli Form", ln: "İsim", li: "Hedef IP", lm: "İhlal", le: "Kanıtlar", ld: "Özet", la: "Tazminat", lf: "Ücret", fs: "UYGULA", m: ["Fidye Yazılımı", "Veri Hırsızlığı"], ts: "VARANT TEBLİĞ EDİLDİ: " },
+        vi: { n: "Tiếng Việt", h: "KIỆN<br>HACKER?", b: "<strong>Hacker</strong> gây hại. Chúng tôi giúp bạn đòi lại công bằng.", bt: "Bắt đầu kiện", fh: "Mẫu đơn", ln: "Họ tên", li: "IP đối tượng", lm: "Vi phạm", le: "Bằng chứng", ld: "Tóm tắt", la: "Bồi thường", lf: "Lệ phí", fs: "THI HÀNH", m: ["Mã độc", "Đánh cắp dữ liệu"], ts: "ĐÃ THI HÀNH LỆNH: " },
+        th: { n: "ไทย", h: "ฟ้องร้อง<br>แฮกเกอร์?", b: "<strong>แฮกเกอร์</strong>สร้างความเสียหาย เราจะช่วยคุณดำเนินคดีทางกฎหมาย", bt: "เริ่มการฟ้องร้อง", fh: "แบบฟอร์มกฎหมาย", ln: "ชื่อ", li: "IP เป้าหมาย", lm: "การละเมิด", le: "หลักฐาน", ld: "สรุป", la: "ค่าเสียหาย", lf: "ค่าธรรมเนียม", fs: "ดำเนินการ", m: ["แรนซัมแวร์", "ขโมยข้อมูล"], ts: "ดำเนินการสำเร็จ: " },
+        he: { n: "עברית", h: "לתבוע<br>האקר?", b: "<strong>האקרים</strong> גורמים נזק. אנחנו כאן כדי לסייע משפטית.", bt: "התחל תביעה", fh: "טופס משפטי", ln: "שם", li: "כתובת IP", lm: "הפרה", le: "ראיות", ld: "תיאור", la: "פיצויים", lf: "עמלה", fs: "בצע", m: ["כופרה", "גניבת נתונים"], ts: "הצו בוצע: " },
+        fi: { n: "Suomi", h: "HAASTA<br>HACKER?", b: "<strong>Hackerit</strong> aiheuttavat tuhoa. Aloita oikeusprosessi nyt.", bt: "Aloita kanne", fh: "Lomake", ln: "Nimi", li: "IP-osoite", lm: "Rike", le: "Todisteet", ld: "Yhteenveto", la: "Vahingot", lf: "Maksu", fs: "SUORITA", m: ["Kiristysohjelma", "Tietovarkaus"], ts: "MÄÄRÄYS TOIMITETTU: " },
+        no: { n: "Norsk", h: "SAKSØKE<br>HACKER?", b: "<strong>Hackere</strong> skaper problemer. Vi hjelper deg med søksmålet.", bt: "Start søksmål", fh: "Skjema", ln: "Navn", li: "IP-adresse", lm: "Krenkelse", le: "Bevis", ld: "Sammendrag", la: "Erstatning", lf: "Gebyr", fs: "UTFØR", m: ["Ransomware", "Spyware"], ts: "MANDAT UTFØRT: " },
+        da: { n: "Dansk", h: "SAGSØGE<br>HACKER?", b: "<strong>Hackere</strong> skader dig. Vi iværksætter juridisk handling nu.", bt: "Start sagsøgning", fh: "Formular", ln: "Navn", li: "IP-adresse", lm: "Overtrædelse", le: "Bevis", ld: "Resumé", la: "Erstatning", lf: "Gebyr", fs: "UDFØR", m: ["Ransomware", "Trojaner"], ts: "MANDAT UDFØRT: " },
+        sv: { n: "Svenska", h: "STÄMMA<br>HACKER?", b: "<strong>Hackers</strong> orsakar skada. Påbörja rättsliga åtgärder idag.", bt: "Starta stämning", fh: "Formulär", ln: "Namn", li: "IP-adress", lm: "Överträdelse", le: "Bevis", ld: "Sammanfattning", la: "Skadestånd", lf: "Avgift", fs: "UTFÖR", m: ["Ransomware", "Spyware"], ts: "MANDAT UTFÖRT: " },
+        hu: { n: "Magyar", h: "PERELJE BE<br>A HACKERT?", b: "A <strong>hackerek</strong> kárt okoznak. Kezdje meg a jogi eljárást most.", bt: "Per indítása", fh: "Űrlap", ln: "Név", li: "IP-cím", lm: "Sértés", le: "Bizonyíték", ld: "Összegzés", la: "Kárigény", lf: "Díj", fs: "VÉGREHAJT", m: ["Zsarolóprogram", "Adatlopás"], ts: "VÉGREHAJTVA: " },
+        cs: { n: "Čeština", h: "ŽALOVAT<br>HACKERA?", b: "<strong>Hackeři</strong> škodí. Pomůžeme vám s právním postupem.", bt: "Zahájit žalobu", fh: "Formulář", ln: "Jméno", li: "IP adresa", lm: "Porušení", le: "Důkazy", ld: "Shrnutí", la: "Škoda", lf: "Poplatek", fs: "PROVÉST", m: ["Ransomware", "Útok"], ts: "ZATYKAČ DORUČEN: " },
+        ro: { n: "Română", h: "DAȚI ÎN JUDECATĂ?", b: "<strong>Hackerii</strong> provoacă daune. Începeți acțiunea legală acum.", bt: "Porniți procesul", fh: "Formular", ln: "Nume", li: "Adresă IP", lm: "Încălcare", le: "Probe", ld: "Rezumat", la: "Daune", lf: "Taxă", fs: "EXECUTĂ", m: ["Ransomware", "Furt de date"], ts: "MANDAT EXECUTAT: " }
     };
 
-    const lSel = document.getElementById('l-select');
-    Object.keys(data).forEach(k => { const o = document.createElement('option'); o.value=k; o.innerText=data[k].n; lSel.appendChild(o); });
+    const lPick = document.getElementById('l-select');
+    Object.keys(db).forEach(k => { const o = document.createElement('option'); o.value=k; o.innerText=db[k].n; lPick.appendChild(o); });
 
-    function sync() {
-        const l = lSel.value, t = data[l], c = document.getElementById('c-select').value;
+    function syncUI() {
+        const l = lPick.value, t = db[l], c = document.getElementById('c-select').value;
         document.getElementById('h-main').innerHTML = t.h; document.getElementById('b-main').innerHTML = t.b;
         document.getElementById('bt-main').innerText = t.bt; document.getElementById('f-h').innerText = t.fh;
         document.getElementById('l-n').innerText = t.ln; document.getElementById('l-i').innerText = t.li;
@@ -136,25 +127,24 @@
         document.getElementById('l-d').innerText = t.ld; document.getElementById('l-a').innerText = t.la;
         document.getElementById('l-f').innerText = t.lf; document.getElementById('f-s').innerText = t.fs;
         const m = document.getElementById('mal-drop'); m.innerHTML = ""; t.m.forEach(i => m.innerHTML += `<option>${i}</option>`);
-        const prices = { USD: '$450.00', RUB: '42,500 ₽', EUR: '410,00 €' };
-        document.getElementById('price').innerText = prices[c];
+        document.getElementById('price').innerText = c === 'USD' ? '$450.00' : '42,500 ₽';
     }
 
-    function openM(s) { document.getElementById('modal').style.display = s ? 'flex' : 'none'; }
+    function toggleM(s) { document.getElementById('modal-box').style.display = s ? 'flex' : 'none'; }
 
     function strike() {
-        openM(0);
-        const l = data[lSel.value], ip = document.getElementById('target-ip').value;
-        const n = document.getElementById('notify');
+        toggleM(0);
+        const l = db[lPick.value], ip = document.getElementById('target-ip').value;
+        const host = document.getElementById('toasts');
         const t = document.createElement('div'); t.className = 'toast';
-        t.innerHTML = `<b>${l.n}</b> ${ip}`;
-        n.appendChild(t);
-        const d = document.createElement('div'); d.className = 'ip-ping';
-        d.style.left = Math.random()*80+10+"%"; d.style.top = Math.random()*80+10+"%";
-        document.getElementById('map-area').appendChild(d);
-        setTimeout(() => t.remove(), 5000);
+        t.innerText = `${l.ts} ${ip}`;
+        host.appendChild(t);
+        const p = document.createElement('div'); p.className = 'ping';
+        p.style.left = Math.random()*80+10+"%"; p.style.top = Math.random()*80+10+"%";
+        document.getElementById('map-world').appendChild(p);
+        setTimeout(() => t.remove(), 6000);
     }
-    sync();
+    syncUI();
 </script>
 </body>
 </html>
