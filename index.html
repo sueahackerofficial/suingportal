@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sue-A-Hacker Enterprise | Official Legal Portal</title>
     <style>
-        /* OFFICIAL MICROSOFT SEGOE UI - CYRILLIC & LATIN SUPPORT */
+        /* FORCING OFFICIAL MICROSOFT SEGOE UI - BYPASSING CHROMEBOOK DEFAULTS */
         @font-face {
             font-family: 'Segoe UI Custom';
             src: url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/normal/latest.woff2') format('woff2');
@@ -35,9 +35,9 @@
             --overlay-bg: rgba(0, 0, 0, 0.95);
         }
 
-        /* BANISH ROBOTO: Enforcing Segoe UI Custom as the absolute priority */
+        /* THE ROBOTO KILLER: This forces the loaded Segoe UI file onto everything */
         * {
-            font-family: 'Segoe UI Custom', "Segoe UI", Tahoma, sans-serif !important;
+            font-family: 'Segoe UI Custom', Tahoma, sans-serif !important;
             -webkit-font-smoothing: antialiased;
             box-sizing: border-box;
         }
@@ -72,7 +72,6 @@
             font-size: 14px;
             font-weight: 600;
             cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
         }
 
         .hero-layout {
@@ -127,6 +126,9 @@
         <option value="es">Español</option>
         <option value="fr">Français</option>
         <option value="de">Deutsch</option>
+        <option value="it">Italiano</option>
+        <option value="pt">Português</option>
+        <option value="zh">中文</option>
         <option value="ar">العربية</option>
     </select>
     <select class="selector" id="curr" onchange="applyCurrency()">
@@ -192,24 +194,59 @@
         },
         ru: {
             title: "Хотите<br>подать в<br>суд на<br>хакера?",
-            intro: "Используйте Sue-A-Hacker Enterprise! Sue-A-Hacker Enterprise здесь не просто так. <strong>Хакеры</strong> могут заставить вас чувствовать себя <em>грустным, встревоженным</em> и <em>разочарованным.</em> Но мы здесь, чтобы всё изменить, и хакер пожалел об этом. Чтобы начать работу с нашим инструментом, просто нажмите <strong>кнопку</strong> ниже. Вы никогда не пожалеете!",
+            intro: "Используйте Sue-A-Hacker Enterprise! Sue-A-Hacker Enterprise здесь не просто так. <strong>Хакеры</strong> могут заставить вас чувствовать себя <em>грустным, встревоженным</em> и <em>разочарованным.</em> Мы здесь, чтобы всё изменить. Чтобы начать, просто нажмите <strong>кнопку</strong> ниже. Вы никогда не пожалеете!",
             cardT: "Судебный центр", cardD: "Безопасно подавайте иски против киберпреступников.", btn: "Подать иск сейчас", modT: "Форма судебного иска",
-            hInfo: "Данные злоумышленника", mal: "Тип ПО", amt: "Сумма иска", fee: "Стоимость подачи:", pub: "Завершить и опубликовать", can: "Отмена",
-            malList: ["Шифровальщик", "Шпионское ПО", "Троян", "Ботнет", "Вайпер", "Кейлоггер", "Руткит"]
+            hInfo: "Данные злоумышленника", mal: "Тип ПО", amt: "Сумма иска", fee: "Стоимость подачи:", pub: "Опубликовать", can: "Отмена",
+            malList: ["Шифровальщик", "Шпион", "Троян", "Ботнет", "Вайпер"]
         },
         es: {
             title: "¿Quieres<br>demandar a<br>un hacker?",
-            intro: "¡Entonces usa Sue-A-Hacker Enterprise! Sue-A-Hacker Enterprise no está aquí por nada. Los <strong>hackers</strong> pueden hacerte sentir <em>triste, inquieto</em> y <em>desanimado.</em> Estamos aquí para darles la vuelta para que el hacker se arrepienta. Para comenzar a usar nuestra herramienta, simplemente haga clic en el <strong>botón</strong> a continuación. ¡Nunca te arrepentirás!",
-            cardT: "Centro de litigios", cardD: "Presentar acciones legales de forma segura contra los actores de amenazas.", btn: "Demandar ahora", modT: "Formulario de demanda",
-            hInfo: "Detalles del atacante", mal: "Tipo de malware", amt: "Cantidad", fee: "Tasa:", pub: "Publicar", can: "Cancelar",
-            malList: ["Ransomware", "Espionaje", "Troyano", "Botnet", "Wiper"]
+            intro: "¡Usa Sue-A-Hacker Enterprise! Los <strong>hackers</strong> pueden hacerte sentir <em>triste, inquieto</em> y <em>desanimado.</em> Estamos aquí para que se arrepientan. Haz clic en el <strong>botón</strong> de abajo.",
+            cardT: "Centro de litigios", cardD: "Presentar acciones legales contra amenazas.", btn: "Demandar ahora", modT: "Formulario de demanda",
+            hInfo: "Atacante", mal: "Malware", amt: "Cantidad", fee: "Tasa:", pub: "Publicar", can: "Cancelar",
+            malList: ["Ransomware", "Espionaje", "Troyano", "Botnet"]
+        },
+        fr: {
+            title: "Voulez-vous<br>poursuivre<br>un hacker ?",
+            intro: "Utilisez Sue-A-Hacker Enterprise ! Les <strong>hackers</strong> peuvent vous rendre <em>triste</em>. Nous sommes là pour inverser la tendance. Cliquez sur le <strong>bouton</strong>.",
+            cardT: "Centre de litige", cardD: "Poursuites judiciaires sécurisées.", btn: "Poursuivre", modT: "Formulaire",
+            hInfo: "Détails du hacker", mal: "Type", amt: "Montant", fee: "Frais :", pub: "Publier", can: "Annuler",
+            malList: ["Ransomware", "Spyware", "Trojan"]
+        },
+        de: {
+            title: "Möchten Sie<br>Hacker<br>verklagen?",
+            intro: "Nutzen Sie Sue-A-Hacker Enterprise! <strong>Hacker</strong> machen Sie <em>traurig</em>. Wir schlagen zurück. Klicken Sie auf den <strong>Button</strong>.",
+            cardT: "Rechtszentrum", cardD: "Sichere Klageerhebung.", btn: "Jetzt verklagen", modT: "Klageformular",
+            hInfo: "Details", mal: "Typ", amt: "Betrag", fee: "Gebühr:", pub: "Senden", can: "Abbruch",
+            malList: ["Ransomware", "Trojaner", "Botnetz"]
+        },
+        it: {
+            title: "Vuoi<br>fare causa a<br>un hacker?",
+            intro: "Usa Sue-A-Hacker Enterprise! Gli <strong>hacker</strong> ti rendono <em>triste</em>. Siamo qui per te. Clicca il <strong>pulsante</strong>.",
+            cardT: "Centro contenziosi", cardD: "Azioni legali sicure.", btn: "Fai causa ora", modT: "Modulo",
+            hInfo: "Dettagli", mal: "Tipo", amt: "Importo", fee: "Costo:", pub: "Invia", can: "Annulla",
+            malList: ["Ransomware", "Spyware", "Trojan"]
+        },
+        pt: {
+            title: "Quer<br>processar um<br>hacker?",
+            intro: "Use Sue-A-Hacker Enterprise! <strong>Hackers</strong> deixam você <em>triste</em>. Nós viramos o jogo. Clique no <strong>botão</strong>.",
+            cardT: "Litígios", cardD: "Ações legais seguras.", btn: "Processar agora", modT: "Formulário",
+            hInfo: "Detalhes", mal: "Tipo", amt: "Valor", fee: "Taxa:", pub: "Publicar", can: "Cancelar",
+            malList: ["Ransomware", "Trojan", "Botnet"]
+        },
+        zh: {
+            title: "你想要<br>起诉<br>黑客吗？",
+            intro: "使用 Sue-A-Hacker Enterprise！<strong>黑客</strong>让你<em>沮丧</em>。我们在这里反击。点击<strong>按钮</strong>。",
+            cardT: "诉讼中心", cardD: "安全提交法律诉讼。", btn: "立即起诉", modT: "起诉表",
+            hInfo: "详情", mal: "类型", amt: "金额", fee: "费用：", pub: "发布", can: "取消",
+            malList: ["勒索软件", "木马", "僵尸网络"]
         },
         ar: {
             title: "هل تريد<br>مقاضاة<br>مخترق؟",
-            intro: "إذن استخدم Sue-A-Hacker Enterprise! لم نوجد هنا من فراغ. يمكن لـ <strong>المخترقين</strong> أن يجعلوك تشعر بـ <em>الحزن والقلق والإحباط.</em> ولكننا هنا لنقلب الموازين حتى يندم المخترق. لبدء استخدام أداتنا، ما عليك سوى النقر فوق <strong>الزر</strong> أدناه. لن تندم أبداً!",
-            cardT: "مركز التقاضي", cardD: "ارفع دعوى قانونية بأمان ضد الجهات المهددة.", btn: "ارفع دعوى الآن", modT: "نموذج الدعوى",
-            hInfo: "تفاصيل المعتدي", mal: "نوع البرمجيات", amt: "المبلغ", fee: "الرسوم:", pub: "نشر", can: "إلغاء",
-            malList: ["برامج الفدية", "تجسس", "طروادة", "بوت نت", "ماسح بيانات"]
+            intro: "استخدم Sue-A-Hacker Enterprise! <strong>المخترقون</strong> يحزنونك. نحن هنا للمساعدة. اضغط على <strong>الزر</strong>.",
+            cardT: "التقاضي", cardD: "إجراءات قانونية آمنة.", btn: "مقاضاة الآن", modT: "نموذج",
+            hInfo: "التفاصيل", mal: "النوع", amt: "المبلغ", fee: "الرسوم:", pub: "نشر", can: "إلغاء",
+            malList: ["فدية", "تجسس", "طروادة"]
         }
     };
 
