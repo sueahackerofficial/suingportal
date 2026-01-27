@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sue-A-Hacker Enterprise | Official Legal Portal</title>
     <style>
-        /* 1. FONT HIJACKING - Intercepting Verdana/Arial at the source */
+        /* 1. THE FONT LOCKDOWN: REDEFINING BANNED FONTS */
         @font-face {
             font-family: 'Segoe UI';
             src: local('Segoe UI'), local('SegoeUI');
@@ -17,10 +17,11 @@
             font-weight: 700;
         }
 
-        /* Mapping Banned Fonts to Segoe UI */
-        @font-face { font-family: 'Verdana'; src: local('Segoe UI'); }
+        /* Hijacking Arial and others so they point to Segoe UI */
         @font-face { font-family: 'Arial'; src: local('Segoe UI'); }
+        @font-face { font-family: 'Verdana'; src: local('Segoe UI'); }
         @font-face { font-family: 'Roboto'; src: local('Segoe UI'); }
+        @font-face { font-family: 'Helvetica'; src: local('Segoe UI'); }
         @font-face { font-family: 'Times New Roman'; src: local('Segoe UI'); }
 
         :root {
@@ -30,10 +31,11 @@
             --overlay-bg: rgba(0, 0, 0, 0.98);
         }
 
+        /* 2. UNIVERSAL ENFORCEMENT */
         * {
-            /* Forced globally with no fallbacks except system-sans */
-            font-family: 'Segoe UI', sans-serif !important;
+            font-family: 'Segoe UI', 'Segoe UI Web (West European)', -apple-system, sans-serif !important;
             -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
             box-sizing: border-box;
         }
 
@@ -48,26 +50,46 @@
             overflow-x: hidden;
         }
 
-        /* 2. LAYOUT & TYPOGRAPHY PRECISION */
+        /* 3. SETTINGS & NAVIGATION */
         .settings-bar {
-            position: fixed; top: 40px; right: 40px; display: flex; gap: 15px; z-index: 10000;
+            position: fixed;
+            top: 40px;
+            right: 40px;
+            display: flex;
+            gap: 15px;
+            z-index: 10000;
         }
 
         .selector {
-            padding: 12px 20px; border-radius: 12px; border: 2px solid #eee;
-            background: white; font-size: 14px; font-weight: 700; cursor: pointer;
+            padding: 12px 22px;
+            border-radius: 12px;
+            border: 2px solid #eee;
+            background: white;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: all 0.2s ease;
         }
 
+        .selector:hover { border-color: var(--accent-red); transform: translateY(-2px); }
+
+        /* 4. HERO SECTION */
         .hero-layout {
-            display: flex; align-items: flex-start; gap: 60px; max-width: 1300px; width: 90%;
+            display: flex;
+            align-items: flex-start;
+            gap: 60px;
+            max-width: 1300px;
+            width: 90%;
         }
 
         .heading-box {
-            flex: 1; border-bottom: 8px solid #000; padding-bottom: 25px;
+            flex: 1;
+            border-bottom: 8px solid #000;
+            padding-bottom: 25px;
         }
 
-        /* Rhetorical Question: Natural Line Height */
+        /* Rhetorical Question: Standard 1.1 leading */
         .red-title {
             color: var(--accent-red);
             font-size: clamp(40px, 6vw, 72px);
@@ -77,7 +99,7 @@
             letter-spacing: -0.04em;
         }
 
-        /* Body Copy: Tightened Line Height */
+        /* Description: Professional 1.2 leading */
         .intro-copy {
             flex: 1.4;
             font-size: 21px;
@@ -86,40 +108,113 @@
             margin-top: 30px;
         }
 
+        /* 5. PORTAL CARD */
         .portal-card {
-            background: #fff; padding: 50px; width: 420px; border-radius: 32px;
-            box-shadow: 0 50px 100px rgba(0,0,0,0.08); border: 1px solid #f0f0f0; text-align: center;
+            background: #fff;
+            padding: 50px;
+            width: 420px;
+            border-radius: 32px;
+            box-shadow: 0 50px 100px rgba(0,0,0,0.08);
+            border: 1px solid #f0f0f0;
+            text-align: center;
         }
 
-        /* 3. MODAL SYSTEM */
+        .portal-card h2 { font-size: 28px; margin-bottom: 15px; font-weight: 700; }
+        .portal-card p { font-size: 16px; color: #666; margin-bottom: 35px; line-height: 1.5; }
+
+        /* 6. MODAL & FORM UI */
         .modal-overlay {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--overlay-bg); z-index: 9999; justify-content: center; align-items: center;
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--overlay-bg);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
             backdrop-filter: blur(20px);
         }
 
         .modal-box {
-            background: white; width: 95%; max-width: 850px; padding: 50px; border-radius: 40px;
-            max-height: 90vh; overflow-y: auto;
+            background: white;
+            width: 95%;
+            max-width: 850px;
+            padding: 50px;
+            border-radius: 40px;
+            max-height: 90vh;
+            overflow-y: auto;
         }
 
-        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-top: 35px; }
-        .full-width { grid-column: span 2; }
-        
-        label { display: block; font-weight: 700; margin-bottom: 10px; font-size: 13px; text-transform: uppercase; color: #999; }
-        input, select, textarea { width: 100%; padding: 18px; border: 2px solid #f4f4f4; border-radius: 16px; font-size: 16px; background: #fafafa; }
-        
-        .primary-btn { background: var(--main-black); color: white; border: none; padding: 22px; width: 100%; border-radius: 20px; font-weight: 700; font-size: 19px; cursor: pointer; margin-top: 30px; }
-        .secondary-btn { background: #eee; color: #666; border: none; padding: 15px; width: 100%; border-radius: 20px; margin-top: 10px; cursor: pointer; }
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-top: 35px;
+        }
 
-        /* 4. ARABIC / RTL FIX */
+        .full-width { grid-column: span 2; }
+
+        label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 10px;
+            font-size: 13px;
+            text-transform: uppercase;
+            color: #999;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 18px;
+            border: 2px solid #f4f4f4;
+            border-radius: 16px;
+            font-size: 16px;
+            background: #fafafa;
+        }
+
+        .primary-btn {
+            background: var(--main-black);
+            color: white;
+            border: none;
+            padding: 22px;
+            width: 100%;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 19px;
+            cursor: pointer;
+            margin-top: 30px;
+        }
+
+        .secondary-btn {
+            background: #eee;
+            color: #666;
+            border: none;
+            padding: 15px;
+            width: 100%;
+            border-radius: 20px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
+        /* 7. RTL & LOG SYSTEM */
         [dir="rtl"] .settings-bar { right: auto; left: 40px; }
         [dir="rtl"] .hero-layout { flex-direction: row-reverse; }
         [dir="rtl"] .modal-box { text-align: right; }
 
         #log-screen {
-            background: #000; color: #00ff00; padding: 35px; border-radius: 24px;
-            font-family: 'Consolas', monospace !important; display: none; margin-top: 30px; text-align: left; direction: ltr;
+            background: #000;
+            color: #00ff00;
+            padding: 35px;
+            border-radius: 24px;
+            font-family: 'Consolas', 'Monaco', monospace !important;
+            display: none;
+            margin-top: 30px;
+            font-size: 16px;
+            line-height: 1.8;
+            text-align: left;
+            direction: ltr;
         }
     </style>
 </head>
@@ -127,21 +222,25 @@
 
 <div class="settings-bar">
     <select class="selector" id="lang" onchange="applyTranslation()">
-        <option value="en">English</option>
-        <option value="ru">Русский</option>
-        <option value="ar">العربية</option>
-        <option value="it">Italiano</option>
-        <option value="pt">Português</option>
-        <option value="zh">中文</option>
+        <option value="en">English (US)</option>
+        <option value="ru">Русский (RU)</option>
+        <option value="ar">العربية (AR)</option>
+        <option value="it">Italiano (IT)</option>
+        <option value="pt">Português (PT)</option>
+        <option value="zh">中文 (ZH)</option>
+        <option value="es">Español (ES)</option>
+        <option value="fr">Français (FR)</option>
+        <option value="de">Deutsch (DE)</option>
     </select>
     <select class="selector" id="curr" onchange="applyCurrency()">
         <option value="USD">USD ($)</option>
         <option value="EUR">EUR (€)</option>
         <option value="RUB">RUB (₽)</option>
+        <option value="GBP">GBP (£)</option>
     </select>
 </div>
 
-<div class="hero-layout" id="main-hero">
+<div class="hero-layout" id="main-ui">
     <div class="heading-box">
         <h1 class="red-title" id="main-title">Do you<br>want to<br>sue a<br>hacker?</h1>
     </div>
@@ -155,7 +254,7 @@
     </div>
     <div class="portal-card">
         <h2 id="card-title">Litigation center</h2>
-        <p id="card-desc">Securely file legal action against threat actors.</p>
+        <p id="card-desc">Securely file legal action against threat actors and cyber-criminals.</p>
         <button class="primary-btn" id="btn-text" onclick="showModal(true)">File lawsuit now</button>
     </div>
 </div>
@@ -167,7 +266,7 @@
             <div class="form-grid">
                 <div class="full-width">
                     <label id="lbl-hinfo">Threat actor details</label>
-                    <input type="text" id="h-input" placeholder="...">
+                    <input type="text" id="h-input" placeholder="IP, Handle, or Full Legal Name">
                 </div>
                 <div>
                     <label id="lbl-malware">Malware type</label>
@@ -182,16 +281,16 @@
                     <textarea id="desc-box" rows="4" placeholder="Describe the breach..."></textarea>
                 </div>
             </div>
-            <div style="margin-top:35px; border-top:2px solid #f9f9f9; padding-top:30px; display:flex; justify-content:space-between; font-size:24px; font-weight:700;">
+            <div style="margin-top:35px; border-top:3px solid #f9f9f9; padding-top:30px; display:flex; justify-content:space-between; font-size:24px; font-weight:700;">
                 <span id="lbl-fee">Filing fee:</span>
                 <span id="cost-display" style="color:var(--accent-red);">$450.00 USD</span>
             </div>
-            <button class="primary-btn" id="lbl-pub" onclick="startProcess()" style="background:var(--btn-green)">Complete & Publish</button>
-            <button class="secondary-btn" id="lbl-cancel" onclick="showModal(false)">Cancel</button>
+            <button class="primary-btn" id="lbl-pub" onclick="startProcess()" style="background:var(--btn-green)">Validate & Publish Lawsuit</button>
+            <button class="secondary-btn" id="lbl-cancel" onclick="showModal(false)">Discard Changes</button>
         </div>
 
         <div id="process-ui" style="display:none; text-align:center;">
-            <h2 id="lbl-proc-title">Serving global warrant...</h2>
+            <h2 id="lbl-proc-title" style="font-size: 30px;">Serving global warrant...</h2>
             <div id="log-screen"></div>
         </div>
     </div>
@@ -202,14 +301,14 @@
         en: {
             title: "Do you<br>want to<br>sue a<br>hacker?",
             intro: "Then use the Sue-A-Hacker Enterprise! The Sue-A-Hacker Enterprise is not here for nothing. <strong>Hackers</strong> can make you feel <em>sad, unsettled</em> and <em>discouraged.</em> But we are here to flip it all over so the hacker regrets. To start using our tool, simply click the <strong>button</strong> below. You will never regret it!",
-            cardT: "Litigation center", cardD: "Securely file legal action against threat actors.", btn: "File lawsuit now", modT: "Lawsuit documentation form",
-            hInfo: "Threat actor details", mal: "Malware type", amt: "Amount to sue for", desc: "Incident Description", fee: "Filing fee:", pub: "Complete & Publish", can: "Cancel", procT: "Serving global warrant...",
-            malList: ["Ransomware", "Spyware", "Trojan", "Botnet"]
+            cardT: "Litigation center", cardD: "Securely file legal action against threat actors and cyber-criminals.", btn: "File lawsuit now", modT: "Lawsuit documentation form",
+            hInfo: "Threat actor details", mal: "Malware type", amt: "Amount to sue for", desc: "Incident Description", fee: "Filing fee:", pub: "Validate & Publish Lawsuit", can: "Discard Changes", procT: "Serving global warrant...",
+            malList: ["Ransomware", "Spyware", "Trojan", "Botnet", "Wiper"]
         },
         ru: {
             title: "Хотите<br>подать в<br>суд на<br>хакера?",
             intro: "Используйте Sue-A-Hacker Enterprise! Sue-A-Hacker Enterprise здесь не просто так. <strong>Хакеры</strong> могут заставить вас чувствовать себя <em>грустным, встревоженным</em> и <em>разочарованным.</em> Мы здесь, чтобы всё изменить, и хакер пожалел об этом. Чтобы начать работу с нашим инструментом, просто нажмите <strong>кнопку</strong> ниже. Вы никогда не пожалеете!",
-            cardT: "Судебный центр", cardD: "Безопасно подавайте иски против преступников.", btn: "Подать иск сейчас", modT: "Форма судебного иска",
+            cardT: "Судебный центр", cardD: "Безопасно подавайте иски против злоумышленников и преступников.", btn: "Подать иск сейчас", modT: "Форма судебного иска",
             hInfo: "Данные злоумышленника", mal: "Тип ПО", amt: "Сумма иска", desc: "Описание инцидента", fee: "Стоимость подачи:", pub: "Опубликовать иск", can: "Отмена", procT: "Выдача глобального ордера...",
             malList: ["Шифровальщик", "Шпион", "Троян", "Ботнет"]
         },
@@ -222,9 +321,9 @@
         },
         it: {
             title: "Vuoi<br>fare causa a<br>un hacker?",
-            intro: "Usa Sue-A-Hacker Enterprise! Gli <strong>hacker</strong> possono farti sentire <em>triste, inquieto</em> e <em>scoraggiato.</em> Ma siamo qui per ribaltare la situazione in modo che l'hacker si penta. Per iniziare, clicca sul <strong>pulsante</strong> qui sotto.",
+            intro: "Usa Sue-A-Hacker Enterprise! Gli <strong>hacker</strong> possono farti sentire <em>triste, inquieto</em> e <em>scoraggiato.</em> Ma siamo qui per ribaltare la situazione in modo che l'hacker si penta. Per iniziare, clicca sul <strong>pulsante</strong> qui sotto. Non te ne pentirai mai!",
             cardT: "Centro contenziosi", cardD: "Azioni legali sicure contro minacce e criminali informatici.", btn: "Fai causa ora", modT: "Modulo",
-            hInfo: "Dettagli hacker", mal: "Malware", amt: "Importo", desc: "Descrizione", fee: "Costo:", pub: "Invia", can: "Annulla", procT: "Notifica mandato...",
+            hInfo: "Dettagli hacker", mal: "Tipo di malware", amt: "Importo", desc: "Descrizione", fee: "Costo totale:", pub: "Pubblica causa", can: "Annulla", procT: "Notifica mandato...",
             malList: ["Ransomware", "Spyware", "Trojan"]
         },
         pt: {
@@ -237,9 +336,30 @@
         zh: {
             title: "你想要<br>起诉<br>黑客吗？",
             intro: "那就使用 Sue-A-Hacker Enterprise！<strong>黑客</strong>会让你感到<em>悲伤、不安和沮丧。</em> 我们在这里帮你反击，让黑客感到后悔。只需点击下方的<strong>按钮</strong>。你绝不会后悔！",
-            cardT: "诉讼中心", cardD: "安全提交法律诉讼。", btn: "立即起诉", modT: "起诉书表格",
-            hInfo: "黑客详情", mal: "软件类型", amt: "金额", desc: "事件说明", fee: "申请费：", pub: "发布", can: "取消", procT: "正在送达全球...",
+            cardT: "诉讼中心", cardD: "安全地针对威胁参与者和网络犯罪分子提起法律诉讼。", btn: "立即起诉", modT: "起诉书文档表格",
+            hInfo: "黑客详情", mal: "软件类型", amt: "金额", desc: "说明", fee: "总申请费：", pub: "完成并发布", can: "取消", procT: "正在送达...",
             malList: ["勒索软件", "木马", "僵尸网络"]
+        },
+        es: {
+            title: "¿Quieres<br>demandar a<br>un hacker?",
+            intro: "¡Entonces usa Sue-A-Hacker Enterprise! Los <strong>hackers</strong> pueden hacerte sentir <em>triste y desanimado.</em> Pero estamos aquí para que el hacker se arrepienta. Para comenzar, simplemente haz clic en el <strong>botón</strong> de abajo.",
+            cardT: "Centro de Litigios", cardD: "Presente acciones legales seguras contra ciberdelincuentes.", btn: "Demandar ahora", modT: "Formulario de demanda",
+            hInfo: "Detalles del hacker", mal: "Tipo de malware", amt: "Monto", desc: "Descripción", fee: "Tarifa:", pub: "Publicar", can: "Cancelar", procT: "Sirviendo orden judicial...",
+            malList: ["Ransomware", "Spyware", "Trojan"]
+        },
+        fr: {
+            title: "Voulez-vous<br>poursuivre un<br>hacker ?",
+            intro: "Utilisez Sue-A-Hacker Enterprise ! Les <strong>hackers</strong> peuvent vous rendre <em>triste et découragé.</em> Nous sommes là pour que le hacker regrette. Pour commencer, cliquez sur le <strong>bouton</strong> ci-dessous.",
+            cardT: "Centre de litiges", cardD: "Engagez des actions en justice contre les cybercriminels.", btn: "Poursuivre", modT: "Formulaire",
+            hInfo: "Détails", mal: "Type", amt: "Montant", desc: "Description", fee: "Frais :", pub: "Publier", can: "Annuler", procT: "Mandat mondial...",
+            malList: ["Ransomware", "Espion", "Trojan"]
+        },
+        de: {
+            title: "Möchten Sie<br>einen Hacker<br>verklagen?",
+            intro: "Nutzen Sie Sue-A-Hacker Enterprise! <strong>Hacker</strong> können Sie <em>traurig und entmutigt</em> machen. Wir sind hier, damit der Hacker es bereut. Klicken Sie auf die <strong>Schaltfläche</strong> unten.",
+            cardT: "Prozesszentrum", cardD: "Rechtliche Schritte gegen Cyberkriminelle einleiten.", btn: "Jetzt verklagen", modT: "Klageformular",
+            hInfo: "Details", mal: "Art", amt: "Betrag", desc: "Beschreibung", fee: "Gebühr:", pub: "Veröffentlichen", can: "Abbrechen", procT: "Haftbefehl wird zugestellt...",
+            malList: ["Ransomware", "Spyware", "Trojan"]
         }
     };
 
@@ -273,8 +393,8 @@
 
     function applyCurrency() {
         const c = document.getElementById('curr').value;
-        const rates = { USD: '$450.00 USD', EUR: '€415.00 EUR', RUB: '42,000.00 ₽ RUB' };
-        document.querySelectorAll('.unit').forEach(u => u.innerText = (c === 'USD' ? '$' : c === 'EUR' ? '€' : '₽'));
+        const rates = { USD: '$450.00 USD', EUR: '€415.00 EUR', RUB: '42,000.00 ₽ RUB', GBP: '£360.00 GBP' };
+        document.querySelectorAll('.unit').forEach(u => u.innerText = (c === 'USD' ? '$' : c === 'EUR' ? '€' : c === 'RUB' ? '₽' : '£'));
         document.getElementById('cost-display').innerText = rates[c];
     }
 
@@ -288,11 +408,11 @@
         document.getElementById('process-ui').style.display = 'block';
         const log = document.getElementById('log-screen');
         log.style.display = 'block'; log.innerHTML = "";
-        const seq = ["> CONNECTING...", "> TRACING IP...", "> SERVING WARRANT...", "> DONE."];
+        const seq = ["> CONNECTING...", "> ENCRYPTING...", "> SERVING WARRANT...", "> DONE."];
         let i = 0;
         const interval = setInterval(() => {
             log.innerHTML += `<div>${seq[i]}</div>`; i++;
-            if(i >= seq.length) { clearInterval(interval); setTimeout(() => { alert("Lawsuit Published."); showModal(false); }, 1000); }
+            if(i >= seq.length) { clearInterval(interval); setTimeout(() => { alert("Success."); showModal(false); }, 1000); }
         }, 800);
     }
     
