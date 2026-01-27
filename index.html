@@ -4,21 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sue-A-Hacker Enterprise | Official Legal Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700;800&display=swap" rel="stylesheet">
     <style>
-        /* This section forces Segoe UI to load on Chromebooks */
-        @font-face {
-            font-family: 'Segoe UI';
-            src: local('Segoe UI'), 
-                 url('https://fonts.gstatic.com/l/font?kit=4iCs6KVjbNBYlgoKcg72nU6AF7xm&v=v20') format('woff2');
-            font-weight: 400;
-        }
-        @font-face {
-            font-family: 'Segoe UI';
-            src: local('Segoe UI Bold'), 
-                 url('https://fonts.gstatic.com/l/font?kit=4iCv6KVjbNBYlgoKcg72nU6AF7xm&v=v20') format('woff2');
-            font-weight: 700;
-        }
-
         :root {
             --accent-red: #cc0000;
             --btn-green: #27ae60;
@@ -28,7 +15,8 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            /* 'Open Sans' is our Chromebook-safe Segoe UI alternative */
+            font-family: 'Segoe UI', 'Open Sans', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #ffffff;
             margin: 0;
             display: flex;
@@ -293,7 +281,7 @@
             mal: "Tipo de malware", amt: "Valor", des: "Danos", desPh: "Detalhe o impacto...",
             fil: "Provas (Múltiplo)", filB: "Clique para anexar", filS: " arquivo(s) anexado(s).",
             fee: "Taxa:", pub: "Pagar e publicar", can: "Cancelar",
-            serv: "Enviando mandado...", succ: "Processo aberto",
+            serv: "Enviando mandado...", succ: "Processو مفتوح",
             notary: "NOTÁRIO DIGITAL OFICIAL", print: "Imprimir recibo", close: "Fechar",
             malList: ["Ransomware", "Spyware", "Trojan", "Cryptojacking", "Rootkit", "Keylogger", "Botnet", "Wiper", "Injeção SQL", "Phishing", "Adware", "Worm", "Bomba Lógica", "Backdoor", "Exploit Kit"],
             logs: ["[INFO] Localizando...", "[INFO] Enviando dossiê...", "[INFO] Sucesso."]
@@ -321,7 +309,7 @@
             fee: "Сбор:", pub: "Оплатить и подать", can: "Отмена",
             serv: "Ордер отправлен...", succ: "Иск подан",
             notary: "ОФИЦИАЛЬНЫЙ НОТАРИУС", print: "Печать чека", close: "Закрыть",
-            malList: ["Вымогатель", "Шпион", "Троян", "Криптоджекинг", "Руткит", "Кейлоггер", "Ботнет", "Вайпер", "SQL-инъекция", "Фишиنگ", "Adware", "Червь", "Логическая бомба", "Бэкдор", "Эксплойт-кит"],
+            malList: ["Вымогатель", "Шпион", "Троян", "Криптоджекинг", "Руткит", "Кейлоггер", "Ботнет", "Вайпер", "SQL-инъекция", "Фишинг", "Adware", "Червь", "Логическая бомба", "Бэкдор", "Эксплойт-кит"],
             logs: ["[ИНФО] Поиск...", "[ИНФО] Отправка данных...", "[ИНФО] Успешно."]
         },
         ar: {
