@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sue-A-Hacker Enterprise | Official Legal Portal</title>
     <style>
-        /* FONT SECURITY: HIJACKING BANNED NAMES */
+        /* =========================================
+           1. TOTAL FONT ENFORCEMENT
+        ========================================= */
         @font-face {
             font-family: 'Segoe UI';
             src: local('Segoe UI'), local('SegoeUI');
@@ -17,12 +19,12 @@
             font-weight: 700;
         }
 
-        /* Redirecting Banned Fonts to Segoe UI */
+        /* Hijacking banned font names to force Segoe UI */
         @font-face { font-family: 'Arial'; src: local('Segoe UI'); }
         @font-face { font-family: 'Verdana'; src: local('Segoe UI'); }
         @font-face { font-family: 'Roboto'; src: local('Segoe UI'); }
-        @font-face { font-family: 'Times New Roman'; src: local('Segoe UI'); }
         @font-face { font-family: 'Helvetica'; src: local('Segoe UI'); }
+        @font-face { font-family: 'Times New Roman'; src: local('Segoe UI'); }
 
         :root {
             --accent-red: #cc0000;
@@ -32,7 +34,7 @@
         }
 
         * {
-            /* Forced globally to ensure no leakage of Arial or Verdana */
+            /* Forced globally with no fallbacks except system sans */
             font-family: 'Segoe UI', -apple-system, sans-serif !important;
             -webkit-font-smoothing: antialiased;
             box-sizing: border-box;
@@ -49,7 +51,9 @@
             overflow-x: hidden;
         }
 
-        /* LAYOUT & UI */
+        /* =========================================
+           2. LAYOUT & GRID
+        ========================================= */
         .settings-bar {
             position: fixed; top: 40px; right: 40px; display: flex; gap: 15px; z-index: 10000;
         }
@@ -73,7 +77,7 @@
             font-size: clamp(40px, 6vw, 72px);
             font-weight: 700;
             margin: 0;
-            line-height: 1.1; /* Rhetorical Question Leading */
+            line-height: 1.1; /* Question Leading */
             letter-spacing: -0.04em;
         }
 
@@ -90,6 +94,9 @@
             box-shadow: 0 50px 100px rgba(0,0,0,0.08); border: 1px solid #f0f0f0; text-align: center;
         }
 
+        /* =========================================
+           3. MODAL & PROCESS UI
+        ========================================= */
         .modal-overlay {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: var(--overlay-bg); z-index: 9999; justify-content: center; align-items: center;
@@ -110,7 +117,7 @@
         .primary-btn { background: var(--main-black); color: white; border: none; padding: 22px; width: 100%; border-radius: 20px; font-weight: 700; font-size: 19px; cursor: pointer; margin-top: 30px; }
         .secondary-btn { background: #eee; color: #666; border: none; padding: 15px; width: 100%; border-radius: 20px; margin-top: 10px; cursor: pointer; }
 
-        /* RTL & LOGS */
+        /* RTL SUPPORT */
         [dir="rtl"] .settings-bar { right: auto; left: 40px; }
         [dir="rtl"] .hero-layout { flex-direction: row-reverse; }
         [dir="rtl"] .modal-box { text-align: right; }
@@ -197,65 +204,65 @@
     const data = {
         en: {
             title: "Do you<br>want to<br>sue a<br>hacker?",
-            intro: "Then use the Sue-A-Hacker Enterprise! The Sue-A-Hacker Enterprise is not here for nothing. <strong>Hackers</strong> can make you feel <em>sad, unsettled</em> and <em>discouraged.</em> But we are here to flip it all over so the hacker regrets. To start using our tool, simply click the <strong>button</strong> below. You will never regret it!",
+            intro: "Then use the Sue-A-Hacker Enterprise! <strong>Hackers</strong> can make you feel <em>sad, unsettled</em> and <em>discouraged.</em> But we are here to flip it all over so the hacker regrets. Click the <strong>button</strong> below. You will never regret it!",
             cardT: "Litigation center", cardD: "Securely file legal action against threat actors.", btn: "File lawsuit now", modT: "Lawsuit documentation form",
             hInfo: "Threat actor details", mal: "Malware type", amt: "Amount to sue for", fee: "Filing fee:", pub: "Publish Lawsuit", can: "Cancel", procT: "Serving global warrant...",
             malList: ["Ransomware", "Spyware", "Trojan", "Botnet"]
         },
         ru: {
             title: "Хотите<br>подать в<br>суд на<br>хакера?",
-            intro: "Используйте Sue-A-Hacker Enterprise! Sue-A-Hacker Enterprise здесь не просто так. <strong>Хакеры</strong> могут заставить вас чувствовать себя <em>грустным, встревоженным</em> и <em>разочарованным.</em> Мы здесь, чтобы всё изменить, и хакер пожалел об этом. Просто нажмите <strong>кнопку</strong> ниже. Вы никогда не пожалеете!",
+            intro: "Используйте Sue-A-Hacker Enterprise! <strong>Хакеры</strong> могут заставить вас чувствовать себя <em>грустным</em> и <em>разочарованным.</em> Мы здесь, чтобы всё изменить. Просто нажмите <strong>кнопку</strong> ниже. Вы не пожалеете!",
             cardT: "Судебный центр", cardD: "Безопасно подавайте иски против преступников.", btn: "Подать иск сейчас", modT: "Форма судебного иска",
             hInfo: "Данные злоумышленника", mal: "Тип ПО", amt: "Сумма иска", fee: "Стоимость подачи:", pub: "Опубликовать иск", can: "Отмена", procT: "Выдача глобального ордера...",
             malList: ["Шифровальщик", "Шпион", "Троян", "Ботнет"]
         },
         ar: {
             title: "هل تريد<br>مقاضاة<br>مخترق؟",
-            intro: "إذن استخدم Sue-A-Hacker Enterprise! لم نوجد هنا من فراغ. يمكن لـ <strong>المخترقين</strong> أن يجعلوك تشعر بـ <em>الحزن والقلق والإحباط.</em> ولكننا هنا لنقلب الموازين حتى يندم المخترق. لبدء استخدام أداتنا، ما عليك سوى النقر فوق <strong>الزر</strong> أدناه. لن تندم أبداً!",
-            cardT: "مركز التقاضي", cardD: "ارفع دعوى قانونية بأمان ضد الجهات المهددة ومجرمي الإنترنت.", btn: "ارفع دعوى الآن", modT: "نموذج توثيق الدعوى",
+            intro: "إذن استخدم Sue-A-Hacker Enterprise! يمكن لـ <strong>المخترقين</strong> أن يجعلوك تشعر بـ <em>الحزن.</em> ولكننا هنا حتى يندم المخترق. لبدء الاستخدام، انقر فوق <strong>الزر</strong> أدناه.",
+            cardT: "مركز التقاضي", cardD: "ارفع دعوى قانونية بأمان ضد الجهات المهددة.", btn: "ارفع دعوى الآن", modT: "نموذج توثيق الدعوى",
             hInfo: "تفاصيل المعتدي", mal: "نوع البرمجيات", amt: "مبلغ المقاضاة", fee: "إجمالي الرسوم:", pub: "نشر الدعوى", can: "إلغاء", procT: "جاري إصدار مذكرة توقيف عالمية...",
-            malList: ["برامج الفدية", "تجسس", "طروادة", "بوت نت"]
+            malList: ["برامج الفدية", "تجسس", "طروادة"]
         },
         it: {
             title: "Vuoi<br>fare causa a<br>un hacker?",
-            intro: "Usa Sue-A-Hacker Enterprise! Gli <strong>hacker</strong> possono farti sentire <em>triste, inquieto</em> e <em>scoraggiato.</em> Ma siamo qui per ribaltare la situazione in modo che l'hacker si penta. Per iniziare, clicca sul <strong>pulsante</strong> qui sotto. Non te ne pentirai mai!",
-            cardT: "Centro contenziosi", cardD: "Azioni legali sicure contro minacce e criminali informatici.", btn: "Fai causa ora", modT: "Modulo",
-            hInfo: "Dettagli hacker", mal: "Tipo di malware", amt: "Importo", fee: "Costo totale:", pub: "Pubblica causa", can: "Annulla", procT: "Notifica mandato...",
+            intro: "Usa Sue-A-Hacker Enterprise! Gli <strong>hacker</strong> possono farti sentire <em>triste.</em> Siamo qui per ribaltare la situazione. Clicca sul <strong>pulsante</strong> qui sotto.",
+            cardT: "Centro contenziosi", cardD: "Azioni legali sicure contro criminali informatici.", btn: "Fai causa ora", modT: "Modulo",
+            hInfo: "Dettagli hacker", mal: "Tipo", amt: "Importo", fee: "Costo:", pub: "Invia", can: "Annulla", procT: "Notifica mandato...",
             malList: ["Ransomware", "Spyware", "Trojan"]
         },
         pt: {
             title: "Quer<br>processar um<br>hacker?",
-            intro: "Use a Sue-A-Hacker Enterprise! <strong>Hackers</strong> podem fazer você se sentir <em>triste, inquieto</em> e <em>desanimado.</em> Mas estamos aqui para virar o jogo. Para começar, basta clicar no <strong>botão</strong> abaixo. Você nunca se arrependerá!",
-            cardT: "Litígios", cardD: "Ações legais seguras contra ameaças e cibercriminosos.", btn: "Processar agora", modT: "Formulário",
+            intro: "Use a Sue-A-Hacker Enterprise! <strong>Hackers</strong> podem fazer você se sentir <em>desanimado.</em> Estamos aqui para virar o jogo. Basta clicar no <strong>botão</strong> abaixo.",
+            cardT: "Litígios", cardD: "Ações legais seguras contra cibercriminosos.", btn: "Processar agora", modT: "Formulário",
             hInfo: "Detalhes", mal: "Tipo", amt: "Valor", fee: "Taxa:", pub: "Publicar", can: "Cancelar", procT: "Servindo mandado...",
-            malList: ["Ransomware", "Spyware", "Trojan"]
+            malList: ["Ransomware", "Spyware"]
         },
         zh: {
             title: "你想要<br>起诉<br>黑客吗？",
-            intro: "那就使用 Sue-A-Hacker Enterprise！<strong>黑客</strong>会让你感到<em>悲伤、不安和沮丧。</em> 我们在这里帮你反击，让黑客感到后悔。只需点击下方的<strong>按钮</strong>。你绝不会后悔！",
-            cardT: "诉讼中心", cardD: "安全提交法律诉讼。", btn: "立即起诉", modT: "起诉书表格",
-            hInfo: "黑客详情", mal: "类型", amt: "金额", fee: "申请费：", pub: "发布", can: "取消", procT: "正在送达...",
+            intro: "那就使用 Sue-A-Hacker Enterprise！<strong>黑客</strong>会让你感到<em>沮丧。</em> 我们在这里帮你反击，让黑客后悔。只需点击下方的<strong>按钮</strong>。",
+            cardT: "诉讼中心", cardD: "安全提交法律诉讼。", btn: "立即起诉", modT: "起诉表格",
+            hInfo: "详情", mal: "类型", amt: "金额", fee: "申请费：", pub: "发布", can: "取消", procT: "正在送达...",
             malList: ["勒索软件", "木马", "僵尸网络"]
         },
         es: {
             title: "¿Quieres<br>demandar a<br>un hacker?",
-            intro: "¡Usa Sue-A-Hacker Enterprise! Los <strong>hackers</strong> pueden hacerte sentir <em>triste y desanimado.</em> Estamos aquí para que el hacker se arrepienta. Para comenzar, haz clic en el <strong>botón</strong> de abajo.",
-            cardT: "Centro de Litigios", cardD: "Presente acciones legales seguras.", btn: "Demandar ahora", modT: "Formulario",
+            intro: "¡Usa Sue-A-Hacker Enterprise! Los <strong>hackers</strong> pueden hacerte sentir <em>triste.</em> Estamos aquí para que el hacker se arrepienta. Haz clic en el <strong>botón</strong>.",
+            cardT: "Litigios", cardD: "Acciones legales seguras.", btn: "Demandar ahora", modT: "Formulario",
             hInfo: "Detalles", mal: "Tipo", amt: "Monto", fee: "Tarifa:", pub: "Publicar", can: "Cancelar", procT: "Sirviendo orden...",
             malList: ["Ransomware", "Spyware"]
         },
         fr: {
             title: "Voulez-vous<br>poursuivre un<br>hacker ?",
-            intro: "Utilisez Sue-A-Hacker Enterprise ! Les <strong>hackers</strong> peuvent vous rendre <em>triste.</em> Nous sommes là pour que le hacker regrette. Cliquez sur le <strong>bouton</strong> ci-dessous.",
-            cardT: "Centre de litiges", cardD: "Engagez des actions en justice.", btn: "Poursuivre", modT: "Formulaire",
-            hInfo: "Détails", mal: "Type", amt: "Montant", fee: "Frais :", pub: "Publier", can: "Annuler", procT: "Mandat mondial...",
+            intro: "Utilisez Sue-A-Hacker Enterprise ! Nous sommes là pour que le hacker regrette. Cliquez sur le <strong>bouton</strong> ci-dessous.",
+            cardT: "Litiges", cardD: "Engagez des actions en justice.", btn: "Poursuivre", modT: "Formulaire",
+            hInfo: "Détails", mal: "Type", amt: "Montant", fee: "Frais :", pub: "Publier", can: "Annuler", procT: "Mandat...",
             malList: ["Ransomware", "Espion"]
         },
         de: {
             title: "Möchten Sie<br>einen Hacker<br>verklagen?",
-            intro: "Nutzen Sie Sue-A-Hacker Enterprise! <strong>Hacker</strong> können Sie <em>entmutigen.</em> Wir sind hier, damit der Hacker es bereut. Klicken Sie auf die <strong>Schaltfläche</strong> unten.",
+            intro: "Nutzen Sie Sue-A-Hacker Enterprise! Wir sind hier, damit der hacker es bereut. Klicken Sie auf die <strong>Schaltfläche</strong>.",
             cardT: "Prozesszentrum", cardD: "Rechtliche Schritte einleiten.", btn: "Jetzt verklagen", modT: "Klageformular",
-            hInfo: "Details", mal: "Art", amt: "Betrag", fee: "Gebühr:", pub: "Veröffentlichen", can: "Abbrechen", procT: "Wird zugestellt...",
+            hInfo: "Details", mal: "Art", amt: "Betrag", fee: "Gebühr:", pub: "Senden", can: "Abbrechen", procT: "Wird zugestellt...",
             malList: ["Ransomware", "Spyware"]
         }
     };
