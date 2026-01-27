@@ -5,28 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sue-A-Hacker Enterprise | Secure Portal</title>
     <style>
-        /* GLOBAL FONT LOCKDOWN */
-        /* This forces the browser to map EVERY generic and common font name to Segoe UI */
-        @font-face { font-family: 'Arimo'; src: local('Segoe UI'); }
-        @font-face { font-family: 'Roboto'; src: local('Segoe UI'); }
+        /* THE VERDANA KILLER: Aliasing all intruders to Segoe UI */
         @font-face { font-family: 'Verdana'; src: local('Segoe UI'); }
+        @font-face { font-family: 'Roboto'; src: local('Segoe UI'); }
+        @font-face { font-family: 'Arimo'; src: local('Segoe UI'); }
         @font-face { font-family: 'Arial'; src: local('Segoe UI'); }
         @font-face { font-family: 'Helvetica'; src: local('Segoe UI'); }
         @font-face { font-family: 'Noto Sans'; src: local('Segoe UI'); }
-        @font-face { font-family: 'Microsoft YaHei'; src: local('Segoe UI'); }
-        @font-face { font-family: 'Malgun Gothic'; src: local('Segoe UI'); }
+        @font-face { font-family: 'MS Gothic'; src: local('Segoe UI'); }
+        @font-face { font-family: 'SimSun'; src: local('Segoe UI'); }
 
         :root {
             --segoe: "Segoe UI", "Segoe UI Web", Tahoma, sans-serif;
             --accent-red: #cc0000;
         }
 
-        /* Direct Hijack of all elements */
+        /* Nuclear Font Enforcement */
         * { 
             font-family: var(--segoe) !important; 
             box-sizing: border-box; 
             -webkit-font-smoothing: antialiased;
-            text-rendering: optimizeLegibility;
         }
 
         body {
@@ -40,77 +38,76 @@
             overflow: hidden;
         }
 
-        /* Top Bar Navigation */
-        .nav-container {
+        /* UI Controls */
+        .top-bar {
             position: absolute; top: 35px; right: 55px; display: flex; gap: 12px;
         }
 
-        .dropdown-menu {
-            padding: 7px 14px; border: 1px solid #dcdcdc; border-radius: 5px;
-            font-size: 14px; cursor: pointer; background: #fff; outline: none;
+        .custom-select {
+            padding: 8px 14px; border: 1px solid #dcdcdc; border-radius: 5px;
+            font-size: 14px; font-weight: 600; cursor: pointer; background: #fff;
         }
 
-        /* Hero Layout - Exact Image Proportions */
-        .content-frame {
-            display: flex; align-items: flex-start; gap: 45px; max-width: 1080px; width: 92%;
+        /* Layout - Matching Image Ratios */
+        .hero-container {
+            display: flex; align-items: flex-start; gap: 40px; max-width: 1050px; width: 92%;
         }
 
-        .title-column { flex: 1; border-bottom: 5px solid #000; padding-bottom: 15px; }
-        .hero-heading { 
-            color: var(--accent-red); font-size: 66px; font-weight: 700; 
-            margin: 0; line-height: 0.92; letter-spacing: -2.8px; 
+        .title-box { flex: 1; border-bottom: 5px solid #000; padding-bottom: 12px; }
+        .red-h1 { 
+            color: var(--accent-red); font-size: 64px; font-weight: 700; 
+            margin: 0; line-height: 0.92; letter-spacing: -2.5px; 
         }
 
-        .description-column { 
-            flex: 1.3; font-size: 19px; line-height: 1.28; color: #111; margin-top: 30px; 
+        .body-copy { 
+            flex: 1.2; font-size: 19px; line-height: 1.28; color: #111; margin-top: 30px; 
         }
 
-        /* Litigation Center UI */
-        .action-card {
-            background: #fff; padding: 45px 38px; width: 360px; border-radius: 26px;
-            box-shadow: 0 18px 50px rgba(0,0,0,0.07); border: 1px solid #f0f0f0; text-align: center;
+        /* Litigation Center Card */
+        .card-ui {
+            background: #fff; padding: 45px 35px; width: 350px; border-radius: 25px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.06); border: 1px solid #f2f2f2; text-align: center;
         }
 
-        .action-card h2 { font-size: 26px; margin-top: 0; margin-bottom: 14px; font-weight: 700; }
-        .action-card p { font-size: 15px; color: #5a5a5a; margin-bottom: 28px; line-height: 1.45; }
+        .card-ui h2 { font-size: 25px; margin-top: 0; margin-bottom: 12px; font-weight: 700; }
+        .card-ui p { font-size: 14px; color: #666; margin-bottom: 25px; line-height: 1.45; }
 
-        .btn-primary {
+        .btn-action {
             background: #1a1a1a; color: white; border: none; padding: 18px; width: 100%;
-            border-radius: 11px; font-weight: 700; font-size: 17px; cursor: pointer;
+            border-radius: 10px; font-weight: 700; font-size: 16px; cursor: pointer;
         }
 
-        /* Documentation Form Modal */
-        .modal-shade {
+        /* Modal & Documentation Form */
+        .modal-bg {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(255,255,255,0.92); z-index: 2000; justify-content: center; align-items: center;
-            backdrop-filter: blur(6px);
         }
 
-        .form-container {
-            background: white; width: 680px; padding: 55px; border-radius: 32px;
-            box-shadow: 0 35px 80px rgba(0,0,0,0.12); border: 1px solid #eee;
+        .modal-content {
+            background: white; width: 650px; padding: 50px; border-radius: 30px;
+            box-shadow: 0 35px 80px rgba(0,0,0,0.1); border: 1px solid #eee;
         }
 
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; text-align: left; }
-        .span-all { grid-column: span 2; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; text-align: left; }
+        .full-span { grid-column: span 2; }
 
-        .field-label { display: block; font-size: 11px; font-weight: 700; text-transform: uppercase; color: #9a9a9a; margin-bottom: 7px; }
-        .input-style { 
-            width: 100%; padding: 14px; border: 2px solid #f2f2f2; border-radius: 9px; 
-            font-size: 16px; background: #fafafa; outline: none;
+        .form-label { display: block; font-size: 11px; font-weight: 700; text-transform: uppercase; color: #aaa; margin-bottom: 6px; }
+        .form-input { 
+            width: 100%; padding: 12px; border: 2px solid #f4f4f4; border-radius: 8px; 
+            font-size: 15px; background: #fafafa; outline: none;
         }
 
-        .btn-submit { background: #27ae60; color: white; border: none; padding: 20px; width: 100%; border-radius: 14px; font-weight: 700; font-size: 19px; margin-top: 30px; cursor: pointer; }
+        .btn-green { background: #27ae60; color: white; border: none; padding: 18px; width: 100%; border-radius: 12px; font-weight: 700; font-size: 18px; margin-top: 25px; cursor: pointer; }
 
-        [dir="rtl"] .nav-container { right: auto; left: 55px; }
-        [dir="rtl"] .content-frame { flex-direction: row-reverse; }
-        [dir="rtl"] .grid-2 { text-align: right; }
+        [dir="rtl"] .top-bar { right: auto; left: 55px; }
+        [dir="rtl"] .hero-container { flex-direction: row-reverse; }
+        [dir="rtl"] .form-grid { text-align: right; }
     </style>
 </head>
 <body>
 
-<div class="nav-container">
-    <select class="dropdown-menu" id="lang-switch" onchange="applyGlobalContent()">
+<div class="top-bar">
+    <select class="custom-select" id="lang-menu" onchange="runTranslation()">
         <option value="en">English (US)</option>
         <option value="ru">Русский</option>
         <option value="zh">中文</option>
@@ -118,43 +115,41 @@
         <option value="es">Español</option>
         <option value="fr">Français</option>
         <option value="de">Deutsch</option>
-        <option value="it">Italiano</option>
-        <option value="pt">Português</option>
     </select>
-    <select class="dropdown-menu"><option>USD ($)</option></select>
+    <select class="custom-select"><option>USD ($)</option></select>
 </div>
 
-<div class="content-frame">
-    <div class="title-column">
-        <h1 class="hero-heading" id="ui-header">Do you<br>want to<br>sue a<br>hacker?</h1>
+<div class="hero-container">
+    <div class="title-box">
+        <h1 class="red-h1" id="h-main">Do you<br>want to<br>sue a<br>hacker?</h1>
     </div>
-    <div class="description-column" id="ui-body"></div>
-    <div class="action-card">
-        <h2 id="ui-card-title">Litigation center</h2>
-        <p id="ui-card-desc">Securely file legal action against threat actors.</p>
-        <button class="btn-primary" id="ui-btn" onclick="toggleForm(true)">File lawsuit now</button>
+    <div class="body-copy" id="b-main"></div>
+    <div class="card-ui">
+        <h2 id="ct-main">Litigation center</h2>
+        <p id="cd-main">Securely file legal action against threat actors.</p>
+        <button class="btn-action" id="bt-main" onclick="toggleForm(true)">File lawsuit now</button>
     </div>
 </div>
 
-<div class="modal-shade" id="form-modal">
-    <div class="form-container">
-        <h2 id="ui-modal-title" style="margin-top:0; font-size: 30px; margin-bottom: 35px;">Lawsuit documentation form</h2>
-        <div class="grid-2">
-            <div class="span-all">
-                <label class="field-label" id="ui-label-1">Threat actor details</label>
-                <input type="text" class="input-style" placeholder="Identity or IP Address">
+<div class="modal-bg" id="form-overlay">
+    <div class="modal-content">
+        <h2 id="mt-main" style="margin-top:0; font-size: 28px; margin-bottom: 30px;">Lawsuit documentation form</h2>
+        <div class="form-grid">
+            <div class="full-span">
+                <label class="form-label" id="fl-1">Threat actor details</label>
+                <input type="text" class="form-input" placeholder="Name or IP">
             </div>
             <div>
-                <label class="field-label" id="ui-label-2">Malware type</label>
-                <select class="input-style" id="malware-options"></select>
+                <label class="form-label" id="fl-2">Malware type</label>
+                <select class="form-input" id="malware-dropdown"></select>
             </div>
             <div>
-                <label class="field-label" id="ui-label-3">Amount to sue for</label>
-                <input type="number" class="input-style" placeholder="0.00">
+                <label class="form-label" id="fl-3">Amount to sue for</label>
+                <input type="number" class="form-input" placeholder="0.00">
             </div>
         </div>
-        <button class="btn-submit" id="ui-btn-submit">Publish Lawsuit</button>
-        <button style="background:none; border:none; color:#ccc; margin-top:20px; cursor:pointer; font-weight:600; font-size: 14px;" onclick="toggleForm(false)">CANCEL FILING</button>
+        <button class="btn-green" id="fl-4">Publish Lawsuit</button>
+        <button style="background:none; border:none; color:#ccc; margin-top:15px; cursor:pointer; font-weight:600;" onclick="toggleForm(false)">CANCEL</button>
     </div>
 </div>
 
@@ -164,62 +159,55 @@
             h: "Do you<br>want to<br>sue a<br>hacker?",
             b: "Then use the Sue-A-Hacker Enterprise! The Sue-A-Hacker Enterprise is not here for nothing. <strong>Hackers</strong> can make you feel <em>sad, unsettled</em> and <em>discouraged.</em> But we are here to flip it all over so the hacker regrets. To start using our tool, simply click the <strong>button</strong> below. You will never regret it!",
             ct: "Litigation center", cd: "Securely file legal action against threat actors.", bt: "File lawsuit now",
-            mt: "Lawsuit documentation form", l1: "Threat actor details", l2: "Malware type", l3: "Amount to sue for", l4: "Publish Lawsuit",
-            ml: ["Ransomware", "Spyware", "Trojan", "Phishing", "Adware"]
+            mt: "Lawsuit documentation form", fl1: "Threat actor details", fl2: "Malware type", fl3: "Amount to sue for", fl4: "Publish Lawsuit",
+            ml: ["Ransomware", "Spyware", "Trojan", "Phishing"]
         },
         ru: {
             h: "Хотите<br>подать в<br>суд на<br>хакера?",
             b: "Тогда используйте Sue-A-Hacker Enterprise! Предприятие Sue-A-Hacker существует не просто так. <strong>Хакеры</strong> могут заставить вас чувствовать себя <em>грустным, встревоженным</em> и <em>разочарованным.</em> Но мы здесь, чтобы все изменить. Просто нажмите на <strong>кнопку</strong> ниже. Вы никогда не пожалеете!",
             ct: "Судебный центр", cd: "Безопасно подавайте иски против злоумышленников.", bt: "Подать иск сейчас",
-            mt: "Форма документации", l1: "Данные злоумышленника", l2: "Тип ПО", l3: "Сумма иска", l4: "Опубликовать иск",
+            mt: "Форма документации", fl1: "Данные взломщика", fl2: "Тип ПО", fl3: "Сумма иска", fl4: "Опубликовать иск",
             ml: ["Шифровальщик", "Шпион", "Троян"]
         },
         zh: {
             h: "你想要<br>起诉<br>黑客吗？",
-            b: "那就使用 Sue-A-Hacker Enterprise！Sue-A-Hacker Enterprise 的存在并非毫无意义。<strong>黑客</strong>会让你感到<em>悲伤、不安</em>和<em>沮丧。</em> 但我们在这里是为了扭转局面，让黑客感到后悔。只需点击下方的<strong>按钮</strong>。你绝不会后悔！",
+            b: "那就使用 Sue-A-Hacker Enterprise！Sue-A-Hacker Enterprise 的存在并非毫无意义。<strong>黑客</strong>会让你感到<em>悲伤、不安</em>和<em>沮丧。</em> 但我们在这里是为了扭转局面，让黑客后悔。只需点击下方的<strong>按钮</strong>。你绝不会后悔！",
             ct: "诉讼中心", cd: "安全地针对威胁行为者提起法律诉讼。", bt: "立即提交",
-            mt: "起诉书表格", l1: "黑客详情", l2: "软件类型", l3: "起诉金额", l4: "完成发布项目",
+            mt: "起诉书表格", fl1: "黑客详情", fl2: "软件类型", fl3: "起诉金额", fl4: "完成发布",
             ml: ["勒索软件", "木马", "钓鱼攻击"]
         },
         ar: {
             h: "هل تريد<br>مقاضاة<br>مخترق؟",
             b: "إذن استخدم Sue-A-Hacker Enterprise! إن Sue-A-Hacker Enterprise لم توجد هنا من فراغ. يمكن لـ <strong>المخترقين</strong> أن يجعلوك تشعر بـ <em>الحزن والقلق والإحباط.</em> ولكننا هنا لنقلب الموازين. لبدء استخدام أداتنا، ما عليك سوى النقر فوق <strong>الزر</strong> أدناه. لن تندم أبداً!",
             ct: "مركز التقاضي", cd: "ارفع دعوى قانونية بأمان ضد الجهات المهددة.", bt: "ارفع دعوى الآن",
-            mt: "نموذج التوثيق", l1: "تفاصيل المعتدي", l2: "نوع البرمجيات", l3: "مبلغ التعويض", l4: "نشر الدعوى",
+            mt: "نموذج التوثيق", fl1: "المعتدي", fl2: "النوع", fl3: "المبلغ", fl4: "نشر",
             ml: ["برامج الفدية", "تجسس", "احتيال"]
         }
     };
 
-    function applyGlobalContent() {
-        const lang = document.getElementById('lang-switch').value;
-        const data = dictionary[lang] || dictionary['en'];
-        
+    function runTranslation() {
+        const lang = document.getElementById('lang-menu').value;
+        const d = dictionary[lang] || dictionary['en'];
         document.body.dir = (lang === 'ar') ? 'rtl' : 'ltr';
-        document.getElementById('ui-header').innerHTML = data.h;
-        document.getElementById('ui-body').innerHTML = data.b;
-        document.getElementById('ui-card-title').innerText = data.ct;
-        document.getElementById('ui-card-desc').innerText = data.cd;
-        document.getElementById('ui-btn').innerText = data.bt;
-        document.getElementById('ui-modal-title').innerText = data.mt;
-        document.getElementById('ui-label-1').innerText = data.l1;
-        document.getElementById('ui-label-2').innerText = data.l2;
-        document.getElementById('ui-label-3').innerText = data.l3;
-        document.getElementById('ui-btn-submit').innerText = data.l4;
+        document.getElementById('h-main').innerHTML = d.h;
+        document.getElementById('b-main').innerHTML = d.b;
+        document.getElementById('ct-main').innerText = d.ct;
+        document.getElementById('cd-main').innerText = d.cd;
+        document.getElementById('bt-main').innerText = d.bt;
+        document.getElementById('mt-main').innerText = d.mt;
+        document.getElementById('fl-1').innerText = d.fl1;
+        document.getElementById('fl-2').innerText = d.fl2;
+        document.getElementById('fl-3').innerText = d.fl3;
+        document.getElementById('fl-4').innerText = d.fl4;
 
-        const select = document.getElementById('malware-options');
-        select.innerHTML = "";
-        data.ml.forEach(m => {
-            let opt = document.createElement('option');
-            opt.innerText = m;
-            select.appendChild(opt);
-        });
+        const sel = document.getElementById('malware-dropdown');
+        sel.innerHTML = "";
+        d.ml.forEach(m => { let o = document.createElement('option'); o.innerText = m; sel.appendChild(o); });
     }
 
-    function toggleForm(state) {
-        document.getElementById('form-modal').style.display = state ? 'flex' : 'none';
-    }
+    function toggleForm(s) { document.getElementById('form-overlay').style.display = s ? 'flex' : 'none'; }
 
-    applyGlobalContent();
+    runTranslation();
 </script>
 </body>
 </html>
