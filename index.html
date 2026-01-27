@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sue-A-Hacker Enterprise | Official Legal Portal</title>
     <style>
-        /* ADDED FONT-IMPORT FOR CHROMEBOOK SUPPORT */
+        /* This section forces Segoe UI to load on Chromebooks */
         @font-face {
             font-family: 'Segoe UI';
             src: local('Segoe UI'), 
@@ -28,7 +28,6 @@
         }
 
         body {
-            /* Kept your original font stack, now 'Segoe UI' will trigger the import above */
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #ffffff;
             margin: 0;
@@ -57,7 +56,7 @@
             font-weight: bold;
             cursor: pointer;
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            font-family: inherit; /* Added to ensure dropdowns use Segoe */
+            font-family: inherit;
         }
 
         .hero-layout {
@@ -97,7 +96,7 @@
         input, select, textarea {
             width: 100%; padding: 16px; border: 2px solid #edf2f7; border-radius: 12px; 
             font-size: 16px; box-sizing: border-box; background: #f8fafc;
-            font-family: inherit; /* Ensures inputs use Segoe */
+            font-family: inherit;
         }
 
         .file-drop-zone {
@@ -220,15 +219,14 @@
 </div>
 
 <script>
-    /* Your original script block goes here - unchanged */
     const data = {
         en: {
             title: "Do you<br>want to<br>sue a<br>hacker?",
             intro: "Then use the Sue-A-Hacker Enterprise! The Sue-A-Hacker Enterprise is not here for nothing. <strong>Hackers</strong> can make you feel <em>sad, unsettled</em> and <em>discouraged.</em> But we are here to flip it all over so the hacker regrets. To start using our tool, simply click the <strong>button</strong> below. You will never regret it!",
-            cardT: "Litigation center", cardD: "Securely file legal action.", btnM: "File lawsuit now",
+            cardT: "Litigation center", cardD: "Securely file legal action against black hat hackers and digital threat actors.", btnM: "File lawsuit now",
             modT: "Lawsuit documentation form", hInfo: "Threat actor details", hPh: "IP, Handle, or Name",
             mal: "Malware type", amt: "Amount to sue for", des: "Description of damages", desPh: "Detail the impact...",
-            fil: "Evidence upload (Multiple)", filB: "Click to attach files", filS: " file(s) attached.",
+            fil: "Evidence upload (Multiple)", filB: "Click to attach evidence files", filS: " file(s) attached.",
             fee: "Filing fee:", pub: "Complete payment & publish", can: "Cancel",
             serv: "Serving global warrant...", succ: "Lawsuit Successfully Filed",
             notary: "OFFICIAL DIGITAL NOTARY", print: "Print Official Receipt", close: "Close",
@@ -323,7 +321,7 @@
             fee: "Сбор:", pub: "Оплатить и подать", can: "Отмена",
             serv: "Ордер отправлен...", succ: "Иск подан",
             notary: "ОФИЦИАЛЬНЫЙ НОТАРИУС", print: "Печать чека", close: "Закрыть",
-            malList: ["Вымогатель", "Шпион", "Троян", "Криптоджекинг", "Руткит", "Кейлоггер", "Ботнет", "Вайпер", "SQL-инъекция", "Фишинг", "Adware", "Червь", "Логическая бомба", "Бэкдор", "Эксплойт-кит"],
+            malList: ["Вымогатель", "Шпион", "Троян", "Криптоджекинг", "Руткит", "Кейлоггер", "Ботнет", "Вайпер", "SQL-инъекция", "Фишиنگ", "Adware", "Червь", "Логическая бомба", "Бэкдор", "Эксплойт-кит"],
             logs: ["[ИНФО] Поиск...", "[ИНФО] Отправка данных...", "[ИНФО] Успешно."]
         },
         ar: {
