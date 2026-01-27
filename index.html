@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sue-A-Hacker Enterprise | Official Legal Portal</title>
     <style>
-        /* FORCING SEGOE UI VIA SYSTEM PREFERENCE + FALLBACK ELIMINATION */
         :root {
             --accent-red: #cc0000;
             --btn-green: #27ae60;
@@ -14,8 +13,8 @@
         }
 
         * {
-            /* Using the local system name first to bypass browser 'smart' fallbacks */
-            font-family: "Segoe UI", "Segoe UI Web (West European)", -apple-system, BlinkMacSystemFont, Tahoma, Arial, sans-serif !important;
+            /* Forced System Font Stack: Segoe UI first, then modern system sans-serifs */
+            font-family: "Segoe UI", "Segoe UI Web (West European)", -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif !important;
             -webkit-font-smoothing: antialiased;
             box-sizing: border-box;
         }
@@ -25,10 +24,10 @@
             align-items: center; min-height: 100vh; color: var(--main-black);
         }
 
-        /* ARABIC / RTL SUPPORT */
-        [dir="rtl"] { text-align: right; }
+        /* ARABIC / RTL FIX: Mirroring the layout */
         [dir="rtl"] .settings-bar { right: auto; left: 25px; }
         [dir="rtl"] .hero-layout { flex-direction: row-reverse; }
+        [dir="rtl"] .modal-box { text-align: right; }
 
         .settings-bar {
             position: fixed; top: 25px; right: 25px; display: flex; gap: 12px; z-index: 10000;
@@ -44,10 +43,19 @@
         }
 
         .heading-box { flex: 1; border-bottom: 5px solid #000; padding-bottom: 10px; }
-        /* FIXED: Normal line height for the question */
-        .red-title { color: var(--accent-red); font-size: clamp(30px, 4.5vw, 52px); font-weight: 700; margin: 0; line-height: 1.1; letter-spacing: -0.01em; }
         
-        .intro-copy { flex: 1.2; font-size: 18px; line-height: 1.2; color: #333; margin-top: 15px; }
+        /* Rhetorical Question: Normal line height restored */
+        .red-title { 
+            color: var(--accent-red); 
+            font-size: clamp(30px, 4.5vw, 52px); 
+            font-weight: 700; 
+            margin: 0; 
+            line-height: 1.1; 
+            letter-spacing: -0.01em; 
+        }
+        
+        /* Description: Tight line height to save space */
+        .intro-copy { flex: 1.2; font-size: 18px; line-height: 1.25; color: #333; margin-top: 15px; }
 
         .portal-card {
             background: #fff; padding: 30px; width: 340px; border-radius: 20px;
@@ -74,7 +82,11 @@
         .primary-btn { background: var(--main-black); color: white; border: none; padding: 16px; width: 100%; border-radius: 12px; font-weight: 700; font-size: 16px; cursor: pointer; margin-top: 10px; }
         .secondary-btn { background: #eee; color: #444; border: none; padding: 10px; width: 100%; border-radius: 12px; margin-top: 8px; cursor: pointer; font-weight: 600; }
 
-        #log-screen { background: #000; color: #0f0; padding: 20px; border-radius: 12px; font-family: monospace !important; display: none; margin-top: 15px; text-align: left; direction: ltr; }
+        #log-screen { 
+            background: #000; color: #0f0; padding: 20px; border-radius: 12px; 
+            font-family: monospace !important; display: none; margin-top: 15px; 
+            text-align: left; direction: ltr; 
+        }
     </style>
 </head>
 <body>
@@ -87,8 +99,6 @@
         <option value="it">Italiano</option>
         <option value="pt">Português</option>
         <option value="zh">中文</option>
-        <option value="es">Español</option>
-        <option value="fr">Français</option>
     </select>
     <select class="selector" id="curr" onchange="applyCurrency()">
         <option value="USD">USD ($)</option>
@@ -97,7 +107,7 @@
     </select>
 </div>
 
-<div class="hero-layout" id="hero">
+<div class="hero-layout">
     <div class="heading-box">
         <h1 class="red-title" id="main-title">Do you<br>want to<br>sue a<br>hacker?</h1>
     </div>
@@ -117,7 +127,7 @@
 </div>
 
 <div id="formOverlay" class="modal-overlay">
-    <div class="modal-box" id="modal">
+    <div class="modal-box">
         <div id="main-form-ui">
             <h2 id="modal-title" style="margin:0 0 10px 0;">Lawsuit documentation form</h2>
             <div class="form-grid">
@@ -135,10 +145,10 @@
                 </div>
                 <div class="full-width">
                     <label id="lbl-desc">Incident Description</label>
-                    <textarea id="desc-box" rows="2" placeholder="..."></textarea>
+                    <textarea id="desc-box" rows="2" placeholder="Describe the incident here..."></textarea>
                 </div>
                 <div class="full-width">
-                    <label id="lbl-file">Upload Evidence</label>
+                    <label id="lbl-file">Upload Evidence (.log, .txt, .jpg)</label>
                     <input type="file" id="file-up">
                 </div>
             </div>
@@ -168,31 +178,38 @@
         },
         ru: {
             title: "Хотите<br>подать в<br>суд на<br>хакера?",
-            intro: "Используйте Sue-A-Hacker Enterprise! Sue-A-Hacker Enterprise здесь не просто так. <strong>Хакеры</strong> могут заставить вас чувствовать себя <em>грустным, встревоженным</em> и <em>разочарованным.</em> Мы здесь, чтобы всё изменить. Чтобы начать работу, просто нажмите <strong>кнопку</strong> ниже. Вы не пожалеете!",
+            intro: "Используйте Sue-A-Hacker Enterprise! Sue-A-Hacker Enterprise здесь не просто так. <strong>Хакеры</strong> могут заставить вас чувствовать себя <em>грустным, встревоженным</em> и <em>разочарованным.</em> Мы здесь, чтобы всё изменить. Чтобы начать работу, нажмите <strong>кнопку</strong> ниже. Вы не пожалеете!",
             cardT: "Судебный центр", cardD: "Безопасно подавайте иски против преступников.", btn: "Подать иск сейчас", modT: "Форма судебного иска",
-            hInfo: "Данные злоумышленника", mal: "Тип ПО", amt: "Сумма иска", desc: "Описание инцидента", file: "Загрузить улики", fee: "Стоимость подачи:", pub: "Опубликовать", can: "Отмена", procT: "Выдача ордера...",
+            hInfo: "Данные злоумышленника", mal: "Тип ПО", amt: "Сумما иска", desc: "Описание инцидента", file: "Загрузить улики", fee: "Стоимость подачи:", pub: "Опубликовать", can: "Отмена", procT: "Выдача глобального ордера...",
             malList: ["Шифровальщик", "Шпион", "Троян", "Ботнет"]
         },
         ar: {
             title: "هل تريد<br>مقاضاة<br>مخترق؟",
-            intro: "إذن استخدم Sue-A-Hacker Enterprise! لم نوجد هنا من فراغ. يمكن لـ <strong>المخترقين</strong> أن يجعلوك تشعر بـ <em>الحزن والقلق والإحباط.</em> ولكننا هنا لنقلب الموازين. لبدء استخدام أداتنا، ما عليك سوى النقر فوق <strong>الزر</strong> أدناه. لن تندم أبداً!",
+            intro: "استخدم Sue-A-Hacker Enterprise! لم نوجد هنا من فراغ. يمكن لـ <strong>المخترقين</strong> أن يجعلوك تشعر بـ <em>الحزن والقلق والإحباط.</em> ولكننا هنا لنقلب الموازين. لبدء استخدام أداتنا، ما عليك سوى النقر فوق <strong>الزر</strong> أدناه. لن تندم أبداً!",
             cardT: "مركز التقاضي", cardD: "ارفع دعوى قانونية بأمان ضد الجهات المهددة.", btn: "ارفع دعوى الآن", modT: "نموذج الدعوى",
             hInfo: "تفاصيل المعتدي", mal: "نوع البرمجيات", amt: "المبلغ", desc: "وصف الحادث", file: "رفع الأدلة", fee: "الرسوم:", pub: "نشر", can: "إلغاء", procT: "جاري إصدار المذكرة...",
             malList: ["برامج الفدية", "تجسس", "طروادة", "بوت نت"]
         },
         it: {
             title: "Vuoi<br>fare causa a<br>un hacker?",
-            intro: "Usa Sue-A-Hacker Enterprise! Gli <strong>hacker</strong> possono farti sentire <em>triste, inquieto</em> e <em>scoraggiato.</em> Ma siamo qui per ribaltare la situazione. Per iniziare a usare il nostro strumento, clicca sul <strong>pulsante</strong> qui sotto.",
+            intro: "Usa Sue-A-Hacker Enterprise! Sue-A-Hacker Enterprise non è qui per niente. Gli <strong>hacker</strong> possono farti sentire <em>triste, inquieto</em> e <em>scoraggiato.</em> Ma siamo qui per ribaltare la situazione in modo che l'hacker si penta. Per iniziare a usare il nostro strumento, clicca sul <strong>pulsante</strong> qui sotto.",
             cardT: "Centro contenziosi", cardD: "Azioni legali sicure.", btn: "Fai causa ora", modT: "Modulo",
             hInfo: "Dettagli hacker", mal: "Tipo", amt: "Importo", desc: "Descrizione", file: "Carica prove", fee: "Costo:", pub: "Invia", can: "Annulla", procT: "Notifica mandato...",
             malList: ["Ransomware", "Spyware", "Trojan"]
         },
         pt: {
             title: "Quer<br>processar um<br>hacker?",
-            intro: "Use a Sue-A-Hacker Enterprise! <strong>Hackers</strong> podem fazer você se sentir <em>triste, inquieto</em> e <em>desanimado.</em> Estamos aqui para virar o jogo. Basta clicar no <strong>botão</strong> abaixo.",
+            intro: "Use a Sue-A-Hacker Enterprise! A Sue-A-Hacker Enterprise não está aqui para nada. <strong>Hackers</strong> podem fazer você se sentir <em>triste, inquieto</em> e <em>desanimado.</em> Mas estamos aqui para virar o jogo. Para começar a usar nossa ferramenta, basta clicar no <strong>botão</strong> abaixo. Você nunca se arrependerá!",
             cardT: "Litígios", cardD: "Ações legais seguras.", btn: "Processar agora", modT: "Formulário",
             hInfo: "Detalhes", mal: "Tipo", amt: "Valor", desc: "Descrição", file: "Carregar provas", fee: "Taxa:", pub: "Publicar", can: "Cancelar", procT: "Servindo mandado...",
             malList: ["Ransomware", "Spyware", "Trojan"]
+        },
+        zh: {
+            title: "你想要<br>起诉<br>黑客吗？",
+            intro: "使用 Sue-A-Hacker Enterprise！<strong>黑客</strong>会让你感到<em>悲伤、不安和沮丧。</em> 我们在这里帮你反击，让黑客感到后悔。只需点击下方的<strong>按钮</strong>。你绝不会后悔！",
+            cardT: "诉讼中心", cardD: "安全提交法律诉讼。", btn: "立即起诉", modT: "起诉书表格",
+            hInfo: "黑客详情", mal: "软件类型", amt: "起诉金额", desc: "事件说明", file: "上传证据", fee: "申请费：", pub: "发布", can: "取消", procT: "正在送达全球...",
+            malList: ["勒索软件", "木马", "僵尸网络"]
         }
     };
 
@@ -200,9 +217,7 @@
         const l = document.getElementById('lang').value;
         const t = data[l] || data['en'];
         
-        // APPLY RTL LOGIC
-        const isRtl = (l === 'ar');
-        document.body.dir = isRtl ? 'rtl' : 'ltr';
+        document.body.dir = (l === 'ar') ? 'rtl' : 'ltr';
         document.documentElement.lang = l;
 
         document.getElementById('main-title').innerHTML = t.title;
@@ -250,14 +265,14 @@
         document.getElementById('process-ui').style.display = 'block';
         const logs = document.getElementById('log-screen');
         logs.style.display = 'block';
-        const seq = ["> ENCRYPTING...", "> PENETRATING...", "> SERVING_WARRANT", "> SUCCESS"];
+        const seq = ["> ENCRYPTING...", "> PENETRATING...", "> SERVING_GLOBAL_WARRANT", "> DONE"];
         let i = 0;
         const interval = setInterval(() => {
             logs.innerHTML += seq[i] + "<br>";
             i++;
             if(i >= seq.length) {
                 clearInterval(interval);
-                setTimeout(() => { alert("Case Published."); showModal(false); }, 1000);
+                setTimeout(() => { alert("Success: Hacker Served."); showModal(false); }, 1000);
             }
         }, 600);
     }
