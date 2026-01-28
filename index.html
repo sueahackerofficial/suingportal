@@ -1,225 +1,2897 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SUE-A-HACKER ENTERPRISE | V5.0 GLOBAL LITIGATION</title>
-    <style>
-        @font-face {
-            font-family: 'Segoe UI';
-            src: url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/bold/latest.woff2') format('woff2');
-            font-weight: 700; font-style: normal;
-        }
-        @font-face {
-            font-family: 'Segoe UI';
-            src: url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/italic/latest.woff2') format('woff2');
-            font-weight: 400; font-style: italic;
-        }
-        @font-face {
-            font-family: 'Segoe UI';
-            src: url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/normal/latest.woff2') format('woff2');
-            font-weight: 400; font-style: normal;
-        }
-        @font-face {
-            font-family: 'Segoe UI';
-            src: url('https://c.s-microsoft.com/static/fonts/segoe-ui/cyrillic/bold/latest.woff2') format('woff2');
-            font-weight: 700; font-style: normal; unicode-range: U+0400-04FF;
-        }
-        :root {
-            --accent-red: #cc0000;
-            --main-black: #000000;
-            --off-white: #f5f5f7;
-            --legal-green: #00ff41;
-            --border-gray: #d2d2d7;
-            --ui-font: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
-        }
-        * {
-            font-family: var(--ui-font) !important;
-            box-sizing: border-box; margin: 0; padding: 0;
-            -webkit-font-smoothing: antialiased;
-        }
-        body { background: #ffffff; color: var(--main-black); overflow-x: hidden; min-height: 100vh; display: flex; flex-direction: column; }
-        header { padding: 30px 60px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-gray); background: #fff; z-index: 1000; position: sticky; top: 0; }
-        .logo-container { display: flex; align-items: center; gap: 15px; }
-        .logo-square { width: 44px; height: 44px; background: var(--accent-red); border-radius: 6px; display: flex; justify-content: center; align-items: center; color: white; font-weight: 700; font-size: 26px; }
-        .logo-text { font-weight: 700; font-size: 20px; text-transform: uppercase; letter-spacing: 0.5px; }
-        .lang-nav { display: flex; gap: 15px; font-size: 11px; font-weight: 700; color: #86868b; overflow-x: auto; max-width: 800px; padding: 10px 0; scrollbar-width: none; }
-        .lang-nav span { cursor: pointer; transition: color 0.2s; flex-shrink: 0; }
-        .lang-nav span:hover { color: var(--main-black); }
-        .active-lang { color: var(--main-black); border-bottom: 2px solid var(--main-black); }
-        main { flex: 1; display: grid; grid-template-columns: 1fr 480px; padding: 80px; align-items: start; gap: 100px; }
-        .hero-section h1 { font-size: 100px; font-weight: 700; line-height: 0.85; color: var(--accent-red); margin-bottom: 40px; letter-spacing: -5px; text-transform: uppercase; }
-        .hero-section p { font-size: 26px; max-width: 550px; line-height: 1.4; color: #1d1d1f; }
-        .hero-section strong { font-weight: 700; }
-        .hero-section em { font-style: italic; }
-        .filing-card { background: var(--off-white); padding: 60px; border-radius: 40px; border: 1px solid var(--border-gray); box-shadow: 0 50px 100px rgba(0,0,0,0.05); }
-        .form-row { margin-bottom: 30px; }
-        .form-row label { display: block; font-weight: 700; font-size: 11px; color: #6e6e73; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
-        .input-box { width: 100%; padding: 20px; border-radius: 12px; border: 1px solid var(--border-gray); font-size: 16px; background: #fff; transition: border-color 0.3s; }
-        .input-box:focus { outline: none; border-color: var(--main-black); }
-        .submit-trigger { width: 100%; padding: 24px; background: var(--main-black); color: #fff; border: none; border-radius: 16px; font-weight: 700; font-size: 18px; cursor: pointer; transition: transform 0.2s; }
-        .submit-trigger:hover { transform: scale(1.02); }
-        #warrant-stage { display: none; position: fixed; inset: 0; background: #000; z-index: 5000; flex-direction: column; align-items: center; justify-content: center; color: var(--legal-green); }
-        .map-canvas { position: relative; width: 90vw; height: 60vh; background: url('https://www.mapchart.net/img/world-map.png') no-repeat center; background-size: contain; filter: invert(1) brightness(0.5) sepia(1) hue-rotate(100deg); opacity: 0.5; }
-        .ping { position: absolute; width: 30px; height: 30px; border: 2px solid var(--legal-green); border-radius: 50%; animation: pulse-ring 2s infinite; }
-        @keyframes pulse-ring { 0% { transform: scale(0.5); opacity: 1; } 100% { transform: scale(4); opacity: 0; } }
-        .terminal-log { width: 80%; height: 250px; background: rgba(0,0,0,0.8); border-top: 2px solid var(--legal-green); padding: 20px; font-family: monospace !important; overflow-y: auto; font-size: 14px; line-height: 1.6; }
-        .exit-btn { position: absolute; top: 40px; right: 40px; font-weight: 700; cursor: pointer; border: 1px solid var(--legal-green); padding: 10px 20px; }
-    </style>
-</head>
-<body>
-<header>
-    <div class="logo-container">
-        <div class="logo-square">S</div>
-        <div class="logo-text">Sue-A-Hacker</div>
-    </div>
-    <div class="lang-nav" id="lng-nav"></div>
-</header>
-<main id="app-main">
-    <div class="hero-section">
-        <h1 id="h-q">DO YOU<br>WANT TO<br>SUE A<br>HACKER?</h1>
-        <p id="h-p">Use Sue-A-Hacker Enterprise. <strong>Hackers</strong> can make you feel <em>sad</em>.</p>
-    </div>
-    <div class="filing-card">
-        <div class="form-row"><label id="l-ip">TARGET IP / NODE NAME</label><input id="f-ip" class="input-box" placeholder="255.255.255.255"></div>
-        <div class="form-row"><label id="l-amt">AMOUNT TO SUE FOR (USD)</label><input type="number" id="f-amt" class="input-box" placeholder="100,000"></div>
-        <div class="form-row"><label id="l-desc">DESCRIPTION</label><textarea id="f-desc" class="input-box" style="height:120px; resize:none;"></textarea></div>
-        <div class="form-row"><label id="l-file">EVIDENCE UPLOAD</label><input type="file" id="f-file" class="input-box"></div>
-        <button class="submit-trigger" id="f-btn" onclick="executeLitigation()">SUBMIT LITIGATION</button>
-    </div>
-</main>
-<div id="warrant-stage">
-    <div class="exit-btn" onclick="location.reload()">TERMINATE_SESSION</div>
-    <div class="map-canvas" id="m-canvas">
-        <div class="ping" style="top:42%; left:28%"></div>
-        <div class="ping" style="top:58%; left:72%"></div>
-    </div>
-    <div class="terminal-log" id="t-log"></div>
-</div>
-<script>
-const DB = {
-    langs: {
-        en: { q: "DO YOU<br>WANT TO<br>SUE A<br>HACKER?", p: "Use Sue-A-Hacker Enterprise. <strong>Hackers</strong> can make you feel <em>sad</em>.", b: "SUBMIT LITIGATION" },
-        ru: { q: "ВЫ ХОТИТЕ<br>ПОДАТЬ В СУД<br>НА ХАКЕРА?", p: "Используйте Sue-A-Hacker Enterprise. <strong>Хакеры</strong> могут заставить вас <em>грустить</em>.", b: "ОТПРАВИТЬ ИСК" },
-        fr: { q: "VOULEZ-VOUS<br>POURSUIVRE UN<br>HACKER?", p: "Utilisez Sue-A-Hacker Enterprise. Les <strong>hackers</strong> vous rendent <em>triste</em>.", b: "SOUMETTRE" },
-        de: { q: "WOLLEN SIE<br>EINEN HACKER<br>VERKLAGEN?", p: "Nutzen Sie Sue-A-Hacker Enterprise. <strong>Hacker</strong> machen Sie <em>traurig</em>.", b: "ABSENDEN" },
-        es: { q: "¿QUIERES<br>DEMANDAR A UN<br>HACKER?", p: "Use Sue-A-Hacker Enterprise. Los <strong>hackers</strong> pueden hacerte sentir <em>triste</em>.", b: "PRESENTAR" },
-        zh: { q: "你想要<br>起诉<br>黑客吗？", p: "请使用 Sue-A-Hacker Enterprise。<strong>黑客</strong>会让你感到<em>悲伤</em>。", b: "提交诉讼" },
-        ja: { q: "ハッカーを<br>訴えたい<br>ですか？", p: "Sue-A-Hacker Enterpriseを使用してください。<strong>ハッカー</strong>はあなたを<em>悲しく</em>させます。", b: "訴訟を提起" },
-        ko: { q: "해커를<br>고소하고<br>싶으십니까?", p: "Sue-A-Hacker Enterprise를 이용하십시오. <strong>해커</strong>는 당신을 <em>슬프게</em> 만듭니다.", b: "소송 제출" },
-        pt: { q: "QUER<br>PROCESSAR UM<br>HACKER?", p: "Use Sue-A-Hacker Enterprise. Os <strong>hackers</strong> podem fazer você se sentir <em>triste</em>.", b: "SUBMETER" },
-        it: { q: "VUOI FARE<br>CAUSA A UN<br>HACKER?", p: "Usa Sue-A-Hacker Enterprise. Gli <strong>hacker</strong> possono farti sentire <em>triste</em>.", b: "INVIA" },
-        tr: { q: "DAVA AÇMAK<br>İSTER MİSİNİZ?", p: "<strong>Hackerlar</strong> sizi <em>üzebilir</em>.", b: "GÖNDER" },
-        nl: { q: "AANKLAGEN?", p: "<strong>Hackers</strong> maken u <em>verdrietig</em>.", b: "INDIENEN" },
-        sv: { q: "STÄMMA?", p: "<strong>Hackers</strong> kan göra dig <em>ledsen</em>.", b: "SKICKA" },
-        pl: { q: "POZWAĆ?", p: "<strong>Hakerzy</strong> mogą sprawić <em>smutek</em>.", b: "WYŚLIJ" },
-        vi: { q: "KIỆN?", p: "<strong>Hacker</strong> làm bạn <em>buồn</em>.", b: "GỬI" },
-        th: { q: "ฟ้อง?", p: "<strong>แฮกเกอร์</strong>ทำให้คุณ<em>เศร้า</em>.", b: "ยื่น" },
-        hi: { q: "मुकदमा?", p: "<strong>हैकर्स</strong> आपको <em>उदास</em> करेंगे।", b: "भेजें" },
-        ar: { q: "مقاضاة؟", p: "<strong>المخترقون</strong> يجعلك <em>حزيناً</em>.", b: "تقديم" },
-        // Expanded 100+ language placeholder logic
-        id: { q: "TUNTUT?", p: "<strong>Hacker</strong> bikin <em>sedih</em>.", b: "KIRIM" },
-        ms: { q: "TUNTUT?", p: "<strong>Hacker</strong> buat <em>sedih</em>.", b: "HANTAR" },
-        cs: { q: "ŽALOVAT?", p: "<strong>Hackeři</strong> vás <em>rozmutní</em>.", b: "ODESLAT" },
-        el: { q: "ΜΗΝΥΣΗ;", p: "<strong>Hackers</strong> σας <em>λυπούν</em>.", b: "ΥΠΟΒΟΛΗ" },
-        hu: { q: "PERELNI?", p: "<strong>Hackerek</strong> <em>szomorúvá</em> teszik.", b: "KÜLDÉS" },
-        ro: { q: "JUDECATĂ?", p: "<strong>Hackerii</strong> vă <em>întristează</em>.", b: "TRIMITE" },
-        sk: { q: "ŽALOVAŤ?", p: "<strong>Hackeri</strong> vás <em>rozsmútia</em>.", b: "POSLAŤ" },
-        uk: { q: "СУД?", p: "<strong>Хакери</strong> <em>засмучують</em>.", b: "ПОДАТИ" },
-        bg: { q: "СЪД?", p: "<strong>Хакерите</strong> ви <em>натъжават</em>.", b: "ИЗПРАТИ" },
-        he: { q: "תביעה?", p: "<strong>האקרים</strong> עושים <em>עצוב</em>.", b: "שלח" },
-        da: { q: "SØGSMÅL?", p: "<strong>Hackere</strong> gør dig <em>trist</em>.", b: "SEND" },
-        fi: { q: "KANNNE?", p: "<strong>Hakkerit</strong> tekevät <em>surulliseksi</em>.", b: "LÄHETÄ" },
-        no: { q: "SØKSMÅL?", p: "<strong>Hackere</strong> gjør deg <em>trist</em>.", b: "SEND" }
+const CORE_CONFIG = {
+    enterprise_id: "SAH-GLOBAL-99",
+    security_level: "MAXIMUM",
+    render_target: "WEB_GL_HUD",
+    system_font: "Segoe UI"
+};
+
+function initializeSystem() {
+    console.log("System Initializing: " + CORE_CONFIG.enterprise_id);
+    return true;
+}
+
+const GLOBAL_MAP_DATA = {
+    "NODE_LIT": "LITIGATION_ROOT",
+    "NODE_GRV": "GRIEVANCE_ROOT",
+    "NODE_AST": "ASSET_ROOT"
+};
+
+const STATUTE_DATABASE = {
+    "US_FED": "COMPUTER_FRAUD_ABUSE_ACT",
+    "EU_GDPR": "DATA_PROTECTION_REGULATION",
+    "UK_CMA": "COMPUTER_MISUSE_ACT"
+};
+
+const GRIEVANCE_TYPES = [
+    { id: "G01", type: "DATA_BREACH", severity: 10 },
+    { id: "G02", type: "IP_THEFT", severity: 8 },
+    { id: "G03", type: "SERVICE_DISRUPTION", severity: 7 }
+];
+
+function processGrievance(id) {
+    const item = GRIEVANCE_TYPES.find(g => g.id === id);
+    return item ? `PROCESSING_${item.type}` : "INVALID_ID";
+}
+
+const JUDICIAL_REGISTRY_B = {
+    "DOCKET_ALPHA": { judge: "JUSTICE_STARK", status: "PENDING" },
+    "DOCKET_BETA": { judge: "JUSTICE_WAYNE", status: "ACTIVE" }
+};
+
+const ASSET_REGISTRY_ALPHA = {
+    "NODE_001": { type: "CRYPTO_EXCHANGE", protocol: "SWIFT-Z", freeze_level: 0.95, priority: "HIGH" },
+    "NODE_002": { type: "OFFSHORE_BANK", protocol: "IBAN-SEC", freeze_level: 0.88, priority: "CRITICAL" },
+    "NODE_003": { type: "REVENUE_STREAM", protocol: "STRIPE-API", freeze_level: 1.00, priority: "IMMEDIATE" },
+    "NODE_004": { type: "REAL_ESTATE_HOLDING", protocol: "DEED-DIGI", freeze_level: 0.50, priority: "LONG_TERM" },
+    "NODE_005": { type: "IP_PORTFOLIO", protocol: "PATENT-X", freeze_level: 0.75, priority: "MEDIUM" },
+    "NODE_006": { type: "EQUITY_STAKE", protocol: "NYSE-FIX", freeze_level: 0.90, priority: "HIGH" },
+    "NODE_007": { type: "CLOUD_INFRA", protocol: "AWS-IAM", freeze_level: 1.00, priority: "CRITICAL" },
+    "NODE_008": { type: "DOMAIN_REGISTRY", protocol: "ICANN-LOCK", freeze_level: 1.00, priority: "IMMEDIATE" }
+};
+
+const LITIGATION_TIMELINE_TEMPLATE = [
+    { phase: "DISCOVERY", duration_days: 180, actions: ["LOG_ANALYSIS", "DEPOSITION_DIGITAL", "METADATA_SCRUB"] },
+    { phase: "PRE_TRIAL_MOTIONS", duration_days: 90, actions: ["MOTION_TO_DISMISS_QUASH", "JURISDICTION_CHALLENGE"] },
+    { phase: "EVIDENTIARY_HEARING", duration_days: 45, actions: ["EXPERT_WITNESS_CYBER", "PACKET_TRACE_DEMO"] },
+    { phase: "ADJUDICATION", duration_days: 30, actions: ["VERDICT_RENDER", "SENTENCING_GUIDELINES"] },
+    { phase: "ASSET_LIQUIDATION", duration_days: 120, actions: ["AUCTION_DOMAINS", "RECOVERY_DISTRIBUTION"] }
+];
+
+function calculateJurisdictionalDelay(countryCode) {
+    const baseline = 365;
+    const multipliers = { "US": 1.2, "DE": 1.5, "IN": 2.5, "BR": 3.0, "CN": 1.1, "RU": 1.4 };
+    return Math.floor(baseline * (multipliers[countryCode] || 1.0));
+}
+
+function generateFullProsecutionReport(id, target, amount) {
+    const total_days = LITIGATION_TIMELINE_TEMPLATE.reduce((acc, p) => acc + p.duration_days, 0);
+    const report = {
+        litigation_id: id,
+        target_node: target,
+        valuation_usd: amount,
+        estimated_conclusion: new Date(Date.now() + (total_days * 86400000)).toLocaleDateString(),
+        milestones: LITIGATION_TIMELINE_TEMPLATE.map(m => {
+            return `${m.phase} COMPLETED BY ${new Date(Date.now() + (m.duration_days * 86400000)).toLocaleDateString()}`;
+        })
+    };
+    return report;
+}
+
+const GLOBAL_SEIZURE_PROTOCOLS = {
+    "METHOD_A": "REMOTE_KERNEL_LOCK",
+    "METHOD_B": "CREDIT_LINE_TERMINATION",
+    "METHOD_C": "BGP_HIJACK_ISOLATION",
+    "METHOD_D": "DNS_SINKHOLE_REDIRECTION",
+    "METHOD_E": "COLD_WALLET_EXTRACTION",
+    "METHOD_F": "SOCIAL_ENGINEERING_RECOVERY",
+    "METHOD_G": "HARDWARE_ID_BLACKLIST",
+    "METHOD_H": "API_TOKEN_INVALIDATION"
+};
+
+const RECOVERY_TIERS = {
+    "TIER_1": { threshold: 1000, fee_percent: 15, speed: "EXPRESS" },
+    "TIER_2": { threshold: 10000, fee_percent: 10, speed: "STANDARD" },
+    "TIER_3": { threshold: 100000, fee_percent: 5, speed: "ENTERPRISE" },
+    "TIER_4": { threshold: 1000000, fee_percent: 2, speed: "ULTRA" }
+};
+
+function getRecoveryTier(amount) {
+    if (amount >= 1000000) return RECOVERY_TIERS.TIER_4;
+    if (amount >= 100000) return RECOVERY_TIERS.TIER_3;
+    if (amount >= 10000) return RECOVERY_TIERS.TIER_2;
+    return RECOVERY_TIERS.TIER_1;
+}
+
+const LEGAL_STRATEGY_MATRIX = {
+    "AGGRESSIVE": ["INTERPOL_RED_NOTICE", "ASSET_FREEZE_ORDER", "REPUTATION_DAMAGE_CLAIM"],
+    "MODERATE": ["CEASE_AND_DESIST", "SETTLEMENT_NEGOTIATION", "ARBITRATION_FILING"],
+    "PASSIVE": ["MONITORING_ONLY", "INFORMATION_GATHERING", "CREDIT_WATCH"]
+};
+
+function selectStrategy(level) {
+    return LEGAL_STRATEGY_MATRIX[level.toUpperCase()] || LEGAL_STRATEGY_MATRIX.MODERATE;
+}
+
+const WITNESS_DATABASE = [
+    { name: "DR. J. BYTES", specialty: "FORENSIC_DECRYPTION", rate: 500 },
+    { name: "SARAH_CRYPT", specialty: "BLOCKCHAIN_TRACE", rate: 750 },
+    { name: "ALEX_LOGS", specialty: "SERVER_PENETRATION_ANALYSIS", rate: 450 },
+    { name: "PROF_SILICON", specialty: "HARDWARE_VULNERABILITY", rate: 600 }
+];
+
+function assignExpertWitness(specialty) {
+    return WITNESS_DATABASE.find(w => w.specialty === specialty) || WITNESS_DATABASE[0];
+}
+
+const JURISDICTION_SPECIFIC_FORMS = {
+    "US_NY": "FORM_NY_C_103",
+    "UK_LDN": "WARRANT_UK_MET_55",
+    "FR_PAR": "DOSSIER_FR_JUD_9",
+    "DE_BER": "AKTE_DE_BUND_22",
+    "JP_TOK": "FORM_JP_MET_11",
+    "CN_BEI": "FORM_CN_SUP_88"
+};
+
+function fetchMandatoryForms(region) {
+    return JURISDICTION_SPECIFIC_FORMS[region] || "GLOBAL_FORM_INTER_01";
+}
+
+const EVIDENCE_LOCKER = {
+    storage: [],
+    add_item: function(id, type, hash) {
+        this.storage.push({ id, type, hash, ts: Date.now() });
     },
-    statutes: {
-        "AF": "Penal Code, Art 488", "AL": "Law 9887", "DZ": "Law 09-04", "AD": "Llei 15/2003", "AO": "Law 22/11", "AG": "ECTA 2006",
-        "AR": "Law 26.388", "AM": "Criminal Code Art 251", "AU": "Crimes Act 1914", "AT": "StGB §118a", "AZ": "Criminal Code Art 271",
-        "BS": "Computer Misuse Act", "BH": "Law 60/2014", "BD": "ICT Act 2006", "BB": "Computer Misuse Cap 143", "BY": "Criminal Code Art 349",
-        "BE": "Crim Code Art 550", "BZ": "Summary Juris Act", "BJ": "Digital Code 2017", "BT": "ICM Act 2006", "BO": "Crim Code Art 363",
-        "BA": "Crim Code Art 193", "BW": "Cybercrime Act", "BR": "Law 12.737", "BN": "Computer Misuse Act", "BG": "Crim Code Art 319",
-        "BF": "Law 045-2009", "BI": "Law 1/02", "KH": "Draft Cybercrime Law", "CM": "Law 2010/012", "CA": "Crim Code s.342.1", "CV": "Law 14/VIII/2012",
-        "CF": "Law 10.001", "TD": "Law 009/PR/2015", "CL": "Law 19.223", "CN": "Cybersecurity Law 2017", "CO": "Law 1273/2009", "KM": "Law 08-019",
-        "CG": "Law 10-2009", "CR": "Law 9048", "CI": "Law 2013-451", "HR": "Crim Code Art 271", "CU": "Decree 370", "CY": "Law 22(I)/2004",
-        "CZ": "Act 40/2009", "DK": "Crim Code §263", "DJ": "Law 114/AN/11", "DM": "Computer Misuse Act", "DO": "Law 53-07", "EC": "COIP Art 230",
-        "EG": "Law 175/2018", "SV": "Ley de Delitos Informáticos", "GQ": "Law 1/2012", "ER": "Proc 114/2001", "EE": "Pen Code §206", "SZ": "Cyberbill 2020",
-        "ET": "Proc 958/2016", "FJ": "Crimes Act 2009", "FI": "Crim Code Ch 38", "FR": "Code Pénal Art 323", "GA": "Law 001/2011", "GM": "IC Act 2009",
-        "GE": "Crim Code Art 284", "DE": "StGB §202a", "GH": "Cybersecurity Act 2020", "GR": "Law 4411/2016", "GD": "Electronic Crimes Act", "GT": "Crim Code Art 274",
-        "GN": "Law L/2016/037", "GW": "Crim Code Art 154", "GY": "Cybercrime Act 2018", "HT": "Decree 2020", "HN": "Crim Code Art 255", "HU": "Act C of 2012",
-        "IS": "Pen Code Art 228", "IN": "IT Act 2000", "ID": "ITE Law", "IR": "Cybercrime Law", "IQ": "Law 123/2012", "IE": "Crim Justice Act 2017",
-        "IL": "Computers Law 1995", "IT": "Crim Code Art 615", "JM": "Cybercrime Act 2015", "JP": "Crim Code Art 168", "JO": "Cybercrime Law 2015",
-        "KZ": "Crim Code Art 227", "KE": "Computer Misuse Act", "KI": "Pen Code s.272", "KP": "Crim Code Art 204", "KR": "Network Act", "KW": "Law 63/2015",
-        "KG": "Crim Code Art 287", "LA": "Law 2015", "LV": "Crim Law §241", "LB": "Law 81/2018", "LS": "Cybercrime Bill", "LR": "Pen Code s.15",
-        "LY": "Law 5/2022", "LI": "StGB §118", "LT": "Crim Code Art 196", "LU": "Crim Code Art 509", "MG": "Law 2014-006", "MW": "E-Trans Act",
-        "MY": "Computer Crimes Act", "MV": "Pen Code s.310", "ML": "Law 2019-056", "MT": "Crim Code Art 337", "MH": "Crim Code Ch 11", "MR": "Law 2016-007",
-        "MU": "Cybercrime Act", "MX": "Fed Crim Code Art 211", "FM": "Crim Code Tit 11", "MD": "Crim Code Art 259", "MC": "Crim Code Art 389", "MN": "Crim Code Art 26",
-        "ME": "Crim Code Art 352", "MA": "Law 07-03", "MZ": "Law 3/2017", "MM": "Electronic Trans Law", "NA": "Cybercrime Act", "NR": "Crimes Act 2016",
-        "NP": "ETA 2063", "NL": "Crim Code Art 138ab", "NZ": "Crimes Act s.249", "NI": "Law 1042", "NE": "Law 2019-33", "NG": "Cybercrimes Act 2015",
-        "MK": "Crim Code Art 251", "NO": "Pen Code §204", "OM": "Cybercrime Law", "PK": "PECA 2016", "PW": "Pen Code s.2801", "PA": "Crim Code Tit IX",
-        "PG": "Cybercrime Code 2016", "PY": "Law 4439", "PE": "Law 30096", "PH": "RA 10175", "PL": "Pen Code Art 267", "PT": "Law 109/2009",
-        "QA": "Law 14/2014", "RO": "Crim Code Art 360", "RU": "UK-RF Art 272", "RW": "Law 60/2018", "KN": "Cybercrime Act", "LC": "Computer Misuse Act",
-        "VC": "Cybercrime Act", "WS": "Crimes Act 2013", "SM": "Crim Code Art 184", "ST": "Law 06/2005", "SA": "Anti-Cybercrime Law", "SN": "Law 2016-29",
-        "RS": "Crim Code Art 298", "SC": "Computer Misuse Act", "SL": "Cybersecurity Act", "SG": "Computer Misuse Act", "SK": "Crim Code §247",
-        "SI": "Pen Code Art 221", "SB": "Pen Code s.315", "SO": "Crim Code Art 212", "ZA": "ECT Act 2002", "SS": "Cyberlaw 2021", "ES": "Crim Code Art 197",
-        "LK": "Computer Crimes Act", "SD": "Cybercrime Act 2018", "SR": "Crim Code Art 161", "SE": "Crim Code Ch 4 §9c", "CH": "Crim Code Art 143",
-        "SY": "Law 17/2012", "TJ": "Crim Code Art 298", "TZ": "Cybercrimes Act", "TH": "Computer Crime Act", "TL": "Crim Code Art 214", "TG": "Law 2018-026",
-        "TO": "Computer Misuse Act", "TT": "Computer Misuse Act", "TN": "Decree 54/2022", "TR": "Pen Code Art 243", "TM": "Crim Code Art 298", "TV": "Pen Code s.274",
-        "UG": "Computer Misuse Act", "UA": "Crim Code Art 361", "AE": "Law 34/2021", "GB": "Computer Misuse Act 1990", "US": "18 U.S.C. § 1030", "UY": "Law 19.749",
-        "UZ": "Crim Code Art 278", "VU": "Cybercrime Act", "VE": "Special Law", "VN": "Cybersecurity Law", "YE": "Crim Code Art 254", "ZM": "Cybersecurity Act", "ZW": "Cybercrime Act"
+    get_all: function() {
+        return this.storage;
     }
 };
 
-function switchL(l) {
-    const d = DB.langs[l];
-    document.getElementById('h-q').innerHTML = d.q;
-    document.getElementById('h-p').innerHTML = d.p;
-    document.getElementById('f-btn').innerText = d.b;
-    document.querySelectorAll('.lang-nav span').forEach(s => s.classList.toggle('active-lang', s.innerText.toLowerCase() === l));
+function simulateCourtRoomDebate(id) {
+    const arguments_pro = ["IP_MATCH_CONFIRMED", "MAC_ADDRESS_STOLEN_DATA", "TIME_STAMP_SYMMETRY"];
+    const arguments_con = ["DYNAMIC_IP_PLAUSIBLE_DENIABILITY", "PROXY_MISDIRECTION", "SPOOFED_MAC"];
+    return { id, pro: arguments_pro, con: arguments_con, result: "PENDING_JUDGMENT" };
 }
 
-function executeLitigation() {
-    const target = document.getElementById('f-ip').value || "UNKNOWN_NODE";
-    const amount = document.getElementById('f-amt').value || "0";
-    document.getElementById('app-main').style.display = 'none';
-    const stage = document.getElementById('warrant-stage');
-    stage.style.display = 'flex';
-    
-    const log = document.getElementById('t-log');
-    const randomCountryCode = Object.keys(DB.statutes)[Math.floor(Math.random() * 200)];
-    const statute = DB.statutes[randomCountryCode] || "Global Cyber Treaty";
-
-    const msgs = [
-        `[NETWORK] RESOLVING TARGET NODE: ${target}...`,
-        `[SECURITY] BYPASSING OFFSHORE PROXY LAYERS...`,
-        `[LEGAL] ESTABLISHING CONNECTION TO JURISDICTION_${randomCountryCode}...`,
-        `[DATABASE] MAPPING STATUTE: ${statute}...`,
-        `[SYSTEM] WARRANT SIGNED BY GLOBAL JUDICIAL COUNCIL.`,
-        `[ACTION] FREEZING ASSETS IN THE AMOUNT OF $${amount} USD...`,
-        `[SUCCESS] WARRANT SERVED TO TARGET: ${target}.`,
-        `[SYSTEM] JUSTICE DEPLOYED. SESSION LOGGED.`
-    ];
-
-    let i = 0;
-    const interval = setInterval(() => {
-        const line = document.createElement('div');
-        line.innerText = msgs[i];
-        log.appendChild(line);
-        log.scrollTop = log.scrollHeight;
-        i++;
-        if(i >= msgs.length) clearInterval(interval);
-    }, 1000);
-}
-
-window.onload = () => {
-    const nav = document.getElementById('lng-nav');
-    Object.keys(DB.langs).forEach(k => {
-        const s = document.createElement('span');
-        s.innerText = k.toUpperCase();
-        s.onclick = () => switchL(k);
-        if(k === 'en') s.className = 'active-lang';
-        nav.appendChild(s);
-    });
+const GLOBAL_TAX_LIABILITY = {
+    "VAT": 0.20,
+    "LEGAL_SURCHARGE": 0.05,
+    "PROCESSING_FEE": 150.00,
+    "RECOVERY_TAX": 0.02
 };
-</script>
-</body>
-</html>
+
+function calculateTotalLegalCosts(amount) {
+    const base = amount * GLOBAL_TAX_LIABILITY.LEGAL_SURCHARGE;
+    const vat = base * GLOBAL_TAX_LIABILITY.VAT;
+    return base + vat + GLOBAL_TAX_LIABILITY.PROCESSING_FEE;
+}
+
+const SETTLEMENT_OFFER_GENERATOR = {
+    generate: function(amount) {
+        return {
+            immediate_payout: amount * 0.4,
+            payment_plan: (amount * 0.7) / 12,
+            waive_rights: true
+        };
+    }
+};
+
+function updateLitigationStatus(id, status) {
+    const statuses = ["FILED", "SERVED", "DISCOVERY", "HEARING", "JUDGMENT", "COLLECTION"];
+    return statuses.includes(status) ? status : "UNKNOWN";
+}
+
+const INTERNATIONAL_SANCTION_LIST = ["NODE_99", "NODE_X_ALPHA", "NODE_Z_BETA"];
+function checkSanctionStatus(node) {
+    return INTERNATIONAL_SANCTION_LIST.includes(node) ? "BLOCKED" : "CLEAR";
+}
+
+const COURT_REPORTER_LOG = {
+    entries: [],
+    log: function(msg) {
+        this.entries.push(`[${new Date().toISOString()}] ${msg}`);
+    }
+};
+
+function triggerRemoteEvidencePurge(id) {
+    COURT_REPORTER_LOG.log(`PURGING SENSITIVE DATA FOR CASE ${id}`);
+    return true;
+}
+
+const ARBITRATION_RULES = {
+    "UNCITRAL": "GLOBAL_STANDARD",
+    "ICC": "CHAMBER_COMMERCE",
+    "LCIA": "LONDON_INTERNATIONAL"
+};
+
+function selectArbitrator(type) {
+    return ARBITRATION_RULES[type] || ARBITRATION_RULES.UNCITRAL;
+}
+
+const JUDICIAL_RANKINGS = {
+    "SUPREME": 1,
+    "APPELLATE": 2,
+    "DISTRICT": 3,
+    "MAGISTRATE": 4
+};
+
+function getCourtAuthority(level) {
+    return JUDICIAL_RANKINGS[level] || 5;
+}
+
+const DATA_PRIVACY_COMPLIANCE = {
+    "GDPR": { dpo_required: true, max_fine: "4_PERCENT_ANNUAL" },
+    "CCPA": { opt_out_required: true, fine_per_violation: 7500 },
+    "LGPD": { brazil_standard: true, audit_required: true }
+};
+
+function validateCompliance(region) {
+    return DATA_PRIVACY_COMPLIANCE[region] || { status: "GENERAL_COMPLIANCE" };
+}
+
+const FORENSIC_TOOLKIT = ["WIRESHARK_DISSECTOR", "FTK_IMAGER", "ENCASE_FORENSIC", "VOLATILITY_MEMORY_DUMP"];
+function deployForensicSuite(target) {
+    return FORENSIC_TOOLKIT.map(tool => `DEPLOYING ${tool} AGAINST ${target}`);
+}
+
+const CASE_DOCKET_SUMMARY = {
+    case_no: "SUE-2026-X99",
+    judge: "HONORABLE_ALGORITHM",
+    courtroom: "VIRTUAL_01",
+    status: "ACTIVE"
+};
+
+function printDocket() {
+    return `CASE: ${CASE_DOCKET_SUMMARY.case_no} | JUDGE: ${CASE_DOCKET_SUMMARY.judge}`;
+}
+
+const GLOBAL_PROCESS_SERVERS = {
+    "EMEA": "EURO_SERVE_LTD",
+    "AMER": "AMERI_SERVE_CORP",
+    "APAC": "APAC_SERVE_GLOBAL"
+};
+
+function getProcessServer(region) {
+    return GLOBAL_PROCESS_SERVERS[region] || "INTERPOL_DIRECT";
+}
+
+const APPELLATE_HISTORY = [];
+function logAppeal(id, reason) {
+    APPELLATE_HISTORY.push({ id, reason, date: Date.now() });
+}
+
+const DISCOVERY_REPOSITORY = {
+    files: ["EMAILS.DB", "LOGS.TXT", "BROWSER_HISTORY.SQLITE"],
+    tags: ["CRITICAL", "HIGH", "MEDIUM"]
+};
+
+function scanDiscoveryRepo() {
+    return DISCOVERY_REPOSITORY.files.length;
+}
+
+const SETTLEMENT_REJECTION_MESSAGES = [
+    "OFFER_TOO_LOW",
+    "NO_LIABILITY_ADMITTED",
+    "TERMS_UNACCEPTABLE",
+    "COUNTER_OFFER_PENDING"
+];
+
+function rejectSettlement(index) {
+    return SETTLEMENT_REJECTION_MESSAGES[index] || "GENERAL_REJECTION";
+}
+
+const JURY_SELECTION_POOL = ["CIV_001", "CIV_002", "CIV_003", "CIV_004", "CIV_005"];
+function selectJury() {
+    return JURY_SELECTION_POOL.sort(() => 0.5 - Math.random()).slice(0, 3);
+}
+
+const LEGAL_FEE_STRUCTURE = {
+    partner_hourly: 1200,
+    associate_hourly: 600,
+    paralegal_hourly: 250
+};
+
+function estimateHourlyCosts(hours) {
+    return hours * LEGAL_FEE_STRUCTURE.partner_hourly;
+}
+
+const TRANSCRIPT_LOGS = [];
+function recordTranscript(speaker, text) {
+    TRANSCRIPT_LOGS.push(`${speaker}: ${text}`);
+}
+
+const SUBPOENA_TEMPLATES = {
+    "ISP": "REQUEST_USER_IDENTIFICATION",
+    "BANK": "REQUEST_TRANSACTION_HISTORY",
+    "CLOUD": "REQUEST_SERVER_SNAPSHOT"
+};
+
+function issueSubpoena(type) {
+    return SUBPOENA_TEMPLATES[type] || "GENERAL_REQUEST";
+}
+
+const CASE_MANAGEMENT_TAGS = ["URGENT", "CONFIDENTIAL", "REDACTED", "SEALED"];
+function tagCase(tag) {
+    return CASE_MANAGEMENT_TAGS.includes(tag) ? tag : "UNTAGGED";
+}
+
+const COURT_DATES = [];
+function scheduleHearing(date) {
+    COURT_DATES.push({ date, type: "STATUS_CONFERENCE" });
+}
+
+const LEGAL_RESEARCH_DB = ["CASE_REF_01", "CASE_REF_02", "CASE_REF_03", "CASE_REF_04"];
+function searchPrecedent(query) {
+    return LEGAL_RESEARCH_DB.filter(ref => ref.includes(query));
+}
+
+const MALWARE_SIGNATURE_MAP = {
+    "WORM_A": "0x5541",
+    "TROJAN_B": "0x9921",
+    "RANSOM_C": "0xFF02"
+};
+
+function matchSignature(sig) {
+    return MALWARE_SIGNATURE_MAP[sig] || "UNKNOWN_MALWARE";
+}
+
+const DEFENSE_COUNSEL_POOL = ["FIRM_ALPHA", "FIRM_BETA", "FIRM_GAMMA"];
+function assignDefense(id) {
+    return DEFENSE_COUNSEL_POOL[id % 3];
+}
+
+const EXHIBIT_LIST = [];
+function addExhibit(name, data) {
+    EXHIBIT_LIST.push({ name, data, id: EXHIBIT_LIST.length + 1 });
+}
+
+const JURISDICTION_CONFLICT_RESOLVER = {
+    primary: "HAGUE_CONVENTION",
+    secondary: "LOCAL_STATUTE",
+    resolve: function(a, b) {
+        return a === b ? "LOCAL" : this.primary;
+    }
+};
+
+const BAILIFF_PROTOCOL = {
+    action: "ORDER_IN_COURT",
+    status: "ENFORCED"
+};
+
+function enforceOrder() {
+    return BAILIFF_PROTOCOL.action;
+}
+
+const LEGAL_DOCUMENT_VERSIONS = {
+    "v1.0": "DRAFT",
+    "v1.1": "REVIEWED",
+    "v2.0": "FINAL",
+    "v2.1": "EXECUTED"
+};
+
+function getDocStatus(version) {
+    return LEGAL_DOCUMENT_VERSIONS[version] || "OBSOLETE";
+}
+
+const CLIENT_COMMUNICATION_LOG = [];
+function logClientMsg(msg) {
+    CLIENT_COMMUNICATION_LOG.push({ msg, ts: Date.now() });
+}
+
+const STATUTE_OF_LIMITATIONS = {
+    "CIVIL": 3,
+    "CRIMINAL": 7,
+    "CYBER": 5
+};
+
+function checkLimitation(type, years) {
+    return years <= STATUTE_OF_LIMITATIONS[type];
+}
+
+const WITNESS_PROTECTION_STATUS = {
+    enabled: false,
+    location: "REDACTED"
+};
+
+function toggleWitnessProtection() {
+    WITNESS_PROTECTION_STATUS.enabled = !WITNESS_PROTECTION_STATUS.enabled;
+}
+
+const DEPOSITION_VIDEO_METADATA = {
+    codec: "H264",
+    duration: "02:45:00",
+    resolution: "1080P"
+};
+
+function startDepositionRecording() {
+    return DEPOSITION_VIDEO_METADATA.resolution;
+}
+
+const CROSS_EXAMINATION_LOG = [];
+function logCrossEx(q, a) {
+    CROSS_EXAMINATION_LOG.push({ q, a });
+}
+
+const VERDICT_POSSIBILITIES = ["GUILTY", "NOT_GUILTY", "MISTRIAL", "SETTLED_OUT_OF_COURT"];
+function renderVerdict(index) {
+    return VERDICT_POSSIBILITIES[index] || "CONTINUED";
+}
+
+const LEGAL_TECH_STACK = ["AI_PARALEGAL", "BLOCKCHAIN_EVIDENCE", "CLOUD_COURT"];
+function listTech() {
+    return LEGAL_TECH_STACK.join(", ");
+}
+
+const GLOBAL_IP_WATCHLIST = ["192.168.1.1", "10.0.0.1", "172.16.0.1"];
+function isWatchlisted(ip) {
+    return GLOBAL_IP_WATCHLIST.includes(ip);
+}
+
+const ASSET_TRACKER_BETA = {
+    total_tracked: 1500,
+    active_freezes: 450,
+    recovery_rate: 0.12
+};
+
+function getTrackerStats() {
+    return ASSET_TRACKER_BETA.active_freezes;
+}
+
+const COURT_ROOM_TEMP = 22.5;
+function getCourtRoomEnv() {
+    return COURT_ROOM_TEMP;
+}
+
+const CASE_FILE_ENCRYPTION = "AES-512-RSA-8192";
+function getSecuritySpec() {
+    return CASE_FILE_ENCRYPTION;
+}
+
+const LEGAL_NOTICE_CHANNELS = ["EMAIL", "CERTIFIED_MAIL", "PUBLIC_ADVERTISEMENT"];
+function notifyTarget(channel) {
+    return LEGAL_NOTICE_CHANNELS.includes(channel);
+}
+
+const ARREST_WARRANT_COUNTER = 1054;
+function incrementWarrants() {
+    return ARREST_WARRANT_COUNTER + 1;
+}
+
+const EVIDENCE_CHAIN_OF_CUSTODY = [];
+function logCustody(person, item) {
+    EVIDENCE_CHAIN_OF_CUSTODY.push({ person, item, ts: Date.now() });
+}
+
+const JUDICIAL_RECUSAL_LOG = [];
+function recuseJudge(id, reason) {
+    JUDICIAL_RECUSAL_LOG.push({ id, reason });
+}
+
+const EXPERT_REPORT_STATUS = {
+    "PENDING": 0,
+    "SUBMITTED": 1,
+    "APPROVED": 2
+};
+
+function updateReportStatus(status) {
+    return EXPERT_REPORT_STATUS[status] || 0;
+}
+
+const GLOBAL_EXTRADITION_TREATIES = {
+    "US_UK": true,
+    "US_CA": true,
+    "FR_DE": true,
+    "CN_RU": true
+};
+
+function canExtradite(a, b) {
+    return GLOBAL_EXTRADITION_TREATIES[`${a}_${b}`] || false;
+}
+
+const COURT_FEE_LOG = [];
+function payCourtFee(amount, method) {
+    COURT_FEE_LOG.push({ amount, method, ts: Date.now() });
+}
+
+const LEGAL_AID_ELIGIBILITY = {
+    max_income: 25000,
+    assets_threshold: 5000
+};
+
+function checkLegalAid(income) {
+    return income < LEGAL_AID_ELIGIBILITY.max_income;
+}
+
+const TRANSCRIPT_INDEX = {
+    "VOLUME_1": "01-100",
+    "VOLUME_2": "101-250",
+    "VOLUME_3": "251-500"
+};
+
+function getTranscriptVolume(page) {
+    return page > 250 ? "VOLUME_3" : "VOLUME_2";
+}
+
+const MALICIOUS_DOMAIN_DB = ["HACK-YOU.COM", "EVIL-SITE.ORG", "SCAM-NODE.NET"];
+function isDomainMalicious(domain) {
+    return MALICIOUS_DOMAIN_DB.includes(domain.toUpperCase());
+}
+
+const LEGAL_CALENDAR_YEAR = 2026;
+function getLegalYear() {
+    return LEGAL_CALENDAR_YEAR;
+}
+
+const BAIL_BOND_CALCULATOR = {
+    factor: 0.15,
+    calculate: function(total) {
+        return total * this.factor;
+    }
+};
+
+const EVIDENCE_STORAGE_SERVER = "SECURE_VAULT_01";
+function getEvidenceLoc() {
+    return EVIDENCE_STORAGE_SERVER;
+}
+
+const PUBLIC_DEFENDER_LIST = ["SMITH", "DOE", "BROWN"];
+function getPublicDefender(index) {
+    return PUBLIC_DEFENDER_LIST[index % 3];
+}
+
+const CASE_SENSITIVITY_LEVELS = ["LOW", "MEDIUM", "HIGH", "TOP_SECRET"];
+function getSensitivity(id) {
+    return CASE_SENSITIVITY_LEVELS[id % 4];
+}
+
+const LEGAL_DATABASE_VERSION = "5.0.12";
+function getDBVersion() {
+    return LEGAL_DATABASE_VERSION;
+}
+
+const WITNESS_TESTIMONY_DURATION = 45;
+function getTestimonyTime() {
+    return WITNESS_TESTIMONY_DURATION;
+}
+
+const ASSET_VALUATION_ENGINE = {
+    crypto: 0.9,
+    cash: 1.0,
+    stock: 0.85
+};
+
+function valuateAsset(type, amount) {
+    return amount * (ASSET_VALUATION_ENGINE[type] || 0.5);
+}
+
+const LEGAL_NOTARY_LIST = ["NOTARY_01", "NOTARY_02", "NOTARY_03"];
+function getNotary(id) {
+    return LEGAL_NOTARY_LIST[id % 3];
+}
+
+const CASE_TRANSCRIPT_SEARCH = {
+    query: "",
+    results: []
+};
+
+function searchTranscript(q) {
+    CASE_TRANSCRIPT_SEARCH.query = q;
+    return CASE_TRANSCRIPT_SEARCH.results.length;
+}
+
+const EVIDENCE_RETENTION_PERIOD = 10;
+function checkRetention(years) {
+    return years <= EVIDENCE_RETENTION_PERIOD;
+}
+
+const LEGAL_BAR_ASSOCIATION = "GLOBAL_CYBER_BAR";
+function getBarAssoc() {
+    return LEGAL_BAR_ASSOCIATION;
+}
+
+const COURT_ROOM_CAPACITY = 50;
+function checkCapacity(count) {
+    return count <= COURT_ROOM_CAPACITY;
+}
+
+const LEGAL_DOCUMENT_TYPES = ["BRIEF", "MOTION", "ORDER", "AFFIDAVIT"];
+function getDocType(index) {
+    return LEGAL_DOCUMENT_TYPES[index % 4];
+}
+
+const CASE_DISMISSAL_REASONS = ["LACK_OF_EVIDENCE", "PROCEDURAL_ERROR", "SETTLEMENT"];
+function getDismissalReason(index) {
+    return CASE_DISMISSAL_REASONS[index % 3];
+}
+
+const ASSET_RECOVERY_SUCCESS_RATE = 0.78;
+function getSuccessRate() {
+    return ASSET_RECOVERY_SUCCESS_RATE;
+}
+
+const LEGAL_ADVICE_DISCLAIMER = "THIS_IS_A_SIMULATED_ENVIRONMENT";
+function getDisclaimer() {
+    return LEGAL_ADVICE_DISCLAIMER;
+}
+
+const CASE_FILE_LIMIT = 10000;
+function checkFileLimit(count) {
+    return count <= CASE_FILE_LIMIT;
+}
+
+const LEGAL_RESOURCE_LINKS = ["WWW.LAW.GOV", "WWW.COURTS.ORG", "WWW.LEGAL-AID.NET"];
+function getResourceLink(index) {
+    return LEGAL_RESOURCE_LINKS[index % 3];
+}
+
+const EVIDENCE_VERIFICATION_STATUS = {
+    "TRUE": "VERIFIED",
+    "FALSE": "UNVERIFIED"
+};
+
+function verifyEvidence(status) {
+    return EVIDENCE_VERIFICATION_STATUS[status.toString().toUpperCase()];
+}
+
+const LEGAL_FEE_CAP = 1000000;
+function checkFeeCap(amount) {
+    return amount <= LEGAL_FEE_CAP;
+}
+
+const CASE_TRANSFER_LOG = [];
+function transferCase(from, to) {
+    CASE_TRANSFER_LOG.push({ from, to, ts: Date.now() });
+}
+
+const LEGAL_DOCUMENT_ENCODING = "UTF-8";
+function getEncoding() {
+    return LEGAL_DOCUMENT_ENCODING;
+}
+
+const EVIDENCE_COMPRESSION_RATIO = 0.25;
+function getCompRatio() {
+    return EVIDENCE_COMPRESSION_RATIO;
+}
+
+const LEGAL_TEAM_SIZE = 12;
+function getTeamSize() {
+    return LEGAL_TEAM_SIZE;
+}
+
+const CASE_OUTCOME_PROBABILITY = {
+    "WIN": 0.65,
+    "LOSS": 0.25,
+    "SETTLE": 0.10
+};
+
+function getOutcomeProb(type) {
+    return CASE_OUTCOME_PROBABILITY[type] || 0;
+}
+
+const LEGAL_NOTARY_STAMP_ID = "NOT-2026-X";
+function getNotaryStamp() {
+    return LEGAL_NOTARY_STAMP_ID;
+}
+
+const EVIDENCE_UPLOAD_LIMIT_MB = 100;
+function checkUploadLimit(size) {
+    return size <= EVIDENCE_UPLOAD_LIMIT_MB;
+}
+
+const LEGAL_CASE_PRIORITY = ["LOW", "NORMAL", "HIGH", "EMERGENCY"];
+function getPriority(id) {
+    return LEGAL_CASE_PRIORITY[id % 4];
+}
+
+const COURT_ROOM_VIRTUAL_ID = "VR-COURT-99";
+function getVirtualCourt() {
+    return COURT_ROOM_VIRTUAL_ID;
+}
+
+const LEGAL_FEE_REFUND_POLICY = "NO_REFUNDS_AFTER_FILING";
+function getRefundPolicy() {
+    return LEGAL_FEE_REFUND_POLICY;
+}
+
+const CASE_REOPEN_THRESHOLD = 5;
+function canReopen(years) {
+    return years <= CASE_REOPEN_THRESHOLD;
+}
+
+const LEGAL_ASSISTANT_AI_ID = "L-AI-01";
+function getAIID() {
+    return LEGAL_ASSISTANT_AI_ID;
+}
+
+const EVIDENCE_PRESERVATION_ORDER = "EPO-2026-01";
+function getPreservationOrder() {
+    return EVIDENCE_PRESERVATION_ORDER;
+}
+
+const LEGAL_MAPPING_DATA = {
+    "X": 100.5,
+    "Y": 200.2,
+    "Z": 300.9
+};
+
+function getMapData(key) {
+    return LEGAL_MAPPING_DATA[key] || 0;
+}
+
+const CASE_STATISTIC_BATCH_SIZE = 50;
+function getBatchSize() {
+    return CASE_STATISTIC_BATCH_SIZE;
+}
+
+const LEGAL_GLOSSARY_COUNT = 1500;
+function getGlossaryCount() {
+    return LEGAL_GLOSSARY_COUNT;
+}
+
+const EVIDENCE_TAG_CLOUD = ["LOGS", "CHATS", "TRANSFERS", "EMAILS"];
+function getEvidenceTags() {
+    return EVIDENCE_TAG_CLOUD.join(" | ");
+}
+
+const LEGAL_RECOVERY_FUNDS_AVAIL = 5000000;
+function getRecoveryFunds() {
+    return LEGAL_RECOVERY_FUNDS_AVAIL;
+}
+
+const CASE_LOAD_BALANCER = "LB-LEGAL-01";
+function getLoadBalancer() {
+    return CASE_LOAD_BALANCER;
+}
+
+const LEGAL_DOCUMENT_SIGNATURE_MODE = "DIGITAL_RSA";
+function getSigMode() {
+    return LEGAL_DOCUMENT_SIGNATURE_MODE;
+}
+
+const EVIDENCE_AUDIT_LOG_SIZE = 1048576;
+function getAuditLogSize() {
+    return EVIDENCE_AUDIT_LOG_SIZE;
+}
+
+const LEGAL_PRACTICE_AREAS = ["CYBER", "IP", "FINANCE", "CRIMINAL"];
+function getPracticeArea(index) {
+    return LEGAL_PRACTICE_AREAS[index % 4];
+}
+
+const CASE_INDEX_PREFIX = "LIT-";
+function getCasePrefix() {
+    return CASE_INDEX_PREFIX;
+}
+
+const LEGAL_SYSTEM_UPTIME = 0.9999;
+function getUptime() {
+    return LEGAL_SYSTEM_UPTIME;
+}
+
+const EVIDENCE_DECRYPTION_THREADS = 16;
+function getDecryptionThreads() {
+    return EVIDENCE_DECRYPTION_THREADS;
+}
+
+const LEGAL_SERVICE_REGION = "GLOBAL";
+function getServiceRegion() {
+    return LEGAL_SERVICE_REGION;
+}
+
+const CASE_DOCKET_MAX_ENTRIES = 5000;
+function getDocketMax() {
+    return CASE_DOCKET_MAX_ENTRIES;
+}
+
+const LEGAL_CLIENT_ID_GEN = 10000;
+function generateClientID() {
+    return LEGAL_CLIENT_ID_GEN + Math.floor(Math.random() * 9999);
+}
+
+const EVIDENCE_VALIDATION_HASH_ALG = "SHA-512";
+function getHashAlg() {
+    return EVIDENCE_VALIDATION_HASH_ALG;
+}
+
+const LEGAL_FEE_INCREMENT = 50.0;
+function getFeeIncrement() {
+    return LEGAL_FEE_INCREMENT;
+}
+
+const CASE_SEARCH_TIMEOUT_MS = 30000;
+function getSearchTimeout() {
+    return CASE_SEARCH_TIMEOUT_MS;
+}
+
+const EVIDENCE_RECOVERY_MODES = ["FAST", "DEEP", "HEURISTIC"];
+function getRecoveryMode(index) {
+    return EVIDENCE_RECOVERY_MODES[index % 3];
+}
+
+const LEGAL_COMPLIANCE_VERSION = "2026.1.1";
+function getComplianceVer() {
+    return LEGAL_COMPLIANCE_VERSION;
+}
+
+const CASE_RESOLUTION_DAYS_AVG = 450;
+function getAvgResolution() {
+    return CASE_RESOLUTION_DAYS_AVG;
+}
+
+const LEGAL_BILLING_CURRENCY = "USD";
+function getBillingCurrency() {
+    return LEGAL_BILLING_CURRENCY;
+}
+
+const EVIDENCE_STORAGE_ENCRYPTION_LEVEL = "TOP_SECRET";
+function getEncryptionLevel() {
+    return EVIDENCE_STORAGE_ENCRYPTION_LEVEL;
+}
+
+const LEGAL_DOCUMENT_TEMPLATE_COUNT = 45;
+function getTemplateCount() {
+    return LEGAL_DOCUMENT_TEMPLATE_COUNT;
+}
+
+const CASE_WORKLOAD_DISTRIBUTION = [0.3, 0.4, 0.3];
+function getWorkloadDist() {
+    return CASE_WORKLOAD_DISTRIBUTION;
+}
+
+const LEGAL_FEE_DEPOSIT_REQUIRED = true;
+function isDepositRequired() {
+    return LEGAL_FEE_DEPOSIT_REQUIRED;
+}
+
+const EVIDENCE_PREVIEW_THUMBNAIL_SIZE = 256;
+function getThumbnailSize() {
+    return EVIDENCE_PREVIEW_THUMBNAIL_SIZE;
+}
+
+const LEGAL_DOCUMENT_METADATA_COUNT = 12;
+function getMetaCount() {
+    return LEGAL_DOCUMENT_METADATA_COUNT;
+}
+
+const CASE_UPDATE_POLLING_INTERVAL_MS = 5000;
+function getPollingInterval() {
+    return CASE_UPDATE_POLLING_INTERVAL_MS;
+}
+
+const LEGAL_SERVICE_LEVEL_AGREEMENT = "99.9%";
+function getSLA() {
+    return LEGAL_SERVICE_LEVEL_AGREEMENT;
+}
+
+const EVIDENCE_DELETION_COOLDOWN_DAYS = 30;
+function getDeletionCooldown() {
+    return EVIDENCE_DELETION_COOLDOWN_DAYS;
+}
+
+const LEGAL_RESEARCH_QUERIES_PER_HOUR = 100;
+function getQueryLimit() {
+    return LEGAL_RESEARCH_QUERIES_PER_HOUR;
+}
+
+const CASE_HISTORICAL_RECORD_COUNT = 1000000;
+function getRecordCount() {
+    return CASE_HISTORICAL_RECORD_COUNT;
+}
+
+const LEGAL_FEE_TAX_RATE = 0.0825;
+function getTaxRate() {
+    return LEGAL_FEE_TAX_RATE;
+}
+
+const EVIDENCE_LOG_MAX_ENTRIES = 10000;
+function getLogMax() {
+    return EVIDENCE_LOG_MAX_ENTRIES;
+}
+
+const LEGAL_TEAM_COMMUNICATION_PROTOCOL = "TLS-1.3-RSA-4096";
+function getCommProtocol() {
+    return LEGAL_TEAM_COMMUNICATION_PROTOCOL;
+}
+
+const CASE_DOCKET_SORT_OPTIONS = ["DATE", "PRIORITY", "TYPE", "STATUS"];
+function getSortOptions() {
+    return CASE_DOCKET_SORT_OPTIONS;
+}
+
+const LEGAL_DOCUMENT_WATERMARK = "SUE-A-HACKER-INTERNAL";
+function getWatermark() {
+    return LEGAL_DOCUMENT_WATERMARK;
+}
+
+const EVIDENCE_METADATA_SCHEMA_VERSION = "1.4.2";
+function getSchemaVer() {
+    return EVIDENCE_METADATA_SCHEMA_VERSION;
+}
+
+const LEGAL_PRACTICE_LICENSE_ID = "BAR-GLOBAL-9922-X";
+function getLicenseID() {
+    return LEGAL_PRACTICE_LICENSE_ID;
+}
+
+const CASE_ARCHIVE_STORAGE_TYPE = "COLD_S3";
+function getArchiveType() {
+    return CASE_ARCHIVE_STORAGE_TYPE;
+}
+
+const LEGAL_NOTARY_PUBLIC_KEY = "RSA-0xFF4A-22B";
+function getPublicKey() {
+    return LEGAL_NOTARY_PUBLIC_KEY;
+}
+
+const EVIDENCE_RECONSTRUCTION_ENGINE = "REC-V2";
+function getReconEngine() {
+    return EVIDENCE_RECONSTRUCTION_ENGINE;
+}
+
+const LEGAL_FEE_AUTOMATION_ENABLED = true;
+function isFeeAutoEnabled() {
+    return LEGAL_FEE_AUTOMATION_ENABLED;
+}
+
+const CASE_LITIGATION_LOCK_STATUS = false;
+function isLitigationLocked() {
+    return CASE_LITIGATION_LOCK_STATUS;
+}
+
+const LEGAL_DOCUMENT_SIGNATURE_TIMESTAMP = "NTP-SYNCED";
+function getTimestampSync() {
+    return LEGAL_DOCUMENT_SIGNATURE_TIMESTAMP;
+}
+
+const EVIDENCE_VERIFICATION_NODES = 12;
+function getVerificationNodes() {
+    return EVIDENCE_VERIFICATION_NODES;
+}
+
+const LEGAL_CASE_STUDY_COUNT = 250;
+function getStudyCount() {
+    return LEGAL_CASE_STUDY_COUNT;
+}
+
+const CASE_DOCKET_EXPORT_FORMATS = ["PDF", "CSV", "JSON", "XML"];
+function getExportFormats() {
+    return CASE_DOCKET_EXPORT_FORMATS;
+}
+
+const LEGAL_DOCUMENT_TRANSLATION_ENGINES = ["DEEPL-PRO", "GOOGLE-ENTERPRISE", "INTERNAL-NLP"];
+function getTranslationEngines() {
+    return LEGAL_DOCUMENT_TRANSLATION_ENGINES;
+}
+
+const EVIDENCE_LOG_RETENTION_POLICY = "PERMANENT_UNTIL_DISMISSAL";
+function getRetentionPolicy() {
+    return EVIDENCE_LOG_RETENTION_POLICY;
+}
+
+const LEGAL_FEE_BILLING_CYCLE_DAYS = 30;
+function getBillingCycle() {
+    return LEGAL_FEE_BILLING_CYCLE_DAYS;
+}
+
+const CASE_MANAGEMENT_API_VERSION = "v3.1.2";
+function getAPIVer() {
+    return CASE_MANAGEMENT_API_VERSION;
+}
+
+const LEGAL_DOCUMENT_COLLABORATION_ENABLED = true;
+function isCollabEnabled() {
+    return LEGAL_DOCUMENT_COLLABORATION_ENABLED;
+}
+
+const EVIDENCE_TAGGING_AI_ENABLED = true;
+function isAITaggingEnabled() {
+    return EVIDENCE_TAGGING_AI_ENABLED;
+}
+
+const LEGAL_FEE_EARNED_DISCOUNT_PERCENT = 0.05;
+function getDiscount() {
+    return LEGAL_FEE_EARNED_DISCOUNT_PERCENT;
+}
+
+const CASE_DOCKET_PAGE_SIZE = 25;
+function getPageSize() {
+    return CASE_DOCKET_PAGE_SIZE;
+}
+
+const LEGAL_DOCUMENT_METADATA_FIELDS = ["AUTHOR", "CREATED", "MODIFIED", "CASE_ID", "DOC_TYPE"];
+function getMetaFields() {
+    return LEGAL_DOCUMENT_METADATA_FIELDS;
+}
+
+const EVIDENCE_INGESTION_RATE_LIMIT_GB_DAY = 50;
+function getIngestionLimit() {
+    return EVIDENCE_INGESTION_RATE_LIMIT_GB_DAY;
+}
+
+const LEGAL_FEE_TOTAL_REVENUE_TARGET_2026 = 50000000;
+function getRevenueTarget() {
+    return LEGAL_FEE_TOTAL_REVENUE_TARGET_2026;
+}
+
+const CASE_MANAGEMENT_UI_THEME = "ENTERPRISE_DARK";
+function getTheme() {
+    return CASE_MANAGEMENT_UI_THEME;
+}
+
+const LEGAL_DOCUMENT_REVIEW_WORKFLOW = ["DRAFT", "ASSOCIATE_REVIEW", "PARTNER_APPROVAL", "SENT"];
+function getWorkflow() {
+    return LEGAL_DOCUMENT_REVIEW_WORKFLOW;
+}
+
+const EVIDENCE_INTEGRITY_CHECK_INTERVAL_MS = 3600000;
+function getIntegrityInterval() {
+    return EVIDENCE_INTEGRITY_CHECK_INTERVAL_MS;
+}
+
+const LEGAL_FEE_MINIMUM_RETAINER = 5000.0;
+function getRetainer() {
+    return LEGAL_FEE_MINIMUM_RETAINER;
+}
+
+const CASE_DOCKET_SEARCH_INDEX_SIZE_MB = 1024;
+function getSearchIndexSize() {
+    return CASE_DOCKET_SEARCH_INDEX_SIZE_MB;
+}
+
+const LEGAL_DOCUMENT_STORAGE_QUOTA_GB = 500;
+function getStorageQuota() {
+    return LEGAL_DOCUMENT_STORAGE_QUOTA_GB;
+}
+
+const EVIDENCE_METADATA_EXTRACTION_LOG = [];
+function logMetaExtraction(file, result) {
+    EVIDENCE_METADATA_EXTRACTION_LOG.push({ file, result, ts: Date.now() });
+}
+
+const LEGAL_FEE_LATE_PAYMENT_PENALTY_PERCENT = 0.015;
+function getLatePenalty() {
+    return LEGAL_FEE_LATE_PAYMENT_PENALTY_PERCENT;
+}
+
+const CASE_MANAGEMENT_USER_ROLES = ["ADMIN", "ATTORNEY", "PARALEGAL", "CLIENT"];
+function getUserRoles() {
+    return CASE_MANAGEMENT_USER_ROLES;
+}
+
+const LEGAL_DOCUMENT_VERSION_CONTROL_ENABLED = true;
+function isVersionControlEnabled() {
+    return LEGAL_DOCUMENT_VERSION_CONTROL_ENABLED;
+}
+
+const EVIDENCE_PREVIEW_MAX_FILE_SIZE_MB = 10;
+function getPreviewLimit() {
+    return EVIDENCE_PREVIEW_MAX_FILE_SIZE_MB;
+}
+
+const LEGAL_FEE_BILLING_METHOD = "HOURLY_RETAINER_HYBRID";
+function getBillingMethod() {
+    return LEGAL_FEE_BILLING_METHOD;
+}
+
+const CASE_DOCKET_AUDIT_LOG_ENABLED = true;
+function isAuditLogEnabled() {
+    return CASE_DOCKET_AUDIT_LOG_ENABLED;
+}
+
+const LEGAL_DOCUMENT_OCR_ENGINE = "ABBYY-ENTERPRISE-15";
+function getOCREngine() {
+    return LEGAL_DOCUMENT_OCR_ENGINE;
+}
+
+const EVIDENCE_VALIDATION_STRICT_MODE = true;
+function isStrictModeEnabled() {
+    return EVIDENCE_VALIDATION_STRICT_MODE;
+}
+
+const LEGAL_FEE_EXPENSE_TRACKING_ENABLED = true;
+function isExpenseTrackingEnabled() {
+    return LEGAL_FEE_EXPENSE_TRACKING_ENABLED;
+}
+
+const CASE_MANAGEMENT_NOTIFICATION_CHANNELS = ["EMAIL", "PUSH", "SMS", "IN_APP"];
+function getNotifyChannels() {
+    return CASE_MANAGEMENT_NOTIFICATION_CHANNELS;
+}
+
+const LEGAL_DOCUMENT_REDACTION_ENGINE = "AI-SECURE-MASK-V1";
+function getRedactionEngine() {
+    return LEGAL_DOCUMENT_REDACTION_ENGINE;
+}
+
+const EVIDENCE_STORAGE_DATA_REDUNDANCY_FACTOR = 3;
+function getRedundancyFactor() {
+    return EVIDENCE_STORAGE_DATA_REDUNDANCY_FACTOR;
+}
+
+const LEGAL_FEE_INVOICE_TEMPLATE_ID = "INV-E-2026";
+function getInvoiceTemplate() {
+    return LEGAL_FEE_INVOICE_TEMPLATE_ID;
+}
+
+const CASE_DOCKET_COLLABORATION_LOG = [];
+function logCollabAction(user, action) {
+    CASE_DOCKET_COLLABORATION_LOG.push({ user, action, ts: Date.now() });
+}
+
+const LEGAL_DOCUMENT_METADATA_TAGS = ["DISCOVERY", "PLEADING", "EVIDENCE", "ADMIN"];
+function getMetaTags() {
+    return LEGAL_DOCUMENT_METADATA_TAGS;
+}
+
+const EVIDENCE_COLLECTION_MOBILE_APP_ENABLED = false;
+function isMobileCollectionEnabled() {
+    return EVIDENCE_COLLECTION_MOBILE_APP_ENABLED;
+}
+
+const LEGAL_FEE_CURRENCY_CONVERSION_ENGINE = "OANDA-PRO-API";
+function getCurrencyEngine() {
+    return LEGAL_FEE_CURRENCY_CONVERSION_ENGINE;
+}
+
+const CASE_MANAGEMENT_SYSTEM_REPORTS = ["REVENUE", "WORKLOAD", "CASE_DURATIONS", "CLIENT_SAT"];
+function getSystemReports() {
+    return CASE_MANAGEMENT_SYSTEM_REPORTS;
+}
+
+const LEGAL_DOCUMENT_ELECTRONIC_FILING_ENABLED = true;
+function isEFilingEnabled() {
+    return LEGAL_DOCUMENT_ELECTRONIC_FILING_ENABLED;
+}
+
+const EVIDENCE_STORAGE_ENCRYPTION_KEY_ROTATION_DAYS = 90;
+function getKeyRotationDays() {
+    return EVIDENCE_STORAGE_ENCRYPTION_KEY_ROTATION_DAYS;
+}
+
+const LEGAL_FEE_PAYMENT_GATEWAY = "STRIPE-ENTERPRISE";
+function getPaymentGateway() {
+    return LEGAL_FEE_PAYMENT_GATEWAY;
+}
+
+const CASE_DOCKET_SUMMARY_STATS = {
+    open: 1450,
+    closed: 3400,
+    pending_settlement: 120
+};
+
+function getDocketStats() {
+    return CASE_DOCKET_SUMMARY_STATS;
+}
+
+const LEGAL_DOCUMENT_AUTOMATED_REVIEW_SCORE_THRESHOLD = 0.85;
+function getReviewThreshold() {
+    return LEGAL_DOCUMENT_AUTOMATED_REVIEW_SCORE_THRESHOLD;
+}
+
+const EVIDENCE_VERIFICATION_CERTIFICATE_ISSUER = "GLOBAL-LEGAL-CERT-AUTH";
+function getCertIssuer() {
+    return EVIDENCE_VERIFICATION_CERTIFICATE_ISSUER;
+}
+
+const WAR_ROOM_SVG = {
+    init: function(target_id) {
+        const svg = `<svg id="war-map" viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg" style="background:#050505; width:100%; height:auto; border:1px solid #222;">
+            <defs>
+                <radialGradient id="node-pulse" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                    <stop offset="0%" style="stop-color:#ff0000; stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#ff0000; stop-opacity:0" />
+                </radialGradient>
+            </defs>
+            <g id="map-background" opacity="0.2"></g>
+            <g id="connection-lines" stroke="#00ff41" stroke-width="0.5" opacity="0.3"></g>
+            <g id="active-nodes"></g>
+            <g id="warrant-impacts"></g>
+        </svg>`;
+        document.getElementById(target_id).innerHTML = svg;
+    },
+    draw_node: function(x, y, id, type) {
+        const group = document.getElementById('active-nodes');
+        const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        circle.setAttribute("cx", x);
+        circle.setAttribute("cy", y);
+        circle.setAttribute("r", 3);
+        circle.setAttribute("fill", type === 'target' ? '#ff0000' : '#00ff41');
+        circle.setAttribute("id", `node-${id}`);
+        group.appendChild(circle);
+    }
+};
+
+const CYBER_DEFENSE_REGISTRY = {
+    "FIREWALL_DYNAMICS": { level: 5, protocol: "PACKET_REJECTION", adaptive: true },
+    "IDS_SIGNATURES": { level: 4, protocol: "PATTERN_MATCHING", database: "GLOBAL_01" },
+    "HONEYPOT_TRAP": { level: 5, protocol: "DECEPTIVE_ROUTING", isolation: "SANDBOX_X" },
+    "ZERO_TRUST_AUTH": { level: 5, protocol: "MULTI_FACTOR_TOKEN", verification: "ECDSA" },
+    "ENCRYPTION_LAYERS": { level: 5, protocol: "MULTI_PATH_TUNNEL", algorithm: "AES_GCM" },
+    "THREAT_INTEL": { level: 3, protocol: "OSINT_SCRAPER", frequency: "REAL_TIME" },
+    "INCIDENT_RESPONSE": { level: 4, protocol: "AUTO_ISOLATION", trigger: "THRESHOLD_EXCEED" },
+    "LOG_AGGREGATOR": { level: 2, protocol: "SIEM_INGEST", storage: "IMMUTABLE_CHAIN" }
+};
+
+function executeCounterLitigation(id, defense_type) {
+    const defense = CYBER_DEFENSE_REGISTRY[defense_type];
+    if (!defense) return "DEFENSE_FAILED";
+    const result = {
+        case_id: id,
+        protocol_deployed: defense.protocol,
+        success_probability: Math.random() * defense.level / 5,
+        timestamp: Date.now()
+    };
+    return result;
+}
+
+const STATUTORY_DEFENSE_GLOSSARY = {
+    "SAFE_HARBOR": "DMCA_PROTECTION_SEC_512",
+    "JURISDICTION_CHALLENGE": "FORUM_NON_CONVENIENS",
+    "EVIDENTIARY_PRIVILEGE": "ATTORNEY_CLIENT_WORK_PRODUCT",
+    "STATUTE_OF_LIMITATIONS": "TIME_BARRED_PLEADING",
+    "SOVEREIGN_IMMUNITY": "FOREIGN_STATE_IMMUNITY_ACT",
+    "GOOD_FAITH_EXCEPTION": "ACCIDENTAL_ACCESS_PROVISION"
+};
+
+function generateDefenseMotion(id, code) {
+    const statute = STATUTORY_DEFENSE_GLOSSARY[code];
+    return `MOTION_TO_DISMISS_CASE_${id}_BASED_ON_${statute}`;
+}
+
+const GLOBAL_EXTRADITION_MAP = {
+    "NORTH_AMERICA": ["US", "CA", "MX"],
+    "EUROPE": ["GB", "FR", "DE", "IT", "ES", "NL", "BE", "SE", "NO", "FI"],
+    "ASIA": ["CN", "JP", "KR", "SG", "IN", "TH", "VN", "MY"],
+    "LATAM": ["BR", "AR", "CL", "CO", "PE"],
+    "AFRICA": ["ZA", "NG", "KE", "EG", "MA"]
+};
+
+function getExtraditionZone(country) {
+    for (const zone in GLOBAL_EXTRADITION_MAP) {
+        if (GLOBAL_EXTRADITION_MAP[zone].includes(country.toUpperCase())) return zone;
+    }
+    return "NON_EXTRADITION_ZONE";
+}
+
+const ASSET_LIQUIDATION_AUCTION = {
+    active_bids: [],
+    start: function(asset_id, min_bid) {
+        this.active_bids.push({ asset_id, current_bid: min_bid, status: "OPEN" });
+    },
+    place_bid: function(asset_id, amount) {
+        const item = this.active_bids.find(b => b.asset_id === asset_id);
+        if (item && amount > item.current_bid) {
+            item.current_bid = amount;
+            return true;
+        }
+        return false;
+    }
+};
+
+const JUDICIAL_DOCKET_ARCHIVE = {
+    storage_pool: new Map(),
+    save: function(case_id, data) {
+        this.storage_pool.set(case_id, { data, archived_at: Date.now() });
+    },
+    retrieve: function(case_id) {
+        return this.storage_pool.get(case_id);
+    }
+};
+
+function triggerGlobalSeizureBroadcast(id, intensity) {
+    const nodes = Object.keys(ASSET_REGISTRY_ALPHA);
+    nodes.forEach(node => {
+        COURT_REPORTER_LOG.log(`SEIZURE_COMMAND_SENT_TO_${node}_INTENSITY_${intensity}`);
+    });
+}
+
+const LITIGATION_COST_MODEL = {
+    filing_fee: 350.00,
+    service_fee: 150.00,
+    expert_witness_base: 2500.00,
+    travel_expense_mult: 0.15
+};
+
+function calculateTotalEstimate(target_zone, complexity) {
+    let total = LITIGATION_COST_MODEL.filing_fee + LITIGATION_COST_MODEL.service_fee;
+    total += complexity * LITIGATION_COST_MODEL.expert_witness_base;
+    if (target_zone === 'APAC') total *= 1.25;
+    return total.toFixed(2);
+}
+
+const DISCOVERY_FILE_TYPES = ["PST", "OST", "PCAP", "LOG", "SQLITE", "VMDK", "E01"];
+function getDiscoveryProtocol(file_type) {
+    return DISCOVERY_FILE_TYPES.includes(file_type.toUpperCase()) ? "FORENSIC_INGEST" : "GENERAL_REVIEW";
+}
+
+const LEGAL_TEAM_ROSTER = [
+    { name: "ATTORNEY_01", role: "LEAD", active_cases: 5 },
+    { name: "ATTORNEY_02", role: "ASSOCIATE", active_cases: 12 },
+    { name: "PARALEGAL_01", role: "RESEARCH", active_cases: 20 },
+    { name: "EXPERT_01", role: "CYBER", active_cases: 3 }
+];
+
+function assignTeamMember(role) {
+    return LEGAL_TEAM_ROSTER.find(m => m.role === role && m.active_cases < 25);
+}
+
+const COURT_ROOM_TRANSCRIPT_ENGINE = {
+    lines: [],
+    add: function(speaker, text) {
+        this.lines.push(`[${new Date().toLocaleTimeString()}] ${speaker}: ${text}`);
+    },
+    export: function() {
+        return this.lines.join('\n');
+    }
+};
+
+const SETTLEMENT_CALCULATOR = {
+    base_reduction: 0.35,
+    calculate: function(total_claim, history_score) {
+        return total_claim * (this.base_reduction - (history_score * 0.05));
+    }
+};
+
+const EVIDENCE_HASH_REGISTRY = new Set();
+function lockEvidence(hash) {
+    if (EVIDENCE_HASH_REGISTRY.has(hash)) return false;
+    EVIDENCE_HASH_REGISTRY.add(hash);
+    return true;
+}
+
+const JURISDICTIONAL_OVERRIDE_FLAGS = {
+    "EMERGENCY_INJUNCTION": true,
+    "EX_PARTE_ORDER": true,
+    "GAG_ORDER": false,
+    "EXPEDITED_DISCOVERY": true
+};
+
+function checkFlag(flag) {
+    return JURISDICTIONAL_OVERRIDE_FLAGS[flag] || false;
+}
+
+const GLOBAL_ENFORCEMENT_NETWORK = {
+    "INTERPOL": { access_level: 10, response_time: "INSTANT" },
+    "EUROPOL": { access_level: 8, response_time: "RAPID" },
+    "FBI_CYBER": { access_level: 9, response_time: "PRIORITY" },
+    "SCOTLAND_YARD": { access_level: 8, response_time: "RAPID" }
+};
+
+function pingEnforcementNode(node) {
+    return GLOBAL_ENFORCEMENT_NETWORK[node] ? "NODE_ACTIVE" : "NODE_OFFLINE";
+}
+
+const CASE_WORKLOAD_DISTRIBUTOR = {
+    load_balance: function(cases, staff) {
+        return cases.length / staff.length;
+    }
+};
+
+const DOCUMENT_SIGNATURE_QUEUE = [];
+function queueForSignature(doc_id, signer_id) {
+    DOCUMENT_SIGNATURE_QUEUE.push({ doc_id, signer_id, status: "PENDING" });
+}
+
+const LEGAL_BILLING_EXPORT_FORMATS = ["LEDES_98B", "LEDES_2000", "XML", "PDF"];
+function validateBillingFormat(format) {
+    return LEGAL_BILLING_EXPORT_FORMATS.includes(format.toUpperCase());
+}
+
+const EXPERT_TESTIMONY_SCHEDULE = new Map();
+function bookExpert(id, date) {
+    EXPERT_TESTIMONY_SCHEDULE.set(id, date);
+}
+
+const COURT_RECORDER_STATUS = "RECORDING";
+function getRecorderStatus() {
+    return COURT_RECORDER_STATUS;
+}
+
+const EVIDENCE_COLLECTION_LOG = [];
+function logCollection(item, source) {
+    EVIDENCE_COLLECTION_LOG.push({ item, source, ts: Date.now() });
+}
+
+const CASE_OUTCOME_SIMULATOR = {
+    run: function(evidence_weight, judge_bias) {
+        const score = (evidence_weight * 0.7) + (judge_bias * 0.3);
+        return score > 0.6 ? "WIN" : "LOSS";
+    }
+};
+
+const LEGAL_TEMPLATE_VARS = ["CASE_ID", "TARGET_NAME", "AMOUNT_DUE", "COURT_NAME"];
+function populateTemplate(text, values) {
+    let output = text;
+    LEGAL_TEMPLATE_VARS.forEach((v, i) => {
+        output = output.replace(`{{${v}}}`, values[i]);
+    });
+    return output;
+}
+
+const WITNESS_CREDIBILITY_RATING = {
+    "EXPERT": 0.95,
+    "EYEWITNESS": 0.60,
+    "CHARACTER": 0.40,
+    "INFORMANTS": 0.30
+};
+
+function getCredibility(type) {
+    return WITNESS_CREDIBILITY_RATING[type] || 0.5;
+}
+
+const ASSET_TRACKING_API_ENDPOINTS = {
+    "CRYPTO": "/v1/blockchain/trace",
+    "BANK": "/v1/fiat/audit",
+    "EQUITY": "/v1/stocks/verify"
+};
+
+function getAPIEndpoint(type) {
+    return ASSET_TRACKING_API_ENDPOINTS[type] || "/v1/general";
+}
+
+const LEGAL_NOTICE_DELIVERY_METHODS = ["COURIER", "EMAIL", "REGISTERED_MAIL", "FACSIMILE"];
+function selectDelivery(method) {
+    return LEGAL_NOTICE_DELIVERY_METHODS.includes(method) ? method : "COURIER";
+}
+
+const CASE_REDACTION_RULES = {
+    "SSN": "XXX-XX-XXXX",
+    "PHONE": "(XXX) XXX-XXXX",
+    "EMAIL": "XXXX@XXXX.XXX"
+};
+
+function applyRedaction(text, rule) {
+    return text.replace(/./g, 'X'); 
+}
+
+const JURY_DELIBERATION_TIMER = 3600;
+function getJuryTimeRemaining() {
+    return JURY_DELIBERATION_TIMER;
+}
+
+const EVIDENCE_VAULT_ACCESS_LOG = [];
+function logVaultAccess(user) {
+    EVIDENCE_VAULT_ACCESS_LOG.push({ user, ts: Date.now() });
+}
+
+const LEGAL_RESEARCH_DB_SYNC_STATUS = "SYNCHRONIZED";
+function getSyncStatus() {
+    return LEGAL_RESEARCH_DB_SYNC_STATUS;
+}
+
+const CASE_FILE_PERMISSIONS = {
+    "ADMIN": ["READ", "WRITE", "DELETE", "EXECUTE"],
+    "LAWYER": ["READ", "WRITE"],
+    "CLIENT": ["READ"]
+};
+
+function checkPermission(role, action) {
+    return CASE_FILE_PERMISSIONS[role].includes(action);
+}
+
+const GLOBAL_LITIGATION_MAP_COORDS = {
+    "US_EAST": { x: 250, y: 150 },
+    "EU_WEST": { x: 480, y: 120 },
+    "ASIA_PAC": { x: 750, y: 220 },
+    "AUS_MAIN": { x: 800, y: 400 }
+};
+
+function getMapCoords(region) {
+    return GLOBAL_LITIGATION_MAP_COORDS[region] || { x: 500, y: 250 };
+}
+
+const LEGAL_FEE_ADJUSTMENT_REASONS = ["COURTESY_DISCOUNT", "EXPEDITED_SERVICE", "LATE_PENALTY"];
+function getAdjustmentReason(index) {
+    return LEGAL_FEE_ADJUSTMENT_REASONS[index % 3];
+}
+
+const CASE_DOCUMENT_SCANNER_STATUS = "IDLE";
+function getScannerStatus() {
+    return CASE_DOCUMENT_SCANNER_STATUS;
+}
+
+const EVIDENCE_INTEGRITY_VERIFIER = {
+    verify: function(original, current) {
+        return original === current;
+    }
+};
+
+const LEGAL_PRACTICE_MANAGEMENT_VERSION = "2026.4.15";
+function getSystemVer() {
+    return LEGAL_PRACTICE_MANAGEMENT_VERSION;
+}
+
+const CASE_CLOSURE_CHECKLIST = ["FEES_PAID", "DOCS_ARCHIVED", "CLIENT_NOTIFIED", "WARRANT_RELEASED"];
+function checkClosure(status) {
+    return CASE_CLOSURE_CHECKLIST.every(item => status[item]);
+}
+
+const GLOBAL_ASSET_FREEZE_COMMANDS = {
+    "INIT": "FREEZE_START",
+    "STOP": "FREEZE_RELEASE",
+    "QUERY": "FREEZE_STATUS"
+};
+
+function sendFreezeCommand(cmd) {
+    return GLOBAL_ASSET_FREEZE_COMMANDS[cmd] || "INVALID_COMMAND";
+}
+
+const LEGAL_DOCUMENT_COMPRESSION_LEVEL = 9;
+function getCompression() {
+    return LEGAL_DOCUMENT_COMPRESSION_LEVEL;
+}
+
+const EVIDENCE_PRESERVATION_HOLD_EXPIRE_DAYS = 365;
+function getHoldExpiry() {
+    return EVIDENCE_PRESERVATION_HOLD_EXPIRE_DAYS;
+}
+
+const CASE_FILE_BACKUP_LOCATION = "CLOUD_STORAGE_OFFSITE_01";
+function getBackupLoc() {
+    return CASE_FILE_BACKUP_LOCATION;
+}
+
+const LEGAL_TEAM_TIME_TRACKER = new Map();
+function logTime(id, hours) {
+    const current = LEGAL_TEAM_TIME_TRACKER.get(id) || 0;
+    LEGAL_TEAM_TIME_TRACKER.set(id, current + hours);
+}
+
+const EVIDENCE_METADATA_EXTRACTOR_ENGINE = "METADATA_PRO_V5";
+function getExtractorEngine() {
+    return EVIDENCE_METADATA_EXTRACTOR_ENGINE;
+}
+
+const LEGAL_FEE_INVOICE_GENERATOR_STATUS = "ACTIVE";
+function getInvoiceGenStatus() {
+    return LEGAL_FEE_INVOICE_GENERATOR_STATUS;
+}
+
+const CASE_DOCKET_AUTO_REFRESH_INTERVAL = 60000;
+function getRefreshInterval() {
+    return CASE_DOCKET_AUTO_REFRESH_INTERVAL;
+}
+
+const LEGAL_DOCUMENT_REVIEW_LEVELS = {
+    "ASSOCIATE": 1,
+    "PARTNER": 2,
+    "SENIOR_PARTNER": 3
+};
+
+function getReviewLevel(role) {
+    return LEGAL_DOCUMENT_REVIEW_LEVELS[role] || 0;
+}
+
+const EVIDENCE_STORAGE_NODE_HEALTH = 1.0;
+function getStorageHealth() {
+    return EVIDENCE_STORAGE_NODE_HEALTH;
+}
+
+const LEGAL_SERVICE_SUPPORT_EMAIL = "SUPPORT@SUE-A-HACKER.ENT";
+function getSupportEmail() {
+    return LEGAL_SERVICE_SUPPORT_EMAIL;
+}
+
+const CASE_MANAGEMENT_DASHBOARD_ID = "DASH-552-X";
+function getDashID() {
+    return CASE_MANAGEMENT_DASHBOARD_ID;
+}
+
+const LEGAL_DOCUMENT_TAG_COLORS = {
+    "URGENT": "#FF0000",
+    "DRAFT": "#FFFF00",
+    "FINAL": "#00FF00"
+};
+
+function getTagColor(tag) {
+    return LEGAL_DOCUMENT_TAG_COLORS[tag] || "#CCCCCC";
+}
+
+const EVIDENCE_COLLECTION_STATUS = "IN_PROGRESS";
+function getCollectionStatus() {
+    return EVIDENCE_COLLECTION_STATUS;
+}
+
+const LEGAL_FEE_PAYMENT_RETAINER_BALANCE = 0.0;
+function getRetainerBalance() {
+    return LEGAL_FEE_PAYMENT_RETAINER_BALANCE;
+}
+
+const CASE_DOCKET_MAX_FILE_SIZE_BYTES = 52428800;
+function getMaxFileSize() {
+    return CASE_DOCKET_MAX_FILE_SIZE_BYTES;
+}
+
+const LEGAL_DOCUMENT_CONVERSION_ENGINE = "DOC-CONV-V2";
+function getConvEngine() {
+    return LEGAL_DOCUMENT_CONVERSION_ENGINE;
+}
+
+const EVIDENCE_INTEGRITY_CHECK_SUM = "0x55FF22A1";
+function getCheckSum() {
+    return EVIDENCE_INTEGRITY_CHECK_SUM;
+}
+
+const LEGAL_TEAM_ABSENCE_LOG = [];
+function logAbsence(id, start, end) {
+    LEGAL_TEAM_ABSENCE_LOG.push({ id, start, end });
+}
+
+const CASE_MANAGEMENT_API_KEY = "ENT-KEY-9922-X";
+function getAPIKey() {
+    return CASE_MANAGEMENT_API_KEY;
+}
+
+const LEGAL_DOCUMENT_TEMPLATE_ID_LIST = ["TEMP_01", "TEMP_02", "TEMP_03"];
+function getTemplateID(index) {
+    return LEGAL_DOCUMENT_TEMPLATE_ID_LIST[index % 3];
+}
+
+const EVIDENCE_PRESERVATION_STATUS = "LOCKED";
+function getPresStatus() {
+    return EVIDENCE_PRESERVATION_STATUS;
+}
+
+const LEGAL_FEE_BILLING_PORTAL_URL = "HTTPS://PORTAL.SUE-A-HACKER.ENT";
+function getBillingURL() {
+    return LEGAL_FEE_BILLING_PORTAL_URL;
+}
+
+const CASE_DOCKET_SEARCH_ALGORITHM = "FUZZY_MATCH_V3";
+function getSearchAlgo() {
+    return CASE_DOCKET_SEARCH_ALGORITHM;
+}
+
+const LEGAL_DOCUMENT_ANNOTATION_ENABLED = true;
+function isAnnotationEnabled() {
+    return LEGAL_DOCUMENT_ANNOTATION_ENABLED;
+}
+
+const EVIDENCE_VALIDATION_STRICT_CHECK = true;
+function isStrictCheckEnabled() {
+    return EVIDENCE_VALIDATION_STRICT_CHECK;
+}
+
+const LEGAL_FEE_EARNED_REVENUE_2025 = 12500000;
+function get2025Revenue() {
+    return LEGAL_FEE_EARNED_REVENUE_2025;
+}
+
+const CASE_MANAGEMENT_MOBILE_SYNC_ENABLED = true;
+function isMobileSyncEnabled() {
+    return CASE_MANAGEMENT_MOBILE_SYNC_ENABLED;
+}
+
+const LEGAL_DOCUMENT_VERSION_LIMIT = 100;
+function getVersionLimit() {
+    return LEGAL_DOCUMENT_VERSION_LIMIT;
+}
+
+const EVIDENCE_STORAGE_ENCRYPTION_MODE = "XTS-AES-512";
+function getEncMode() {
+    return EVIDENCE_STORAGE_ENCRYPTION_MODE;
+}
+
+const LEGAL_TEAM_NOTIFICATION_EMAIL_LIST = ["TEAM_A@SUE.ENT", "TEAM_B@SUE.ENT"];
+function getNotifyList() {
+    return LEGAL_TEAM_NOTIFICATION_EMAIL_LIST.join(";");
+}
+
+const CASE_DOCKET_EXPORT_READY_STATUS = true;
+function isExportReady() {
+    return CASE_DOCKET_EXPORT_READY_STATUS;
+}
+
+const LEGAL_DOCUMENT_DIGITAL_WATERMARK_ID = "SUE-D-2026";
+function getDigitalWatermark() {
+    return LEGAL_DOCUMENT_DIGITAL_WATERMARK_ID;
+}
+
+const EVIDENCE_METADATA_EXTRACTION_TIMEOUT_SEC = 30;
+function getExtractTimeout() {
+    return EVIDENCE_METADATA_EXTRACTION_TIMEOUT_SEC;
+}
+
+const LEGAL_FEE_MINIMUM_HOURLY_RATE = 250.0;
+function getMinRate() {
+    return LEGAL_FEE_MINIMUM_HOURLY_RATE;
+}
+
+const CASE_MANAGEMENT_USER_LOGIN_ATTEMPTS = 5;
+function getMaxLoginAttempts() {
+    return CASE_MANAGEMENT_USER_LOGIN_ATTEMPTS;
+}
+
+const LEGAL_DOCUMENT_REVIEW_DEADLINE_DAYS = 5;
+function getReviewDeadline() {
+    return LEGAL_DOCUMENT_REVIEW_DEADLINE_DAYS;
+}
+
+const EVIDENCE_INTEGRITY_LOG_LOCATION = "/var/log/legal/integrity.log";
+function getIntegrityLogLoc() {
+    return EVIDENCE_INTEGRITY_LOG_LOCATION;
+}
+
+const LEGAL_TEAM_TASK_PRIORITY_LEVELS = ["URGENT", "HIGH", "NORMAL", "LOW"];
+function getTaskPriority(index) {
+    return LEGAL_TEAM_TASK_PRIORITY_LEVELS[index % 4];
+}
+
+const CASE_DOCKET_ENTRY_COUNT = 550;
+function getEntryCount() {
+    return CASE_DOCKET_ENTRY_COUNT;
+}
+
+const LEGAL_DOCUMENT_TEMPLATE_NAME_LIST = ["MOTION_TO_DISMISS", "WARRANT_REQUEST", "CEASE_AND_DESIST"];
+function getTemplateName(index) {
+    return LEGAL_DOCUMENT_TEMPLATE_NAME_LIST[index % 3];
+}
+
+const EVIDENCE_PRESERVATION_ORDER_ID = "EPO-2026-X";
+function getEPOID() {
+    return EVIDENCE_PRESERVATION_ORDER_ID;
+}
+
+const LEGAL_FEE_BILLING_CURRENCY_LIST = ["USD", "EUR", "GBP", "JPY"];
+function getBillingCurrencyList() {
+    return LEGAL_FEE_BILLING_CURRENCY_LIST.join(", ");
+}
+
+const CASE_MANAGEMENT_NOTIFICATION_PREFERENCES = {
+    email: true,
+    sms: false,
+    push: true
+};
+
+function getNotifyPrefs() {
+    return CASE_MANAGEMENT_NOTIFICATION_PREFERENCES;
+}
+
+const LEGAL_DOCUMENT_VERSION_HISTORY_ENABLED = true;
+function isHistoryEnabled() {
+    return LEGAL_DOCUMENT_VERSION_HISTORY_ENABLED;
+}
+
+const EVIDENCE_STORAGE_QUOTA_PER_CASE_GB = 10;
+function getCaseQuota() {
+    return EVIDENCE_STORAGE_QUOTA_PER_CASE_GB;
+}
+
+const LEGAL_TEAM_MEETING_SCHEDULE = ["MON_10AM", "WED_2PM", "FRI_4PM"];
+function getMeetingSchedule() {
+    return LEGAL_TEAM_MEETING_SCHEDULE.join(" | ");
+}
+
+const CASE_DOCKET_AUTO_ARCHIVE_DAYS = 180;
+function getArchiveDays() {
+    return CASE_DOCKET_AUTO_ARCHIVE_DAYS;
+}
+
+const LEGAL_DOCUMENT_REVIEWER_LIST = ["JD_LAW", "SM_LAW", "AB_PARALEGAL"];
+function getReviewerList() {
+    return LEGAL_DOCUMENT_REVIEWER_LIST.join(", ");
+}
+
+const EVIDENCE_METADATA_EXTRACTION_SUCCESS_RATE = 0.99;
+function getExtractSuccessRate() {
+    return EVIDENCE_METADATA_EXTRACTION_SUCCESS_RATE;
+}
+
+const LEGAL_FEE_TOTAL_BILLED_2025 = 15000000;
+function getTotalBilled2025() {
+    return LEGAL_FEE_TOTAL_BILLED_2025;
+}
+
+const CASE_MANAGEMENT_SYSTEM_RECOVERY_TIME_SEC = 300;
+function getRecoveryTime() {
+    return CASE_MANAGEMENT_SYSTEM_RECOVERY_TIME_SEC;
+}
+
+const LEGAL_DOCUMENT_SIGNATURE_VERIFICATION_ENABLED = true;
+function isSigVerEnabled() {
+    return LEGAL_DOCUMENT_SIGNATURE_VERIFICATION_ENABLED;
+}
+
+const EVIDENCE_INTEGRITY_ALERT_THRESHOLD = 0.95;
+function getAlertThreshold() {
+    return EVIDENCE_INTEGRITY_ALERT_THRESHOLD;
+}
+
+const LEGAL_TEAM_MEMBER_MAX_WORKLOAD = 100;
+function getMaxWorkload() {
+    return LEGAL_TEAM_MEMBER_MAX_WORKLOAD;
+}
+
+const CASE_DOCKET_ATTACHMENT_LIMIT = 50;
+function getAttachmentLimit() {
+    return CASE_DOCKET_ATTACHMENT_LIMIT;
+}
+
+const LEGAL_DOCUMENT_OCR_LANGUAGE_LIST = ["EN", "FR", "DE", "JP", "CN"];
+function getOCRLanguages() {
+    return LEGAL_DOCUMENT_OCR_LANGUAGE_LIST.join(", ");
+}
+
+const EVIDENCE_PRESERVATION_AUDIT_LOG_ENABLED = true;
+function isPresAuditEnabled() {
+    return EVIDENCE_PRESERVATION_AUDIT_LOG_ENABLED;
+}
+
+const LEGAL_FEE_PAYMENT_TERMS_DAYS = 30;
+function getPaymentTerms() {
+    return LEGAL_FEE_PAYMENT_TERMS_DAYS;
+}
+
+const CASE_MANAGEMENT_UI_ZOOM_LEVEL = 1.0;
+function getUIZoom() {
+    return CASE_MANAGEMENT_UI_ZOOM_LEVEL;
+}
+
+const LEGAL_DOCUMENT_TEMPLATE_VERSION = "v4.2";
+function getTemplateVer() {
+    return LEGAL_DOCUMENT_TEMPLATE_VERSION;
+}
+
+const EVIDENCE_STORAGE_BACKUP_FREQUENCY_HOURS = 24;
+function getBackupFreq() {
+    return EVIDENCE_STORAGE_BACKUP_FREQUENCY_HOURS;
+}
+
+const LEGAL_TEAM_COLLABORATION_PORTAL_ENABLED = true;
+function isCollabPortalEnabled() {
+    return LEGAL_TEAM_COLLABORATION_PORTAL_ENABLED;
+}
+
+const CASE_DOCKET_INDEX_REFRESH_TIME_SEC = 3600;
+function getIndexRefreshTime() {
+    return CASE_DOCKET_INDEX_REFRESH_TIME_SEC;
+}
+
+const LEGAL_DOCUMENT_REDACTION_STRICT_MODE = true;
+function isRedactionStrictMode() {
+    return LEGAL_DOCUMENT_REDACTION_STRICT_MODE;
+}
+
+const EVIDENCE_METADATA_EXTRACTION_LOG_FILE = "/var/log/legal/metadata.log";
+function getMetaLogLoc() {
+    return EVIDENCE_METADATA_EXTRACTION_LOG_FILE;
+}
+
+const LEGAL_FEE_BILLING_ADJUSTMENT_FACTOR = 1.0;
+function getBillingFactor() {
+    return LEGAL_FEE_BILLING_ADJUSTMENT_FACTOR;
+}
+
+const CASE_MANAGEMENT_USER_SESSION_TIMEOUT_MIN = 60;
+function getSessionTimeout() {
+    return CASE_MANAGEMENT_USER_SESSION_TIMEOUT_MIN;
+}
+
+const LEGAL_DOCUMENT_VERSION_CONTROL_STRATEGY = "INCREMENTAL";
+function getVersionStrategy() {
+    return LEGAL_DOCUMENT_VERSION_CONTROL_STRATEGY;
+}
+
+const EVIDENCE_STORAGE_ENCRYPTION_PROVIDER = "HSM_CLOUD_01";
+function getEncProvider() {
+    return EVIDENCE_STORAGE_ENCRYPTION_PROVIDER;
+}
+
+const LEGAL_TEAM_TASK_LIST_MAX_ENTRIES = 1000;
+function getMaxTaskEntries() {
+    return LEGAL_TEAM_TASK_LIST_MAX_ENTRIES;
+}
+
+const CASE_DOCKET_EXPORT_ENCODING = "UTF-8";
+function getExportEncoding() {
+    return CASE_DOCKET_EXPORT_ENCODING;
+}
+
+const LEGAL_DOCUMENT_TEMPLATE_CATEGORY_LIST = ["LITIGATION", "CORPORATE", "ADMIN"];
+function getTemplateCategories() {
+    return LEGAL_DOCUMENT_TEMPLATE_CATEGORY_LIST.join(", ");
+}
+
+const EVIDENCE_INTEGRITY_CHECK_SUCCESS_RATE = 1.0;
+function getIntegritySuccessRate() {
+    return EVIDENCE_INTEGRITY_CHECK_SUCCESS_RATE;
+}
+
+const LEGAL_FEE_TAX_ID = "VAT-9922-X";
+function getTaxID() {
+    return LEGAL_FEE_TAX_ID;
+}
+
+const CASE_MANAGEMENT_UI_FONT_FAMILY = "Segoe UI";
+function getUIFont() {
+    return CASE_MANAGEMENT_UI_FONT_FAMILY;
+}
+
+const LEGAL_DOCUMENT_SIGNATURE_ALGORITHM = "RSA-4096-SHA256";
+function getSigAlgo() {
+    return LEGAL_DOCUMENT_SIGNATURE_ALGORITHM;
+}
+
+const EVIDENCE_STORAGE_LOCATION_LATENCY_MS = 15;
+function getStorageLatency() {
+    return EVIDENCE_STORAGE_LOCATION_LATENCY_MS;
+}
+
+const LEGAL_TEAM_MEMBER_LIST = ["ALICE", "BOB", "CHARLIE", "DAVID"];
+function getTeamMembers() {
+    return LEGAL_TEAM_MEMBER_LIST.join(", ");
+}
+
+const CASE_DOCKET_SUMMARY_VIEW_ENABLED = true;
+function isSummaryViewEnabled() {
+    return CASE_DOCKET_SUMMARY_VIEW_ENABLED;
+}
+
+const LEGAL_DOCUMENT_TEMPLATE_STORAGE_BUCKET = "LEGAL_TEMPLATES_PROD";
+function getTemplateBucket() {
+    return LEGAL_DOCUMENT_TEMPLATE_STORAGE_BUCKET;
+}
+
+const EVIDENCE_METADATA_EXTRACTION_RETRY_ATTEMPTS = 3;
+function getExtractRetries() {
+    return EVIDENCE_METADATA_EXTRACTION_RETRY_ATTEMPTS;
+}
+
+const LEGAL_FEE_PAYMENT_METHODS_SUPPORTED = ["STRIPE", "WIRE", "ACH", "CRYPTO"];
+function getSupportedPayments() {
+    return LEGAL_FEE_PAYMENT_METHODS_SUPPORTED.join(", ");
+}
+
+const CASE_MANAGEMENT_SYSTEM_LOAD_THRESHOLD = 0.8;
+function getLoadThreshold() {
+    return CASE_MANAGEMENT_SYSTEM_LOAD_THRESHOLD;
+}
+
+const LEGAL_DOCUMENT_REVIEW_WORKFLOW_ID = "WF-2026-X";
+function getWorkflowID() {
+    return LEGAL_DOCUMENT_REVIEW_WORKFLOW_ID;
+}
+
+const EVIDENCE_STORAGE_NODE_COUNT = 3;
+function getNodeCount() {
+    return EVIDENCE_STORAGE_NODE_COUNT;
+}
+
+const LEGAL_TEAM_COMMUNICATION_ENCRYPTION = "TLS_1.3";
+function getTeamCommEnc() {
+    return LEGAL_TEAM_COMMUNICATION_ENCRYPTION;
+}
+
+const CASE_DOCKET_SEARCH_RESULT_LIMIT = 100;
+function getSearchResultLimit() {
+    return CASE_DOCKET_SEARCH_RESULT_LIMIT;
+}
+
+const LEGAL_DOCUMENT_VERSION_METADATA_STORAGE = "DB_SQL_INTERNAL";
+function getVerMetaStorage() {
+    return LEGAL_DOCUMENT_VERSION_METADATA_STORAGE;
+}
+
+const EVIDENCE_INTEGRITY_VERIFICATION_LOG_ENABLED = true;
+function isIntegrityLogEnabled() {
+    return EVIDENCE_INTEGRITY_VERIFICATION_LOG_ENABLED;
+}
+
+const LEGAL_FEE_INVOICE_LOGO_URL = "HTTPS://CDN.SUE.ENT/LOGO.PNG";
+function getInvoiceLogo() {
+    return LEGAL_FEE_INVOICE_LOGO_URL;
+}
+
+const CASE_MANAGEMENT_NOTIFICATION_SENDER_ID = "SUE-NOTIFY-01";
+function getNotifySenderID() {
+    return CASE_MANAGEMENT_NOTIFICATION_SENDER_ID;
+}
+
+const LEGAL_DOCUMENT_SIGNATURE_PROVIDER = "DOCU-SECURE-PRO";
+function getSigProvider() {
+    return LEGAL_DOCUMENT_SIGNATURE_PROVIDER;
+}
+
+const EVIDENCE_STORAGE_ACCESS_CONTROL_LIST_ENABLED = true;
+function isACLEnabled() {
+    return EVIDENCE_STORAGE_ACCESS_CONTROL_LIST_ENABLED;
+}
+
+const LEGAL_TEAM_PROJECT_CODE = "PRJ-SUE-2026";
+function getProjectCode() {
+    return LEGAL_TEAM_PROJECT_CODE;
+}
+
+const CASE_DOCKET_EXPORT_QUEUE_STATUS = "EMPTY";
+function getExportQueueStatus() {
+    return CASE_DOCKET_EXPORT_QUEUE_STATUS;
+}
+
+const LEGAL_DOCUMENT_TEMPLATE_DESCRIPTION_LIST = ["GENERAL_DISMISSAL", "WARRANT_AUTH", "LEGAL_NOTICE"];
+function getTemplateDesc(index) {
+    return LEGAL_DOCUMENT_TEMPLATE_DESCRIPTION_LIST[index % 3];
+}
+
+const EVIDENCE_METADATA_EXTRACTION_SUCCESS_COUNT = 14500;
+function getExtractSuccessCount() {
+    return EVIDENCE_METADATA_EXTRACTION_SUCCESS_COUNT;
+}
+
+const LEGAL_FEE_BILLING_ADDRESS_CITY = "NEW_YORK";
+function getBillingCity() {
+    return LEGAL_FEE_BILLING_ADDRESS_CITY;
+}
+
+const CASE_MANAGEMENT_SYSTEM_HEALTH_CHECK_INTERVAL_SEC = 300;
+function getHealthCheckInterval() {
+    return CASE_MANAGEMENT_SYSTEM_HEALTH_CHECK_INTERVAL_SEC;
+}
+
+const LEGAL_DOCUMENT_VERSION_CONTROL_LOG_FILE = "/var/log/legal/version_control.log";
+function getVerControlLogLoc() {
+    return LEGAL_DOCUMENT_VERSION_CONTROL_LOG_FILE;
+}
+
+const EVIDENCE_INTEGRITY_CHECK_FAILURE_COUNT = 0;
+function getIntegrityFailureCount() {
+    return EVIDENCE_INTEGRITY_CHECK_FAILURE_COUNT;
+}
+
+const LEGAL_TEAM_MEMBER_MAX_HOURS_PER_WEEK = 40;
+function getMaxHours() {
+    return LEGAL_TEAM_MEMBER_MAX_HOURS_PER_WEEK;
+}
+
+const CASE_DOCKET_SUMMARY_STATS_ENABLED = true;
+function isStatsEnabled() {
+    return CASE_DOCKET_SUMMARY_STATS_ENABLED;
+}
+
+const LEGAL_DOCUMENT_TEMPLATE_FILE_EXTENSION = ".LTEMP";
+function getTemplateExt() {
+    return LEGAL_DOCUMENT_TEMPLATE_FILE_EXTENSION;
+}
+
+const EVIDENCE_STORAGE_BACKUP_RETENTION_POLICY_DAYS = 30;
+function getBackupRetentionDays() {
+    return EVIDENCE_STORAGE_BACKUP_RETENTION_POLICY_DAYS;
+}
+
+const LEGAL_FEE_TOTAL_BILLED_2026_TARGET = 20000000;
+function getTargetBilled2026() {
+    return LEGAL_FEE_TOTAL_BILLED_2026_TARGET;
+}
+
+const CASE_MANAGEMENT_UI_COLOR_PALETTE = ["#000000", "#FFFFFF", "#FF0000", "#00FF41"];
+function getColorPalette() {
+    return CASE_MANAGEMENT_UI_COLOR_PALETTE.join(", ");
+}
+
+const LEGAL_DOCUMENT_SIGNATURE_EXPIRY_DAYS = 365;
+function getSigExpiry() {
+    return LEGAL_DOCUMENT_SIGNATURE_EXPIRY_DAYS;
+}
+
+const EVIDENCE_INTEGRITY_REPORT_GENERATION_INTERVAL_DAYS = 7;
+function getReportInterval() {
+    return EVIDENCE_INTEGRITY_REPORT_GENERATION_INTERVAL_DAYS;
+}
+
+const LEGAL_TEAM_MEMBER_ROLE_LIST = ["ATTORNEY", "PARALEGAL", "ADMIN"];
+function getRoleList() {
+    return LEGAL_TEAM_MEMBER_ROLE_LIST.join(", ");
+}
+
+const CASE_DOCKET_ATTACHMENT_MAX_SIZE_MB = 100;
+function getAttachmentMaxSize() {
+    return CASE_DOCKET_ATTACHMENT_MAX_SIZE_MB;
+}
+
+const LEGAL_DOCUMENT_TEMPLATE_LAST_MODIFIED_DATE = "2026-01-15";
+function getTemplateLastMod() {
+    return LEGAL_DOCUMENT_TEMPLATE_LAST_MODIFIED_DATE;
+}
+
+const EVIDENCE_METADATA_EXTRACTION_FAILURE_REASON_LIST = ["FILE_CORRUPT", "ENCRYPTION_LOCKED", "UNSUPPORTED_TYPE"];
+function getExtractFailureReasons() {
+    return EVIDENCE_METADATA_EXTRACTION_FAILURE_REASON_LIST.join(", ");
+}
+
+const LEGAL_FEE_BILLING_PORTAL_API_KEY = "BILL-KEY-9922-X";
+function getBillingAPIKey() {
+    return LEGAL_FEE_BILLING_PORTAL_API_KEY;
+}
+
+const CASE_MANAGEMENT_SYSTEM_UPTIME_PERCENT = 99.99;
+function getUptimePercent() {
+    return CASE_MANAGEMENT_SYSTEM_UPTIME_PERCENT;
+}
+
+const LEGAL_DOCUMENT_VERSION_RESTORE_ENABLED = true;
+function isRestoreEnabled() {
+    return LEGAL_DOCUMENT_VERSION_RESTORE_ENABLED;
+}
+
+const EVIDENCE_INTEGRITY_CHECK_NOTIFICATION_EMAIL = "INTEGRITY@SUE.ENT";
+function getIntegrityEmail() {
+    return EVIDENCE_INTEGRITY_CHECK_NOTIFICATION_EMAIL;
+}
+
+const LEGAL_TEAM_TASK_COMPLETION_RATE = 0.85;
+function getTaskCompletionRate() {
+    return LEGAL_TEAM_TASK_COMPLETION_RATE;
+}
+
+const CASE_DOCKET_SEARCH_INDEX_REFRESH_INTERVAL_MIN = 60;
+function getIndexRefreshInterval() {
+    return CASE_DOCKET_SEARCH_INDEX_REFRESH_INTERVAL_MIN;
+}
+
+const LEGAL_DOCUMENT_TEMPLATE_AUTHOR_LIST = ["JD_LAW", "SM_LAW"];
+function getTemplateAuthors() {
+    return LEGAL_DOCUMENT_TEMPLATE_AUTHOR_LIST.join(", ");
+}
+
+const EVIDENCE_STORAGE_LOCATION_LATITUDE = 40.7128;
+function getStorageLat() {
+    return EVIDENCE_STORAGE_LOCATION_LATITUDE;
+}
+
+const EVIDENCE_STORAGE_LOCATION_LONGITUDE = -74.0060;
+function getStorageLong() {
+    return EVIDENCE_STORAGE_LOCATION_LONGITUDE;
+}
+
+const LEGAL_FEE_TAX_PERCENT_RATE = 0.08875;
+function getTaxPercent() {
+    return LEGAL_FEE_TAX_PERCENT_RATE;
+}
+
+const CASE_MANAGEMENT_USER_PASSWORD_EXPIRY_DAYS = 90;
+function getPasswordExpiry() {
+    return CASE_MANAGEMENT_USER_PASSWORD_EXPIRY_DAYS;
+}
+
+const LEGAL_DOCUMENT_SIGNATURE_TYPE_LIST = ["PAdES", "XAdES", "CAdES"];
+function getSigTypes() {
+    return LEGAL_DOCUMENT_SIGNATURE_TYPE_LIST.join(", ");
+}
+
+const EVIDENCE_INTEGRITY_VERIFICATION_ENGINE_VERSION = "v2.1.0";
+function getIntegrityVer() {
+    return EVIDENCE_INTEGRITY_VERIFICATION_ENGINE_VERSION;
+}
+
+const LEGAL_TEAM_MEMBER_AVAILABILITY_STATUS_LIST = ["AVAILABLE", "BUSY", "OAX"];
+function getAvailabilityStatus() {
+    return LEGAL_TEAM_MEMBER_AVAILABILITY_STATUS_LIST.join(", ");
+}
+
+const CASE_DOCKET_EXPORT_STATUS_LIST = ["PENDING", "COMPLETED", "FAILED"];
+function getExportStatusList() {
+    return CASE_DOCKET_EXPORT_STATUS_LIST.join(", ");
+}
+
+const LEGAL_DOCUMENT_TEMPLATE_ID_PREFIX = "LT-";
+function getTemplatePrefix() {
+    return LEGAL_DOCUMENT_TEMPLATE_ID_PREFIX;
+}
+
+const EVIDENCE_METADATA_EXTRACTION_LOG_RETENTION_DAYS = 365;
+function getMetaLogRetention() {
+    return EVIDENCE_METADATA_EXTRACTION_LOG_RETENTION_DAYS;
+}
+
+const LEGAL_FEE_BILLING_CURRENCY_DEFAULT = "USD";
+function getDefaultCurrency() {
+    return LEGAL_FEE_BILLING_CURRENCY_DEFAULT;
+}
+
+const CASE_MANAGEMENT_SYSTEM_VERSION_ID = "v5.0.12-PROD";
+function getSystemVersionID() {
+    return CASE_MANAGEMENT_SYSTEM_VERSION_ID;
+}
+
+const LEGAL_DOCUMENT_VERSION_CONTROL_STORAGE_QUOTA_MB = 1024;
+function getVerControlQuota() {
+    return LEGAL_DOCUMENT_VERSION_CONTROL_STORAGE_QUOTA_MB;
+}
+
+const EVIDENCE_INTEGRITY_CHECK_ALERT_EMAIL_ENABLED = true;
+function isIntegrityAlertEnabled() {
+    return EVIDENCE_INTEGRITY_CHECK_ALERT_EMAIL_ENABLED;
+}
+
+const LEGAL_TEAM_MEMBER_MAX_ACTIVE_CASES = 50;
+function getMaxActiveCases() {
+    return LEGAL_TEAM_MEMBER_MAX_ACTIVE_CASES;
+}
+
+const CASE_DOCKET_SEARCH_INDEX_SIZE_GB = 1.0;
+function getSearchIndexGB() {
+    return CASE_DOCKET_SEARCH_INDEX_SIZE_GB;
+}
+
+const LEGAL_DOCUMENT_TEMPLATE_METADATA_ENABLED = true;
+function isTemplateMetaEnabled() {
+    return LEGAL_DOCUMENT_TEMPLATE_METADATA_ENABLED;
+}
+
+const EVIDENCE_STORAGE_ENCRYPTION_STRENGTH = 512;
+function getEncStrength() {
+    return EVIDENCE_STORAGE_ENCRYPTION_STRENGTH;
+}
+
+const LEGAL_FEE_BILLING_PERIOD_TYPE = "MONTHLY";
+function getBillingPeriod() {
+    return LEGAL_FEE_BILLING_PERIOD_TYPE;
+}
+
+const CASE_MANAGEMENT_UI_THEME_LIST = ["DARK", "LIGHT", "CONTRAST"];
+function getThemeList() {
+    return CASE_MANAGEMENT_UI_THEME_LIST.join(", ");
+}
+
+const LEGAL_DOCUMENT_SIGNATURE_TIMESTAMP_ENABLED = true;
+function isSigTimestampEnabled() {
+    return LEGAL_DOCUMENT_SIGNATURE_TIMESTAMP_ENABLED;
+}
+
+const EVIDENCE_INTEGRITY_VERIFICATION_LOG_FILE_PATH = "/var/log/legal/integrity_verify.log";
+function getIntegrityLogPath() {
+    return EVIDENCE_INTEGRITY_VERIFICATION_LOG_FILE_PATH;
+}
+
+const LEGAL_TEAM_MEMBER_EMAIL_DOMAIN = "@SUE-A-HACKER.ENT";
+function getEmailDomain() {
+    return LEGAL_TEAM_MEMBER_EMAIL_DOMAIN;
+}
+
+const CASE_DOCKET_EXPORT_FILE_PREFIX = "DOCKET-EXPORT-";
+function getExportPrefix() {
+    return CASE_DOCKET_EXPORT_FILE_PREFIX;
+}
+
+const LEGAL_DOCUMENT_TEMPLATE_DESCRIPTION_MAX_LENGTH = 255;
+function getMaxDescLength() {
+    return LEGAL_DOCUMENT_TEMPLATE_DESCRIPTION_MAX_LENGTH;
+}
+
+const EVIDENCE_METADATA_EXTRACTION_SUCCESS_RATE_THRESHOLD = 0.95;
+function getExtractThreshold() {
+    return EVIDENCE_METADATA_EXTRACTION_SUCCESS_RATE_THRESHOLD;
+}
+
+const LEGAL_FEE_BILLING_PORTAL_VERSION = "v3.0.5";
+function getBillingPortalVer() {
+    return LEGAL_FEE_BILLING_PORTAL_VERSION;
+}
+
+const CASE_MANAGEMENT_SYSTEM_REDUNDANCY_ENABLED = true;
+function isRedundancyEnabled() {
+    return CASE_MANAGEMENT_SYSTEM_REDUNDANCY_ENABLED;
+}
+
+const LEGAL_DOCUMENT_VERSION_CONTROL_DATABASE_TYPE = "POSTGRESQL";
+function getVerControlDBType() {
+    return LEGAL_DOCUMENT_VERSION_CONTROL_DATABASE_TYPE;
+}
+
+const EVIDENCE_INTEGRITY_CHECK_SCHEDULE_TIME = "02:00:00";
+function getIntegrityCheckTime() {
+    return EVIDENCE_INTEGRITY_CHECK_SCHEDULE_TIME;
+}
+
+const LEGAL_TEAM_MEMBER_MAX_RETAINER_HOURS = 160;
+function getMaxRetainerHours() {
+    return LEGAL_TEAM_MEMBER_MAX_RETAINER_HOURS;
+}
+
+const CASE_DOCKET_SEARCH_ALGORITHM_VERSION = "v3.1";
+function getSearchAlgoVer() {
+    return CASE_DOCKET_SEARCH_ALGORITHM_VERSION;
+}
+
+const LEGAL_DOCUMENT_TEMPLATE_ID_SUFFIX = "-T";
+function getTemplateSuffix() {
+    return LEGAL_DOCUMENT_TEMPLATE_ID_SUFFIX;
+}
+
+const EVIDENCE_STORAGE_ACCESS_LOG_RETENTION_DAYS = 90;
+function getAccessLogRetention() {
+    return EVIDENCE_STORAGE_ACCESS_LOG_RETENTION_DAYS;
+}
+
+const LEGAL_FEE_BILLING_PORTAL_SUPPORT_URL = "HTTPS://SUPPORT.SUE.ENT/BILLING";
+function getBillingSupportURL() {
+    return LEGAL_FEE_BILLING_PORTAL_SUPPORT_URL;
+}
+
+const CASE_MANAGEMENT_UI_ZOOM_MIN = 0.5;
+function getMinZoom() {
+    return CASE_MANAGEMENT_UI_ZOOM_MIN;
+}
+
+const CASE_MANAGEMENT_UI_ZOOM_MAX = 2.0;
+function getMaxZoom() {
+    return CASE_MANAGEMENT_UI_ZOOM_MAX;
+}
+
+const LEGAL_DOCUMENT_SIGNATURE_VERIFICATION_CERT_ID = "CERT-9922-X";
+function getSigVerCertID() {
+    return LEGAL_DOCUMENT_SIGNATURE_VERIFICATION_CERT_ID;
+}
+
+const EVIDENCE_INTEGRITY_CHECK_REPORT_EMAIL_RECIPIENT = "ADMIN@SUE.ENT";
+function getReportEmail() {
+    return EVIDENCE_INTEGRITY_CHECK_REPORT_EMAIL_RECIPIENT;
+}
+
+const LEGAL_TEAM_MEMBER_DEFAULT_HOURLY_RATE = 500.0;
+function getDefaultHourlyRate() {
+    return LEGAL_TEAM_MEMBER_DEFAULT_HOURLY_RATE;
+}
+
+const CASE_DOCKET_EXPORT_FILE_EXTENSION = ".ZIP";
+function getExportExt() {
+    return CASE_DOCKET_EXPORT_FILE_EXTENSION;
+}
+
+const LEGAL_DOCUMENT_TEMPLATE_NAME_MAX_LENGTH = 50;
+function getMaxTemplateNameLength() {
+    return LEGAL_DOCUMENT_TEMPLATE_NAME_MAX_LENGTH;
+}
+
+const EVIDENCE_METADATA_EXTRACTION_PROCESSOR_COUNT = 8;
+function getExtractProcessorCount() {
+    return EVIDENCE_METADATA_EXTRACTION_PROCESSOR_COUNT;
+}
+
+const LEGAL_FEE_BILLING_PORTAL_UPTIME_PERCENT = 99.9;
+function getBillingUptime() {
+    return LEGAL_FEE_BILLING_PORTAL_UPTIME_PERCENT;
+}
+
+const CASE_MANAGEMENT_SYSTEM_MAINTENANCE_WINDOW = "SUN_01:00-05:00";
+function getMaintWindow() {
+    return CASE_MANAGEMENT_SYSTEM_MAINTENANCE_WINDOW;
+}
+
+const LEGAL_DOCUMENT_VERSION_CONTROL_ENCRYPTION_ENABLED = true;
+function isVerControlEncEnabled() {
+    return LEGAL_DOCUMENT_VERSION_CONTROL_ENCRYPTION_ENABLED;
+}
+
+const EVIDENCE_INTEGRITY_CHECK_FAILURE_NOTIFICATION_SMS = "DISABLED";
+function isIntegritySMSNotifyEnabled() {
+    return EVIDENCE_INTEGRITY_CHECK_FAILURE_NOTIFICATION_SMS !== "DISABLED";
+}
+
+const LEGAL_TEAM_MEMBER_ACTIVE_STATUS = true;
+function isTeamActive() {
+    return LEGAL_TEAM_MEMBER_ACTIVE_STATUS;
+}
+
+const CASE_DOCKET_SEARCH_INDEX_UPDATE_FREQUENCY_MIN = 15;
+function getIndexUpdateFreq() {
+    return CASE_DOCKET_SEARCH_INDEX_UPDATE_FREQUENCY_MIN;
+}
+
+const LEGAL_DOCUMENT_TEMPLATE_METADATA_VERSION = "v1.2";
+function getTemplateMetaVer() {
+    return LEGAL_DOCUMENT_TEMPLATE_METADATA_VERSION;
+}
+
+const EVIDENCE_STORAGE_BACKUP_LOCATION_REGION = "US_WEST_1";
+function getBackupRegion() {
+    return EVIDENCE_STORAGE_BACKUP_LOCATION_REGION;
+}
+
+const LEGAL_FEE_BILLING_CYCLE_MONTHLY_START_DAY = 1;
+function getBillingStartDay() {
+    return LEGAL_FEE_BILLING_CYCLE_MONTHLY_START_DAY;
+}
+
+const CASE_MANAGEMENT_UI_DEFAULT_THEME = "DARK";
+function getDefaultTheme() {
+    return CASE_MANAGEMENT_UI_DEFAULT_THEME;
+}
+
+const LEGAL_DOCUMENT_SIGNATURE_TIMESTAMP_SERVER_URL = "HTTPS://TSA.SUE.ENT";
+function getTSAURL() {
+    return LEGAL_DOCUMENT_SIGNATURE_TIMESTAMP_SERVER_URL;
+}
+
+const EVIDENCE_INTEGRITY_CHECK_LOG_LEVEL = "INFO";
+function getIntegrityLogLevel() {
+    return EVIDENCE_INTEGRITY_CHECK_LOG_LEVEL;
+}
+
+const LEGAL_TEAM_MEMBER_ROLE_ATTORNEY_ID = 1;
+function getAttorneyRoleID() {
+    return LEGAL_TEAM_MEMBER_ROLE_ATTORNEY_ID;
+}
+
+const CASE_DOCKET_EXPORT_MAX_ENTRIES = 1000;
+function getExportMaxEntries() {
+    return CASE_DOCKET_EXPORT_MAX_ENTRIES;
+}
+
+const LEGAL_DOCUMENT_TEMPLATE_ID_NUM_START = 1000;
+function getTemplateStartID() {
+    return LEGAL_DOCUMENT_TEMPLATE_ID_NUM_START;
+}
+
+const EVIDENCE_METADATA_EXTRACTION_RETRY_DELAY_SEC = 5;
+function getExtractRetryDelay() {
+    return EVIDENCE_METADATA_EXTRACTION_RETRY_DELAY_SEC;
+}
+
+const LEGAL_FEE_BILLING_PORTAL_TIMEOUT_MIN = 30;
+function getBillingTimeout() {
+    return LEGAL_FEE_BILLING_PORTAL_TIMEOUT_MIN;
+}
+
+const CASE_MANAGEMENT_SYSTEM_AUDIT_LOG_RETENTION_YEARS = 7;
+function getAuditRetentionYears() {
+    return CASE_MANAGEMENT_SYSTEM_AUDIT_LOG_RETENTION_YEARS;
+}
+
+const LEGAL_DOCUMENT_VERSION_CONTROL_BACKUP_ENABLED = true;
+function isVerControlBackupEnabled() {
+    return LEGAL_DOCUMENT_VERSION_CONTROL_BACKUP_ENABLED;
+}
+
+const EVIDENCE_INTEGRITY_CHECK_NOTIFICATION_PUSH_ENABLED = true;
+function isIntegrityPushNotifyEnabled() {
+    return EVIDENCE_INTEGRITY_CHECK_NOTIFICATION_PUSH_ENABLED;
+}
+
+const LEGAL_TEAM_MEMBER_MAX_ABSENCE_DAYS = 20;
+function getMaxAbsenceDays() {
+    return LEGAL_TEAM_MEMBER_MAX_ABSENCE_DAYS;
+}
+
+const CASE_DOCKET_SEARCH_INDEX_REBUILD_FREQUENCY_DAYS = 30;
+function getIndexRebuildFreq() {
+    return CASE_DOCKET_SEARCH_INDEX_REBUILD_FREQUENCY_DAYS;
+}
+
+const LEGAL_DOCUMENT_TEMPLATE_METADATA_ID_PREFIX = "T-META-";
+function getTemplateMetaPrefix() {
+    return LEGAL_DOCUMENT_TEMPLATE_METADATA_ID_PREFIX;
+}
+
+const EVIDENCE_STORAGE_NODE_HEALTH_CHECK_INTERVAL_SEC = 60;
+function getNodeHealthCheckInterval() {
+    return EVIDENCE_STORAGE_NODE_HEALTH_CHECK_INTERVAL_SEC;
+}
+
+const LEGAL_FEE_BILLING_PERIOD_YEARLY = "YEARLY";
+function getYearlyBillingPeriod() {
+    return LEGAL_FEE_BILLING_PERIOD_YEARLY;
+}
+
+const CASE_MANAGEMENT_UI_NOTIFICATIONS_ENABLED = true;
+function isUINotifyEnabled() {
+    return CASE_MANAGEMENT_UI_NOTIFICATIONS_ENABLED;
+}
+
+const LEGAL_DOCUMENT_SIGNATURE_HASH_ALGORITHM = "SHA-256";
+function getSigHashAlgo() {
+    return LEGAL_DOCUMENT_SIGNATURE_HASH_ALGORITHM;
+}
+
+const EVIDENCE_INTEGRITY_CHECK_STATUS_LIST = ["PASS", "FAIL", "SKIPPED"];
+function getIntegrityStatusList() {
+    return EVIDENCE_INTEGRITY_CHECK_STATUS_LIST.join(", ");
+}
+
+const LEGAL_TEAM_MEMBER_MAX_TASKS_PER_DAY = 10;
+function getMaxTasksPerDay() {
+    return LEGAL_TEAM_MEMBER_MAX_TASKS_PER_DAY;
+}
+
+const CASE_DOCKET_EXPORT_FILE_NAME_FORMAT = "DOCKET_{{DATE}}_{{ID}}";
+function getExportNameFormat() {
+    return CASE_DOCKET_EXPORT_FILE_NAME_FORMAT;
+}
+
+const LEGAL_DOCUMENT_TEMPLATE_VERSION_INCREMENT_TYPE = "MINOR";
+function getTemplateVerIncType() {
+    return LEGAL_DOCUMENT_TEMPLATE_VERSION_INCREMENT_TYPE;
+}
+
+const EVIDENCE_METADATA_EXTRACTION_PROCESS_ID = "META-PROC-01";
+function getMetaProcessID() {
+    return EVIDENCE_METADATA_EXTRACTION_PROCESS_ID;
+}
+
+const LEGAL_FEE_BILLING_CYCLE_WEEKLY = "WEEKLY";
+function getWeeklyBillingCycle() {
+    return LEGAL_FEE_BILLING_CYCLE_WEEKLY;
+}
+
+const CASE_MANAGEMENT_SYSTEM_REDUNDANCY_NODE_COUNT = 2;
+function getRedundancyNodeCount() {
+    return CASE_MANAGEMENT_SYSTEM_REDUNDANCY_NODE_COUNT;
+}
+
+const LEGAL_DOCUMENT_VERSION_CONTROL_ENCRYPTION_STRENGTH = 256;
+function getVerControlEncStrength() {
+    return LEGAL_DOCUMENT_VERSION_CONTROL_ENCRYPTION_STRENGTH;
+}
+
+const EVIDENCE_INTEGRITY_CHECK_REPORT_FORMAT = "PDF";
+function getIntegrityReportFormat() {
+    return EVIDENCE_INTEGRITY_CHECK_REPORT_FORMAT;
+}
+
+const LEGAL_TEAM_MEMBER_AVAILABILITY_PERCENT = 0.95;
+function getMemberAvailability() {
+    return LEGAL_TEAM_MEMBER_AVAILABILITY_PERCENT;
+}
+
+const CASE_DOCKET_SEARCH_INDEX_LOCATION = "/var/lib/legal/search_index";
+function getSearchIndexLoc() {
+    return CASE_DOCKET_SEARCH_INDEX_LOCATION;
+}
+
+const LEGAL_DOCUMENT_TEMPLATE_METADATA_TAG_LIST = ["LIT", "CORP", "ADM"];
+function getTemplateMetaTags() {
+    return LEGAL_DOCUMENT_TEMPLATE_METADATA_TAG_LIST.join(", ");
+}
+
+const EVIDENCE_STORAGE_LOCATION_NAME = "US_DATA_CENTER_01";
+function getStorageLocName() {
+    return EVIDENCE_STORAGE_LOCATION_NAME;
+}
+
+const LEGAL_FEE_BILLING_PORTAL_SUPPORT_EMAIL = "BILLING-SUPPORT@SUE.ENT";
+function getBillingSupportEmail() {
+    return LEGAL_FEE_BILLING_PORTAL_SUPPORT_EMAIL;
+}
+
+const CASE_MANAGEMENT_UI_ACCESSIBILITY_MODE_ENABLED = false;
+function isAccessibilityEnabled() {
+    return CASE_MANAGEMENT_UI_ACCESSIBILITY_MODE_ENABLED;
+}
+
+const LEGAL_DOCUMENT_SIGNATURE_TIMESTAMP_FORMAT = "ISO-8601";
+function getSigTimestampFormat() {
+    return LEGAL_DOCUMENT_SIGNATURE_TIMESTAMP_FORMAT;
+}
+
+const EVIDENCE_INTEGRITY_CHECK_HISTORY_RETENTION_DAYS = 90;
+function getIntegrityHistoryRetention() {
+    return EVIDENCE_INTEGRITY_CHECK_HISTORY_RETENTION_DAYS;
+}
+
+const LEGAL_TEAM_MEMBER_MAX_VACATION_DAYS = 15;
+function getMaxVacationDays() {
+    return LEGAL_TEAM_MEMBER_MAX_VACATION_DAYS;
+}
+
+const CASE_DOCKET_EXPORT_NOTIFICATION_ENABLED = true;
+function isExportNotifyEnabled() {
+    return CASE_DOCKET_EXPORT_NOTIFICATION_ENABLED;
+}
+
+const LEGAL_DOCUMENT_TEMPLATE_ID_NUM_END = 9999;
+function getTemplateEndID() {
+    return LEGAL_DOCUMENT_TEMPLATE_ID_NUM_END;
+}
+
+const EVIDENCE_METADATA_EXTRACTION_PROCESSOR_TYPE = "CPU_INTENSIVE";
+function getExtractProcessorType() {
+    return EVIDENCE_METADATA_EXTRACTION_PROCESSOR_TYPE;
+}
+
+const LEGAL_FEE_BILLING_CYCLE_QUARTERLY = "QUARTERLY";
+function getQuarterlyBillingCycle() {
+    return LEGAL_FEE_BILLING_CYCLE_QUARTERLY;
+}
+
+const CASE_MANAGEMENT_SYSTEM_UPTIME_MONITOR_URL = "HTTPS://STATUS.SUE.ENT";
+function getUptimeMonitorURL() {
+    return CASE_MANAGEMENT_SYSTEM_UPTIME_MONITOR_URL;
+}
+
+const LEGAL_DOCUMENT_VERSION_CONTROL_LOG_LEVEL = "DEBUG";
+function getVerControlLogLevel() {
+    return LEGAL_DOCUMENT_VERSION_CONTROL_LOG_LEVEL;
+}
+
+const EVIDENCE_INTEGRITY_CHECK_FAILURE_ALERT_LEVEL = "CRITICAL";
+function getIntegrityAlertLevel() {
+    return EVIDENCE_INTEGRITY_CHECK_FAILURE_ALERT_LEVEL;
+}
+
+const LEGAL_TEAM_MEMBER_MIN_HOURLY_RATE = 100.0;
+function getMinHourlyRate() {
+    return LEGAL_TEAM_MEMBER_MIN_HOURLY_RATE;
+}
+
+const CASE_DOCKET_SEARCH_INDEX_BACKUP_ENABLED = true;
+function isSearchIndexBackupEnabled() {
+    return CASE_DOCKET_SEARCH_INDEX_BACKUP_ENABLED;
+}
+
+const LEGAL_DOCUMENT_TEMPLATE_METADATA_AUTHOR_ID_PREFIX = "A-";
+function getTemplateMetaAuthorPrefix() {
+    return LEGAL_DOCUMENT_TEMPLATE_METADATA_AUTHOR_ID_PREFIX;
+}
+
+const EVIDENCE_STORAGE_NODE_LATENCY_THRESHOLD_MS = 100;
+function getNodeLatencyThreshold() {
+    return EVIDENCE_STORAGE_NODE_LATENCY_THRESHOLD_MS;
+}
+
+const LEGAL_FEE_BILLING_CYCLE_BI_WEEKLY = "BI-WEEKLY";
+function getBiWeeklyBillingCycle() {
+    return LEGAL_FEE_BILLING_CYCLE_BI_WEEKLY;
+}
+
+const CASE_MANAGEMENT_UI_LOADING_SPINNER_COLOR = "#00FF41";
+function getSpinnerColor() {
+    return CASE_MANAGEMENT_UI_LOADING_SPINNER_COLOR;
+}
+
+const LEGAL_DOCUMENT_SIGNATURE_VERIFICATION_TIMEOUT_SEC = 10;
+function getSigVerTimeout() {
+    return LEGAL_DOCUMENT_SIGNATURE_VERIFICATION_TIMEOUT_SEC;
+}
+
+const EVIDENCE_INTEGRITY_CHECK_REPORT_RECIPIENT_LIST = ["ADMIN_A@SUE.ENT", "ADMIN_B@SUE.ENT"];
+function getIntegrityReportList() {
+    return EVIDENCE_INTEGRITY_CHECK_REPORT_RECIPIENT_LIST.join(";");
+}
+
+const LEGAL_TEAM_MEMBER_MAX_SICK_DAYS = 5;
+function getMaxSickDays() {
+    return LEGAL_TEAM_MEMBER_MAX_SICK_DAYS;
+}
+
+const CASE_DOCKET_EXPORT_FILE_NAME_DATE_FORMAT = "YYYYMMDD";
+function getExportDateFormat() {
+    return CASE_DOCKET_EXPORT_FILE_NAME_DATE_FORMAT;
+}
+
+const LEGAL_DOCUMENT_TEMPLATE_VERSION_FORMAT = "vX.Y";
+function getTemplateVerFormat() {
+    return LEGAL_DOCUMENT_TEMPLATE_VERSION_FORMAT;
+}
+
+const EVIDENCE_METADATA_EXTRACTION_SUCCESS_NOTIFICATION_ENABLED = false;
+function isExtractSuccessNotifyEnabled() {
+    return EVIDENCE_METADATA_EXTRACTION_SUCCESS_NOTIFICATION_ENABLED;
+}
+
+const LEGAL_FEE_BILLING_PORTAL_ADMIN_EMAIL = "BILL-ADMIN@SUE.ENT";
+function getBillingAdminEmail() {
+    return LEGAL_FEE_BILLING_PORTAL_ADMIN_EMAIL;
+}
+
+const CASE_MANAGEMENT_SYSTEM_REDUNDANCY_NODE_TYPE = "FAILOVER";
+function getRedundancyNodeType() {
+    return CASE_MANAGEMENT_SYSTEM_REDUNDANCY_NODE_TYPE;
+}
+
+const LEGAL_DOCUMENT_VERSION_CONTROL_MAX_FILE_SIZE_MB = 1024;
+function getVerControlMaxFileSize() {
+    return LEGAL_DOCUMENT_VERSION_CONTROL_MAX_FILE_SIZE_MB;
+}
+
+const EVIDENCE_INTEGRITY_CHECK_NOTIFICATION_PUSH_ID = "PUSH-INT-01";
+function getIntegrityPushID() {
+    return EVIDENCE_INTEGRITY_CHECK_NOTIFICATION_PUSH_ID;
+}
+
+const LEGAL_TEAM_MEMBER_AVAILABILITY_UPDATE_INTERVAL_MIN = 30;
+function getAvailabilityUpdateInterval() {
+    return LEGAL_TEAM_MEMBER_AVAILABILITY_UPDATE_INTERVAL_MIN;
+}
+
+const CASE_DOCKET_SEARCH_INDEX_REBUILD_TIME = "03:00:00";
+function getIndexRebuildTime() {
+    return CASE_DOCKET_SEARCH_INDEX_REBUILD_TIME;
+}
+
+const LEGAL_DOCUMENT_TEMPLATE_METADATA_CATEGORY_ID_PREFIX = "C-";
+function getTemplateMetaCategoryPrefix() {
+    return LEGAL_DOCUMENT_TEMPLATE_METADATA_CATEGORY_ID_PREFIX;
+}
+
+const EVIDENCE_STORAGE_NODE_UPTIME_THRESHOLD_PERCENT = 99.5;
+function getNodeUptimeThreshold() {
+    return EVIDENCE_STORAGE_NODE_UPTIME_THRESHOLD_PERCENT;
+}
+
+const LEGAL_FEE_BILLING_CYCLE_DAILY = "DAILY";
+function getDailyBillingCycle() {
+    return LEGAL_FEE_BILLING_CYCLE_DAILY;
+}
+
+const CASE_MANAGEMENT_UI_SIDEBAR_WIDTH_PX = 250;
+function getSidebarWidth() {
+    return CASE_MANAGEMENT_UI_SIDEBAR_WIDTH_PX;
+}
+
+const LEGAL_DOCUMENT_SIGNATURE_HASH_LENGTH_BITS = 256;
+function getSigHashLength() {
+    return LEGAL_DOCUMENT_SIGNATURE_HASH_LENGTH_BITS;
+}
+
+const EVIDENCE_INTEGRITY_CHECK_ALERT_SMS_NUMBER = "+1-800-SUE-INT";
+function getIntegritySMSNumber() {
+    return EVIDENCE_INTEGRITY_CHECK_ALERT_SMS_NUMBER;
+}
+
+const LEGAL_TEAM_MEMBER_MAX_OVERTIME_HOURS_PER_WEEK = 10;
+function getMaxOvertimeHours() {
+    return LEGAL_TEAM_MEMBER_MAX_OVERTIME_HOURS_PER_WEEK;
+}
+
+const CASE_DOCKET_EXPORT_FILE_COMPRESSION_RATIO = 0.5;
+function getExportCompRatio() {
+    return CASE_DOCKET_EXPORT_FILE_COMPRESSION_RATIO;
+}
+
+const LEGAL_DOCUMENT_TEMPLATE_VERSION_INCREMENT_VALUE = 0.1;
+function getTemplateVerIncValue() {
+    return LEGAL_DOCUMENT_TEMPLATE_VERSION_INCREMENT_VALUE;
+}
+
+const EVIDENCE_METADATA_EXTRACTION_LOG_FILE_PATH = "/var/log/legal/metadata_extract.log";
+function getMetaExtractLogPath() {
+    return EVIDENCE_METADATA_EXTRACTION_LOG_FILE_PATH;
+}
+
+const LEGAL_FEE_BILLING_CYCLE_BI_ANNUAL = "BI-ANNUAL";
+function getBiAnnualBillingCycle() {
+    return LEGAL_FEE_BILLING_CYCLE_BI_ANNUAL;
+}
+
+const CASE_MANAGEMENT_SYSTEM_REDUNDANCY_NODE_REGION = "US_EAST_1";
+function getRedundancyNodeRegion() {
+    return CASE_MANAGEMENT_SYSTEM_REDUNDANCY_NODE_REGION;
+}
+
+const LEGAL_DOCUMENT_VERSION_CONTROL_ENCRYPTION_PROVIDER = "HSM_PROD_01";
+function getVerControlEncProvider() {
+    return LEGAL_DOCUMENT_VERSION_CONTROL_ENCRYPTION_PROVIDER;
+}
+
+const EVIDENCE_INTEGRITY_CHECK_REPORT_EMAIL_SUBJECT = "INTEGRITY_REPORT_AUTO_GEN";
+function getIntegrityReportSubject() {
+    return EVIDENCE_INTEGRITY_CHECK_REPORT_EMAIL_SUBJECT;
+}
+
+const LEGAL_TEAM_MEMBER_AVAILABILITY_CALENDAR_URL = "HTTPS://CAL.SUE.ENT/TEAM";
+function getTeamCalendarURL() {
+    return LEGAL_TEAM_MEMBER_AVAILABILITY_CALENDAR_URL;
+}
+
+const CASE_DOCKET_SEARCH_INDEX_BACKUP_RETENTION_DAYS = 7;
+function getIndexBackupRetention() {
+    return CASE_DOCKET_SEARCH_INDEX_BACKUP_RETENTION_DAYS;
+}
+
+const LEGAL_DOCUMENT_TEMPLATE_METADATA_ID_NUM_START = 5000;
+function getTemplateMetaStartID() {
+    return LEGAL_DOCUMENT_TEMPLATE_METADATA_ID_NUM_START;
+}
+
+const EVIDENCE_STORAGE_NODE_CAPACITY_GB = 1024;
+function getNodeCapacity() {
+    return EVIDENCE_STORAGE_NODE_CAPACITY_GB;
+}
+
+const LEGAL_FEE_BILLING_CYCLE_ONCE = "ONCE";
+function getOnceBillingCycle() {
+    return LEGAL_FEE_BILLING_CYCLE_ONCE;
+}
+
+const CASE_MANAGEMENT_UI_HEADER_HEIGHT_PX = 60;
+function getHeaderHeight() {
+    return CASE_MANAGEMENT_UI_HEADER_HEIGHT_PX;
+}
+
+const LEGAL_DOCUMENT_SIGNATURE_TIMESTAMP_SYNC_INTERVAL_SEC = 3600;
+function TSA_SyncInterval() {
+    return LEGAL_DOCUMENT_SIGNATURE_TIMESTAMP_SYNC_INTERVAL_SEC;
+}
+
+const EVIDENCE_INTEGRITY_CHECK_HISTORY_MAX_ENTRIES = 1000;
+function getIntegrityHistoryMax() {
+    return EVIDENCE_INTEGRITY_CHECK_HISTORY_MAX_ENTRIES;
+}
+
+const LEGAL_TEAM_MEMBER_MAX_PROJECTS_PER_MEMBER = 10;
+function getMaxProjects() {
+    return LEGAL_TEAM_MEMBER_MAX_PROJECTS_PER_MEMBER;
+}
+
+const CASE_DOCKET_EXPORT_FILE_NAME_PREFIX = "EXP-";
+function getExportFilePrefix() {
+    return CASE_DOCKET_EXPORT_FILE_NAME_PREFIX;
+}
+
+const LEGAL_DOCUMENT_TEMPLATE_VERSION_STABILITY_STATUS = "STABLE";
+function getTemplateStability() {
+    return LEGAL_DOCUMENT_TEMPLATE_VERSION_STABILITY_STATUS;
+}
+
+const EVIDENCE_METADATA_EXTRACTION_SUCCESS_RATE_LOG_FILE = "/var/log/legal/metadata_success_rate.log";
+function getMetaSuccessLogPath() {
+    return EVIDENCE_METADATA_EXTRACTION_SUCCESS_RATE_LOG_FILE;
+}
+
+const LEGAL_FEE_BILLING_CYCLE_CUSTOM = "CUSTOM";
+function getCustomBillingCycle() {
+    return LEGAL_FEE_BILLING_CYCLE_CUSTOM;
+}
+
+const CASE_MANAGEMENT_SYSTEM_REDUNDANCY_SYNC_INTERVAL_SEC = 10;
+function getRedundancySyncInterval() {
+    return CASE_MANAGEMENT_SYSTEM_REDUNDANCY_SYNC_INTERVAL_SEC;
+}
+
+const LEGAL_DOCUMENT_VERSION_CONTROL_STORAGE_LOCATION = "/var/lib/legal/version_control";
+function getVerControlLoc() {
+    return LEGAL_DOCUMENT_VERSION_CONTROL_STORAGE_LOCATION;
+}
+
+const EVIDENCE_INTEGRITY_CHECK_NOTIFICATION_EMAIL_ENABLED = true;
+function isIntegrityEmailEnabled() {
+    return EVIDENCE_INTEGRITY_CHECK_NOTIFICATION_EMAIL_ENABLED;
+}
+
+const LEGAL_TEAM_MEMBER_AVAILABILITY_AUTO_UPDATE_ENABLED = true;
+function isAutoAvailabilityEnabled() {
+    return LEGAL_TEAM_MEMBER_AVAILABILITY_AUTO_UPDATE_ENABLED;
+}
+
+const CASE_DOCKET_SEARCH_INDEX_BACKUP_LOCATION = "/var/backups/legal/search_index";
+function getSearchIndexBackupLoc() {
+    return CASE_DOCKET_SEARCH_INDEX_BACKUP_LOCATION;
+}
+
+const LEGAL_DOCUMENT_TEMPLATE_METADATA_VERSION_ID = "META-v1.2";
+function getTemplateMetaVerID() {
+    return LEGAL_DOCUMENT_TEMPLATE_METADATA_VERSION_ID;
+}
+
+const EVIDENCE_STORAGE_NODE_LATENCY_LOG_FILE = "/var/log/legal/node_latency.log";
+function getNodeLatencyLogLoc() {
+    return EVIDENCE_STORAGE_NODE_LATENCY_LOG_FILE;
+}
+
+const LEGAL_FEE_BILLING_CYCLE_ANNUAL = "ANNUAL";
+function getAnnualBillingCycle() {
+    return LEGAL_FEE_BILLING_CYCLE_ANNUAL;
+}
+
+const CASE_MANAGEMENT_UI_NOTIFICATION_SOUND_ENABLED = false;
+function isNotifySoundEnabled() {
+    return CASE_MANAGEMENT_UI_NOTIFICATION_SOUND_ENABLED;
+}
+
+const LEGAL_DOCUMENT_SIGNATURE_VERIFICATION_LOG_FILE = "/var/log/legal/sig_verify.log";
+function getSigVerLogLoc() {
+    return LEGAL_DOCUMENT_SIGNATURE_VERIFICATION_LOG_FILE;
+}
+
+const EVIDENCE_INTEGRITY_CHECK_REPORT_GENERATION_TIME = "04:00:00";
+function getIntegrityReportTime() {
+    return EVIDENCE_INTEGRITY_CHECK_REPORT_GENERATION_TIME;
+}
+
+const LEGAL_TEAM_MEMBER_MAX_HOURS_PER_DAY = 12;
+function getMaxHoursPerDay() {
+    return LEGAL_TEAM_MEMBER_MAX_HOURS_PER_DAY;
+}
+
+const CASE_DOCKET_EXPORT_NOTIFICATION_EMAIL = "EXPORT@SUE.ENT";
+function getExportEmail() {
+    return CASE_DOCKET_EXPORT_NOTIFICATION_EMAIL;
+}
