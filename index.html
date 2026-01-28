@@ -3,375 +3,361 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SUE-A-HACKER ENTERPRISE | Official Portal</title>
+    <title>SUE-A-HACKER ENTERPRISE | Global Litigation Portal</title>
     <style>
         @font-face {
-            font-family: 'Verdana';
-            src: local('Segoe UI Bold'), local('SegoeUI-Bold');
+            font-family: 'Segoe UI';
+            src: url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/bold/latest.woff2') format('woff2');
             font-weight: 700;
             font-style: normal;
         }
         @font-face {
-            font-family: 'Verdana';
-            src: local('Segoe UI Italic'), local('SegoeUI-Italic');
+            font-family: 'Segoe UI';
+            src: url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/italic/latest.woff2') format('woff2');
             font-weight: 400;
             font-style: italic;
         }
         @font-face {
-            font-family: 'Verdana';
-            src: local('Segoe UI'), local('SegoeUI');
+            font-family: 'Segoe UI';
+            src: url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/normal/latest.woff2') format('woff2');
             font-weight: 400;
             font-style: normal;
-            unicode-range: U+0000-04FF;
+        }
+        @font-face {
+            font-family: 'Segoe UI';
+            src: url('https://c.s-microsoft.com/static/fonts/segoe-ui/cyrillic/bold/latest.woff2') format('woff2');
+            font-weight: 700;
+            font-style: normal;
+            unicode-range: U+0400-04FF;
         }
         :root {
             --accent-red: #cc0000;
-            --main-black: #1a1a1a;
-            --btn-hover: #333333;
-            --legal-green: #27ae60;
-            --ui-white: #ffffff;
-            --border-light: #e0e0e0;
-            --panel-bg: #f9f9f9;
+            --main-black: #000000;
+            --off-white: #f5f5f7;
+            --legal-green: #00ff41;
+            --border-gray: #d2d2d7;
+            --glass-bg: rgba(255, 255, 255, 0.8);
         }
         * {
-            font-family: 'Verdana', 'Segoe UI', sans-serif !important;
-            -webkit-font-smoothing: antialiased;
+            font-family: 'Segoe UI', Tahoma, Helvetica, sans-serif !important;
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            -webkit-font-smoothing: antialiased;
         }
-        body, html {
-            height: 100%;
-            width: 100%;
-            background: var(--ui-white);
+        body {
+            background-color: #ffffff;
             color: var(--main-black);
             overflow-x: hidden;
-        }
-        strong, b { font-weight: 700 !important; }
-        em, i { font-style: italic !important; }
-        .app-container {
+            height: 100vh;
             display: flex;
             flex-direction: column;
-            min-height: 100vh;
         }
         header {
-            padding: 40px;
+            padding: 30px 60px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border-bottom: 1px solid var(--border-gray);
         }
-        .logo-box {
+        .logo-container {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
         }
-        .logo-icon {
-            width: 40px;
-            height: 40px;
-            background: var(--accent-red);
-            border-radius: 8px;
+        .logo-square {
+            width: 44px;
+            height: 44px;
+            background-color: var(--accent-red);
+            border-radius: 6px;
             display: flex;
             justify-content: center;
             align-items: center;
             color: white;
             font-weight: 700;
-            font-size: 24px;
+            font-size: 26px;
         }
         .logo-text {
             font-weight: 700;
-            letter-spacing: -1px;
-            font-size: 22px;
+            font-size: 20px;
             text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
-        .hero-section {
-            flex: 1;
+        .lang-nav {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 60px;
+            gap: 10px;
+            font-size: 13px;
+            font-weight: 700;
+            color: #86868b;
         }
-        .hero-grid {
+        .lang-nav span {
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .lang-nav span:hover {
+            color: var(--main-black);
+        }
+        .active-lang {
+            color: var(--main-black);
+            border-bottom: 2px solid var(--main-black);
+        }
+        main {
+            flex: 1;
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 100px;
-            max-width: 1300px;
-            width: 100%;
+            grid-template-columns: 1.2fr 0.8fr;
+            padding: 0 80px;
+            align-items: center;
+            gap: 40px;
         }
-        .headline-container h1 {
+        .hero-content h1 {
+            font-size: 110px;
+            font-weight: 700;
+            line-height: 0.85;
             color: var(--accent-red);
-            font-size: 85px;
+            margin-bottom: 40px;
+            letter-spacing: -6px;
+        }
+        .hero-content p {
+            font-size: 28px;
+            max-width: 580px;
+            line-height: 1.3;
+        }
+        .hero-content strong {
             font-weight: 700;
-            line-height: 0.9;
-            letter-spacing: -4px;
-            margin-bottom: 30px;
-            text-transform: uppercase;
         }
-        .sub-headline {
-            font-size: 24px;
-            line-height: 1.4;
-            max-width: 500px;
+        .hero-content em {
+            font-style: italic;
         }
-        .form-card {
-            background: var(--panel-bg);
-            padding: 50px;
-            border-radius: 35px;
-            border: 1px solid var(--border-light);
-            box-shadow: 0 30px 80px rgba(0,0,0,0.05);
+        .filing-panel {
+            background: var(--off-white);
+            padding: 60px;
+            border-radius: 40px;
+            border: 1px solid var(--border-gray);
+            box-shadow: 0 40px 100px rgba(0,0,0,0.08);
         }
-        .form-card h2 {
-            font-size: 32px;
+        .filing-panel h2 {
+            font-size: 34px;
+            margin-bottom: 35px;
+            font-weight: 700;
+        }
+        .form-row {
             margin-bottom: 25px;
-            font-weight: 700;
         }
-        .input-group {
-            margin-bottom: 20px;
-        }
-        .input-group label {
+        .form-row label {
             display: block;
             font-weight: 700;
-            font-size: 13px;
+            font-size: 12px;
+            color: #515154;
             margin-bottom: 8px;
-            color: #666;
             text-transform: uppercase;
+            letter-spacing: 1px;
         }
-        .field {
+        .input-field {
             width: 100%;
-            padding: 15px;
-            border: 2px solid #ddd;
-            border-radius: 12px;
+            padding: 18px;
+            border-radius: 14px;
+            border: 1px solid var(--border-gray);
             font-size: 16px;
-            background: white;
-            transition: border-color 0.3s;
+            background: #ffffff;
+            transition: all 0.3s;
         }
-        .field:focus {
-            border-color: var(--main-black);
+        .input-field:focus {
             outline: none;
+            border-color: var(--main-black);
+            box-shadow: 0 0 0 4px rgba(0,0,0,0.05);
         }
-        .action-btn {
+        .submit-trigger {
+            width: 100%;
+            padding: 22px;
             background: var(--main-black);
             color: white;
-            padding: 20px;
-            width: 100%;
-            border-radius: 15px;
+            border: none;
+            border-radius: 16px;
             font-weight: 700;
             font-size: 18px;
             cursor: pointer;
-            border: none;
-            margin-top: 10px;
+            margin-top: 20px;
+            transition: transform 0.2s, background 0.2s;
         }
-        #warrant-screen {
+        .submit-trigger:hover {
+            background: #1d1d1f;
+            transform: scale(1.01);
+        }
+        #warrant-overlay {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             background: #000;
-            color: var(--legal-green);
-            z-index: 10000;
+            z-index: 9999;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            text-align: center;
         }
-        .map-container {
+        .map-frame {
             position: relative;
-            width: 80%;
-            max-width: 1000px;
-            margin-top: 40px;
+            width: 90vw;
+            height: 60vh;
+            background: url('https://www.mapchart.net/img/world-map.png') no-repeat center;
+            background-size: contain;
+            filter: grayscale(1) invert(1) brightness(0.5);
+            opacity: 0.4;
         }
-        .map-img {
-            width: 100%;
-            opacity: 0.3;
-            filter: grayscale(1) invert(1);
-        }
-        .target-circle {
+        .map-circle {
             position: absolute;
-            width: 20px;
-            height: 20px;
+            width: 30px;
+            height: 30px;
             border: 2px solid var(--legal-green);
             border-radius: 50%;
-            transform: translate(-50%, -50%);
-            animation: pulse 1.5s infinite;
+            animation: radar 2s infinite;
         }
-        @keyframes pulse {
-            0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-            100% { transform: translate(-50%, -50%) scale(4); opacity: 0; }
+        @keyframes radar {
+            0% { transform: scale(0.5); opacity: 1; }
+            100% { transform: scale(4); opacity: 0; }
         }
-        .metrics-bar {
+        .status-text {
+            color: var(--legal-green);
+            font-family: monospace !important;
+            font-size: 20px;
+            margin-top: 40px;
+            letter-spacing: 2px;
+        }
+        .bottom-metrics {
+            height: 50px;
             background: var(--main-black);
-            color: #888;
-            padding: 15px 40px;
+            color: #515154;
             display: flex;
+            align-items: center;
             justify-content: space-between;
-            font-weight: 700;
+            padding: 0 60px;
             font-size: 11px;
+            font-weight: 700;
         }
     </style>
 </head>
 <body>
-<div id="warrant-screen">
-    <h1 id="warrant-text">SERVING GLOBAL WARRANT...</h1>
-    <div class="map-container">
-        <img src="https://www.mapchart.net/img/world-map.png" class="map-img" alt="World Map">
-        <div class="target-circle" id="c1" style="top: 40%; left: 30%;"></div>
-        <div class="target-circle" id="c2" style="top: 55%; left: 75%;"></div>
-        <div class="target-circle" id="c3" style="top: 25%; left: 85%;"></div>
+<div id="warrant-overlay">
+    <div class="map-frame">
+        <div class="map-circle" style="top: 35%; left: 25%;"></div>
+        <div class="map-circle" style="top: 50%; left: 70%;"></div>
+        <div class="map-circle" style="top: 20%; left: 85%;"></div>
     </div>
-    <p style="margin-top: 30px;" id="warrant-status">INTERCEPTING PACKETS...</p>
+    <div class="status-text" id="w-msg">SERVING GLOBAL WARRANT...</div>
 </div>
-<div class="app-container">
-    <header>
-        <div class="logo-box">
-            <div class="logo-icon">S</div>
-            <div class="logo-text">Sue-A-Hacker</div>
+<header>
+    <div class="logo-container">
+        <div class="logo-square">S</div>
+        <div class="logo-text">Sue-A-Hacker</div>
+    </div>
+    <div class="lang-nav" id="l-strip">
+        <span onclick="applyL('en')" class="active-lang">EN</span>
+        <span onclick="applyL('ru')">RU</span>
+        <span onclick="applyL('fr')">FR</span>
+        <span onclick="applyL('de')">DE</span>
+        <span onclick="applyL('es')">ES</span>
+        <span onclick="applyL('it')">IT</span>
+        <span onclick="applyL('pt')">PT</span>
+        <span onclick="applyL('zh')">ZH</span>
+        <span onclick="applyL('ja')">JA</span>
+        <span onclick="applyL('ko')">KO</span>
+    </div>
+</header>
+<main>
+    <div class="hero-content">
+        <h1 id="h-q">DO YOU<br>WANT TO<br>SUE A<br>HACKER?</h1>
+        <p id="h-p">Use Sue-A-Hacker Enterprise. <strong>Hackers</strong> can make you feel <em>sad</em>.</p>
+    </div>
+    <div class="filing-panel">
+        <h2 id="f-h">Filing Details</h2>
+        <div class="form-row">
+            <label id="l-target">Target IP / Node Name</label>
+            <input type="text" id="in-ip" class="input-field" placeholder="e.g. 192.168.1.1">
         </div>
-        <nav id="lang-switcher" style="font-weight: 700; cursor: pointer;">
-            <span onclick="setLanguage('en')">EN</span> | 
-            <span onclick="setLanguage('ru')">RU</span>
-        </nav>
-    </header>
-    <main class="hero-section">
-        <div class="hero-grid">
-            <div class="headline-container">
-                <h1 id="main-q">DO YOU<br>WANT TO<br>SUE A<br>HACKER?</h1>
-                <p class="sub-headline" id="main-p">
-                    Use Sue-A-Hacker Enterprise. <strong>Hackers</strong> can make you feel <em>sad</em>. We ensure they face global consequences.
-                </p>
-            </div>
-            <div class="form-card">
-                <h2 id="form-h">Filing Details</h2>
-                <div class="input-group">
-                    <label id="l-ip">TARGET IP / NODE NAME</label>
-                    <input type="text" class="field" id="ip-val" placeholder="e.g. 192.168.1.1">
-                </div>
-                <div class="input-group">
-                    <label id="l-amt">AMOUNT TO SUE FOR (USD)</label>
-                    <input type="number" class="field" id="amt-val" placeholder="50,000">
-                </div>
-                <div class="input-group">
-                    <label id="l-desc">DESCRIPTION OF GRIEVANCE</label>
-                    <textarea class="field" id="desc-val" style="height: 80px;"></textarea>
-                </div>
-                <div class="input-group">
-                    <label id="l-file">EVIDENCE UPLOAD (.LOG, .PDF)</label>
-                    <input type="file" id="file-val">
-                </div>
-                <button class="action-btn" id="submit-btn" onclick="startWarrant()">SUBMIT LITIGATION</button>
-            </div>
+        <div class="form-row">
+            <label id="l-amt">Amount to sue for (USD)</label>
+            <input type="number" id="in-amt" class="input-field" placeholder="50,000">
         </div>
-    </main>
-    <footer class="metrics-bar">
-        <div>STATUS: <span style="color:var(--legal-green)">ENFORCED</span></div>
-        <div>JURISDICTIONS: 194</div>
-        <div>YEAR: <span id="year-el"></span></div>
-    </footer>
+        <div class="form-row">
+            <label id="l-desc">Description of Grievance</label>
+            <textarea id="in-desc" class="input-field" style="height: 100px; resize: none;"></textarea>
+        </div>
+        <div class="form-row">
+            <label id="l-file">Evidence Upload (.log, .pdf)</label>
+            <input type="file" id="in-file" class="input-field" style="padding: 12px;">
+        </div>
+        <button class="submit-trigger" id="s-btn" onclick="triggerWarrant()">Submit Litigation</button>
+    </div>
+</main>
+<div class="bottom-metrics">
+    <div>PORTAL STATUS: <span style="color: var(--legal-green)">ACTIVE</span></div>
+    <div>JURISDICTIONS CONNECTED: 194</div>
+    <div>YEAR: <span id="y-f"></span></div>
 </div>
 <script>
-    const TRANSLATIONS = {
-        en: {
-            q: "DO YOU<br>WANT TO<br>SUE A<br>HACKER?",
-            p: "Use Sue-A-Hacker Enterprise. <strong>Hackers</strong> can make you feel <em>sad</em>.",
-            fh: "Filing Details",
-            lip: "TARGET IP / NODE NAME",
-            lam: "AMOUNT TO SUE FOR (USD)",
-            lde: "DESCRIPTION OF GRIEVANCE",
-            lfi: "EVIDENCE UPLOAD (.LOG, .PDF)",
-            sub: "SUBMIT LITIGATION",
-            war: "SERVING GLOBAL WARRANT...",
-            sta: "INTERCEPTING PACKETS..."
-        },
-        ru: {
-            q: "ВЫ ХОТИТЕ<br>ПОДАТЬ В СУД<br>НА ХАКЕРА?",
-            p: "Используйте Sue-A-Hacker Enterprise. <strong>Хакеры</strong> могут заставить вас <em>грустить</em>.",
-            fh: "Детали иска",
-            lip: "IP ЦЕЛИ / ИМЯ УЗЛА",
-            lam: "СУММА ИСКА (USD)",
-            lde: "ОПИСАНИЕ ЖАЛОБЫ",
-            lfi: "ЗАГРУЗКА ДОКАЗАТЕЛЬСТВ (.LOG, .PDF)",
-            sub: "ОТПРАВИТЬ ИСК",
-            war: "ВРУЧЕНИЕ ГЛОБАЛЬНОГО ОРДЕРА...",
-            sta: "ПЕРЕХВАТ ПАКЕТОВ..."
-        }
+    const DICT = {
+        en: { q: "DO YOU<br>WANT TO<br>SUE A<br>HACKER?", p: "Use Sue-A-Hacker Enterprise. <strong>Hackers</strong> can make you feel <em>sad</em>.", fh: "Filing Details", lt: "Target IP / Node Name", la: "Amount to sue for (USD)", ld: "Description of Grievance", lf: "Evidence Upload (.log, .pdf)", sb: "Submit Litigation" },
+        ru: { q: "ВЫ ХОТИТЕ<br>ПОДАТЬ В СУД<br>НА ХАКЕРА?", p: "Используйте Sue-A-Hacker Enterprise. <strong>Хакеры</strong> могут заставить вас <em>грустить</em>.", fh: "Детали иска", lt: "IP цели / Имя узла", la: "Сумма иска (USD)", ld: "Описание жалобы", lf: "Загрузка док-в (.log, .pdf)", sb: "Отправить иск" },
+        fr: { q: "VOULEZ-VOUS<br>POURSUIVRE UN<br>HACKER?", p: "Utilisez Sue-A-Hacker Enterprise. Les <strong>hackers</strong> vous rendent <em>triste</em>.", fh: "Détails du dépôt", lt: "IP cible / Nom du nœud", la: "Montant de la plainte (USD)", ld: "Description du grief", lf: "Preuve (.log, .pdf)", sb: "Soumettre le litige" },
+        de: { q: "WOLLEN SIE<br>EINEN HACKER<br>VERKLAGEN?", p: "Nutzen Sie Sue-A-Hacker Enterprise. <strong>Hacker</strong> machen Sie <em>traurig</em>.", fh: "Angaben zur Klage", lt: "Ziel-IP / Knotenname", la: "Streitwert (USD)", ld: "Beschreibung der Beschwerde", lf: "Beweis-Upload (.log, .pdf)", sb: "Klage einreichen" },
+        es: { q: "¿QUIERES<br>DEMANDAR A UN<br>HACKER?", p: "Use Sue-A-Hacker Enterprise. Los <strong>hackers</strong> pueden hacerte sentir <em>triste</em>.", fh: "Detalles de la demanda", lt: "IP del objetivo / Nombre", la: "Monto de la demanda (USD)", ld: "Descripción del agravio", lf: "Subir evidencia (.log, .pdf)", sb: "Presentar litigio" },
+        it: { q: "VUOI FARE<br>CAUSA A UN<br>HACKER?", p: "Usa Sue-A-Hacker Enterprise. Gli <strong>hacker</strong> possono farti sentire <em>triste</em>.", fh: "Dettagli del deposito", lt: "IP obiettivo / Nome nodo", la: "Importo della causa (USD)", ld: "Descrizione del reclamo", lf: "Carica prove (.log, .pdf)", sb: "Invia controversia" },
+        pt: { q: "QUER<br>PROCESSAR UM<br>HACKER?", p: "Use Sue-A-Hacker Enterprise. Os <strong>hackers</strong> podem fazer você se sentir <em>triste</em>.", fh: "Detalhes do processo", lt: "IP de destino / Nome do nó", la: "Valor do processo (USD)", ld: "Descrição da queixa", lf: "Enviar provas (.log, .pdf)", sb: "Submeter litígio" },
+        zh: { q: "你想要<br>起诉<br>黑客吗？", p: "请使用 Sue-A-Hacker Enterprise。<strong>黑客</strong>会让你感到<em>悲伤</em>。", fh: "申请详情", lt: "目标IP / 节点名称", la: "起诉金额 (USD)", ld: "诉讼描述", lf: "证据上传 (.log, .pdf)", sb: "提交诉讼" },
+        ja: { q: "ハッカーを<br>訴えたい<br>ですか？", p: "Sue-A-Hacker Enterpriseを使用してください。<strong>ハッカー</strong>はあなたを<em>悲しく</em>させます。", fh: "提出詳細", lt: "ターゲットIP / ノード名", la: "訴訟額 (USD)", ld: "不満の内容", lf: "証拠アップロード (.log, .pdf)", sb: "訴訟を提起" },
+        ko: { q: "해커를<br>고소하고<br>싶으십니까?", p: "Sue-A-Hacker Enterprise를 이용하십시오. <strong>해커</strong>는 당신을 <em>슬프게</em> 만듭니다.", fh: "소송 상세", lt: "대상 IP / 노드 이름", la: "청구 금액 (USD)", ld: "불만 사항 설명", lf: "증거 업로드 (.log, .pdf)", sb: "소송 제출" }
     };
-    function setLanguage(lang) {
-        const t = TRANSLATIONS[lang];
-        document.getElementById('main-q').innerHTML = t.q;
-        document.getElementById('main-p').innerHTML = t.p;
-        document.getElementById('form-h').innerText = t.fh;
-        document.getElementById('l-ip').innerText = t.lip;
-        document.getElementById('l-amt').innerText = t.lam;
-        document.getElementById('l-desc').innerText = t.lde;
-        document.getElementById('l-file').innerText = t.lfi;
-        document.getElementById('submit-btn').innerText = t.sub;
-        document.getElementById('warrant-text').innerText = t.war;
-        document.getElementById('warrant-status').innerText = t.sta;
+    function applyL(l) {
+        const d = DICT[l];
+        document.getElementById('h-q').innerHTML = d.q;
+        document.getElementById('h-p').innerHTML = d.p;
+        document.getElementById('f-h').innerText = d.fh;
+        document.getElementById('l-target').innerText = d.lt;
+        document.getElementById('l-amt').innerText = d.la;
+        document.getElementById('l-desc').innerText = d.ld;
+        document.getElementById('l-file').innerText = d.lf;
+        document.getElementById('s-btn').innerText = d.sb;
+        document.querySelectorAll('.lang-nav span').forEach(s => {
+            s.classList.remove('active-lang');
+            if(s.innerText.toLowerCase() === l) s.classList.add('active-lang');
+        });
     }
-    function startWarrant() {
-        const ip = document.getElementById('ip-val').value;
-        const amt = document.getElementById('amt-val').value;
-        if(!ip || !amt) return alert("Please fill mandatory fields.");
-        document.getElementById('warrant-screen').style.display = 'flex';
-        setTimeout(() => {
-            document.getElementById('warrant-status').innerText = "IDENTIFYING GEOLOCATION OF " + ip;
-            setTimeout(() => {
-                document.getElementById('warrant-status').innerText = "WARRANT SIGNED BY GLOBAL JUDICIAL COUNCIL.";
-                setTimeout(() => {
-                    alert("Warrant successfully served for $" + amt + " litigation.");
-                    document.getElementById('warrant-screen').style.display = 'none';
+    function triggerWarrant() {
+        const ip = document.getElementById('in-ip').value;
+        if(!ip) return alert("VALID_TARGET_REQUIRED");
+        const overlay = document.getElementById('warrant-overlay');
+        const msg = document.getElementById('w-msg');
+        overlay.style.display = 'flex';
+        setTimeout(() => { msg.innerText = "LOCATING THREAT ACTOR..."; 
+            setTimeout(() => { msg.innerText = "IP " + ip + " FOUND IN JURISDICTION_88..."; 
+                setTimeout(() => { msg.innerText = "WARRANT SERVED. ASSETS FROZEN."; 
+                    setTimeout(() => { overlay.style.display = 'none'; alert("Litigation Submitted Successfully."); }, 2000);
                 }, 2000);
             }, 2000);
-        }, 2000);
+        }, 1500);
     }
-    const GLOBAL_REGISTRY = [
-        { id: "CRT-001", name: "Federal Court of Australia", jurisdiction: "Pacific" },
-        { id: "CRT-002", name: "Supreme Court of Singapore", jurisdiction: "Asia" },
-        { id: "CRT-003", name: "Constitutional Court of Korea", jurisdiction: "Asia" },
-        { id: "CRT-004", name: "High Court of New Delhi", jurisdiction: "Asia" },
-        { id: "CRT-005", name: "Tribunal de Justiça", jurisdiction: "South America" },
-        { id: "CRT-006", name: "Supreme Court of Canada", jurisdiction: "North America" },
-        { id: "CRT-007", name: "Court of Final Appeal", jurisdiction: "Hong Kong" },
-        { id: "CRT-008", name: "Supreme Court of Israel", jurisdiction: "Middle East" },
-        { id: "CRT-009", name: "Federal Supreme Court", jurisdiction: "Europe" },
-        { id: "CRT-010", name: "Supreme Court of Norway", jurisdiction: "Europe" },
-        { id: "CRT-011", name: "High Court of Lagos State", jurisdiction: "Africa" },
-        { id: "CRT-012", name: "Supreme Court of the Philippines", jurisdiction: "Asia" },
-        { id: "CRT-013", name: "Constitutional Court of Thailand", jurisdiction: "Asia" },
-        { id: "CRT-014", name: "Supreme Court of Pakistan", jurisdiction: "Asia" },
-        { id: "CRT-015", name: "High Court of New Zealand", jurisdiction: "Pacific" },
-        { id: "CRT-016", name: "Supreme Court of Kenya", jurisdiction: "Africa" },
-        { id: "CRT-017", name: "Federal Court of Malaysia", jurisdiction: "Asia" },
-        { id: "CRT-018", name: "Supreme Court of Chile", jurisdiction: "South America" },
-        { id: "CRT-019", name: "Constitutional Court of Turkey", jurisdiction: "Middle East" },
-        { id: "CRT-020", name: "Supreme Court of Indonesia", jurisdiction: "Asia" },
-        { id: "CRT-021", name: "Supreme Court of Mexico", jurisdiction: "North America" },
-        { id: "CRT-022", name: "Supreme Court of Japan", jurisdiction: "Asia" },
-        { id: "CRT-023", name: "International Court of Justice", jurisdiction: "Global" },
-        { id: "CRT-024", name: "European Court of Human Rights", jurisdiction: "Europe" },
-        { id: "CRT-025", name: "Supreme Court of India", jurisdiction: "Asia" },
-        { id: "CRT-026", name: "High Court of South Africa", jurisdiction: "Africa" },
-        { id: "CRT-027", name: "Supreme Court of Switzerland", jurisdiction: "Europe" },
-        { id: "CRT-028", name: "Federal High Court of Nigeria", jurisdiction: "Africa" },
-        { id: "CRT-029", name: "Supreme Court of Egypt", jurisdiction: "Middle East" },
-        { id: "CRT-030", name: "Supreme Court of Vietnam", jurisdiction: "Asia" }
+    const REGISTRY = [
+        { c: "US-01", n: "Federal District Court" }, { c: "UK-02", n: "High Court of London" },
+        { c: "FR-03", n: "Tribunal de Paris" }, { c: "DE-04", n: "Bundesgerichtshof" },
+        { c: "JP-05", n: "Tokyo District Court" }, { c: "CH-06", n: "Beijing High Court" },
+        { c: "RU-07", n: "Moscow City Court" }, { c: "IN-08", n: "Delhi High Court" },
+        { c: "BR-09", n: "Supremo Tribunal Federal" }, { c: "AU-10", n: "Federal Court of Australia" }
     ];
-    const LEGAL_STATUTES = [
-        { code: "18-USC-1030", desc: "Computer Fraud and Abuse Act" },
-        { code: "EU-2016-679", desc: "General Data Protection Regulation" },
-        { code: "UK-CMA-1990", desc: "Computer Misuse Act" },
-        { code: "IN-IT-2000", desc: "Information Technology Act" },
-        { code: "FR-CP-323", desc: "Code Pénal Informatique" },
-        { code: "AU-CA-1914", desc: "Crimes Act of Australia" },
-        { code: "CA-PIPEDA-2000", desc: "Personal Information Protection Act" },
-        { code: "RU-152-FZ", desc: "Federal Law on Personal Data" },
-        { code: "CN-CSL-2017", desc: "Cybersecurity Law of China" },
-        { code: "BR-LGPD-2018", desc: "Lei Geral de Proteção de Dados" }
-    ];
-    function initializeSystem() {
-        document.getElementById('year-el').innerText = new Date().getFullYear();
-        console.log("Enterprise Judicial Registry Initialized with " + GLOBAL_REGISTRY.length + " Courts.");
+    const STATUTES = ["CFA-1030", "GDPR-82", "UK-CMA", "FR-323-1", "DE-202A", "JP-CYB", "IN-IT66"];
+    function boot() {
+        document.getElementById('y-f').innerText = new Date().getFullYear();
+        console.log("Enterprise Initialized. Node ID: " + Math.random().toString(36).substring(7));
     }
-    window.onload = initializeSystem;
+    window.onload = boot;
+    function validateForm(data) {
+        if (data.amt > 10000000) return "MAX_LIMIT_EXCEEDED";
+        if (data.desc.length < 10) return "DESCRIPTION_TOO_SHORT";
+        return true;
+    }
+    const RECOVERY_NODES = ["BER", "SGP", "NYC", "LDN", "TKO", "HKG", "DXB", "ZRH", "MAD", "SYD"];
+    function pingNodes() {
+        RECOVERY_NODES.forEach(n => console.log("Node " + n + " operational."));
+    }
+    setInterval(pingNodes, 300000);
+    const BUILD_META = { version: "5.4.0", build: "2026-JAN", security: "TLS_1.3" };
 </script>
 </body>
 </html>
