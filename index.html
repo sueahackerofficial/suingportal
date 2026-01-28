@@ -104,6 +104,7 @@
             line-height: 0.9;
             letter-spacing: -4px;
             margin-bottom: 30px;
+            text-transform: uppercase;
         }
         .sub-headline {
             font-size: 24px;
@@ -209,7 +210,6 @@
     </style>
 </head>
 <body>
-
 <div id="warrant-screen">
     <h1 id="warrant-text">SERVING GLOBAL WARRANT...</h1>
     <div class="map-container">
@@ -220,19 +220,17 @@
     </div>
     <p style="margin-top: 30px;" id="warrant-status">INTERCEPTING PACKETS...</p>
 </div>
-
 <div class="app-container">
     <header>
         <div class="logo-box">
             <div class="logo-icon">S</div>
             <div class="logo-text">Sue-A-Hacker</div>
         </div>
-        <nav id="lang-switcher">
-            <button onclick="setLanguage('en')">EN</button> | 
-            <button onclick="setLanguage('ru')">RU</button>
+        <nav id="lang-switcher" style="font-weight: 700; cursor: pointer;">
+            <span onclick="setLanguage('en')">EN</span> | 
+            <span onclick="setLanguage('ru')">RU</span>
         </nav>
     </header>
-
     <main class="hero-section">
         <div class="hero-grid">
             <div class="headline-container">
@@ -241,12 +239,11 @@
                     Use Sue-A-Hacker Enterprise. <strong>Hackers</strong> can make you feel <em>sad</em>. We ensure they face global consequences.
                 </p>
             </div>
-
             <div class="form-card">
                 <h2 id="form-h">Filing Details</h2>
                 <div class="input-group">
                     <label id="l-ip">TARGET IP / NODE NAME</label>
-                    <input type="text" class="field" id="ip-val" placeholder="e.g. 192.168.1.1 or 'DarkNode'">
+                    <input type="text" class="field" id="ip-val" placeholder="e.g. 192.168.1.1">
                 </div>
                 <div class="input-group">
                     <label id="l-amt">AMOUNT TO SUE FOR (USD)</label>
@@ -254,7 +251,7 @@
                 </div>
                 <div class="input-group">
                     <label id="l-desc">DESCRIPTION OF GRIEVANCE</label>
-                    <textarea class="field" id="desc-val" style="height: 100px;"></textarea>
+                    <textarea class="field" id="desc-val" style="height: 80px;"></textarea>
                 </div>
                 <div class="input-group">
                     <label id="l-file">EVIDENCE UPLOAD (.LOG, .PDF)</label>
@@ -264,14 +261,12 @@
             </div>
         </div>
     </main>
-
     <footer class="metrics-bar">
         <div>STATUS: <span style="color:var(--legal-green)">ENFORCED</span></div>
         <div>JURISDICTIONS: 194</div>
         <div>YEAR: <span id="year-el"></span></div>
     </footer>
 </div>
-
 <script>
     const TRANSLATIONS = {
         en: {
@@ -299,7 +294,6 @@
             sta: "ПЕРЕХВАТ ПАКЕТОВ..."
         }
     };
-
     function setLanguage(lang) {
         const t = TRANSLATIONS[lang];
         document.getElementById('main-q').innerHTML = t.q;
@@ -313,11 +307,9 @@
         document.getElementById('warrant-text').innerText = t.war;
         document.getElementById('warrant-status').innerText = t.sta;
     }
-
     function startWarrant() {
         const ip = document.getElementById('ip-val').value;
         if(!ip) return alert("Please enter a target.");
-        
         document.getElementById('warrant-screen').style.display = 'flex';
         setTimeout(() => {
             document.getElementById('warrant-status').innerText = "IDENTIFYING GEOLOCATION...";
@@ -330,27 +322,39 @@
             }, 2000);
         }, 2000);
     }
-
-    // Logic expansion for line density
+    const GLOBAL_REGISTRY = [
+        { id: "CRT-001", name: "Federal Court of Australia", jurisdiction: "Pacific" },
+        { id: "CRT-002", name: "Supreme Court of Singapore", jurisdiction: "Asia" },
+        { id: "CRT-003", name: "Constitutional Court of Korea", jurisdiction: "Asia" },
+        { id: "CRT-004", name: "High Court of New Delhi", jurisdiction: "Asia" },
+        { id: "CRT-005", name: "Tribunal de Justiça", jurisdiction: "South America" },
+        { id: "CRT-006", name: "Supreme Court of Canada", jurisdiction: "North America" },
+        { id: "CRT-007", name: "Court of Final Appeal", jurisdiction: "Hong Kong" },
+        { id: "CRT-008", name: "Supreme Court of Israel", jurisdiction: "Middle East" },
+        { id: "CRT-009", name: "Federal Supreme Court", jurisdiction: "Europe" },
+        { id: "CRT-010", name: "Supreme Court of Norway", jurisdiction: "Europe" },
+        { id: "CRT-011", name: "High Court of Lagos State", jurisdiction: "Africa" },
+        { id: "CRT-012", name: "Supreme Court of the Philippines", jurisdiction: "Asia" },
+        { id: "CRT-013", name: "Constitutional Court of Thailand", jurisdiction: "Asia" },
+        { id: "CRT-014", name: "Supreme Court of Pakistan", jurisdiction: "Asia" },
+        { id: "CRT-015", name: "High Court of New Zealand", jurisdiction: "Pacific" },
+        { id: "CRT-016", name: "Supreme Court of Kenya", jurisdiction: "Africa" },
+        { id: "CRT-017", name: "Federal Court of Malaysia", jurisdiction: "Asia" },
+        { id: "CRT-018", name: "Supreme Court of Chile", jurisdiction: "South America" },
+        { id: "CRT-019", name: "Constitutional Court of Turkey", jurisdiction: "Middle East" },
+        { id: "CRT-020", name: "Supreme Court of Indonesia", jurisdiction: "Asia" }
+    ];
+    const LEGAL_STATUTES = [
+        { code: "18-USC-1030", desc: "Computer Fraud and Abuse Act" },
+        { code: "EU-2016-679", desc: "General Data Protection Regulation" },
+        { code: "UK-CMA-1990", desc: "Computer Misuse Act" },
+        { code: "IN-IT-2000", desc: "Information Technology Act" },
+        { code: "FR-CP-323", desc: "Code Pénal Informatique" }
+    ];
     function initializeSystem() {
         document.getElementById('year-el').innerText = new Date().getFullYear();
-        const courtCodes = ["US-99", "UK-12", "RU-04", "SG-88", "CH-21", "FR-09", "DE-11", "JP-44"];
-        const statutes = ["CFA-1030", "GDPR-82", "MAL-V2", "INT-67"];
-        
-        // Internal data population to ensure enterprise-grade scaling
-        let registry = [];
-        for(let i = 0; i < 500; i++) {
-            registry.push({
-                id: i,
-                code: courtCodes[i % courtCodes.length],
-                statute: statutes[i % statutes.length],
-                active: true
-            });
-        }
-        
-        console.log("Enterprise Judicial Registry Initialized.");
+        console.log("Enterprise Judicial Registry Initialized with " + GLOBAL_REGISTRY.length + " Courts.");
     }
-
     window.onload = initializeSystem;
 </script>
 </body>
