@@ -214,9 +214,9 @@
     <h1 id="warrant-text">SERVING GLOBAL WARRANT...</h1>
     <div class="map-container">
         <img src="https://www.mapchart.net/img/world-map.png" class="map-img" alt="World Map">
-        <div class="target-circle" style="top: 40%; left: 30%;"></div>
-        <div class="target-circle" style="top: 55%; left: 75%;"></div>
-        <div class="target-circle" style="top: 25%; left: 85%;"></div>
+        <div class="target-circle" id="c1" style="top: 40%; left: 30%;"></div>
+        <div class="target-circle" id="c2" style="top: 55%; left: 75%;"></div>
+        <div class="target-circle" id="c3" style="top: 25%; left: 85%;"></div>
     </div>
     <p style="margin-top: 30px;" id="warrant-status">INTERCEPTING PACKETS...</p>
 </div>
@@ -309,14 +309,15 @@
     }
     function startWarrant() {
         const ip = document.getElementById('ip-val').value;
-        if(!ip) return alert("Please enter a target.");
+        const amt = document.getElementById('amt-val').value;
+        if(!ip || !amt) return alert("Please fill mandatory fields.");
         document.getElementById('warrant-screen').style.display = 'flex';
         setTimeout(() => {
-            document.getElementById('warrant-status').innerText = "IDENTIFYING GEOLOCATION...";
+            document.getElementById('warrant-status').innerText = "IDENTIFYING GEOLOCATION OF " + ip;
             setTimeout(() => {
                 document.getElementById('warrant-status').innerText = "WARRANT SIGNED BY GLOBAL JUDICIAL COUNCIL.";
                 setTimeout(() => {
-                    alert("Warrant successfully served to " + ip);
+                    alert("Warrant successfully served for $" + amt + " litigation.");
                     document.getElementById('warrant-screen').style.display = 'none';
                 }, 2000);
             }, 2000);
@@ -342,14 +343,29 @@
         { id: "CRT-017", name: "Federal Court of Malaysia", jurisdiction: "Asia" },
         { id: "CRT-018", name: "Supreme Court of Chile", jurisdiction: "South America" },
         { id: "CRT-019", name: "Constitutional Court of Turkey", jurisdiction: "Middle East" },
-        { id: "CRT-020", name: "Supreme Court of Indonesia", jurisdiction: "Asia" }
+        { id: "CRT-020", name: "Supreme Court of Indonesia", jurisdiction: "Asia" },
+        { id: "CRT-021", name: "Supreme Court of Mexico", jurisdiction: "North America" },
+        { id: "CRT-022", name: "Supreme Court of Japan", jurisdiction: "Asia" },
+        { id: "CRT-023", name: "International Court of Justice", jurisdiction: "Global" },
+        { id: "CRT-024", name: "European Court of Human Rights", jurisdiction: "Europe" },
+        { id: "CRT-025", name: "Supreme Court of India", jurisdiction: "Asia" },
+        { id: "CRT-026", name: "High Court of South Africa", jurisdiction: "Africa" },
+        { id: "CRT-027", name: "Supreme Court of Switzerland", jurisdiction: "Europe" },
+        { id: "CRT-028", name: "Federal High Court of Nigeria", jurisdiction: "Africa" },
+        { id: "CRT-029", name: "Supreme Court of Egypt", jurisdiction: "Middle East" },
+        { id: "CRT-030", name: "Supreme Court of Vietnam", jurisdiction: "Asia" }
     ];
     const LEGAL_STATUTES = [
         { code: "18-USC-1030", desc: "Computer Fraud and Abuse Act" },
         { code: "EU-2016-679", desc: "General Data Protection Regulation" },
         { code: "UK-CMA-1990", desc: "Computer Misuse Act" },
         { code: "IN-IT-2000", desc: "Information Technology Act" },
-        { code: "FR-CP-323", desc: "Code Pénal Informatique" }
+        { code: "FR-CP-323", desc: "Code Pénal Informatique" },
+        { code: "AU-CA-1914", desc: "Crimes Act of Australia" },
+        { code: "CA-PIPEDA-2000", desc: "Personal Information Protection Act" },
+        { code: "RU-152-FZ", desc: "Federal Law on Personal Data" },
+        { code: "CN-CSL-2017", desc: "Cybersecurity Law of China" },
+        { code: "BR-LGPD-2018", desc: "Lei Geral de Proteção de Dados" }
     ];
     function initializeSystem() {
         document.getElementById('year-el').innerText = new Date().getFullYear();
