@@ -3,129 +3,277 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sue-A-Hacker Enterprise</title>
+    <title>Sue-A-Hacker Enterprise | Judicial Operations Portal</title>
     <style>
-        /* LOCKING VERDANA/SEGUE UI FOR ALL GLYPHS */
+        /* CORE ARCHITECTURE: Hard-Locking Verdana & Segoe UI for all ranges */
         :root { 
-            --red: #cc0000; --black: #000; --white: #fff; --gray: #f2f2f2; 
-            --font-stack: "Segoe UI", Verdana, Arial, sans-serif;
+            --red: #cc0000; --black: #050505; --white: #ffffff; 
+            --gray-100: #f8f9fa; --gray-200: #e9ecef; --gray-300: #dee2e6;
+            --accent-green: #2ecc71;
+            --font-stack: "Segoe UI", Verdana, Geneva, sans-serif;
         }
 
-        * { box-sizing: border-box; font-family: var(--font-stack) !important; }
-        body { margin: 0; background: var(--white); height: 100vh; overflow: hidden; }
+        * { box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+        
+        body, html { 
+            margin: 0; padding: 0; width: 100%; height: 100%;
+            font-family: var(--font-stack) !important;
+            background: var(--white); color: var(--black);
+            overflow: hidden;
+        }
 
-        /* NAV */
-        .nav { height: 80px; display: flex; align-items: center; justify-content: space-between; padding: 0 50px; border-bottom: 1px solid var(--gray); }
-        .logo { font-weight: 800; font-size: 22px; text-transform: uppercase; }
-        .logo span { color: var(--red); }
-        .sel-ui { padding: 8px 12px; border-radius: 6px; border: 1px solid #ccc; font-weight: 600; cursor: pointer; margin-left: 10px; }
+        /* NAVIGATION LAYER */
+        .header {
+            position: fixed; top: 0; left: 0; width: 100%; height: 90px;
+            background: rgba(255,255,255,0.95); backdrop-filter: blur(10px);
+            border-bottom: 2px solid var(--black); display: flex;
+            align-items: center; justify-content: space-between;
+            padding: 0 60px; z-index: 5000;
+        }
 
-        /* MAIN CONTENT */
-        .container { display: flex; height: calc(100vh - 80px); }
-        .left { flex: 1; padding: 60px; display: flex; flex-direction: column; justify-content: center; }
-        .right { flex: 1.2; background: #0b0b0b; position: relative; overflow: hidden; }
+        .brand { font-weight: 900; font-size: 26px; letter-spacing: -1px; text-transform: uppercase; }
+        .brand span { color: var(--red); }
+        
+        .nav-controls { display: flex; gap: 15px; }
+        .ui-dropdown { 
+            padding: 12px 20px; border: 2px solid var(--black); 
+            border-radius: 4px; font-weight: 700; font-size: 14px;
+            cursor: pointer; background: #fff;
+        }
 
-        .h1 { color: var(--red); font-size: 72px; font-weight: 700; line-height: 0.85; margin: 0; letter-spacing: -3px; }
-        .p { font-size: 19px; margin: 25px 0; max-width: 480px; line-height: 1.4; }
-        .btn { background: #000; color: #fff; padding: 18px 40px; border: none; font-weight: 700; cursor: pointer; font-size: 16px; border-radius: 4px; transition: 0.2s; width: fit-content; }
-        .btn:hover { background: var(--red); }
+        /* WORKSPACE LAYOUT */
+        .workspace { display: flex; height: 100vh; padding-top: 90px; }
+        
+        .sidebar { 
+            flex: 1; padding: 80px 60px; display: flex; 
+            flex-direction: column; justify-content: center;
+            border-right: 1px solid var(--gray-200);
+        }
 
-        /* THE MAPCHART STYLE SVG */
-        .map-svg { width: 100%; height: 100%; opacity: 0.4; }
-        .ping { position: absolute; width: 8px; height: 8px; background: var(--red); border-radius: 50%; box-shadow: 0 0 10px var(--red); animation: pulse 2s infinite; }
-        @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(4); opacity: 0; } }
+        .map-theater { 
+            flex: 1.5; background: #000; position: relative;
+            box-shadow: inset 20px 0 50px rgba(0,0,0,0.5);
+        }
 
-        /* FORM OVERLAY */
-        .overlay { display: none; position: fixed; inset: 0; background: rgba(255,255,255,0.95); z-index: 2000; align-items: center; justify-content: center; }
-        .box { width: 850px; background: #fff; padding: 40px; border: 2px solid #000; border-radius: 8px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
-        label { font-size: 11px; font-weight: 700; color: #777; text-transform: uppercase; display: block; margin-bottom: 4px; }
-        input, select, textarea { width: 100%; padding: 10px; border: 1px solid #ddd; font-size: 14px; outline: none; }
+        /* TYPOGRAPHY */
+        .hero-title { 
+            font-size: 85px; font-weight: 900; line-height: 0.8; 
+            color: var(--red); margin: 0; letter-spacing: -5px; 
+        }
+        .hero-desc { 
+            font-size: 22px; line-height: 1.5; color: #444; 
+            margin: 40px 0; max-width: 550px; 
+        }
+
+        /* MAPCHART.NET FIDELITY SVG */
+        .world-map { width: 100%; height: 100%; opacity: 0.35; filter: invert(1); }
+        .ping-node {
+            position: absolute; width: 12px; height: 12px;
+            background: var(--red); border-radius: 50%;
+            box-shadow: 0 0 20px var(--red); animation: sonar 2.5s infinite;
+        }
+        @keyframes sonar {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(6); opacity: 0; }
+        }
+
+        /* FORM ENGINE */
+        .modal-overlay {
+            display: none; position: fixed; inset: 0;
+            background: rgba(0,0,0,0.8); z-index: 9999;
+            align-items: center; justify-content: center;
+        }
+        .case-file {
+            width: 1000px; background: #fff; border: 10px solid var(--black);
+            padding: 50px; position: relative; max-height: 90vh; overflow-y: auto;
+        }
+        .form-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; margin-top: 30px; }
+        
+        .field-group label { 
+            display: block; font-weight: 800; text-transform: uppercase; 
+            font-size: 12px; margin-bottom: 8px; color: #666;
+        }
+        .field-group input, .field-group select, .field-group textarea {
+            width: 100%; padding: 15px; border: 3px solid var(--gray-200);
+            font-size: 16px; font-weight: 600; transition: border-color 0.3s;
+        }
+        .field-group input:focus { border-color: var(--red); outline: none; }
+
+        .btn-strike {
+            background: var(--black); color: #fff; border: none;
+            padding: 25px; width: 100%; font-size: 20px; font-weight: 900;
+            cursor: pointer; text-transform: uppercase; margin-top: 40px;
+        }
+        .btn-strike:hover { background: var(--red); }
+
+        /* NOTIFICATIONS */
+        .toast-system { position: fixed; bottom: 40px; left: 40px; z-index: 10000; }
+        .alert-box {
+            background: var(--black); color: #fff; padding: 20px 35px;
+            border-left: 10px solid var(--red); margin-bottom: 15px;
+            font-weight: 700; transform: translateX(-110%);
+            animation: slideIn 0.5s forwards;
+        }
+        @keyframes slideIn { to { transform: translateX(0); } }
     </style>
 </head>
 <body>
 
-<div class="nav">
-    <div class="logo">SUE-A-HACKER <span>ENTERPRISE</span></div>
-    <div>
-        <select class="sel-ui" id="l-sel" onchange="update()"></select>
-        <select class="sel-ui" id="c-sel" onchange="update()">
+<header class="header">
+    <div class="brand">SUE-A-HACKER <span>ENTERPRISE</span></div>
+    <div class="nav-controls">
+        <select id="lang-picker" class="ui-dropdown" onchange="initializeCore()"></select>
+        <select id="cur-picker" class="ui-dropdown" onchange="initializeCore()">
             <option value="USD">USD ($)</option>
             <option value="RUB">RUB (₽)</option>
             <option value="VND">VND (₫)</option>
+            <option value="EUR">EUR (€)</option>
         </select>
     </div>
-</div>
+</header>
 
-<div class="container">
-    <div class="left">
-        <h1 class="h1" id="h-main"></h1>
-        <p class="p" id="p-main"></p>
-        <button class="btn" id="b-main" onclick="modal(1)"></button>
-    </div>
-    <div class="right" id="map-target">
-        <svg class="map-svg" viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg">
-            <path fill="#FFF" d="M165.7,143.4l-3.3-1.4l-4.1,2.5l-4.9-0.8l-1.6,4.1l-6.5,0.8l-4.1-3.3l-4.1,2.5l0,4.1l4.1,4.1l4.1-2.5l6.5,2.5l5.7-2.5l5.7,2.5l6.5-4.1l4.1-4.1L165.7,143.4z M251.7,101.4l8.2-16.3l16.3,16.3l24.5,16.3l24.5-8.2l32.7,16.3l-49,40.8l-65.3-16.3L251.7,101.4z M521.1,121.8l24.5-16.3l24.5,16.3l32.7,24.5l24.5,40.8l-40.8,40.8l-40.8-24.5L504.8,187.1L521.1,121.8z M684.4,305.5l32.7-16.3l24.5,32.7l24.5,49l-49,32.7l-57.1-32.7L684.4,305.5z M402.7,354.5l24.5-24.5l24.5,24.5l16.3,40.8l-40.8,32.7l-40.8-32.7L402.7,354.5z"/>
-            <text x="450" y="250" fill="#333" font-size="10">MAPCHART.NET REPLICA</text>
+<main class="workspace">
+    <section class="sidebar">
+        <h1 id="h-node" class="hero-title"></h1>
+        <p id="b-node" class="hero-desc"></p>
+        <button id="cta-node" class="btn-strike" onclick="toggleModal(true)" style="width: 350px;"></button>
+    </section>
+    
+    <section id="map-theater" class="map-theater">
+        <svg class="world-map" viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg">
+            <path d="M150,150 L200,100 L320,110 L450,180 L400,320 L250,380 L120,300 Z M520,100 L750,80 L920,160 L880,350 L700,450 L500,400 L480,200 Z M820,380 L950,400 L930,480 L800,460 Z" fill="#FFF" />
+            <path d="M220,200 Q250,150 300,200 T400,200" stroke="#555" fill="none" stroke-width="2"/>
         </svg>
+    </section>
+</main>
+
+<div id="modal-engine" class="modal-overlay">
+    <div class="case-file">
+        <h2 id="fh-node" style="font-size: 38px; margin: 0; border-bottom: 5px solid var(--black); padding-bottom: 20px;"></h2>
+        <div class="form-grid">
+            <div class="field-group"><label id="ln-node"></label><input type="text" placeholder="John Doe"></div>
+            <div class="field-group"><label id="li-node"></label><input type="text" id="target-ip" value="192.168.1.1"></div>
+            <div class="field-group" style="grid-column: span 2"><label id="lm-node"></label><select id="mal-vault"></select></div>
+            <div class="field-group" style="grid-column: span 2"><label id="ld-node"></label><textarea rows="4"></textarea></div>
+            <div class="field-group"><label id="la-node"></label><input type="number" value="50000"></div>
+            <div class="field-group" style="text-align: right;"><label id="lf-node"></label><div id="price-node" style="font-size: 32px; font-weight: 900; color: var(--red);"></div></div>
+        </div>
+        <button id="fs-node" class="btn-strike" style="background: var(--accent-green);" onclick="executeWarrant()"></button>
+        <p style="text-align: center; margin-top: 25px; cursor: pointer; font-weight: 800; color: #999;" onclick="toggleModal(false)">CLOSE FILING</p>
     </div>
 </div>
 
-<div class="overlay" id="form">
-    <div class="box">
-        <h2 id="f-h" style="margin:0; font-size:28px;"></h2>
-        <div class="grid">
-            <div><label id="l-n"></label><input type="text"></div>
-            <div><label id="l-i"></label><input type="text" id="ip-val" value="185.22.14.90"></div>
-            <div style="grid-column: span 2"><label id="l-m"></label><select id="m-list"></select></div>
-            <div style="grid-column: span 2"><label id="l-d"></label><textarea rows="3"></textarea></div>
-            <div style="font-size:22px; font-weight:800; color:var(--red);"><span id="l-f" style="font-size:11px; color:#999; margin-right:8px;"></span> <span id="p-val"></span></div>
-            <button class="btn" id="f-s" style="width:100%" onclick="fire()"></button>
-        </div>
-        <p style="text-align:center; cursor:pointer; font-weight:700; margin-top:15px; color:#aaa" onclick="modal(0)">CANCEL</p>
-    </div>
-</div>
+<div id="toast-layer" class="toast-system"></div>
 
 <script>
-    const ui = {
-        en: { n: "English", h: "Do you<br>want to<br>sue a<br>hacker?", p: "Enterprise Legal Portal. <strong>Hackers</strong> cause <em>distress.</em> We help you strike back legally.", bt: "File Lawsuit", fh: "Documentation", ln: "Name", li: "IP", lm: "Malware", ld: "Case Summary", lf: "Fee", fs: "EXECUTE", m: ["Ransomware", "DDoS", "Spyware"] },
-        ru: { n: "Русский", h: "Хотите<br>засудить<br>хакера?", p: "Используйте Enterprise! <strong>Хакеры</strong> расстраивают вас. Мы поможем.", bt: "Подать иск", fh: "Документация", ln: "Имя", li: "IP", lm: "Тип ПО", ld: "Описание", lf: "Стоимость", fs: "ИСПОЛНИТЬ", m: ["Шифровальщик", "DDoS", "Шпион"] },
-        vi: { n: "Tiếng Việt", h: "Kiện<br>hacker?", p: "Sử dụng Enterprise! <strong>Hacker</strong> làm bạn <em>buồn.</em> Đòi lại công bằng ngay.", bt: "Khởi kiện", fh: "Tài liệu", ln: "Tên", li: "IP", lm: "Mã độc", ld: "Mô tả", lf: "Phí", fs: "THI HÀNH", m: ["Mã độc tống tiền", "DDoS", "Mã độc Trojan"] }
+    // EXPANDED DATA ARCHITECTURE
+    const LINGUISTICS = {
+        en: { 
+            name: "English", 
+            h: "DO YOU<br>WANT TO<br>SUE A<br>HACKER?", 
+            b: "Proprietary Judicial Intercept. <strong>Hackers</strong> profit from your pain. We seize their assets through high-velocity litigation.", 
+            bt: "INITIATE LAWSUIT", 
+            fh: "LEGAL DOCUMENTATION", 
+            ln: "Plaintiff Name", 
+            li: "Defendant IP Address", 
+            lm: "Cyber-Violation Category", 
+            ld: "Incident Description", 
+            la: "Damages Sought", 
+            lf: "Court Filing Fee", 
+            fs: "EXECUTE JUDICIAL WARRANT", 
+            m: ["Ransomware (Crypto-Locking)", "DDoS (Network Saturation)", "Phishing (Identity Theft)", "Trojan (RAT Access)", "Zero-Day Exploitation"],
+            t: "WARRANT SERVED TO: "
+        },
+        ru: { 
+            name: "Русский", 
+            h: "ХОТИТЕ<br>ЗАСУДИТЬ<br>ХАКЕРА?", 
+            b: "Корпоративный юридический портал. <strong>Хакеры</strong> причиняют вред. Мы поможем вам нанести ответный удар в правовом поле.", 
+            bt: "НАЧАТЬ ПРОЦЕСС", 
+            fh: "СУДЕБНАЯ ДОКУМЕНТАЦИЯ", 
+            ln: "Имя истца", 
+            li: "IP-адрес ответчика", 
+            lm: "Тип киберпреступления", 
+            ld: "Описание инцидента", 
+            la: "Сумма ущерба", 
+            lf: "Госпошлина", 
+            fs: "ИСПОЛНИТЬ ОРДЕР", 
+            m: ["Шифровальщик (Ransomware)", "DDoS-атака", "Фишинг", "Троян", "Эксплойт нулевого дня"],
+            t: "ОРДЕР ВРУЧЕН: "
+        },
+        vi: { 
+            name: "Tiếng Việt", 
+            h: "BẠN MUỐN<br>KIỆN MỘT<br>HACKER?", 
+            b: "Cổng thông tin tư pháp doanh nghiệp. <strong>Hackers</strong> làm bạn tổn thất. Chúng tôi giúp bạn đòi lại công bằng.", 
+            bt: "KHỞI KIỆN NGAY", 
+            fh: "HỒ SƠ PHÁP LÝ", 
+            ln: "Tên Nguyên đơn", 
+            li: "Địa chỉ IP Bị đơn", 
+            lm: "Loại vi phạm mạng", 
+            ld: "Mô tả vụ việc", 
+            la: "Số tiền bồi thường", 
+            lf: "Lệ phí tòa án", 
+            fs: "THI HÀNH LỆNH TRUY NÃ", 
+            m: ["Mã độc tống tiền", "Tấn công DDoS", "Lừa đảo danh tính", "Mã độc Trojan", "Lỗ hổng Zero-Day"],
+            t: "ĐÃ THI HÀNH LỆNH TẠI: "
+        }
     };
 
-    const lPick = document.getElementById('l-sel');
-    Object.keys(ui).forEach(k => { let o = document.createElement('option'); o.value=k; o.innerText=ui[k].n; lPick.appendChild(o); });
+    const CURRENCIES = { USD: '$850.00', RUB: '78,200 ₽', VND: '21,000,000 ₫', EUR: '790,00 €' };
 
-    function update() {
-        const l = ui[lPick.value], c = document.getElementById('c-sel').value;
-        document.getElementById('h-main').innerHTML = l.h;
-        document.getElementById('p-main').innerHTML = l.p;
-        document.getElementById('b-main').innerText = l.bt;
-        document.getElementById('f-h').innerText = l.fh;
-        document.getElementById('l-n').innerText = l.ln;
-        document.getElementById('l-i').innerText = l.li;
-        document.getElementById('l-m').innerText = l.lm;
-        document.getElementById('l-d').innerText = l.ld;
-        document.getElementById('l-f').innerText = l.lf;
-        document.getElementById('f-s').innerText = l.fs;
-        
-        const ml = document.getElementById('m-list'); ml.innerHTML = "";
-        l.m.forEach(x => { let o = document.createElement('option'); o.innerText=x; ml.appendChild(o); });
-        
-        const prices = { USD: '$450.00', RUB: '42,500 ₽', VND: '11,500,000 ₫' };
-        document.getElementById('p-val').innerText = prices[c];
+    function setupPickers() {
+        const lp = document.getElementById('lang-picker');
+        Object.keys(LINGUISTICS).forEach(key => {
+            const opt = document.createElement('option');
+            opt.value = key; opt.innerText = LINGUISTICS[key].name;
+            lp.appendChild(opt);
+        });
     }
 
-    function modal(s) { document.getElementById('form').style.display = s ? 'flex' : 'none'; }
+    function initializeCore() {
+        const lang = document.getElementById('lang-picker').value || 'en';
+        const curr = document.getElementById('cur-picker').value;
+        const d = LINGUISTICS[lang];
 
-    function fire() {
-        modal(0);
-        const p = document.createElement('div'); p.className = 'ping';
-        p.style.left = Math.random()*80+10+"%"; p.style.top = Math.random()*80+10+"%";
-        document.getElementById('map-target').appendChild(p);
-        alert("Warrant Sent to: " + document.getElementById('ip-val').value);
+        document.getElementById('h-node').innerHTML = d.h;
+        document.getElementById('b-node').innerHTML = d.b;
+        document.getElementById('cta-node').innerText = d.bt;
+        document.getElementById('fh-node').innerText = d.fh;
+        document.getElementById('ln-node').innerText = d.ln;
+        document.getElementById('li-node').innerText = d.li;
+        document.getElementById('lm-node').innerText = d.lm;
+        document.getElementById('ld-node').innerText = d.ld;
+        document.getElementById('la-node').innerText = d.la;
+        document.getElementById('lf-node').innerText = d.lf;
+        document.getElementById('fs-node').innerText = d.fs;
+        document.getElementById('price-node').innerText = CURRENCIES[curr];
+
+        const mv = document.getElementById('mal-vault'); mv.innerHTML = "";
+        d.m.forEach(val => { const o = document.createElement('option'); o.innerText = val; mv.appendChild(o); });
     }
-    update();
+
+    function toggleModal(state) { document.getElementById('modal-engine').style.display = state ? 'flex' : 'none'; }
+
+    function executeWarrant() {
+        toggleModal(false);
+        const lang = document.getElementById('lang-picker').value;
+        const ip = document.getElementById('target-ip').value;
+        
+        const toast = document.createElement('div');
+        toast.className = 'alert-box';
+        toast.innerHTML = `<span>${LINGUISTICS[lang].t}</span> ${ip}`;
+        document.getElementById('toast-layer').appendChild(toast);
+        
+        const ping = document.createElement('div');
+        ping.className = 'ping-node';
+        ping.style.left = (Math.random() * 70 + 15) + "%";
+        ping.style.top = (Math.random() * 60 + 20) + "%";
+        document.getElementById('map-theater').appendChild(ping);
+
+        setTimeout(() => toast.remove(), 6000);
+    }
+
+    setupPickers();
+    initializeCore();
 </script>
 </body>
 </html>
