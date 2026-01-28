@@ -23,6 +23,9 @@
             --accent-red: #cc0000;
             --main-black: #1a1a1a;
             --btn-hover: #333333;
+            --legal-green: #27ae60;
+            --ui-white: #ffffff;
+            --border-light: #f0f0f0;
         }
 
         /* STYLING ENFORCEMENT */
@@ -30,30 +33,45 @@
             font-family: 'Verdana' !important;
             -webkit-font-smoothing: antialiased;
             box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
-        /* Precise Bold/Italic Styles from Samples */
+        /* Precise Bold/Italic Styles */
         strong, b { 
-            font-weight: 700 !important; /* Matches image_301c9b.png */
+            font-weight: 700 !important; 
         }
         em, i { 
-            font-style: italic !important; /* Matches image_301c83.png */
+            font-style: italic !important; 
         }
         strong em, em strong, b i, i b {
             font-weight: 700 !important;
-            font-style: italic !important; /* Matches image_301c9e.png */
+            font-style: italic !important; 
         }
 
         body {
-            background-color: #ffffff; margin: 0; display: flex; justify-content: center;
-            align-items: center; height: 100vh; color: var(--main-black); overflow: hidden;
+            background-color: var(--ui-white);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: var(--main-black);
+            overflow: hidden;
         }
 
         .hero-layout {
-            display: flex; align-items: flex-start; gap: 50px; max-width: 1100px; width: 90%;
+            display: flex;
+            align-items: flex-start;
+            gap: 50px;
+            max-width: 1100px;
+            width: 90%;
         }
 
-        .heading-box { flex: 1; border-bottom: 5px solid #000; padding-bottom: 15px; }
+        .heading-box {
+            flex: 1;
+            border-bottom: 5px solid #000;
+            padding-bottom: 15px;
+        }
         
         .red-title { 
             color: var(--accent-red); 
@@ -73,71 +91,67 @@
         }
 
         .portal-card {
-            background: #fff; padding: 45px 35px; width: 380px; border-radius: 25px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.07); border: 1px solid #f0f0f0; text-align: center;
+            background: #fff;
+            padding: 45px 35px;
+            width: 380px;
+            border-radius: 25px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.07);
+            border: 1px solid var(--border-light);
+            text-align: center;
         }
 
-        .portal-card h2 { font-size: 28px; margin-bottom: 15px; font-weight: 700; letter-spacing: -0.5px; }
-        .portal-card p { font-size: 15px; color: #555; margin-bottom: 30px; line-height: 1.4; }
+        .portal-card h2 {
+            font-size: 28px;
+            margin-bottom: 15px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .portal-card p {
+            font-size: 15px;
+            color: #555;
+            margin-bottom: 30px;
+            line-height: 1.4;
+        }
         
         .primary-btn { 
-            background: var(--main-black); color: white; border: none; padding: 18px; 
-            width: 100%; border-radius: 12px; font-weight: 700; font-size: 17px; cursor: pointer; 
+            background: var(--main-black);
+            color: white;
+            border: none;
+            padding: 18px; 
+            width: 100%;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 17px;
+            cursor: pointer; 
             transition: background 0.2s ease;
         }
-        .primary-btn:hover { background: var(--btn-hover); }
 
-        /* Modal / Overlay */
+        .primary-btn:hover {
+            background: var(--btn-hover);
+        }
+
         .modal-overlay {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(255, 255, 255, 0.98); z-index: 9999; justify-content: center; align-items: center;
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
         }
 
         .modal-box {
-            background: white; width: 90%; max-width: 550px; padding: 50px; border-radius: 30px;
-            box-shadow: 0 40px 100px rgba(0,0,0,0.1); border: 1px solid #eee;
+            background: white;
+            width: 90%;
+            max-width: 550px;
+            padding: 50px;
+            border-radius: 30px;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.1);
+            border: 1px solid #eee;
         }
-
-        label { display: block; font-weight: 700; font-size: 12px; text-transform: uppercase; color: #888; margin-bottom: 8px; }
-        input { width: 100%; padding: 14px; border: 2px solid #f2f2f2; border-radius: 10px; font-size: 16px; margin-bottom: 25px; outline: none; }
-        input:focus { border-color: #ddd; }
     </style>
 </head>
-<body>
-
-<div class="hero-layout">
-    <div class="heading-box">
-        <h1 class="red-title">Do you<br>want to<br>sue a<br>hacker?</h1>
-    </div>
-    <div class="intro-copy">
-        <p>
-            Then use the Sue-A-Hacker Enterprise! The Sue-A-Hacker Enterprise is not here for nothing. 
-            <strong>Hackers</strong> can make you feel <em>sad, unsettled</em> and <em>discouraged.</em> 
-            But we are here to flip it all over so the hacker regrets. To start using our tool, simply click the <strong>button</strong> below. You will never regret it!
-        </p>
-    </div>
-    <div class="portal-card">
-        <h2>Litigation center</h2>
-        <p>Securely file legal action against threat actors.</p>
-        <button class="primary-btn" onclick="showModal(true)">File lawsuit now</button>
-    </div>
-</div>
-
-<div id="formOverlay" class="modal-overlay">
-    <div class="modal-box">
-        <h2 style="margin-top:0; font-size: 32px; letter-spacing: -1px;">Lawsuit Filing</h2>
-        <label>Threat Actor IP or Alias</label>
-        <input type="text" placeholder="e.g. 192.168.1.1 or 'ShadowMask'">
-        
-        <button class="primary-btn" style="background: #27ae60;">Submit Documentation</button>
-        <button style="background:none; border:none; color:#aaa; margin-top:20px; cursor:pointer; font-weight:700; font-size: 12px; width: 100%;" onclick="showModal(false)">GO BACK</button>
-    </div>
-</div>
-
-<script>
-    function showModal(s) { 
-        document.getElementById('formOverlay').style.display = s ? 'flex' : 'none'; 
-    }
-</script>
-</body>
-</html>
