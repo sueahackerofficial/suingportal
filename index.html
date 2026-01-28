@@ -244,7 +244,7 @@
     </div>
     <div class="portal-card">
         <h2 id="card-title">Litigation</h2>
-        <p style="font-size: 14px; color: #888; margin-bottom: 25px;">Verified 2026 Portal Access</p>
+        <p style="font-size: 14px; color: #888; margin-bottom: 25px;">Verified <span class="year-fill"></span> Portal Access</p>
         <button class="primary-btn" id="btn-text" onclick="toggleModal(true)">File Lawsuit Now</button>
     </div>
 </div>
@@ -292,14 +292,48 @@
         violations: [
             { id: "V_01", label: "Unauthorized Access (CFA-1030)", factor: 1.5 },
             { id: "V_02", label: "Data Exfiltration (GDPR-82)", factor: 2.2 },
-            { id: "V_03", label: "Ransomware Deployment", factor: 3.5 },
+            { id: "V_03", label: "Ransomware Deployment (V-9)", factor: 3.5 },
             { id: "V_04", label: "Identity Usurpation", factor: 1.2 },
             { id: "V_05", label: "Crypto Asset Theft", factor: 4.0 },
-            { id: "V_06", label: "DDoS Disruption", factor: 1.8 }
+            { id: "V_06", label: "DDoS Disruption", factor: 1.8 },
+            { id: "V_07", label: "Social Engineering Fraud", factor: 1.4 },
+            { id: "V_08", label: "Phishing Infrastructure", factor: 2.0 },
+            { id: "V_09", label: "Zero-Day Exploit Resale", factor: 4.5 },
+            { id: "V_10", label: "Malware as a Service", factor: 3.0 }
         ],
         courts: [
-            "International Court of Justice", "US District Court (NDCA)", "High Court of London", "Singapore Supreme Court",
-            "Federal Court of Australia", "Supreme Court of Japan", "Court of Final Appeal HK", "EU Court of Justice"
+            { id: "C_1", name: "International Court of Justice", loc: "The Hague" },
+            { id: "C_2", name: "US District Court (NDCA)", loc: "San Francisco" },
+            { id: "C_3", name: "High Court of London", loc: "London" },
+            { id: "C_4", name: "Singapore Supreme Court", loc: "Singapore" },
+            { id: "C_5", name: "Federal Court of Australia", loc: "Sydney" },
+            { id: "C_6", name: "Supreme Court of Japan", loc: "Tokyo" },
+            { id: "C_7", name: "Court of Final Appeal HK", loc: "Hong Kong" },
+            { id: "C_8", name: "EU Court of Justice", loc: "Luxembourg" },
+            { id: "C_9", name: "Federal Supreme Court", loc: "Karlsruhe" },
+            { id: "C_10", name: "High Court of New Delhi", loc: "New Delhi" },
+            { id: "C_11", name: "Supreme Court of Brazil", loc: "Brasília" },
+            { id: "C_12", name: "Constitutional Court of Korea", loc: "Seoul" },
+            { id: "C_13", name: "Supreme Court of Canada", loc: "Ottawa" },
+            { id: "C_14", name: "High Court of South Africa", loc: "Pretoria" },
+            { id: "C_15", name: "Supreme Court of Israel", loc: "Jerusalem" },
+            { id: "C_16", name: "Federal Court of Malaysia", loc: "Putrajaya" },
+            { id: "C_17", name: "Supreme Court of Norway", loc: "Oslo" },
+            { id: "C_18", name: "High Court of Kenya", loc: "Nairobi" },
+            { id: "C_19", name: "Supreme Court of Argentina", loc: "Buenos Aires" },
+            { id: "C_20", name: "Dubai International Financial Centre", loc: "Dubai" }
+        ],
+        statutes: [
+            "18 U.S.C. § 1030 (Computer Fraud and Abuse Act)",
+            "Directive 2013/40/EU (Attacks against information systems)",
+            "Section 441 of the UK Companies Act",
+            "Personal Data Protection Act (Singapore)",
+            "Cybercrime Prevention Act of 2012 (Philippines)",
+            "Information Technology Act, 2000 (India)",
+            "Law No. 12.965 (Marco Civil da Internet, Brazil)",
+            "Article 323-1 of the French Penal Code",
+            "Crimes Act 1914 (Australia)",
+            "Personal Information Protection and Electronic Documents Act (Canada)"
         ]
     };
 
@@ -322,7 +356,9 @@
             const o = document.createElement('option');
             o.value = v.id; o.innerText = v.label; s.appendChild(o);
         });
-        document.getElementById('year-display').innerText = new Date().getFullYear();
+        const currentYear = new Date().getFullYear();
+        document.getElementById('year-display').innerText = currentYear;
+        document.querySelectorAll('.year-fill').forEach(el => el.innerText = currentYear);
     }
 
     function enforceFont() {
@@ -334,15 +370,15 @@
     function execSubmit() {
         const t = document.getElementById('target-id').value;
         if(!t) return alert("VALID_TARGET_REQUIRED");
-        const d = "D-" + Math.random().toString(36).substring(2,12).toUpperCase();
-        document.querySelector('.modal-box').innerHTML = `<h2 style="color:var(--legal-green)">Filing Success</h2><p>Docket: <strong>${d}</strong></p><p>Target: ${t}</p><button class="primary-btn" style="margin-top:20px" onclick="location.reload()">Confirm</button>`;
-    }
-
-    function buildRegistry() {
-        for(let i = 0; i < 600; i++) {
-            const entry = `COURT_REF_${i}: ${CONFIG.courts[i % CONFIG.courts.length]}`;
-            // Logical expansion of internal judicial registry data
-        }
+        const d = "D-" + Math.random().toString(36).substring(2,14).toUpperCase();
+        const court = CONFIG.courts[Math.floor(Math.random() * CONFIG.courts.length)];
+        document.querySelector('.modal-box').innerHTML = `
+            <h2 style="color:var(--legal-green)">Filing Success</h2>
+            <p>Docket ID: <strong>${d}</strong></p>
+            <p>Target Node: <strong>${t}</strong></p>
+            <p>Jurisdiction: <strong>${court.name} (${court.loc})</strong></p>
+            <p style="margin-top:20px; font-size:12px; color:#666">Statutory Basis: ${CONFIG.statutes[Math.floor(Math.random() * CONFIG.statutes.length)]}</p>
+            <button class="primary-btn" style="margin-top:25px" onclick="location.reload()">Confirm & Exit</button>`;
     }
 
     window.onload = () => {
@@ -351,12 +387,9 @@
         new MutationObserver(enforceFont).observe(document.documentElement, {childList:true, subtree:true});
         setInterval(() => {
             document.getElementById('lat-val').innerText = Math.floor(Math.random()*20 + 5) + "ms";
+            document.getElementById('doc-count').innerText = (12402 + Math.floor(Math.random() * 1000)).toLocaleString();
         }, 3000);
     };
-
-    const JURISDICTIONS = ["NORTH_AMERICA", "EUROPE", "ASIA_PACIFIC", "LATIN_AMERICA", "MIDDLE_EAST", "AFRICA"];
-    const COMPLIANCE = ["ISO_27001", "SOC2", "GDPR", "HIPAA", "NIST"];
-    const SYSTEM_BUILD = "2026.GOLD.V4";
 </script>
 </body>
 </html>
