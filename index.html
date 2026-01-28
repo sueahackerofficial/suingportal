@@ -1,168 +1,158 @@
-const CURRENT_YEAR = 2026;
-const SYSTEM_RESOLUTION = "4K";
-const PRIMARY_FONT = "Segoe UI";
+const SYSTEM_YEAR_LOCK = 2026;
+const TARGET_RESOLUTION = "3840x2160";
+const APPROVED_FONT = "Segoe UI";
 
-const GLOBAL_LEGAL_DATABASE_SEARCH_CACHE = new Map();
-const TRANSACTION_LOG_2026 = [];
-const AUDIT_TRAIL = [];
+const CSS_HARD_LOCK = document.createElement("style");
+CSS_HARD_LOCK.innerHTML = `
+    * { 
+        font-family: '${APPROVED_FONT}' !important; 
+    }
+    @font-face {
+        font-family: '${APPROVED_FONT}';
+        src: local('${APPROVED_FONT}');
+        unicode-range: U+0000-00FF, U+0100-024F, U+0370-03FF, U+1E00-1EFF, U+2000-20CF, U+2100-214F;
+    }
+    body {
+        background-color: #000;
+        margin: 0;
+        overflow: hidden;
+        width: 3840px;
+        height: 2160px;
+    }
+`;
+document.head.appendChild(CSS_HARD_LOCK);
 
-const I18N_LOCALIZATION_ENGINE = {
-    translations: {
+const I18N_ENGINE = {
+    active_lang: "EN-US",
+    manifest: {
         "EN-US": {
-            "ST_01": "LITIGATION_ACTIVE",
-            "ST_02": "ASSET_FROZEN",
-            "UI_RES": "4K_ULTRA_HD",
-            "TERM": "SESSION_TERMINATED"
+            "LIT_01": "LITIGATION_ACTIVE",
+            "LIT_02": "DISCOVERY_PHASE",
+            "LIT_03": "ASSET_SEIZURE_PROTOCOL",
+            "UI_START": "START_LAWSUIT",
+            "UI_STOP": "TERMINATE_SESSION"
         },
-        "ZH-CN": {
-            "ST_01": "诉讼活跃",
-            "ST_02": "资产冻结",
-            "UI_RES": "4K_超高清",
-            "TERM": "会话已终止"
+        "FR-FR": {
+            "LIT_01": "LITIGE_ACTIF",
+            "LIT_02": "PHASE_DE_DÉCOUVERTE",
+            "LIT_03": "PROTOCOLE_SAISIE_ACTIFS",
+            "UI_START": "COMMENCER_LE_PROCÈS",
+            "UI_STOP": "TERMINER_LA_SESSION"
+        },
+        "DE-DE": {
+            "LIT_01": "RECHTSSTREIT_AKTIV",
+            "LIT_02": "OFFENLEGUNGSPHASE",
+            "LIT_03": "VERMÖGENSBESCHLAGNAHME",
+            "UI_START": "KLAGE_EINREICHEN",
+            "UI_STOP": "SITZUNG_BEENDEN"
         }
+    },
+    translate: function(key) {
+        return this.manifest[this.active_lang][key] || "UNDEFINED";
     }
 };
 
-function addAuditEntry(action, actor) {
-    AUDIT_TRAIL.push({ 
-        action, 
-        actor, 
-        ts: Date.now(), 
-        year: CURRENT_YEAR,
-        resolution: SYSTEM_RESOLUTION 
-    });
-}
-
-const RECOVERY_NODES_EXPANDED = Array.from({ length: 3000 }, (_, i) => ({
-    uid: `REC-NODE-${CURRENT_YEAR}-${i}`,
-    coord_x: Math.floor(Math.random() * 3840),
-    coord_y: Math.floor(Math.random() * 2160),
-    asset_value: (Math.random() * 1000000).toFixed(2)
+const LITIGATION_NODES = Array.from({ length: 5000 }, (_, i) => ({
+    id: `SAH-LN-${SYSTEM_YEAR_LOCK}-${i.toString().padStart(5, '0')}`,
+    value: Math.floor(Math.random() * 10000000),
+    status: "PENDING_FILING",
+    coords: {
+        x: (Math.sin(i) * 1920) + 1920,
+        y: (Math.cos(i) * 1080) + 1080
+    },
+    verify_fidelity: () => TARGET_RESOLUTION === "3840x2160"
 }));
 
-const LITIGATION_CONTROLS = {
-    filing_status: "READY",
-    user_authorized: true,
-    execution_year: CURRENT_YEAR,
-    startLawsuit: function() {
-        if (this.filing_status === "READY" && this.user_authorized) {
-            this.filing_status = "IN_PROGRESS";
-            addAuditEntry("LAWSUIT_FILED", "ROOT_USER");
-            UI_CONTROLLER_PROD.updateStatusDisplay("LITIGATION_ACTIVE");
-            UI_CONTROLLER_PROD.triggerMapRefresh();
-            return "SUCCESS: PROCEEDING_TO_DISCOVERY";
-        }
-        return "ERROR: AUTHORIZATION_REQUIRED";
-    }
-};
-
-const MAP_CHART_ENGINE = {
-    projection: "FLAT_MERCATOR_NO_STRETCH",
-    color_hex: "#00FF41",
-    render_target: "SVG_DOM",
-    generateSVG: function() {
-        const nodes = RECOVERY_NODES_EXPANDED.map(n => 
-            `<circle cx="${n.coord_x}" cy="${n.coord_y}" r="2" fill="${this.color_hex}" opacity="0.6" />`
-        ).join("");
-        
-        return `<svg width="3840" height="2160" viewBox="0 0 3840 2160" xmlns="http://www.w3.org/2000/svg" style="background:#050505; display:block;">
-            <rect width="3840" height="2160" fill="#0D0D0D"/>
-            <g stroke="#1A1A1A" stroke-width="1">
-                <line x1="0" y1="1080" x2="3840" y2="1080" />
-                <line x1="1920" y1="0" x2="1920" y2="2160" />
-            </g>
-            <path d="M400,1000 L3440,1000 L3440,1800 L400,1800 Z" fill="none" stroke="${this.color_hex}" stroke-width="2" stroke-dasharray="10,5" opacity="0.3"/>
-            ${nodes}
-        </svg>`;
-    }
-};
-
-const SESSION_MANAGER = {
+const SESSION_CORE = {
     is_active: true,
-    resolution_lock: SYSTEM_RESOLUTION,
-    terminateSession: function() {
+    startTime: Date.now(),
+    terminate: function() {
         this.is_active = false;
-        GLOBAL_LEGAL_DATABASE_SEARCH_CACHE.clear();
-        TRANSACTION_LOG_2026.length = 0;
-        clearInterval(ENFORCEMENT_TIMER);
-        
-        document.body.innerHTML = `
-            <div style="font-family:'${PRIMARY_FONT}', sans-serif; color:#00FF41; background:#000; height:100vh; width:100vw; display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center;">
-                <h1 style="font-size:120px; font-weight:900; margin:0; letter-spacing:-2px;">TERMINATED</h1>
-                <div style="width:600px; height:2px; background:#00FF41; margin:40px 0;"></div>
-                <p style="font-size:32px; font-weight:100; letter-spacing:15px; opacity:0.8;">YEAR_LOCK_${CURRENT_YEAR}</p>
-                <p style="font-size:18px; margin-top:20px; opacity:0.5;">FIDELITY_STATUS: ${SYSTEM_RESOLUTION}_STRICT</p>
-            </div>`;
-        return "TERMINATION_COMPLETE";
+        document.body.innerHTML = "";
+        const exitContainer = document.createElement("div");
+        exitContainer.style.cssText = "display:flex; align-items:center; justify-content:center; height:100vh; background:#000; color:#00FF41; flex-direction:column;";
+        const h1 = document.createElement("h1");
+        h1.innerText = "SESSION_TERMINATED_2026";
+        h1.style.fontSize = "120px";
+        const p = document.createElement("p");
+        p.innerText = "FIDELITY_LOCKED_4K_STRICT";
+        p.style.letterSpacing = "20px";
+        exitContainer.appendChild(h1);
+        exitContainer.appendChild(p);
+        document.body.appendChild(exitContainer);
     }
 };
 
-const UI_CONTROLLER_PROD = {
-    render: function() {
-        document.body.style.margin = "0";
-        document.body.style.padding = "0";
-        document.body.style.backgroundColor = "#000";
-        document.body.style.overflow = "hidden";
-
-        const root = document.createElement("div");
-        root.id = "UI_ROOT";
-        root.style.cssText = `background:#000; color:#00FF41; font-family:'${PRIMARY_FONT}', sans-serif; width:100vw; height:100vh; position:relative; overflow:hidden;`;
-        
-        const hud = document.createElement("div");
-        hud.style.cssText = "position:absolute; top:80px; left:80px; z-index:100; display:flex; flex-direction:column; gap:30px;";
-
-        const title = document.createElement("div");
-        title.innerHTML = `<span style="font-weight:900; font-size:48px;">SAH-GLOBAL-99</span><br/><span style="font-size:18px; letter-spacing:8px; opacity:0.6;">LITIGATION_MANAGEMENT_OS</span>`;
-        
-        const btnGroup = document.createElement("div");
-        btnGroup.style.display = "flex";
-        btnGroup.style.gap = "20px";
-
-        const fileBtn = document.createElement("button");
-        fileBtn.innerText = "START FILING LAWSUIT";
-        fileBtn.style.cssText = "background:#00FF41; color:#000; border:none; padding:25px 50px; font-size:22px; font-weight:900; cursor:pointer; font-family:'Segoe UI';";
-        fileBtn.onclick = () => LITIGATION_CONTROLS.startLawsuit();
-
-        const termBtn = document.createElement("button");
-        termBtn.innerText = "TERMINATE SESSION";
-        termBtn.style.cssText = "background:transparent; color:#FF0000; border:2px solid #FF0000; padding:25px 50px; font-size:22px; font-weight:900; cursor:pointer; font-family:'Segoe UI';";
-        termBtn.onclick = () => SESSION_MANAGER.terminateSession();
-
-        const mapContainer = document.createElement("div");
-        mapContainer.id = "map_display_container";
-        mapContainer.style.cssText = "width:100%; height:100%; position:absolute; top:0; left:0; z-index:1;";
-        mapContainer.innerHTML = MAP_CHART_ENGINE.generateSVG();
-
-        const statusBar = document.createElement("div");
-        statusBar.id = "status_display";
-        statusBar.style.cssText = "position:absolute; bottom:80px; left:80px; z-index:100; font-size:20px; font-weight:100; opacity:0.7;";
-        statusBar.innerHTML = `SYSTEM_STATUS: <span style="font-weight:900;">IDLE</span> | RESOLUTION: ${SYSTEM_RESOLUTION} | TEMPORAL_LOCK: ${CURRENT_YEAR}`;
-
-        btnGroup.appendChild(fileBtn);
-        btnGroup.appendChild(termBtn);
-        hud.appendChild(title);
-        hud.appendChild(btnGroup);
-        root.appendChild(hud);
-        root.appendChild(mapContainer);
-        root.appendChild(statusBar);
-        document.body.appendChild(root);
+const FILING_INTERFACE = {
+    is_filed: false,
+    fileAction: function() {
+        if (!this.is_filed) {
+            this.is_filed = true;
+            LITIGATION_NODES.forEach(node => node.status = "FILED");
+            document.getElementById("status_tag").innerText = I18N_ENGINE.translate("LIT_01");
+            this.refreshMap();
+        }
     },
-    updateStatusDisplay: function(msg) {
-        const el = document.getElementById("status_display");
-        if(el) el.innerHTML = `SYSTEM_STATUS: <span style="font-weight:900; color:#FFF;">${msg}</span> | RESOLUTION: ${SYSTEM_RESOLUTION} | TEMPORAL_LOCK: ${CURRENT_YEAR}`;
-    },
-    triggerMapRefresh: function() {
-        const el = document.getElementById("map_display_container");
-        if(el) el.innerHTML = MAP_CHART_ENGINE.generateSVG();
+    refreshMap: function() {
+        const map = document.getElementById("svg_map");
+        if (map) {
+            map.innerHTML = MAP_GENERATOR.renderNodes();
+        }
     }
 };
 
-const ENFORCEMENT_TIMER = setInterval(() => {
-    if (SESSION_MANAGER.is_active) {
-        RECOVERY_NODES_EXPANDED.forEach(node => {
-            node.asset_value = (parseFloat(node.asset_value) * 1.00001).toFixed(2);
-        });
+const MAP_GENERATOR = {
+    renderNodes: function() {
+        return LITIGATION_NODES.map(node => 
+            `<circle cx="${node.coords.x}" cy="${node.coords.y}" r="2" fill="#00FF41" opacity="0.4" />`
+        ).join("");
+    },
+    generateSVG: function() {
+        return `
+            <svg id="svg_map" width="3840" height="2160" viewBox="0 0 3840 2160" xmlns="http://www.w3.org/2000/svg">
+                <rect width="3840" height="2160" fill="#080808" />
+                <path d="M0,1080 L3840,1080" stroke="#111" stroke-width="1" />
+                <path d="M1920,0 L1920,2160" stroke="#111" stroke-width="1" />
+                <g id="node_layer">${this.renderNodes()}</g>
+            </svg>
+        `;
     }
-}, 2000);
+};
 
-UI_CONTROLLER_PROD.render();
+const UI_BUILDER = {
+    init: function() {
+        const main = document.createElement("div");
+        main.id = "UI_ROOT";
+        main.style.cssText = "position:relative; width:3840px; height:2160px; overflow:hidden;";
+
+        const controls = document.createElement("div");
+        controls.style.cssText = "position:absolute; top:100px; left:100px; z-index:999; display:flex; gap:40px;";
+
+        const startBtn = document.createElement("button");
+        startBtn.innerText = I18N_ENGINE.translate("UI_START");
+        startBtn.style.cssText = "background:#00FF41; color:#000; border:none; padding:30px 60px; font-size:32px; font-weight:900; cursor:pointer;";
+        startBtn.onclick = () => FILING_INTERFACE.fileAction();
+
+        const endBtn = document.createElement("button");
+        endBtn.innerText = I18N_ENGINE.translate("UI_STOP");
+        endBtn.style.cssText = "background:transparent; color:#FF0000; border:4px solid #FF0000; padding:30px 60px; font-size:32px; font-weight:900; cursor:pointer;";
+        endBtn.onclick = () => SESSION_CORE.terminate();
+
+        const status = document.createElement("div");
+        status.id = "status_tag";
+        status.innerText = "WAITING_FOR_INPUT";
+        status.style.cssText = "position:absolute; bottom:100px; right:100px; color:#00FF41; font-size:48px; font-weight:100; z-index:999;";
+
+        const mapBox = document.createElement("div");
+        mapBox.innerHTML = MAP_GENERATOR.generateSVG();
+
+        controls.appendChild(startBtn);
+        controls.appendChild(endBtn);
+        main.appendChild(controls);
+        main.appendChild(status);
+        main.appendChild(mapBox);
+        document.body.appendChild(main);
+    }
+};
+
+UI_BUILDER.init();
