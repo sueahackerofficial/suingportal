@@ -1,158 +1,119 @@
-const SYSTEM_YEAR_LOCK = 2026;
-const TARGET_RESOLUTION = "3840x2160";
-const APPROVED_FONT = "Segoe UI";
-
-const CSS_HARD_LOCK = document.createElement("style");
-CSS_HARD_LOCK.innerHTML = `
-    * { 
-        font-family: '${APPROVED_FONT}' !important; 
-    }
-    @font-face {
-        font-family: '${APPROVED_FONT}';
-        src: local('${APPROVED_FONT}');
-        unicode-range: U+0000-00FF, U+0100-024F, U+0370-03FF, U+1E00-1EFF, U+2000-20CF, U+2100-214F;
-    }
-    body {
-        background-color: #000;
-        margin: 0;
-        overflow: hidden;
-        width: 3840px;
-        height: 2160px;
-    }
-`;
-document.head.appendChild(CSS_HARD_LOCK);
-
-const I18N_ENGINE = {
-    active_lang: "EN-US",
-    manifest: {
-        "EN-US": {
-            "LIT_01": "LITIGATION_ACTIVE",
-            "LIT_02": "DISCOVERY_PHASE",
-            "LIT_03": "ASSET_SEIZURE_PROTOCOL",
-            "UI_START": "START_LAWSUIT",
-            "UI_STOP": "TERMINATE_SESSION"
-        },
-        "FR-FR": {
-            "LIT_01": "LITIGE_ACTIF",
-            "LIT_02": "PHASE_DE_DÉCOUVERTE",
-            "LIT_03": "PROTOCOLE_SAISIE_ACTIFS",
-            "UI_START": "COMMENCER_LE_PROCÈS",
-            "UI_STOP": "TERMINER_LA_SESSION"
-        },
-        "DE-DE": {
-            "LIT_01": "RECHTSSTREIT_AKTIV",
-            "LIT_02": "OFFENLEGUNGSPHASE",
-            "LIT_03": "VERMÖGENSBESCHLAGNAHME",
-            "UI_START": "KLAGE_EINREICHEN",
-            "UI_STOP": "SITZUNG_BEENDEN"
-        }
-    },
-    translate: function(key) {
-        return this.manifest[this.active_lang][key] || "UNDEFINED";
-    }
-};
-
-const LITIGATION_NODES = Array.from({ length: 5000 }, (_, i) => ({
-    id: `SAH-LN-${SYSTEM_YEAR_LOCK}-${i.toString().padStart(5, '0')}`,
-    value: Math.floor(Math.random() * 10000000),
-    status: "PENDING_FILING",
-    coords: {
-        x: (Math.sin(i) * 1920) + 1920,
-        y: (Math.cos(i) * 1080) + 1080
-    },
-    verify_fidelity: () => TARGET_RESOLUTION === "3840x2160"
+const LEGAL_CALENDAR_2026 = Array.from({ length: 1500 }, (_, i) => ({
+    docket_id: `DOCK-2026-${i.toString().padStart(5, '0')}`,
+    court_room: `CR-${(i % 50).toString().padStart(2, '0')}`,
+    presiding_judge: `JUDGE_REF_${(i % 100)}`,
+    case_type: i % 2 === 0 ? "CIVIL_RECOVERY" : "ASSET_SEIZURE",
+    priority: (i % 5) + 1,
+    status: "SCHEDULED"
 }));
 
-const SESSION_CORE = {
-    is_active: true,
-    startTime: Date.now(),
-    terminate: function() {
-        this.is_active = false;
-        document.body.innerHTML = "";
-        const exitContainer = document.createElement("div");
-        exitContainer.style.cssText = "display:flex; align-items:center; justify-content:center; height:100vh; background:#000; color:#00FF41; flex-direction:column;";
-        const h1 = document.createElement("h1");
-        h1.innerText = "SESSION_TERMINATED_2026";
-        h1.style.fontSize = "120px";
-        const p = document.createElement("p");
-        p.innerText = "FIDELITY_LOCKED_4K_STRICT";
-        p.style.letterSpacing = "20px";
-        exitContainer.appendChild(h1);
-        exitContainer.appendChild(p);
-        document.body.appendChild(exitContainer);
-    }
-};
+const DISCOVERY_FILE_SYSTEM = Array.from({ length: 1500 }, (_, i) => ({
+    file_id: `FILE-REF-${i.toString().padStart(6, '0')}`,
+    metadata: {
+        resolution: "3840x2160",
+        bitrate: "120Mbps",
+        encoding: "HEVC_STRICT",
+        year_lock: 2026
+    },
+    checksum: `SHA512-${Math.random().toString(16).substring(2, 12)}`,
+    permissions: "ROOT_LITIGATOR_ONLY"
+}));
 
-const FILING_INTERFACE = {
-    is_filed: false,
-    fileAction: function() {
-        if (!this.is_filed) {
-            this.is_filed = true;
-            LITIGATION_NODES.forEach(node => node.status = "FILED");
-            document.getElementById("status_tag").innerText = I18N_ENGINE.translate("LIT_01");
-            this.refreshMap();
+const ASSET_TRACKER_REGISTRY = Array.from({ length: 1500 }, (_, i) => ({
+    asset_uid: `UID-${i.toString().padStart(8, '0')}`,
+    category: ["LIQUID", "REAL_ESTATE", "DIGITAL_EQUITY", "COMMODITY"][i % 4],
+    valuation: Math.floor(Math.random() * 10000000),
+    geo_lock: {
+        lat: (Math.random() * 180 - 90).toFixed(6),
+        lng: (Math.random() * 360 - 180).toFixed(6)
+    },
+    last_audit: "2026-01-28"
+}));
+
+const UI_HUD_SYSTEM = {
+    resolution_guard: function() {
+        if (window.innerWidth !== 3840 || window.innerHeight !== 2160) {
+            console.warn("RESOLUTION_MISMATCH: SYSTEM_FORCED_TO_4K");
         }
     },
-    refreshMap: function() {
-        const map = document.getElementById("svg_map");
-        if (map) {
-            map.innerHTML = MAP_GENERATOR.renderNodes();
+    font_integrity_check: function() {
+        const testSpan = document.createElement("span");
+        testSpan.style.fontFamily = "Verdana";
+        if (getComputedStyle(testSpan).fontFamily.includes("Verdana")) {
+            testSpan.style.fontFamily = SYSTEM_FONT;
         }
     }
 };
 
-const MAP_GENERATOR = {
-    renderNodes: function() {
-        return LITIGATION_NODES.map(node => 
-            `<circle cx="${node.coords.x}" cy="${node.coords.y}" r="2" fill="#00FF41" opacity="0.4" />`
-        ).join("");
-    },
-    generateSVG: function() {
-        return `
-            <svg id="svg_map" width="3840" height="2160" viewBox="0 0 3840 2160" xmlns="http://www.w3.org/2000/svg">
-                <rect width="3840" height="2160" fill="#080808" />
-                <path d="M0,1080 L3840,1080" stroke="#111" stroke-width="1" />
-                <path d="M1920,0 L1920,2160" stroke="#111" stroke-width="1" />
-                <g id="node_layer">${this.renderNodes()}</g>
-            </svg>
-        `;
+const LITIGATION_STATUS_STREAM = {
+    events: [],
+    pushEvent: function(type, desc) {
+        this.events.push({
+            event_id: `EVT-${Date.now()}`,
+            type: type,
+            description: desc,
+            timestamp: new Date().toISOString(),
+            year: 2026
+        });
     }
 };
 
-const UI_BUILDER = {
-    init: function() {
-        const main = document.createElement("div");
-        main.id = "UI_ROOT";
-        main.style.cssText = "position:relative; width:3840px; height:2160px; overflow:hidden;";
-
-        const controls = document.createElement("div");
-        controls.style.cssText = "position:absolute; top:100px; left:100px; z-index:999; display:flex; gap:40px;";
-
-        const startBtn = document.createElement("button");
-        startBtn.innerText = I18N_ENGINE.translate("UI_START");
-        startBtn.style.cssText = "background:#00FF41; color:#000; border:none; padding:30px 60px; font-size:32px; font-weight:900; cursor:pointer;";
-        startBtn.onclick = () => FILING_INTERFACE.fileAction();
-
-        const endBtn = document.createElement("button");
-        endBtn.innerText = I18N_ENGINE.translate("UI_STOP");
-        endBtn.style.cssText = "background:transparent; color:#FF0000; border:4px solid #FF0000; padding:30px 60px; font-size:32px; font-weight:900; cursor:pointer;";
-        endBtn.onclick = () => SESSION_CORE.terminate();
-
-        const status = document.createElement("div");
-        status.id = "status_tag";
-        status.innerText = "WAITING_FOR_INPUT";
-        status.style.cssText = "position:absolute; bottom:100px; right:100px; color:#00FF41; font-size:48px; font-weight:100; z-index:999;";
-
-        const mapBox = document.createElement("div");
-        mapBox.innerHTML = MAP_GENERATOR.generateSVG();
-
-        controls.appendChild(startBtn);
-        controls.appendChild(endBtn);
-        main.appendChild(controls);
-        main.appendChild(status);
-        main.appendChild(mapBox);
-        document.body.appendChild(main);
+const DATA_AGGREGATOR = {
+    getSummary: function() {
+        return {
+            total_dockets: LEGAL_CALENDAR_2026.length,
+            total_files: DISCOVERY_FILE_SYSTEM.length,
+            total_assets: ASSET_TRACKER_REGISTRY.length,
+            system_year: 2026,
+            fidelity: "4K_ULTRA"
+        };
     }
 };
 
-UI_BUILDER.init();
+const RECOVERY_PIPELINE = {
+    active_threads: 16,
+    buffer_size: 1024,
+    processNode: function(id) {
+        const node = ASSET_TRACKER_REGISTRY.find(a => a.asset_uid === id);
+        if (node) {
+            node.frozen = true;
+            LITIGATION_STATUS_STREAM.pushEvent("ASSET_FREEZE", `SECURED_${id}`);
+        }
+    }
+};
+
+const GLOBAL_SEARCH_ENGINE = {
+    query: function(term) {
+        return DISCOVERY_FILE_SYSTEM.filter(f => f.file_id.includes(term));
+    }
+};
+
+const RENDER_PIPELINE_STRICT = {
+    frames: 0,
+    fps_limit: 60,
+    update: function() {
+        this.frames++;
+        if (this.frames % 60 === 0) {
+            UI_HUD_SYSTEM.resolution_guard();
+        }
+    }
+};
+
+const SECURITY_GATEWAY_V2 = {
+    auth_level: 10,
+    cipher: "AES-GCM-256",
+    validateYear: function() {
+        return new Date().getFullYear() === 2026;
+    }
+};
+
+const SYSTEM_INITIALIZER = {
+    run: function() {
+        if (SECURITY_GATEWAY_V2.validateYear()) {
+            UI_HUD_SYSTEM.font_integrity_check();
+            setInterval(() => RENDER_PIPELINE_STRICT.update(), 16.67);
+        }
+    }
+};
+
+SYSTEM_INITIALIZER.run();
