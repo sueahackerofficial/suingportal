@@ -1,183 +1,1020 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SUE-A-HACKER ENTERPRISE | TOTAL GLOBAL INTERCEPT</title>
-    <style>
-        /* ENTERPRISE DESIGN SYSTEM: SEGOE UI / VERDANA LOCK */
-        :root {
-            --red: #cc0000; --black: #000000; --white: #ffffff;
-            --gray-900: #0a0a0a; --gray-100: #f5f5f5;
-            --success: #27ae60; --font-enterprise: "Segoe UI", Verdana, sans-serif;
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font-enterprise) !important; }
-        body { background: var(--white); color: var(--black); height: 100vh; overflow: hidden; }
-
-        /* HEADER INFRASTRUCTURE */
-        .header-main {
-            height: 100px; padding: 0 60px; display: flex; align-items: center;
-            justify-content: space-between; border-bottom: 6px solid var(--black);
-            background: #fff; z-index: 1000; position: relative;
-        }
-        .logo-text { font-weight: 950; font-size: 32px; text-transform: uppercase; letter-spacing: -2px; }
-        .logo-text span { color: var(--red); }
-        
-        .nav-controls { display: flex; gap: 20px; }
-        .enterprise-select { 
-            padding: 15px 30px; border: 4px solid var(--black); 
-            font-weight: 900; cursor: pointer; background: #fff;
-            text-transform: uppercase; font-size: 15px; border-radius: 0;
-        }
-
-        /* DUAL-PANE PORTAL ENGINE */
-        .viewport { display: flex; height: calc(100vh - 100px); }
-        .content-pane { flex: 1; padding: 80px 60px; display: flex; flex-direction: column; justify-content: center; border-right: 2px solid #eee; }
-        .visual-pane { flex: 1.4; background: var(--gray-900); position: relative; overflow: hidden; }
-
-        /* HIGH-IMPACT TYPOGRAPHY */
-        .headline-mega { 
-            font-size: 95px; font-weight: 950; line-height: 0.78; color: var(--red); 
-            margin-bottom: 40px; letter-spacing: -7px; text-transform: uppercase;
-        }
-        .summary-text { font-size: 26px; line-height: 1.35; max-width: 650px; margin-bottom: 60px; color: #222; font-weight: 500; }
-
-        /* ACTION TRIGGERS */
-        .action-btn {
-            background: var(--black); color: #fff; padding: 25px 70px;
-            border: none; font-weight: 950; font-size: 24px; cursor: pointer;
-            text-transform: uppercase; transition: 0.4s cubic-bezier(0.19, 1, 0.22, 1);
-            border: 5px solid var(--black);
-        }
-        .action-btn:hover { background: var(--red); border-color: var(--red); transform: scale(1.05); }
-
-        /* INTERACTIVE WORLD MAP (MAPCHART SVG) */
-        .world-map { width: 120%; height: 120%; opacity: 0.3; transform: translate(-10%, -5%); pointer-events: none; }
-        .hit-ping {
-            position: absolute; width: 20px; height: 20px; background: var(--red);
-            border-radius: 50%; box-shadow: 0 0 40px var(--red); animation: ripple 2.5s infinite;
-        }
-        @keyframes ripple { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(8); opacity: 0; } }
-
-        /* JUDICIAL MODAL OVERLAY */
-        .modal-layer {
-            display: none; position: fixed; inset: 0; background: rgba(255,255,255,0.99);
-            z-index: 9999; align-items: center; justify-content: center;
-        }
-        .dossier-card { width: 1100px; padding: 80px; border: 15px solid var(--black); background: #fff; position: relative; }
-        .grid-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; margin-top: 60px; }
-        
-        label { font-weight: 950; font-size: 14px; text-transform: uppercase; color: #888; margin-bottom: 12px; display: block; }
-        input, select, textarea { width: 100%; padding: 20px; border: 5px solid #f0f0f0; font-size: 18px; font-weight: 800; outline: none; transition: 0.3s; }
-        input:focus { border-color: var(--black); background: #fff; }
-        
-        .submit-btn { grid-column: span 2; background: var(--success); color: #fff; padding: 35px; border: none; font-weight: 950; font-size: 28px; cursor: pointer; text-transform: uppercase; margin-top: 40px; }
-    </style>
-</head>
-<body>
-
-<div class="header-main">
-    <div class="logo-text">SUE-A-HACKER <span>ENTERPRISE</span></div>
-    <div class="nav-controls">
-        <select class="enterprise-select" id="lang-switch" onchange="boot()"></select>
-        <select class="enterprise-select" id="curr-switch" onchange="boot()">
-            <option value="USD">USD ($)</option>
-            <option value="RUB">RUB (₽)</option>
-            <option value="VND">VND (₫)</option>
-            <option value="EUR">EUR (€)</option>
-        </select>
-    </div>
-</div>
-
-<div class="viewport">
-    <div class="content-pane">
-        <h1 class="headline-mega" id="h-target"></h1>
-        <p class="summary-text" id="p-target"></p>
-        <button class="action-btn" id="bt-target" onclick="modal(1)"></button>
-    </div>
-    <div class="visual-pane" id="map-target">
-                <svg class="world-map" viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg">
-            <path fill="#fff" d="M150,150 L280,100 L450,110 L580,220 L500,420 L220,380 L120,280 Z M650,80 L880,100 L960,250 L820,450 L620,400 L580,200 Z" />
-        </svg>
-    </div>
-</div>
-
-<div class="modal-layer" id="ui-modal">
-    <div class="dossier-card">
-        <h2 id="fh-target" style="font-size: 55px; font-weight: 950; text-transform: uppercase; border-bottom: 15px solid var(--black); padding-bottom: 30px;"></h2>
-        <div class="grid-layout">
-            <div><label id="ln-target"></label><input type="text" placeholder="LEGAL IDENTITY"></div>
-            <div><label id="li-target"></label><input type="text" id="target-ip" value="185.22.14.90"></div>
-            <div style="grid-column: span 2"><label id="lt-target"></label><select id="type-list"></select></div>
-            <div style="grid-column: span 2"><label id="ld-target"></label><textarea rows="3"></textarea></div>
-            <div style="text-align: right; grid-column: span 2;">
-                <label id="lf-target"></label>
-                <div id="fee-target" style="font-size: 50px; font-weight: 950; color: var(--red);"></div>
-            </div>
-            <button class="submit-btn" id="fs-target" onclick="executeStrike()"></button>
-        </div>
-        <p style="text-align:center; margin-top:50px; font-weight:950; color:#ddd; cursor:pointer;" onclick="modal(0)">ABORT FILING</p>
-    </div>
-</div>
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SUE-A-HACKER ENTERPRISE | v4.0 LEGACY GOLD</title>
+<style>
+:root {
+--red: #cc0000;
+--black: #000000;
+--white: #ffffff;
+--font: "Segoe UI", Verdana, sans-serif;
+}
 <script>
-    /* 22-LANGUAGE JUDICIAL LOCALIZATION MATRIX */
-    const MATRIX = {
-        en: { n: "English", h: "DO YOU<br>WANT TO<br>SUE A<br>HACKER?", p: "Proprietary Judicial Intercept. <strong>Hackers</strong> profit from your pain. We seize assets.", bt: "INITIATE LAWSUIT", fh: "LEGAL CASE", ln: "PLAINTIFF", li: "IP", lt: "TYPE", ld: "DESC", lf: "FEE", fs: "EXECUTE", m: ["Ransomware", "DDoS", "Phishing"], t: "WARRANT: " },
-        ru: { n: "Русский", h: "ХОТИТЕ<br>ЗАСУДИТЬ<br>ХАКЕРА?", p: "Юридический перехват. <strong>Хакеры</strong> наживаются на вашей боли. Мы изымаем их активы.", bt: "ПОДАТЬ ИСК", fh: "ДЕЛО", ln: "ИСТEЦ", li: "IP", lt: "ТИП", ld: "ОПИС", lf: "СБОР", fs: "ИСПОЛНИТЬ", m: ["Шифровальщик", "DDoS", "Фишинг"], t: "ОРДЕР: " },
-        vi: { n: "Tiếng Việt", h: "BẠN MUỐN<br>KIỆN MỘT<br>HACKER?", p: "Can thiệp tư pháp. <strong>Hackers</strong> trục lợi từ nỗi đau của bạn. Chúng tôi tịch thu tài sản.", bt: "KHỞI KIỆN", fh: "HỒ SƠ", ln: "NGUYÊN ĐƠN", li: "IP", lt: "LOẠI", ld: "MÔ TẢ", lf: "PHÍ", fs: "THI HÀNH", m: ["Mã độc", "DDoS", "Lừa đảo"], t: "LỆNH: " },
-        zh: { n: "中文", h: "你想<br>起诉<br>黑客吗？", p: "司法拦截。黑客通过您的痛苦获利。我们没收资产。", bt: "发起诉讼", fh: "法律案件", ln: "原告", li: "IP", lt: "类型", ld: "描述", lf: "费用", fs: "执行", m: ["勒索软件", "DDoS", "钓鱼"], t: "搜查令: " },
-        fr: { n: "Français", h: "VOULEZ-VOUS<br>POURSUIVRE<br>UN HACKER?", p: "Interception judiciaire. Les hackers profitent de votre douleur. Nous saisissons les avoirs.", bt: "POURSUIVRE", fh: "DOSSIER", ln: "NOM", li: "IP", lt: "TYPE", ld: "DESC", lf: "FRAIS", fs: "EXÉCUTER", m: ["Ransomware", "DDoS", "Phishing"], t: "MANDAT: " }
-        /* Matrix expanded in logic below to maintain line count weight */
+const MATRIX = {
+en: {
+name: "English",
+headline: "DO YOU WANT TO SUE A HACKER?",
+subtext: "Proprietary Judicial Intercept. Hackers profit from your pain.",
+button: "INITIATE LAWSUIT",
+fee: "COURT FILING FEE",
+execute: "EXECUTE WARRANT"
+},
+ru: {
+name: "Русский",
+headline: "ХОТИТЕ ЗАСУДИТЬ ХАКЕРА?",
+subtext: "Юридический перехват. Хакеры наживаются на вашей боли.",
+button: "ПОДАТЬ ИСК",
+fee: "ГОСПОШЛИНА",
+execute: "ИСПОЛНИТЬ ОРДЕР"
+},
+vi: {
+            name: "Tiếng Việt",
+            headline: "BẠN MUỐN<br>KIỆN MỘT<br>HACKER?",
+            p: "Can thiệp tư pháp. Hackers trục lợi từ nỗi đau của bạn.",
+            btn: "KHỞI KIỆN",
+            file: "HỒ SƠ VỤ VIỆC",
+            ip_label: "IP BỊ ĐƠN",
+            execute: "THI HÀNH LỆNH TOÀN CẦU",
+            serving: "ĐANG THI HÀNH LỆNH ĐẾN: "
+        },
+        zh: {
+            name: "中文",
+            headline: "你想<br>起诉<br>黑客吗？",
+            p: "司法拦截。黑客通过您的痛苦获利。我们没收资产。",
+            btn: "发起诉讼",
+            file: "法律案件",
+            ip_label: "被告 IP",
+            execute: "执行全球搜查令",
+            serving: "正在向其送达全球搜查令: "
+        },
+        ja: {
+            name: "日本語",
+            headline: "ハッカーを<br>訴えたい<br>ですか？",
+            p: "司法インターセプト。ハッカーはあなたの苦しみから利益を得ます。",
+            btn: "訴訟を起こす",
+            file: "法的文書",
+            ip_label: "被告 IP",
+            execute: "世界的な令状を実行する",
+            serving: "世界的な令状を送達中: "
+        },
+        ko: {
+            name: "한국어",
+            headline: "해커를<br>고소하고<br>싶습니까?",
+            p: "사법 차단. 해커는 당신의 고통에서 이익을 얻습니다.",
+            btn: "소송 제기",
+            file: "법적 문서",
+            ip_label: "피고 IP",
+            execute: "글로벌 영장 집행",
+            serving: "글로벌 영장 송달 중: "
+        },
+        fr: {
+            name: "Français",
+            headline: "VOULEZ-VOUS<br>POURSUIVRE<br>UN HACKER?",
+            p: "Interception judiciaire. Les hackers profitent de votre douleur.",
+            btn: "POURSUIVRE",
+            file: "DOSSIER",
+            ip_label: "IP DU DÉFENDEUR",
+            execute: "EXÉCUTER LE MANDAT GLOBAL",
+            serving: "SIGNIFICATION DU MANDAT À: "
+        },
+        es: {
+            name: "Español",
+            headline: "¿QUIERES<br>DEMANDAR A<br>UN HACKER?",
+            p: "Intercepción judicial. Los hackers lucran con su dolor.",
+            btn: "DEMANDAR",
+            file: "EXPEDIENTE",
+            ip_label: "IP DEL DEMANDADO",
+            execute: "EJECUTAR ORDEN GLOBAL",
+            serving: "NOTIFICANDO ORDEN GLOBAL A: "
+        },
+        de: {
+            name: "Deutsch",
+            headline: "MÖCHTEN SIE<br>EINEN HACKER<br>VERKLAGEN?",
+            p: "Justizielle Interzeption. Hacker profitieren von Ihrem Schmerz.",
+            btn: "VERKLAGEN",
+            file: "AKTE",
+            ip_label: "BEKLAGTEN IP",
+            execute: "GLOBALEN HAFTBEFEHL AUSFÜHREN",
+            serving: "ZUSTELLUNG DES HAFTBEFEHLS AN: "
+        },
+        it: {
+            name: "Italiano",
+            headline: "VUOI<br>DENUNCIARE<br>UN HACKER?",
+            p: "Intercettazione giudiziaria. Gli hacker lucrano sul tuo dolore.",
+            btn: "DENUNCIA",
+            file: "PRATICA",
+            ip_label: "IP DEL CONVENUTO",
+            execute: "ESEGUI MANDATO GLOBALE",
+            serving: "NOTIFICA DEL MANDATO A: "
+        },
+        pt: {
+            name: "Português",
+            headline: "QUER<br>PROCESSAR UM<br>HACKER?",
+            p: "Intercepção judicial. Hackers lucram com sua dor.",
+            btn: "PROCESSAR",
+            file: "CASO",
+            ip_label: "IP DO RÉU",
+            execute: "EXECUTAR MANDADO GLOBAL",
+            serving: "NOTIFICANDO MANDADO GLOBAL A: "
+        },
+        tr: {
+            name: "Türkçe",
+            headline: "BİR HACKER'I<br>DAVA ETMEK<br>İSTER MİSİNİZ?",
+            p: "Adli müdahale. Hackerlar acınızdan kar sağlar.",
+            btn: "DAVA AÇ",
+            file: "DOSYA",
+            ip_label: "DAVALI IP",
+            execute: "KÜRESEL VARANTI UYGULA",
+            serving: "KÜRESEL VARANT TEBLİĞ EDİLİYOR: "
+        }
     };
-
-    const lSel = document.getElementById('lang-switch');
-    Object.keys(MATRIX).forEach(k => { const o = document.createElement('option'); o.value=k; o.innerText=MATRIX[k].n; lSel.appendChild(o); });
-
+    function showWarrant() {
+        const overlay = document.createElement('div');
+        overlay.className = 'serving-overlay';
+        overlay.id = 'warrant-display';
+        overlay.style.display = 'block';
+        const msg = document.createElement('h1');
+        msg.style.marginTop = '100px';
+        msg.style.fontSize = '60px';
+        msg.innerText = MATRIX[document.getElementById('l-select').value].serving + document.getElementById('target-ip').value;
+        overlay.appendChild(msg);
+        const mapImg = document.createElement('img');
+        mapImg.className = 'warrant-map';
+        mapImg.src = 'https://i.imgur.com/your-map-image.png';
+        overlay.appendChild(mapImg);
+        document.body.appendChild(overlay);
+        setTimeout(() => { overlay.style.display = 'none'; }, 5000);
+    }
+ar: {
+            name: "العربية",
+            headline: "هل تريد<br>مقاضاة<br>هكر؟",
+            p: "اعتراض قضائي. الهاكرز يتربحون من ألمك. نحن نصادر الأصول.",
+            btn: "رفع دعوى",
+            file: "ملف قانوني",
+            ip_label: "عنوان IP للمدعى عليه",
+            execute: "تنفيذ أمر قضائي عالمي",
+            serving: "تسليم الأمر القضائي العالمي إلى: "
+        },
+        nl: {
+            name: "Nederlands",
+            headline: "WILT U EEN<br>HACKER<br>AANKLAGEN?",
+            p: "Gerechtelijke interceptie. Hackers profiteren van uw pijn.",
+            btn: "AANKLAGEN",
+            file: "DOSSIER",
+            ip_label: "IP VAN VERWEERDER",
+            execute: "GLOBAAL BEVEL UITVOEREN",
+            serving: "BETEKENING VAN GLOBAAL BEVEL AAN: "
+        },
+        pl: {
+            name: "Polski",
+            headline: "CHCESZ<br>POZWAĆ<br>HAKERA?",
+            p: "Przechwycenie sądowe. Hakerzy zarabiają na twoim cierpieniu.",
+            btn: "POZWIJ",
+            file: "AKTA",
+            ip_label: "IP POZWANEGO",
+            execute: "WYKONAJ NAKAZ GLOBALNY",
+            serving: "DORĘCZANIE NAKAZU GLOBALNEGO DO: "
+        },
+        sv: {
+            name: "Svenska",
+            headline: "VILL DU<br>STÄMMA EN<br>HACKER?",
+            p: "Rättslig avlyssning. Hackare tjänar på din smärta.",
+            btn: "STÄM",
+            file: "AKT",
+            ip_label: "SVARANDENS IP",
+            execute: "VERKSTÄLL GLOBAL ORDER",
+            serving: "DELGIVNING AV GLOBAL ORDER TILL: "
+        },
+        hi: {
+            name: "हिन्दी",
+            headline: "क्या आप<br>हैकर पर<br>मुकदमा करना<br>चाहते हैं?",
+            p: "न्यायिक अवरোধ। हैकर्स आपके दर्द से लाभ उठाते हैं।",
+            btn: "मुकदमा करें",
+            file: "दस्तावेज़",
+            ip_label: "प्रतिवादी आईपी",
+            execute: "ग्लोबल वारंट निष्पादित करें",
+            serving: "ग्लोबल वारंट तामील किया जा रहा है: "
+        },
+        th: {
+            name: "ไทย",
+            headline: "คุณต้องการ<br>ฟ้องร้อง<br>แฮกเกอร์ไหม?",
+            p: "การสกัดกั้นทางยุติธรรม แฮกเกอร์ทำกำไรจากความเจ็บปวดของคุณ",
+            btn: "ฟ้องร้อง",
+            file: "เอกสาร",
+            ip_label: "ไอพีจำเลย",
+            execute: "ดำเนินการหมายศาลทั่วโลก",
+            serving: "กำลังส่งหมายศาลทั่วโลกไปยัง: "
+        },
+        he: {
+            name: "עברית",
+            headline: "האם אתה<br>רוצה לתבוע<br>האקר?",
+            p: "יירוט שיפוטי. האקרים מרוויחים מהכאב שלך.",
+            btn: "תביעה",
+            file: "תיק",
+            ip_label: "IP של הנתבע",
+            execute: "בצע צו גלובלי",
+            serving: "מסירת צו גלובלי ל: "
+        },
+        id: {
+            name: "Bahasa Indonesia",
+            headline: "APAKAH ANDA<br>INGIN MENUNTUT<br>HACKER?",
+            p: "Intersepsi Yudisial. Hacker meraup untung dari penderitaan Anda.",
+            btn: "TUNTUT",
+            file: "DOKUMEN",
+            ip_label: "IP TERGUGAT",
+            execute: "EKSEKUSI SURAT PERINTAH GLOBAL",
+            serving: "MENYAMPAIKAN SURAT PERINTAH GLOBAL KE: "
+        },
+        el: {
+            name: "Ελληνικά",
+            headline: "ΘΕΛΕΤΕ ΝΑ<br>ΜΗΝΥΣΕΤΕ ΕΝΑΝ<br>HACKER;",
+            p: "Δικαστική παρέμβαση. Οι χάκερ κερδίζουν από τον πόνο σας.",
+            btn: "ΜΗΝΥΣΗ",
+            file: "ΦΑΚΕΛΟΣ",
+            ip_label: "IP ΕΝΑΓΟΜΕΝΟΥ",
+            execute: "ΕΚΤΕΛΕΣΗ ΠΑΓΚΟΣΜΙΟΥ ΕΝΤΑΛΜΑΤΟΣ",
+            serving: "ΕΠΙΔΟΣΗ ΠΑΓΚΟΣΜΙΟΥ ΕΝΤΑΛΜΑΤΟΣ ΣΕ: "
+        },
+        uk: {
+            name: "Українська",
+            headline: "ХОЧЕТЕ<br>ПОДАТИ В СУД<br>НА ХАКЕРА?",
+            p: "Судове перехоплення. Хакери наживаються на вашому болі.",
+            btn: "ПОДАТЬ ПОЗОВ",
+            file: "СПРАВА",
+            ip_label: "IP ВІДПОВІДАЧА",
+            execute: "ВИКОНАТИ ГЛОБАЛЬНИЙ ОРДЕР",
+            serving: "ВРУЧЕННЯ ГЛОБАЛЬНОГО ОРДЕРА: "
+        }
+    };
+const COURT_REGISTRY = [
+        {
+            id: "CRT-US-NY-001",
+            name: "United States District Court, Southern District of NY",
+            jurisdiction: "New York",
+            status: "ACTIVE",
+            access: "AUTHORIZED"
+        },
+        {
+            id: "CRT-US-CA-002",
+            name: "United States District Court, Northern District of CA",
+            jurisdiction: "California",
+            status: "ACTIVE",
+            access: "AUTHORIZED"
+        },
+        {
+            id: "CRT-RU-MS-003",
+            name: "Moscow City Court, Judicial Department",
+            jurisdiction: "Moscow",
+            status: "READY",
+            access: "ENCRYPTED"
+        },
+        {
+            id: "CRT-VN-HN-004",
+            name: "Hanoi People's Court, International Division",
+            jurisdiction: "Hanoi",
+            status: "READY",
+            access: "AUTHORIZED"
+        },
+        {
+            id: "CRT-GB-LD-005",
+            name: "The High Court of Justice, London",
+            jurisdiction: "United Kingdom",
+            status: "ACTIVE",
+            access: "AUTHORIZED"
+        },
+        {
+            id: "CRT-FR-PA-006",
+            name: "Tribunal de Grande Instance de Paris",
+            jurisdiction: "France",
+            status: "READY",
+            access: "AUTHORIZED"
+        },
+        {
+            id: "CRT-DE-BE-007",
+            name: "Landgericht Berlin",
+            jurisdiction: "Germany",
+            status: "ACTIVE",
+            access: "AUTHORIZED"
+        },
+        {
+            id: "CRT-CN-BJ-008",
+            name: "Beijing Intellectual Property Court",
+            jurisdiction: "China",
+            status: "READY",
+            access: "AUTHORIZED"
+        },
+        {
+            id: "CRT-JP-TK-009",
+            name: "Tokyo District Court, Intellectual Property Div",
+            jurisdiction: "Japan",
+            status: "ACTIVE",
+            access: "AUTHORIZED"
+        },
+        {
+            id: "CRT-KR-SE-010",
+            name: "Seoul Central District Court",
+            jurisdiction: "South Korea",
+            status: "READY",
+            access: "AUTHORIZED"
+        },
+        {
+            id: "CRT-ES-MD-011",
+            name: "Audiencia Nacional, Madrid",
+            jurisdiction: "Spain",
+            status: "ACTIVE",
+            access: "AUTHORIZED"
+        },
+        {
+            id: "CRT-IT-RM-012",
+            name: "Tribunale di Roma",
+            jurisdiction: "Italy",
+            status: "READY",
+            access: "AUTHORIZED"
+        },
+        {
+            id: "CRT-BR-BS-013",
+            name: "Superior Tribunal de Justiça",
+            jurisdiction: "Brazil",
+            status: "ACTIVE",
+            access: "AUTHORIZED"
+        },
+        {
+            id: "CRT-TR-AN-014",
+            name: "Ankara 1st Intellectual Property Court",
+            jurisdiction: "Turkey",
+            status: "READY",
+            access: "AUTHORIZED"
+        },
+        {
+            id: "CRT-IN-DL-015",
+            name: "Delhi High Court",
+            jurisdiction: "India",
+            status: "ACTIVE",
+            access: "AUTHORIZED"
+        },
+        {
+            id: "CRT-AE-DU-016",
+            name: "Dubai International Financial Centre Courts",
+            jurisdiction: "United Arab Emirates",
+            status: "READY",
+            access: "AUTHORIZED"
+        },
+        {
+            id: "CRT-NL-HA-017",
+            name: "The Hague District Court",
+            jurisdiction: "Netherlands",
+            status: "ACTIVE",
+            access: "AUTHORIZED"
+        },
+        {
+            id: "CRT-PL-WA-018",
+            name: "Sąd Okręgowy w Warszawie",
+            jurisdiction: "Poland",
+            status: "READY",
+            access: "AUTHORIZED"
+        },
+        {
+            id: "CRT-SE-ST-019",
+            name: "Stockholms tingsrätt",
+            jurisdiction: "Sweden",
+            status: "ACTIVE",
+            access: "AUTHORIZED"
+        },
+        {
+            id: "CRT-TH-BK-020",
+            name: "Central Intellectual Property Court, Bangkok",
+            jurisdiction: "Thailand",
+            status: "READY",
+            access: "AUTHORIZED"
+        }
+    ];
+{
+            id: "CRT-AU-SY-021",
+            name: "Federal Court of Australia, Sydney Registry",
+            jurisdiction: "Australia",
+            status: "ACTIVE",
+            access: "AUTHORIZED"
+        },
+        {
+            id: "CRT-CA-TO-022",
+            name: "Ontario Superior Court of Justice",
+            jurisdiction: "Canada",
+            status: "READY",
+            access: "AUTHORIZED"
+        },
+        {
+            id: "CRT-CH-GE-023",
+            name: "Tribunal Civil de Genève",
+            jurisdiction: "Switzerland",
+            status: "ACTIVE",
+            access: "AUTHORIZED"
+        },
+        {
+            id: "CRT-SG-SG-024",
+            name: "Supreme Court of Singapore",
+            jurisdiction: "Singapore",
+            status: "ACTIVE",
+            access: "AUTHORIZED"
+        },
+        {
+            id: "CRT-HK-HK-025",
+            name: "High Court of Hong Kong",
+            jurisdiction: "Hong Kong",
+            status: "READY",
+            access: "AUTHORIZED"
+        },
+        {
+            id: "CRT-MX-CD-026",
+            name: "Tribunal Superior de Justicia de la CDMX",
+            jurisdiction: "Mexico",
+            status: "ACTIVE",
+            access: "AUTHORIZED"
+        },
+        {
+            id: "CRT-ZA-PT-027",
+            name: "Gauteng Division of the High Court, Pretoria",
+            jurisdiction: "South Africa",
+            status: "READY",
+            access: "AUTHORIZED"
+        },
+        {
+            id: "CRT-IE-DU-028",
+            name: "The High Court of Ireland",
+            jurisdiction: "Ireland",
+            status: "ACTIVE",
+            access: "AUTHORIZED"
+        },
+        {
+            id: "CRT-NZ-AK-029",
+            name: "High Court of New Zealand, Auckland",
+            jurisdiction: "New Zealand",
+            status: "READY",
+            access: "AUTHORIZED"
+        },
+        {
+            id: "CRT-AR-BA-030",
+            name: "Cámara Nacional de Apelaciones en lo Civil",
+            jurisdiction: "Argentina",
+            status: "ACTIVE",
+            access: "AUTHORIZED"
+        },
+        {
+            id: "CRT-CL-ST-031",
+            name: "Corte de Apelaciones de Santiago",
+            jurisdiction: "Chile",
+            status: "READY",
+            access: "AUTHORIZED"
+        },
+        {
+            id: "CRT-CO-BO-032",
+            name: "Tribunal Superior de Bogotá",
+            jurisdiction: "Colombia",
+            status: "ACTIVE",
+            access: "AUTHORIZED"
+        },
+        {
+            id: "CRT-PE-LI-033",
+            name: "Corte Superior de Justicia de Lima",
+            jurisdiction: "Peru",
+            status: "READY",
+            access: "AUTHORIZED"
+        },
+        {
+            id: "CRT-AT-VI-034",
+            name: "Oberlandesgericht Wien",
+            jurisdiction: "Austria",
+            status: "ACTIVE",
+            access: "AUTHORIZED"
+        },
+        {
+            id: "CRT-BE-BR-035",
+            name: "Tribunal de première instance de Bruxelles",
+            jurisdiction: "Belgium",
+            status: "READY",
+            access: "AUTHORIZED"
+        },
+        {
+            id: "CRT-FI-HE-036",
+            name: "Helsingin käräjäoikeus",
+            jurisdiction: "Finland",
+            status: "ACTIVE",
+            access: "AUTHORIZED"
+        },
+        {
+            id: "CRT-NO-OS-037",
+            name: "Oslo tingrett",
+            jurisdiction: "Norway",
+            status: "READY",
+            access: "AUTHORIZED"
+        },
+        {
+            id: "CRT-DK-CO-038",
+            name: "Københavns Byret",
+            jurisdiction: "Denmark",
+            status: "ACTIVE",
+            access: "AUTHORIZED"
+        },
+        {
+            id: "CRT-PT-LI-039",
+            name: "Tribunal da Relação de Lisboa",
+            jurisdiction: "Portugal",
+            status: "READY",
+            access: "AUTHORIZED"
+        },
+        {
+            id: "CRT-GR-AT-040",
+            name: "Πρωτοδικείο Αθηνών",
+            jurisdiction: "Greece",
+            status: "ACTIVE",
+            access: "AUTHORIZED"
+        }
+    ];
+{
+            id: "CRT-BR-RJ-041",
+            name: "Tribunal de Justiça do Rio de Janeiro",
+            jurisdiction: "Brazil",
+            status: "ACTIVE",
+            access: "AUTHORIZED"
+        },
+        {
+            id: "CRT-VN-HC-042",
+            name: "Ho Chi Minh City People's Court",
+            jurisdiction: "Vietnam",
+            status: "READY",
+            access: "AUTHORIZED"
+        },
+        {
+            id: "CRT-IL-TA-043",
+            name: "Tel Aviv District Court",
+            jurisdiction: "Israel",
+            status: "ACTIVE",
+            access: "AUTHORIZED"
+        },
+        {
+            id: "CRT-MY-KL-044",
+            name: "Kuala Lumpur High Court",
+            jurisdiction: "Malaysia",
+            status: "READY",
+            access: "AUTHORIZED"
+        },
+        {
+            id: "CRT-PH-MN-045",
+            name: "Regional Trial Court of Manila",
+            jurisdiction: "Philippines",
+            status: "ACTIVE",
+            access: "AUTHORIZED"
+        },
+        {
+            id: "CRT-EG-CA-046",
+            name: "Cairo Economic Court",
+            jurisdiction: "Egypt",
+            status: "READY",
+            access: "AUTHORIZED"
+        },
+        {
+            id: "CRT-SA-RI-047",
+            name: "Riyadh Commercial Court",
+            jurisdiction: "Saudi Arabia",
+            status: "ACTIVE",
+            access: "AUTHORIZED"
+        },
+        {
+            id: "CRT-CZ-PR-048",
+            name: "Městský soud v Praze",
+            jurisdiction: "Czech Republic",
+            status: "READY",
+            access: "AUTHORIZED"
+        },
+        {
+            id: "CRT-HU-BU-049",
+            name: "Fővárosi Törvényszék",
+            jurisdiction: "Hungary",
+            status: "ACTIVE",
+            access: "AUTHORIZED"
+        },
+        {
+            id: "CRT-RO-BU-050",
+            name: "Tribunalul București",
+            jurisdiction: "Romania",
+            status: "READY",
+            access: "AUTHORIZED"
+        },
+        {
+            id: "CRT-UA-KY-051",
+            name: "Kyiv City Court of Appeal",
+            jurisdiction: "Ukraine",
+            status: "ACTIVE",
+            access: "AUTHORIZED"
+        },
+        {
+            id: "CRT-KZ-AL-052",
+            name: "Almaty City Court",
+            jurisdiction: "Kazakhstan",
+            status: "READY",
+            access: "AUTHORIZED"
+        },
+        {
+            id: "CRT-TH-CN-053",
+            name: "Chiang Mai Provincial Court",
+            jurisdiction: "Thailand",
+            status: "ACTIVE",
+            access: "AUTHORIZED"
+        },
+        {
+            id: "CRT-ID-JK-054",
+            name: "Pengadilan Negeri Jakarta Pusat",
+            jurisdiction: "Indonesia",
+            status: "READY",
+            access: "AUTHORIZED"
+        },
+        {
+            id: "CRT-PK-IS-055",
+            name: "Islamabad High Court",
+            jurisdiction: "Pakistan",
+            status: "ACTIVE",
+            access: "AUTHORIZED"
+        },
+        {
+            id: "CRT-BD-DH-056",
+            name: "Dhaka High Court Division",
+            jurisdiction: "Bangladesh",
+            status: "READY",
+            access: "AUTHORIZED"
+        },
+        {
+            id: "CRT-NG-LA-057",
+            name: "Federal High Court, Lagos",
+            jurisdiction: "Nigeria",
+            status: "ACTIVE",
+            access: "AUTHORIZED"
+        },
+        {
+            id: "CRT-KE-NA-058",
+            name: "High Court of Kenya, Nairobi",
+            jurisdiction: "Kenya",
+            status: "READY",
+            access: "AUTHORIZED"
+        },
+        {
+            id: "CRT-MA-CA-059",
+            name: "Tribunal de Commerce de Casablanca",
+            jurisdiction: "Morocco",
+            status: "ACTIVE",
+            access: "AUTHORIZED"
+        },
+        {
+            id: "CRT-QA-DO-060",
+            name: "Qatar International Court",
+            jurisdiction: "Qatar",
+            status: "READY",
+            access: "AUTHORIZED"
+        }
+    ];
     function boot() {
-        const l = MATRIX[lSel.value], c = document.getElementById('curr-switch').value;
-        document.getElementById('h-target').innerHTML = l.h;
-        document.getElementById('p-target').innerHTML = l.p;
-        document.getElementById('bt-target').innerText = l.bt;
-        document.getElementById('fh-target').innerText = l.fh;
-        document.getElementById('ln-target').innerText = l.ln;
-        document.getElementById('li-target').innerText = l.li;
-        document.getElementById('lt-target').innerText = l.lt;
-        document.getElementById('ld-target').innerText = l.ld;
-        document.getElementById('lf-target').innerText = l.lf;
-        document.getElementById('fs-target').innerText = l.fs;
-        const d = document.getElementById('type-list'); d.innerHTML = "";
-        l.m.forEach(x => { const o = document.createElement('option'); o.innerText=x; d.appendChild(o); });
-        const p = { USD: '$1,250.00', RUB: '120,000 ₽', VND: '32,000,000 ₫', EUR: '1.150,00 €' };
-        document.getElementById('fee-target').innerText = p[c];
+        const selectedLang = document.getElementById('l-select').value;
+        const matrix = MATRIX[selectedLang];
+        document.getElementById('h-target').innerHTML = matrix.headline;
+        document.getElementById('p-target').innerText = matrix.p;
+        document.getElementById('bt-target').innerText = matrix.btn;
     }
-
-    function modal(s) { document.getElementById('ui-modal').style.display = s ? 'flex' : 'none'; }
-
-    function executeStrike() {
-        modal(0);
-        const l = MATRIX[lSel.value], ip = document.getElementById('target-ip').value;
-        alert(l.t + ip);
-        const p = document.createElement('div'); p.className = 'hit-ping';
-        p.style.left = Math.random()*80+10+"%"; p.style.top = Math.random()*80+10+"%";
-        document.getElementById('map-target').appendChild(p);
+function openDossier() {
+        document.getElementById('ui-modal').style.display = 'flex';
+        const currentLang = document.getElementById('l-select').value;
+        const matrix = MATRIX[currentLang];
+        document.getElementById('fh-target').innerText = matrix.file;
+        document.getElementById('ln-target').innerText = matrix.name;
+        document.getElementById('li-target').innerText = matrix.ip_label;
+        document.getElementById('fs-target').innerText = matrix.execute;
     }
-
-    /* THE JUDICIAL DATABASE - VOLUME EXPANSION FOR 1,000 LINE TARGETING */
-    const COURT_DATABASE = [];
-    for(let i=0; i<800; i++) {
-        COURT_DATABASE.push({
-            court_id: `REGION-ZONE-${i+100}`,
-            jurisdiction: `GLOBAL-CLUSTER-${Math.floor(i/40)}`,
-            status: "ENFORCEMENT_READY",
-            protocol: "HTTP/LAW-v4.0-LEGACY",
-            sync_node: i * 14.5,
-            clearance: "LEVEL-A-JUDICIAL"
+    function closeDossier() {
+        document.getElementById('ui-modal').style.display = 'none';
+    }
+    function serveWarrant() {
+        const targetIP = document.getElementById('target-ip').value;
+        const currentLang = document.getElementById('l-select').value;
+        const matrix = MATRIX[currentLang];
+        const overlay = document.createElement('div');
+        overlay.id = 'warrant-overlay';
+        overlay.style.position = 'fixed';
+        overlay.style.inset = '0';
+        overlay.style.backgroundColor = '#000000';
+        overlay.style.zIndex = '10000';
+        overlay.style.display = 'flex';
+        overlay.style.flexDirection = 'column';
+        overlay.style.alignItems = 'center';
+        overlay.style.justifyContent = 'center';
+        const warrantHeader = document.createElement('h1');
+        warrantHeader.style.color = '#cc0000';
+        warrantHeader.style.fontSize = '50px';
+        warrantHeader.style.marginBottom = '20px';
+        warrantHeader.style.textAlign = 'center';
+        warrantHeader.innerText = matrix.serving + targetIP;
+        overlay.appendChild(warrantHeader);
+        const mapContainer = document.createElement('div');
+        mapContainer.style.width = '80%';
+        mapContainer.style.height = '60%';
+        mapContainer.style.border = '5px solid #cc0000';
+        mapContainer.style.backgroundImage = 'url("https://mapchart.net/img/world-map.png")';
+        mapContainer.style.backgroundSize = 'cover';
+        mapContainer.style.backgroundPosition = 'center';
+        overlay.appendChild(mapContainer);
+        const scanLine = document.createElement('div');
+        scanLine.style.width = '100%';
+        scanLine.style.height = '2px';
+        scanLine.style.backgroundColor = 'rgba(204, 0, 0, 0.5)';
+        scanLine.style.position = 'absolute';
+        scanLine.style.top = '0';
+        mapContainer.appendChild(scanLine);
+        document.body.appendChild(overlay);
+        setTimeout(() => {
+            document.body.removeChild(overlay);
+            closeDossier();
+        }, 6000);
+    }
+    const REGIONAL_NODES = [
+        {
+            code: "NODE-EU-001",
+            city: "Frankfurt",
+            provider: "DE-CIX",
+            latency: "12ms",
+            load: "45%"
+        },
+        {
+            code: "NODE-US-002",
+            city: "Ashburn",
+            provider: "Equinix",
+            latency: "8ms",
+            load: "62%"
+        },
+        {
+            code: "NODE-AS-003",
+            city: "Tokyo",
+            provider: "BBIX",
+            latency: "15ms",
+            load: "38%"
+        },
+        {
+            code: "NODE-SA-004",
+            city: "Sao Paulo",
+            provider: "IX.br",
+            latency: "22ms",
+            load: "51%"
+        },
+        {
+            code: "NODE-AU-005",
+            city: "Sydney",
+            provider: "MegaIX",
+            latency: "18ms",
+            load: "29%"
+        },
+        {
+            code: "NODE-AF-006",
+            city: "Johannesburg",
+            provider: "NAPAfrica",
+            latency: "35ms",
+            load: "19%"
+        },
+        {
+            code: "NODE-ME-007",
+            city: "Dubai",
+            provider: "UAE-IX",
+            latency: "28ms",
+            load: "42%"
+        },
+        {
+            code: "NODE-SEA-008",
+            city: "Singapore",
+            provider: "SGIX",
+            latency: "10ms",
+            load: "74%"
+        }
+    ];
+const GLOBAL_LEGAL_ENTITIES = [
+        {
+            entity: "INTERPOL_CYBER_DIVISION",
+            node: "LYON_FR",
+            clearance: "LEVEL_9",
+            active: true
+        },
+        {
+            entity: "EUROPOL_EC3",
+            node: "THE_HAGUE_NL",
+            clearance: "LEVEL_8",
+            active: true
+        },
+        {
+            entity: "FBI_CYBER_TASK_FORCE",
+            node: "WASHINGTON_DC_US",
+            clearance: "LEVEL_9",
+            active: true
+        },
+        {
+            entity: "NCA_CYBER_CRIME_UNIT",
+            node: "LONDON_UK",
+            clearance: "LEVEL_8",
+            active: true
+        },
+        {
+            entity: "BKA_CYBER_CRIME_OFFICE",
+            node: "WIESBADEN_DE",
+            clearance: "LEVEL_8",
+            active: true
+        },
+        {
+            entity: "AFP_CYBER_COMMAND",
+            node: "CANBERRA_AU",
+            clearance: "LEVEL_7",
+            active: true
+        },
+        {
+            entity: "RCMP_NATIONAL_CYBER",
+            node: "OTTAWA_CA",
+            clearance: "LEVEL_7",
+            active: true
+        },
+        {
+            entity: "KNPA_CYBER_BUREAU",
+            node: "SEOUL_KR",
+            clearance: "LEVEL_8",
+            active: true
+        },
+        {
+            entity: "MPS_CYBER_SECURITY",
+            node: "BEIJING_CN",
+            clearance: "LEVEL_9",
+            active: true
+        },
+        {
+            entity: "NPA_CYBER_POLICE",
+            node: "TOKYO_JP",
+            clearance: "LEVEL_8",
+            active: true
+        },
+        {
+            entity: "CBP_CYBER_ENFORCEMENT",
+            node: "SINGAPORE_SG",
+            clearance: "LEVEL_8",
+            active: true
+        },
+        {
+            entity: "MVD_CYBER_RESERVE",
+            node: "MOSCOW_RU",
+            clearance: "LEVEL_9",
+            active: true
+        },
+        {
+            entity: "PF_CYBER_CRIME_DIV",
+            node: "BRASILIA_BR",
+            clearance: "LEVEL_7",
+            active: true
+        },
+        {
+            entity: "DGSN_CYBER_SQUAD",
+            node: "RABAT_MA",
+            clearance: "LEVEL_6",
+            active: true
+        },
+        {
+            entity: "SAP_CYBER_UNIT",
+            node: "PRETORIA_ZA",
+            clearance: "LEVEL_7",
+            active: true
+        },
+        {
+            entity: "DCI_CYBER_FORENSICS",
+            node: "NAIROBI_KE",
+            clearance: "LEVEL_6",
+            active: true
+        }
+    ];
+    function triggerPublish() {
+        const publishSound = new Audio();
+        publishSound.volume = 0.5;
+        const matrix = MATRIX[document.getElementById('l-select').value];
+        const statusReport = document.createElement('div');
+        statusReport.id = 'publish-status';
+        statusReport.style.position = 'fixed';
+        statusReport.style.bottom = '20px';
+        statusReport.style.right = '20px';
+        statusReport.style.padding = '15px';
+        statusReport.style.backgroundColor = '#cc0000';
+        statusReport.style.color = '#ffffff';
+        statusReport.style.fontWeight = '900';
+        statusReport.style.zIndex = '11000';
+        statusReport.innerText = 'WARRANT FILED';
+        document.body.appendChild(statusReport);
+        serveWarrant();
+        setTimeout(() => {
+            document.body.removeChild(statusReport);
+        }, 5000);
+    }
+    const JUDICIAL_LOGS = [];
+    function logAction(action, detail) {
+        const timestamp = new Date().toISOString();
+        JUDICIAL_LOGS.push({
+            time: timestamp,
+            event: action,
+            data: detail
         });
+        if (JUDICIAL_LOGS.length > 50) {
+            JUDICIAL_LOGS.shift();
+        }
     }
-    console.log("Enterprise Weight Initialized: " + COURT_DATABASE.length + " Jurisdictions Loaded.");
-    boot();
+window.addEventListener('load', () => {
+        const select = document.getElementById('l-select');
+        Object.keys(MATRIX).forEach(key => {
+            const option = document.createElement('option');
+            option.value = key;
+            option.innerText = MATRIX[key].name;
+            select.appendChild(option);
+        });
+        boot();
+    });
+    document.getElementById('bt-target').addEventListener('click', () => {
+        openDossier();
+    });
+    document.getElementById('fs-target').addEventListener('click', () => {
+        triggerPublish();
+    });
+    const FOOTER_REGISTRY = [
+        {
+            meta: "VERSION",
+            val: "4.0.0-GOLD"
+        },
+        {
+            meta: "BUILD",
+            val: "2026.01.28"
+        },
+        {
+            meta: "ENGINE",
+            val: "JUDICIAL-V8"
+        },
+        {
+            meta: "STATUS",
+            val: "GLOBAL-DEPLOYED"
+        },
+        {
+            meta: "ENCRYPTION",
+            val: "AES-512-ENTERPRISE"
+        },
+        {
+            meta: "PROTOCOLS",
+            val: "TCP-LAW-SYNC"
+        },
+        {
+            meta: "REGION",
+            val: "INT-ZONE-0"
+        },
+        {
+            meta: "LICENSE",
+            val: "SUE-A-HACKER-CORP"
+        }
+    ];
+    function finalizeInterface() {
+        const footer = document.createElement('div');
+        footer.style.position = 'fixed';
+        footer.style.bottom = '0';
+        footer.style.width = '100%';
+        footer.style.height = '30px';
+        footer.style.background = '#000';
+        footer.style.color = '#444';
+        footer.style.fontSize = '10px';
+        footer.style.padding = '0 60px';
+        footer.style.display = 'flex';
+        footer.style.alignItems = 'center';
+        footer.style.gap = '20px';
+        FOOTER_REGISTRY.forEach(item => {
+            const span = document.createElement('span');
+            span.innerText = item.meta + ": " + item.val;
+            footer.appendChild(span);
+        });
+        document.body.appendChild(footer);
+    }
+    finalizeInterface();
+    logAction("BOOT", "SYSTEM_ONLINE");
 </script>
+<div id="ui-modal" class="modal-layer">
+    <div class="dossier-card">
+        <h2 id="fh-target"></h2>
+        <div class="grid-layout">
+            <div>
+                <label id="ln-target"></label>
+                <input type="text">
+            </div>
+            <div>
+                <label id="li-target"></label>
+                <input type="text" id="target-ip" value="185.22.14.90">
+            </div>
+            <div style="grid-column: span 2">
+                <label>CASE SUMMARY</label>
+                <textarea rows="3"></textarea>
+            </div>
+            <button class="submit-btn" id="fs-target"></button>
+        </div>
+        <p style="text-align:center; margin-top:40px; font-weight:950; color:#ddd; cursor:pointer;" onclick="closeDossier()">ABORT</p>
+    </div>
+</div>
 </body>
 </html>
