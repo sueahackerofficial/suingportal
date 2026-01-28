@@ -3,215 +3,266 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sue-A-Hacker Enterprise | Judicial Operations Portal</title>
+    <title>Sue-A-Hacker Enterprise | v4.0 Legacy</title>
     <style>
-        /* V11.0 ARCHITECTURE: 1000-LINE ENTERPRISE SPEC 
-           FONT LOCK: SEGOE UI (PRIMARY) -> VERDANA (FALLBACK)
-        */
-        :root { 
-            --red: #cc0000; --black: #000; --white: #fff; 
-            --gray-100: #f2f2f2; --gray-200: #ddd; --green: #27ae60; 
-            --font: "Segoe UI", "Verdana", sans-serif;
+        /* V4.0 CORE TYPOGRAPHY: SEGOE UI & VERDANA LOCK */
+        :root {
+            --red: #cc0000;
+            --black: #000000;
+            --white: #ffffff;
+            --ui-gray: #f5f5f5;
+            --font-stack: "Segoe UI", Verdana, Arial, sans-serif;
         }
 
-        * { box-sizing: border-box; font-family: var(--font) !important; -webkit-font-smoothing: antialiased; }
-        body { margin: 0; background: var(--white); color: var(--black); height: 100vh; overflow: hidden; }
-
-        /* HEADER LAYOUT */
-        .top-nav { 
-            position: fixed; top: 0; width: 100%; height: 90px; 
-            display: flex; align-items: center; justify-content: space-between; 
-            padding: 0 60px; background: #fff; border-bottom: 3px solid var(--black); z-index: 5000; 
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body, html {
+            height: 100%;
+            font-family: var(--font-stack) !important;
+            background: var(--white);
+            color: var(--black);
+            overflow: hidden;
         }
-        .branding { font-weight: 900; font-size: 26px; text-transform: uppercase; letter-spacing: -1px; }
-        .branding span { color: var(--red); }
-        .ui-sel { padding: 12px 20px; border: 2px solid var(--black); font-weight: 800; cursor: pointer; background: #fff; }
 
-        /* WORKSPACE */
-        .container { display: flex; height: 100vh; padding-top: 90px; }
-        .hero { flex: 1; padding: 80px 60px; display: flex; flex-direction: column; justify-content: center; }
-        .map-theater { flex: 1.4; background: #050505; position: relative; border-left: 1px solid #222; overflow: hidden; }
+        /* NAVIGATION */
+        .nav {
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 50px;
+            border-bottom: 2px solid var(--black);
+            background: #fff;
+            position: relative;
+            z-index: 10;
+        }
 
-        /* THE TITLES - RESTORING AGGRESSIVE CAPS */
-        .h1 { color: var(--red); font-size: 82px; font-weight: 900; line-height: 0.8; margin: 0; letter-spacing: -5px; text-transform: uppercase; }
-        .p { font-size: 21px; line-height: 1.4; margin: 35px 0; max-width: 550px; color: #333; }
+        .logo { font-weight: 900; font-size: 24px; text-transform: uppercase; }
+        .logo span { color: var(--red); }
 
-        /* MAPCHART.NET FIDELITY SVG */
-        .world-svg { width: 100%; height: 100%; opacity: 0.35; }
-        .ping { position: absolute; width: 12px; height: 12px; background: var(--red); border-radius: 50%; box-shadow: 0 0 20px var(--red); animation: sonar 2s infinite; }
-        @keyframes sonar { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(6); opacity: 0; } }
+        .controls { display: flex; gap: 10px; }
+        .sel {
+            padding: 8px 12px;
+            border: 2px solid var(--black);
+            font-weight: 700;
+            background: #fff;
+            cursor: pointer;
+        }
 
-        /* MODAL & FORM */
-        .modal { display: none; position: fixed; inset: 0; background: rgba(255,255,255,0.98); z-index: 9999; align-items: center; justify-content: center; }
-        .case-file { width: 950px; padding: 60px; border: 5px solid var(--black); max-height: 90vh; overflow-y: auto; }
-        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 30px; }
-        label { font-weight: 900; font-size: 12px; color: #777; text-transform: uppercase; margin-bottom: 8px; display: block; }
-        input, select, textarea { width: 100%; padding: 15px; border: 2px solid var(--gray-200); font-size: 16px; font-weight: 600; }
-        .strike-btn { background: var(--black); color: #fff; border: none; padding: 25px; font-weight: 900; cursor: pointer; font-size: 20px; width: 100%; transition: 0.3s; text-transform: uppercase; }
-        .strike-btn:hover { background: var(--red); }
+        /* LAYOUT: SPLIT SCREEN */
+        .portal { display: flex; height: calc(100vh - 80px); }
 
-        /* NOTIFICATIONS */
-        .toast-bin { position: fixed; bottom: 40px; left: 40px; z-index: 10000; }
-        .toast { background: var(--black); color: #fff; padding: 20px 35px; border-left: 10px solid var(--red); margin-top: 15px; font-weight: 800; animation: slideIn 0.5s cubic-bezier(0.17, 0.67, 0.83, 0.67); }
-        @keyframes slideIn { from { transform: translateX(-120%); } to { transform: translateX(0); } }
+        .left-panel {
+            flex: 1;
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-right: 1px solid #eee;
+        }
+
+        .right-panel {
+            flex: 1.2;
+            background: #0a0a0a;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* TEXT ELEMENTS */
+        .headline {
+            font-size: 72px;
+            font-weight: 900;
+            line-height: 0.85;
+            color: var(--red);
+            text-transform: uppercase;
+            margin-bottom: 25px;
+            letter-spacing: -4px;
+        }
+
+        .description {
+            font-size: 20px;
+            line-height: 1.4;
+            max-width: 500px;
+            margin-bottom: 40px;
+        }
+
+        .btn-action {
+            background: var(--black);
+            color: #fff;
+            padding: 20px 40px;
+            border: none;
+            font-weight: 800;
+            font-size: 18px;
+            text-transform: uppercase;
+            cursor: pointer;
+            width: fit-content;
+            transition: 0.2s;
+        }
+
+        .btn-action:hover { background: var(--red); }
+
+        /* MAPCHART STYLE SVG */
+        .map-svg {
+            width: 100%;
+            height: 100%;
+            opacity: 0.3;
+            transform: scale(1.1);
+        }
+
+        .ping {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: var(--red);
+            border-radius: 50%;
+            box-shadow: 0 0 15px var(--red);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(5); opacity: 0; }
+        }
+
+        /* MODAL OVERLAY */
+        .overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(255,255,255,0.95);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .form-box {
+            width: 800px;
+            background: #fff;
+            padding: 50px;
+            border: 4px solid var(--black);
+        }
+
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 30px; }
+        
+        .field label {
+            display: block;
+            font-weight: 800;
+            font-size: 11px;
+            text-transform: uppercase;
+            color: #888;
+            margin-bottom: 5px;
+        }
+
+        .field input, .field select, .field textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            font-size: 15px;
+        }
+
+        .submit-btn {
+            grid-column: span 2;
+            background: #27ae60;
+            color: #fff;
+            padding: 20px;
+            border: none;
+            font-weight: 900;
+            text-transform: uppercase;
+            cursor: pointer;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
 
-<div class="top-nav">
-    <div class="branding">SUE-A-HACKER <span>ENTERPRISE</span></div>
-    <div>
-        <select class="ui-sel" id="lang-set" onchange="run()"></select>
-        <select class="ui-sel" id="cur-set" onchange="run()">
+<nav class="nav">
+    <div class="logo">SUE-A-HACKER <span>ENTERPRISE</span></div>
+    <div class="controls">
+        <select class="sel" id="l-picker" onchange="updateUI()"></select>
+        <select class="sel" id="c-picker" onchange="updateUI()">
             <option value="USD">USD ($)</option>
             <option value="RUB">RUB (₽)</option>
             <option value="VND">VND (₫)</option>
         </select>
     </div>
-</div>
+</nav>
 
-<div class="container">
-    <div class="hero">
-        <h1 class="h1" id="main-h"></h1>
-        <p class="p" id="main-p"></p>
-        <button class="strike-btn" id="main-bt" onclick="view(1)" style="width:380px"></button>
+<div class="portal">
+    <div class="left-panel">
+        <h1 class="headline" id="h-text"></h1>
+        <p class="description" id="d-text"></p>
+        <button class="btn-action" id="b-text" onclick="modal(1)"></button>
     </div>
-    <div class="map-theater" id="map-box">
-        <svg class="world-svg" viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg">
-            <path fill="#fff" d="M150,150 L180,130 L250,140 L300,180 L280,300 L150,350 Z M500,100 L700,80 L850,150 L900,300 L750,450 L550,420 L480,250 Z M400,350 L450,400 L400,450 L350,400 Z" />
-            <path fill="#fff" opacity="0.4" d="M220,50 L350,40 L400,80 L380,150 L250,120 Z M600,300 L700,280 L750,350 L700,400 L600,380 Z" />
+    <div class="right-panel" id="map-container">
+        <svg class="map-svg" viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg">
+            <path fill="#fff" d="M150,150 L250,100 L350,120 L450,200 L400,350 L250,400 L120,300 Z M550,80 L750,100 L920,180 L880,350 L700,450 L500,400 L520,200 Z" />
+            <path fill="#fff" opacity="0.5" d="M220,220 L280,200 L320,250 L280,320 L200,280 Z M650,250 L750,230 L800,280 L750,350 L650,320 Z" />
         </svg>
     </div>
 </div>
 
-<div class="modal" id="portal">
-    <div class="case-file">
-        <h2 id="f-head" style="font-size:42px; margin:0; border-bottom:8px solid var(--black); padding-bottom:20px;"></h2>
+<div class="overlay" id="modal-view">
+    <div class="form-box">
+        <h2 id="f-head" style="font-size: 32px; font-weight: 900; text-transform: uppercase;"></h2>
         <div class="form-grid">
-            <div><label id="l-name"></label><input type="text" placeholder="FULL LEGAL NAME"></div>
-            <div><label id="l-ip"></label><input type="text" id="ip-val" value="185.22.14.90"></div>
-            <div style="grid-column: span 2"><label id="l-type"></label><select id="type-drop"></select></div>
-            <div style="grid-column: span 2"><label id="l-desc"></label><textarea rows="4"></textarea></div>
-            <div><label id="l-claim"></label><input type="number" value="100000"></div>
-            <div style="text-align:right"><label id="l-fee"></label><div id="cost" style="font-size:36px; font-weight:900; color:var(--red);"></div></div>
+            <div class="field"><label id="l-name"></label><input type="text"></div>
+            <div class="field"><label id="l-ip"></label><input type="text" id="target-ip" value="185.22.14.90"></div>
+            <div class="field" style="grid-column: span 2"><label id="l-type"></label><select id="type-list"></select></div>
+            <div class="field" style="grid-column: span 2"><label id="l-desc"></label><textarea rows="3"></textarea></div>
+            <div class="field" style="text-align: right; grid-column: span 2;">
+                <label id="l-fee"></label>
+                <div id="price-display" style="font-size: 32px; font-weight: 900; color: var(--red);"></div>
+            </div>
+            <button class="submit-btn" id="f-submit" onclick="fire()"></button>
         </div>
-        <button class="strike-btn" id="f-submit" style="background:var(--green); margin-top:40px;" onclick="execute()"></button>
-        <p style="text-align:center; color:#999; cursor:pointer; margin-top:25px; font-weight:900;" onclick="view(0)">CANCEL FILING</p>
+        <p style="text-align: center; margin-top: 20px; font-weight: 800; color: #aaa; cursor: pointer;" onclick="modal(0)">BACK</p>
     </div>
 </div>
 
-<div class="toast-bin" id="t-bin"></div>
-
 <script>
-    /* V11.0 ENTERPRISE DATA DICTIONARY 
-       (Expanding to fulfill 1,000 line requirement with structured data)
-    */
-    const TRANSLATIONS = {
-        en: { 
-            n: "English", 
-            h: "DO YOU<br>WANT TO<br>SUE A<br>HACKER?", 
-            p: "Proprietary Judicial Intercept. <strong>Hackers</strong> profit from your pain. We seize their assets through high-velocity litigation.", 
-            bt: "INITIATE LAWSUIT", 
-            fh: "COURT DOCUMENTATION", 
-            ln: "PLAINTIFF NAME", 
-            li: "DEFENDANT IP", 
-            lt: "VIOLATION TYPE", 
-            ld: "INCIDENT SUMMARY", 
-            lc: "DAMAGES CLAIMED", 
-            lf: "FILING FEE", 
-            fs: "EXECUTE JUDICIAL WARRANT", 
-            m: ["Ransomware (Crypto-Locking)", "DDoS (Network Saturation)", "Phishing (Identity Theft)", "Trojan (RAT Access)", "Zero-Day Exploitation"],
-            toast: "WARRANT SERVED: "
-        },
-        ru: { 
-            n: "Русский", 
-            h: "ХОТИТЕ<br>ЗАСУДИТЬ<br>ХАКЕРА?", 
-            p: "Корпоративный юридический портал. <strong>Хакеры</strong> расстраивают вас. Мы поможем вам нанести ответный удар.", 
-            bt: "ПОДАТЬ ИСК", 
-            fh: "СУДЕБНАЯ ДОКУМЕНТАЦИЯ", 
-            ln: "ИМЯ ИСТЦА", 
-            li: "IP-АДРЕС ОТВЕТЧИКА", 
-            lt: "ТИП НАРУШЕНИЯ", 
-            ld: "ОПИСАНИЕ ИНЦИДЕНТА", 
-            lc: "СУММА УЩЕРБА", 
-            lf: "ГОСПОШЛИНА", 
-            fs: "ИСПОЛНИТЬ ОРДЕР", 
-            m: ["Шифровальщик", "DDoS-атака", "Фишинг", "Троян", "Эксплойт нулевого дня"],
-            toast: "ОРДЕР ИСПОЛНЕН: "
-        },
-        vi: { 
-            n: "Tiếng Việt", 
-            h: "BẠN MUỐN<br>KIỆN MỘT<br>HACKER?", 
-            p: "Sử dụng Enterprise! <strong>Hackers</strong> làm bạn buồn. Chúng tôi đòi lại công bằng thông qua tố tụng tốc độ cao.", 
-            bt: "KHỞI KIỆN NGAY", 
-            fh: "TÀI LIỆU TÒA ÁN", 
-            ln: "TÊN NGUYÊN ĐƠN", 
-            li: "IP BỊ ĐƠN", 
-            lt: "LOẠI VI PHẠM", 
-            ld: "TÓM TẮT VỤ VIỆC", 
-            lc: "SỐ TIỀN YÊU CẦU", 
-            lf: "LỆ PHÍ NỘP ĐƠN", 
-            fs: "THI HÀNH LỆNH TRUY NÃ", 
-            m: ["Mã độc tống tiền", "Tấn công DDoS", "Lừa đảo danh tính", "Mã độc Trojan", "Lỗ hổng Zero-Day"],
-            toast: "ĐÃ THI HÀNH LỆNH: "
-        }
+    const UI_DATA = {
+        en: { n: "English", h: "DO YOU<br>WANT TO<br>SUE A<br>HACKER?", d: "Proprietary Judicial Intercept. <strong>Hackers</strong> profit from your pain. We strike back legally.", bt: "FILE LAWSUIT", fh: "CASE DOCUMENTATION", ln: "Plaintiff Name", li: "Defendant IP", lt: "Violation Type", ld: "Description", lf: "Filing Fee", fs: "EXECUTE WARRANT", m: ["Ransomware", "DDoS", "Spyware"], t: "WARRANT SERVED: " },
+        ru: { n: "Русский", h: "ХОТИТЕ<br>ЗАСУДИТЬ<br>ХАКЕРА?", d: "Корпоративный портал. <strong>Хакеры</strong> расстраивают вас. Мы поможем нанести ответный удар.", bt: "ПОДАТЬ ИСК", fh: "ДОКУМЕНТАЦИЯ", ln: "Имя истца", li: "IP-адрес", lt: "Тип нарушения", ld: "Описание", lf: "Госпошлина", fs: "ИСПОЛНИТЬ ОРДЕР", m: ["Шифровальщик", "DDoS-атака", "Шпион"], t: "ОРДЕР ИСПОЛНЕН: " },
+        vi: { n: "Tiếng Việt", h: "BẠN MUỐN<br>KIỆN MỘT<br>HACKER?", d: "Cổng thông tin tư pháp. <strong>Hackers</strong> làm bạn buồn. Chúng tôi đòi lại công bằng cho bạn.", bt: "KHỞI KIỆN", fh: "HỒ SƠ VỤ VIỆC", ln: "Tên nguyên đơn", li: "Địa chỉ IP", lt: "Loại vi phạm", ld: "Mô tả", lf: "Lệ phí", fs: "THI HÀNH LỆNH", m: ["Mã độc tống tiền", "Tấn công DDoS", "Phần mềm gián điệp"], t: "ĐÃ THI HÀNH LỆNH: " }
     };
 
-    const lSel = document.getElementById('lang-set');
-    Object.keys(TRANSLATIONS).forEach(k => { 
-        const o = document.createElement('option'); o.value=k; o.innerText=TRANSLATIONS[k].n; lSel.appendChild(o); 
+    const lPick = document.getElementById('l-picker');
+    Object.keys(UI_DATA).forEach(k => {
+        const o = document.createElement('option'); o.value = k; o.innerText = UI_DATA[k].n; lPick.appendChild(o);
     });
 
-    function run() {
-        const l = TRANSLATIONS[lSel.value], c = document.getElementById('cur-set').value;
-        document.getElementById('main-h').innerHTML = l.h;
-        document.getElementById('main-p').innerHTML = l.p;
-        document.getElementById('main-bt').innerText = l.bt;
-        document.getElementById('f-head').innerText = l.fh;
-        document.getElementById('l-name').innerText = l.ln;
-        document.getElementById('l-ip').innerText = l.li;
-        document.getElementById('l-type').innerText = l.lt;
-        document.getElementById('l-desc').innerText = l.ld;
-        document.getElementById('l-claim').innerText = l.lc;
-        document.getElementById('l-fee').innerText = l.lf;
-        document.getElementById('f-submit').innerText = l.fs;
-        
-        const d = document.getElementById('type-drop'); d.innerHTML = "";
-        l.m.forEach(x => { const o = document.createElement('option'); o.innerText=x; d.appendChild(o); });
+    function updateUI() {
+        const lang = UI_DATA[lPick.value], curr = document.getElementById('c-picker').value;
+        document.getElementById('h-text').innerHTML = lang.h;
+        document.getElementById('d-text').innerHTML = lang.d;
+        document.getElementById('b-text').innerText = lang.bt;
+        document.getElementById('f-head').innerText = lang.fh;
+        document.getElementById('l-name').innerText = lang.ln;
+        document.getElementById('l-ip').innerText = lang.li;
+        document.getElementById('l-type').innerText = lang.lt;
+        document.getElementById('l-desc').innerText = lang.ld;
+        document.getElementById('l-fee').innerText = lang.lf;
+        document.getElementById('f-submit').innerText = lang.fs;
 
-        const p = { USD: '$850.00', RUB: '79,200 ₽', VND: '21,500,000 ₫' };
-        document.getElementById('cost').innerText = p[c];
+        const prices = { USD: '$450.00', RUB: '42,500 ₽', VND: '11,500,000 ₫' };
+        document.getElementById('price-display').innerText = prices[curr];
+
+        const list = document.getElementById('type-list'); list.innerHTML = "";
+        lang.m.forEach(x => { const o = document.createElement('option'); o.innerText = x; list.appendChild(o); });
     }
 
-    function view(s) { document.getElementById('portal').style.display = s ? 'flex' : 'none'; }
+    function modal(s) { document.getElementById('modal-view').style.display = s ? 'flex' : 'none'; }
 
-    function execute() {
-        view(0);
-        const l = TRANSLATIONS[lSel.value], ip = document.getElementById('ip-val').value;
-        const b = document.getElementById('t-bin');
-        const t = document.createElement('div'); t.className = 'toast';
-        t.innerHTML = `<span>${l.toast}</span> ${ip}`;
-        b.appendChild(t);
-
+    function fire() {
+        modal(0);
+        const lang = UI_DATA[lPick.value], ip = document.getElementById('target-ip').value;
+        alert(lang.t + ip);
         const p = document.createElement('div'); p.className = 'ping';
-        p.style.left = Math.random()*80+10+"%"; p.style.top = Math.random()*70+15+"%";
-        document.getElementById('map-box').appendChild(p);
-
-        setTimeout(() => t.remove(), 6000);
+        p.style.left = Math.random()*80+10+"%"; p.style.top = Math.random()*80+10+"%";
+        document.getElementById('map-container').appendChild(p);
     }
 
-    /* THE DATA EXPANSION BLOCK (LINE 1000 TARGET)
-       Adding structured Judicial Districts & Court Codes to simulated dataset.
-    */
-    const DISTRICTS = [
-        { id: "NY-01", court: "Southern District of NY", status: "Active" },
-        { id: "CA-09", court: "Northern District of CA", status: "Ready" },
-        { id: "MS-01", court: "Moscow Municipal Court", status: "Connected" },
-        { id: "VN-01", court: "Hanoi People's Court", status: "Direct Link" }
-        /* Imagine 200 more rows of district metadata here to reach line 1000 */
-    ];
-
-    run();
+    updateUI();
 </script>
 </body>
 </html>
