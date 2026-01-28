@@ -1,214 +1,84 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SUE-A-HACKER ENTERPRISE | V5.0 GLOBAL LITIGATION</title>
-    <style>
-        @font-face {
-            font-family: 'Segoe UI';
-            src: url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/bold/latest.woff2') format('woff2');
-            font-weight: 700; font-style: normal;
-        }
-        @font-face {
-            font-family: 'Segoe UI';
-            src: url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/italic/latest.woff2') format('woff2');
-            font-weight: 400; font-style: italic;
-        }
-        @font-face {
-            font-family: 'Segoe UI';
-            src: url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/normal/latest.woff2') format('woff2');
-            font-weight: 400; font-style: normal;
-        }
-        @font-face {
-            font-family: 'Segoe UI';
-            src: url('https://c.s-microsoft.com/static/fonts/segoe-ui/cyrillic/bold/latest.woff2') format('woff2');
-            font-weight: 700; font-style: normal; unicode-range: U+0400-04FF;
-        }
-        :root {
-            --accent-red: #cc0000;
-            --main-black: #000000;
-            --off-white: #f5f5f7;
-            --legal-green: #00ff41;
-            --border-gray: #d2d2d7;
-            --ui-font: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
-        }
-        * {
-            font-family: var(--ui-font) !important;
-            box-sizing: border-box; margin: 0; padding: 0;
-            -webkit-font-smoothing: antialiased;
-        }
-        body { background: #ffffff; color: var(--main-black); overflow-x: hidden; min-height: 100vh; display: flex; flex-direction: column; }
-        header { padding: 30px 60px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-gray); background: #fff; z-index: 1000; position: sticky; top: 0; }
-        .logo-container { display: flex; align-items: center; gap: 15px; }
-        .logo-square { width: 44px; height: 44px; background: var(--accent-red); border-radius: 6px; display: flex; justify-content: center; align-items: center; color: white; font-weight: 700; font-size: 26px; }
-        .logo-text { font-weight: 700; font-size: 20px; text-transform: uppercase; letter-spacing: 0.5px; }
-        .lang-nav { display: flex; gap: 15px; font-size: 13px; font-weight: 700; color: #86868b; overflow-x: auto; max-width: 700px; padding: 10px 0; scrollbar-width: none; }
-        .lang-nav span { cursor: pointer; transition: color 0.2s; flex-shrink: 0; }
-        .lang-nav span:hover { color: var(--main-black); }
-        .active-lang { color: var(--main-black); border-bottom: 2px solid var(--main-black); }
-        main { flex: 1; display: grid; grid-template-columns: 1.1fr 0.9fr; padding: 80px; align-items: start; gap: 100px; }
-        .hero-section h1 { font-size: 100px; font-weight: 700; line-height: 0.85; color: var(--accent-red); margin-bottom: 40px; letter-spacing: -5px; text-transform: uppercase; }
-        .hero-section p { font-size: 26px; max-width: 550px; line-height: 1.4; color: #1d1d1f; }
-        .hero-section strong { font-weight: 700; }
-        .hero-section em { font-style: italic; }
-        .filing-card { background: var(--off-white); padding: 60px; border-radius: 40px; border: 1px solid var(--border-gray); box-shadow: 0 50px 100px rgba(0,0,0,0.05); }
-        .form-row { margin-bottom: 30px; }
-        .form-row label { display: block; font-weight: 700; font-size: 11px; color: #6e6e73; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
-        .input-box { width: 100%; padding: 20px; border-radius: 12px; border: 1px solid var(--border-gray); font-size: 16px; background: #fff; transition: border-color 0.3s; }
-        .input-box:focus { outline: none; border-color: var(--main-black); }
-        .submit-trigger { width: 100%; padding: 24px; background: var(--main-black); color: #fff; border: none; border-radius: 16px; font-weight: 700; font-size: 18px; cursor: pointer; transition: transform 0.2s; }
-        .submit-trigger:hover { transform: scale(1.02); }
-        #warrant-stage { display: none; position: fixed; inset: 0; background: #000; z-index: 5000; flex-direction: column; align-items: center; justify-content: center; color: var(--legal-green); }
-        .map-canvas { position: relative; width: 90vw; height: 65vh; background: url('https://www.mapchart.net/img/world-map.png') no-repeat center; background-size: contain; filter: invert(1) brightness(0.5) sepia(1) hue-rotate(100deg); opacity: 0.5; }
-        .ping { position: absolute; width: 30px; height: 30px; border: 2px solid var(--legal-green); border-radius: 50%; animation: pulse-ring 2s infinite; }
-        @keyframes pulse-ring { 0% { transform: scale(0.5); opacity: 1; } 100% { transform: scale(4); opacity: 0; } }
-        .terminal-log { width: 80%; height: 200px; background: rgba(0,0,0,0.8); border-top: 2px solid var(--legal-green); padding: 20px; font-family: 'Courier New', monospace !important; overflow-y: auto; font-size: 14px; line-height: 1.6; }
-        .exit-btn { position: absolute; top: 40px; right: 40px; font-weight: 700; cursor: pointer; border: 1px solid var(--legal-green); padding: 10px 20px; }
-    </style>
-</head>
-<body>
-<header>
-    <div class="logo-container">
-        <div class="logo-square">S</div>
-        <div class="logo-text">Sue-A-Hacker</div>
-    </div>
-    <div class="lang-nav" id="lng-nav"></div>
-</header>
-<main id="app-main">
-    <div class="hero-section">
-        <h1 id="h-q">DO YOU<br>WANT TO<br>SUE A<br>HACKER?</h1>
-        <p id="h-p">Use Sue-A-Hacker Enterprise. <strong>Hackers</strong> can make you feel <em>sad</em>.</p>
-    </div>
-    <div class="filing-card">
-        <div class="form-row"><label id="l-ip">TARGET IP / NODE NAME</label><input id="f-ip" class="input-box" placeholder="255.255.255.255"></div>
-        <div class="form-row"><label id="l-amt">AMOUNT TO SUE FOR (USD)</label><input type="number" id="f-amt" class="input-box" placeholder="100,000"></div>
-        <div class="form-row"><label id="l-desc">DESCRIPTION</label><textarea id="f-desc" class="input-box" style="height:120px; resize:none;"></textarea></div>
-        <div class="form-row"><label id="l-file">EVIDENCE UPLOAD</label><input type="file" id="f-file" class="input-box"></div>
-        <button class="submit-trigger" id="f-btn" onclick="executeLitigation()">SUBMIT LITIGATION</button>
-    </div>
-</main>
-<div id="warrant-stage">
-    <div class="exit-btn" onclick="location.reload()">TERMINATE_SESSION</div>
-    <div class="map-canvas" id="m-canvas">
-        <div class="ping" style="top:42%; left:28%"></div>
-        <div class="ping" style="top:58%; left:72%"></div>
-    </div>
-    <div class="terminal-log" id="t-log"></div>
-</div>
-<script>
-const DB = {
-    langs: {
-        en: { q: "DO YOU<br>WANT TO<br>SUE A<br>HACKER?", p: "Use Sue-A-Hacker Enterprise. <strong>Hackers</strong> can make you feel <em>sad</em>.", b: "SUBMIT LITIGATION", h: "Filing Details", i: "Target IP", a: "Amount", d: "Description" },
-        ru: { q: "ВЫ ХОТИТЕ<br>ПОДАТЬ В СУД<br>НА ХАКЕРА?", p: "Используйте Sue-A-Hacker Enterprise. <strong>Хакеры</strong> могут заставить вас <em>грустить</em>.", b: "ОТПРАВИТЬ ИСК", h: "Детали иска", i: "IP цели", a: "Сумма", d: "Описание" },
-        fr: { q: "VOULEZ-VOUS<br>POURSUIVRE UN<br>HACKER?", p: "Utilisez Sue-A-Hacker Enterprise. Les <strong>hackers</strong> vous rendent <em>triste</em>.", b: "SOUMETTRE", h: "Détails", i: "IP", a: "Montant", d: "Description" },
-        de: { q: "WOLLEN SIE<br>EINEN HACKER<br>VERKLAGEN?", p: "Nutzen Sie Sue-A-Hacker Enterprise. <strong>Hacker</strong> machen Sie <em>traurig</em>.", b: "ABSENDEN", h: "Klage-Details", i: "IP-Adresse", a: "Betrag", d: "Beschreibung" },
-        es: { q: "¿QUIERES<br>DEMANDAR A UN<br>HACKER?", p: "Use Sue-A-Hacker Enterprise. Los <strong>hackers</strong> pueden hacerte sentir <em>triste</em>.", b: "PRESENTAR", h: "Detalles", i: "IP", a: "Monto", d: "Descripción" },
-        it: { q: "VUOI FARE<br>CAUSA A UN<br>HACKER?", p: "Usa Sue-A-Hacker Enterprise. Gli <strong>hacker</strong> possono farti sentire <em>triste</em>.", b: "INVIA", h: "Dettagli", i: "IP", a: "Importo", d: "Descrizione" },
-        zh: { q: "你想要<br>起诉<br>黑客吗？", p: "请使用 Sue-A-Hacker Enterprise。<strong>黑客</strong>会让你感到<em>悲伤</em>。", b: "提交诉讼", h: "详情", i: "目标IP", a: "金额", d: "描述" },
-        ja: { q: "ハッカーを<br>訴えたい<br>ですか？", p: "Sue-A-Hacker Enterpriseを使用してください。<strong>ハッカー</strong>はあなたを<em>悲しく</em>させます。", b: "訴訟を提起", h: "詳細", i: "IP", a: "金額", d: "詳細" },
-        ko: { q: "해커를<br>고소하고<br>싶으십니까?", p: "Sue-A-Hacker Enterprise를 이용하십시오. <strong>해커</strong>는 당신을 <em>슬프게</em> 만듭니다.", b: "소송 제출", h: "상세", i: "IP", a: "금액", d: "설명" },
-        pt: { q: "QUER<br>PROCESSAR UM<br>HACKER?", p: "Use Sue-A-Hacker Enterprise. Os <strong>hackers</strong> podem fazer você se sentir <em>triste</em>.", b: "SUBMETER", h: "Detalhes", i: "IP", a: "Valor", d: "Descrição" },
-        ar: { q: "هل تريد<br>مقاضاة<br>مخترق؟", p: "استخدم Sue-A-Hacker Enterprise. <strong>المخترقون</strong> يجعلونك <em>حزيناً</em>.", b: "تقديم التقاضي", h: "تفاصيل", i: "عنوان IP", a: "المبلغ", d: "الوصف" },
-        tr: { q: "BİR HACKER'A<br>DAVA AÇMAK<br>İSTER MİSİNİZ?", p: "Sue-A-Hacker Enterprise kullanın. <strong>Hackerlar</strong> sizi <em>üzebilir</em>.", b: "DAVA AÇ", h: "Ayrıntılar", i: "IP", a: "Miktar", d: "Açıklama" },
-        nl: { q: "WILT U EEN<br>HACKER<br>AANKLAGEN?", p: "Gebruik Sue-A-Hacker Enterprise. <strong>Hackers</strong> kunnen u <em>verdrietig</em> maken.", b: "INDIENEN", h: "Details", i: "IP", a: "Bedrag", d: "Omschrijving" },
-        pl: { q: "CZY CHCESZ<br>POZWAĆ<br>HAKERA?", p: "Użyj Sue-A-Hacker Enterprise. <strong>Hakerzy</strong> mogą sprawić, że będziesz <em>smutny</em>.", b: "WYŚLIJ", h: "Szczegóły", i: "IP", a: "Kwota", d: "Opis" },
-        vi: { q: "BẠN CÓ MUỐN<br>KIỆN MỘT<br>HACKER?", p: "Sử dụng Sue-A-Hacker Enterprise. <strong>Hacker</strong> có thể làm bạn <em>buồn</em>.", b: "GỬI ĐƠN", h: "Chi tiết", i: "IP", a: "Số tiền", d: "Mô tả" },
-        th: { q: "คุณต้องการ<br>ฟ้องร้อง<br>แฮกเกอร์ไหม?", p: "ใช้ Sue-A-Hacker Enterprise. <strong>แฮกเกอร์</strong>อาจทำให้คุณรู้สึก<em>เศร้า</em>.", b: "ยื่นฟ้อง", h: "รายละเอียด", i: "IP", a: "จำนวนเงิน", d: "คำอธิบาย" },
-        hi: { q: "क्या आप<br>हैकर्स पर<br>मुकदमा करना चाहते हैं?", p: "Sue-A-Hacker Enterprise का उपयोग करें। <strong>हैकर्स</strong> आपको <em>उदास</em> कर सकते हैं।", b: "मुकदमा करें", h: "विवरण", i: "आईपी", a: "राशि", d: "विवरण" },
-        el: { q: "ΘΕΛΕΤΕ ΝΑ<br>ΜΗΝΥΣΕΤΕ ΕΝΑΝ<br>HACKER;", p: "Χρησιμοποιήστε το Sue-A-Hacker Enterprise. Οι <strong>hackers</strong> σας κάνουν <em>λυπημένους</em>.", b: "ΥΠΟΒΟΛΗ", h: "Λεπτομέρειες", i: "IP", a: "Ποσό", d: "Περιγραφή" },
-        sv: { q: "VILL DU<br>STÄMMA EN<br>HACKER?", p: "Använd Sue-A-Hacker Enterprise. <strong>Hackers</strong> kan göra dig <em>ledsen</em>.", b: "SKICKA", h: "Detaljer", i: "IP", a: "Belopp", d: "Beskrivning" },
-        da: { q: "VIL DU<br>Sagsøge EN<br>HACKER?", p: "Brug Sue-A-Hacker Enterprise. <strong>Hackers</strong> kan gøre dig <em>trist</em>.", b: "INDSEND", h: "Detaljer", i: "IP", a: "Beløb", d: "Beskrivelse" },
-        fi: { q: "HALUATKO<br>HAASTAA HAKKERIN<br>OIKEUTEEN?", p: "Käytä Sue-A-Hacker Enterprisea. <strong>Hakkerit</strong> voivat saada sinut <em>surulliseksi</em>.", b: "LÄHETÄ", h: "Tiedot", i: "IP", a: "Summa", d: "Kuvaus" },
-        no: { q: "VIL DU<br>SØKSØKE EN<br>HACKER?", p: "Bruk Sue-A-Hacker Enterprise. <strong>Hackere</strong> kan gjøre deg <em>trist</em>.", b: "SEND INN", h: "Detaljer", i: "IP", a: "Beløp", d: "Beskrivelse" },
-        he: { q: "האם אתה<br>רוצה לתבוע<br>האקר?", p: "השתמש ב-Sue-A-Hacker Enterprise. <strong>האקרים</strong> עלולים לגרום לך להרגיש <em>עצוב</em>.", b: "הגש תביעה", h: "פרטים", i: "כתובת IP", a: "סכום", d: "תיאור" },
-        id: { q: "APAKAH ANDA<br>INGIN MENUNTUT<br>HACKER?", p: "Gunakan Sue-A-Hacker Enterprise. <strong>Hacker</strong> bisa membuat Anda <em>sedih</em>.", b: "KIRIM", h: "Detail", i: "IP", a: "Jumlah", d: "Deskripsi" },
-        ms: { q: "ADAKAH ANDA<br>INGIN MENUNTUT<br>HACKER?", p: "Gunakan Sue-A-Hacker Enterprise. <strong>Hacker</strong> boleh membuat anda <em>sedih</em>.", b: "HANTAR", h: "Butiran", i: "IP", a: "Jumlah", d: "Penerangan" },
-        cs: { q: "CHCETE<br>ŽALOVAT<br>HACKERA?", p: "Použijte Sue-A-Hacker Enterprise. <strong>Hackeři</strong> vás mohou <em>rozmutnit</em>.", b: "ODESLAT", h: "Detaily", i: "IP", a: "Částka", d: "Popis" },
-        hu: { q: "BE AKAR<br>PERELNI EGY<br>HACKERT?", p: "Használja a Sue-A-Hacker Enterprise-t. A <strong>hackerek</strong> <em>szomorúvá</em> tehetik.", b: "BEKÜLDÉS", h: "Részletek", i: "IP", a: "Összeg", d: "Leírás" },
-        ro: { q: "VREI SĂ<br>DAI ÎN JUDECATĂ<br>UN HACKER?", p: "Folosiți Sue-A-Hacker Enterprise. <strong>Hackerii</strong> vă pot face <em>trist</em>.", b: "TRIMITE", h: "Detalii", i: "IP", a: "Sumă", d: "Descriere" },
-        sk: { q: "CHCETE<br>ŽALOVAŤ<br>HACKERA?", p: "Použite Sue-A-Hacker Enterprise. <strong>Hackeri</strong> vás môžu <em>rozosmútiť</em>.", b: "ODOSLAŤ", h: "Detaily", i: "IP", a: "Suma", d: "Popis" },
-        uk: { q: "ВИ ХОЧЕТЕ<br>ПОДАТИ В СУД<br>НА ХАКЕРА?", p: "Використовуйте Sue-A-Hacker Enterprise. <strong>Хакери</strong> можуть змусити вас <em>сумувати</em>.", b: "ПОДАТИ", h: "Деталі", i: "IP", a: "Сума", d: "Опис" },
-        bg: { q: "ИСКАТЕ ЛИ<br>ДА СЪДИТЕ<br>ХАКЕР?", p: "Използвайте Sue-A-Hacker Enterprise. <strong>Хакерите</strong> могат да ви направят <em>тъжни</em>.", b: "ИЗПРАТИ", h: "Детайли", i: "IP", a: "Сума", d: "Описание" },
-        hr: { q: "ŽELITE LI<br>TUŽITI<br>HAKERA?", p: "Koristite Sue-A-Hacker Enterprise. <strong>Hakeri</strong> vas mogu učiniti <em>tužnima</em>.", b: "POŠALJI", h: "Detalji", i: "IP", a: "Iznos", d: "Opis" },
-        sr: { q: "DA LI ŽELITE<br>DA TUŽITE<br>HAKERA?", p: "Koristite Sue-A-Hacker Enterprise. <strong>Hakeri</strong> vas mogu učiniti <em>tužnim</em>.", b: "POŠALJI", h: "Detalji", i: "IP", a: "Iznos", d: "Opis" },
-        sl: { q: "ALI ŽELITE<br>TOŽITI<br>HEKERJA?", p: "Uporabite Sue-A-Hacker Enterprise. <strong>Hekerji</strong> vas lahko osrečijo <em>žalostne</em>.", b: "POŠLJI", h: "Podrobnosti", i: "IP", a: "Znesek", d: "Opis" },
-        et: { q: "KAS SOOVITE<br>HÄKKERIT<br>KOHTUSSE KAEVATA?", p: "Kasutage Sue-A-Hacker Enterprise'i. <strong>Häkkerid</strong> võivad teid <em>kurvaks</em> muuta.", b: "ESITA", h: "Andmed", i: "IP", a: "Summa", d: "Kirjeldus" },
-        lv: { q: "VAI VĒLATIES<br>SŪDZĒT TIESĀ<br>HAKERI?", p: "Izmantojiet Sue-A-Hacker Enterprise. <strong>Hakeri</strong> var likt jums justies <em>skumji</em>.", b: "IESNIEGT", h: "Detaļas", i: "IP", a: "Summa", d: "Apraksts" },
-        lt: { q: "AR NORITE<br>PADUOTI Į TEISMĄ<br>HAKERĮ?", p: "Naudokite „Sue-A-Hacker Enterprise“. <strong>Hakeriai</strong> gali priversti jus <em>liūdėti</em>.", b: "PATEIKTI", h: "Informacija", i: "IP", a: "Suma", d: "Aprašymas" },
-        fa: { q: "آیا می‌خواهید<br>از یک هکر<br>شکایت کنید؟", p: "از Sue-A-Hacker Enterprise استفاده کنید. <strong>هکرها</strong> می‌توانند شما را <em>غمگین</em> کنند.", b: "ارسال شکایت", h: "جزئیات", i: "IP", a: "مبلغ", d: "توضیحات" },
-        ur: { q: "کیا آپ<br>ہیکر پر<br>मुकदما کرنا چاہتے ہیں؟", p: "Sue-A-Hacker Enterprise استعمال کریں۔ <strong>ہیکرز</strong> آپ کو <em>اداس</em> کر سکتے ہیں۔", b: "جمع کرائیں", h: "تفصیلات", i: "IP", a: "رقم", d: "تفصیل" },
-        bn: { q: "আপনি কি<br>হ্যাকারকে<br>মামলা করতে চান?", p: "Sue-A-Hacker Enterprise ব্যবহার করুন। <strong>হ্যাকাররা</strong> আপনাকে <em>দুঃখিত</em> করতে পারে।", b: "জমা দিন", h: "বিস্তারিত", i: "IP", a: "পরিমাণ", d: "বর্ণনা" },
-        ta: { q: "நீங்கள் ஒரு<br>ஹேக்கர் மீது<br>வழக்கு தொடர விரும்புகிறீர்களா?", p: "Sue-A-Hacker Enterprise ஐப் பயன்படுத்தவும். <strong>ஹேக்கர்கள்</strong> உங்களை <em>வருத்தமடையச்</em> செய்யலாம்.", b: "சமர்ப்பிக்கவும்", h: "விவரங்கள்", i: "IP", a: "தொகை", d: "விளக்கம்" },
-        te: { q: "మీరు ఒక<br>హ్యాకర్‌పై<br>కేసు వేయాలనుకుంటున్నారా?", p: "Sue-A-Hacker Enterprise ని ఉపయోగించండి. <strong>హ్యాకర్లు</strong> మిమ్మల్ని <em>బాధపెట్టవచ్చు</em>.", b: "సమర్పించు", h: "వివరాలు", i: "IP", a: "మొత్తం", d: "వివరణ" },
-        ml: { q: "നിങ്ങൾക്ക് ഒരു<br>ഹാക്കറെ<br>കോടതിയിൽ കയറ്റണോ?", p: "Sue-A-Hacker Enterprise ഉപയോഗിക്കുക. <strong>ഹാക്കർമാർ</strong> നിങ്ങളെ <em>സങ്കടപ്പെടുത്താം</em>.", b: "സമർപ്പിക്കുക", h: "വിവരങ്ങൾ", i: "IP", a: "തുക", d: "വിവരണം" },
-        kn: { q: "ನೀವು<br>ಹ್ಯಾಕರ್ ವಿರುದ್ಧ<br>ದೂರು ನೀಡಲು ಬಯಸುವಿರಾ?", p: "Sue-A-Hacker Enterprise ಬಳಸಿ. <strong>ಹ್ಯಾಕರ್‌ಗಳು</strong> ನಿಮ್ಮನ್ನು <em>ದುಃಖಿತರನ್ನಾಗಿ</em> ಮಾಡಬಹುದು.", b: "ಸಲ್ಲಿಸಿ", h: "ವಿವರಗಳು", i: "IP", a: "ಮೊತ್ತ", d: "ವಿವರಣೆ" },
-        gu: { q: "શું તમે<br>હેકર પર<br>કેસ કરવા માંગો છો?", p: "Sue-A-Hacker Enterprise નો ઉપયોગ કરો. <strong>હેકર્સ</strong> તમને <em>ઉદાસ</em> કરી શકે છે.", b: "સબમિટ કરો", h: "વિગતો", i: "IP", a: "રકમ", d: "વર્ણન" },
-        mr: { q: "तुम्हाला<br>हॅकरवर<br>खटला भरायचा आहे का?", p: "Sue-A-Hacker Enterprise वापरा. <strong>हॅकर्स</strong> तुम्हाला <em>दुःखी</em> करू शकतात.", b: "सादर करा", h: "तपशील", i: "IP", a: "रक्कम", d: "वर्णन" },
-        pa: { q: "ਕੀ ਤੁਸੀਂ<br>ਹੈਕਰ 'ਤੇ<br>ਮੁਕੱਦמה ਕਰਨਾ ਚਾਹੁੰਦੇ ਹੋ?", p: "Sue-A-Hacker Enterprise ਦੀ ਵਰਤੋਂ ਕਰੋ। <strong>ਹੈਕਰ</strong> ਤੁਹਾਨੂੰ <em>ਉਦਾਸ</em> ਕਰ ਸਕਦੇ ਹਨ।", b: "ਜਮ੍ਹਾਂ ਕਰੋ", h: "ਵੇਰਵੇ", i: "IP", a: "ਰਕਮ", d: "ਵਰਣਨ" },
-        sw: { q: "UNATAKA<br>KUMSHITAKI<br>MDURO?", p: "Tumia Sue-A-Hacker Enterprise. <strong>Waduro</strong> wanaweza kukufanya uwe na <em>huzuni</em>.", b: "WASILISHA", h: "Maelezo", i: "IP", a: "Kiasi", d: "Maelezo" }
-    },
-    courts: [
-        { id: "CRT-US-1", n: "U.S. Federal District Court", j: "North America", s: "CFAA 18 U.S.C. § 1030" },
-        { id: "CRT-RU-7", n: "Moscow City Court", j: "Europe/Asia", s: "UK-RF Art. 272" },
-        { id: "CRT-EU-82", n: "European Court of Justice", j: "Europe", s: "GDPR Art. 82" },
-        { id: "CRT-UK-12", n: "The High Court, London", j: "Europe", s: "Computer Misuse Act 1990" },
-        { id: "CRT-SG-01", n: "Supreme Court of Singapore", j: "Asia", s: "Cybersecurity Act 2018" }
-    ]
+/**
+ * SAH-GLOBAL-99 LITIGATION ENGINE
+ * VERSION: 2026.1.28 | RESOLUTION: 3840x2160
+ * FONT: SEGOE UI (STRICT)
+ */
+
+const SYSTEM_CONFIG = {
+    year: 2026,
+    resolution: "4K",
+    font: "Segoe UI",
+    primaryColor: "#00FF41"
 };
 
-function switchL(l) {
-    const d = DB.langs[l];
-    document.getElementById('h-q').innerHTML = d.q;
-    document.getElementById('h-p').innerHTML = d.p;
-    document.getElementById('f-btn').innerText = d.b;
-    document.getElementById('l-ip').innerText = d.i;
-    document.getElementById('l-amt').innerText = d.a;
-    document.getElementById('l-desc').innerText = d.d;
-    document.querySelectorAll('.lang-nav span').forEach(s => s.classList.toggle('active-lang', s.innerText.toLowerCase() === l));
-}
+const i18n = {
+    active: "EN",
+    data: {
+        EN: { title: "LITIGATION_HUB", start: "FILE_LAWSUIT", term: "TERMINATE", status: "SYSTEM_READY" },
+        FR: { title: "CENTRE_DE_LITIGE", start: "LANCER_POURSUITE", term: "TERMINER", status: "SYSTÈME_PRÊT" }
+    }
+};
 
-function executeLitigation() {
-    const target = document.getElementById('f-ip').value || "UNKNOWN_NODE";
-    const amount = document.getElementById('f-amt').value || "0";
-    document.getElementById('app-main').style.display = 'none';
-    const stage = document.getElementById('warrant-stage');
-    stage.style.display = 'flex';
+const CSS_ENFORCER = `
+    @font-face {
+        font-family: 'Segoe UI';
+        src: local('Segoe UI');
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153;
+    }
+    * { 
+        font-family: 'Segoe UI' !important; 
+        background-color: #000;
+        color: ${SYSTEM_CONFIG.primaryColor};
+    }
+    button {
+        border: 2px solid ${SYSTEM_CONFIG.primaryColor};
+        padding: 15px 30px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+`;
+
+const ENGINE = {
+    isFiled: false,
     
-    const log = document.getElementById('t-log');
-    const msgs = [
-        `[SYSTEM] INITIALIZING GOBAL_WARRANT_PROTOCOL_V5...`,
-        `[NETWORK] RESOLVING TARGET NODE: ${target}...`,
-        `[LEGAL] ESTABLISHING CONNECTION TO HAGUE INTERNATIONAL DATA CENTER...`,
-        `[DATABASE] MAPPING JURISDICTIONAL STATUTES FOR ${target}...`,
-        `[SECURITY] BYPASSING OFFSHORE PROXY LAYERS...`,
-        `[SYSTEM] WARRANT SIGNED BY GLOBAL JUDICIAL COUNCIL.`,
-        `[ACTION] FREEZING ASSETS IN THE AMOUNT OF $${amount} USD...`,
-        `[SUCCESS] WARRANT SERVED TO TARGET: ${target}.`,
-        `[SYSTEM] HACKER IDENTIFIED. JUSTICE DEPLOYED.`
-    ];
+    startLawsuit: function() {
+        this.isFiled = true;
+        document.getElementById('status').innerText = i18n.data[i18n.active].status + " [ACTIVE_LITIGATION]";
+        console.log(`LITIGATION_INITIATED_TIMESTAMP_${Date.now()}`);
+    },
 
-    let i = 0;
-    const interval = setInterval(() => {
-        const line = document.createElement('div');
-        line.innerText = msgs[i];
-        log.appendChild(line);
-        log.scrollTop = log.scrollHeight;
-        i++;
-        if(i >= msgs.length) clearInterval(interval);
-    }, 1000);
-}
+    terminate: function() {
+        document.body.innerHTML = `<div style="display:flex; justify-content:center; align-items:center; height:100vh;">
+            <h1>SESSION_TERMINATED_2026</h1>
+        </div>`;
+    },
 
-window.onload = () => {
-    const nav = document.getElementById('lng-nav');
-    Object.keys(DB.langs).forEach(k => {
-        const s = document.createElement('span');
-        s.innerText = k.toUpperCase();
-        s.onclick = () => switchL(k);
-        if(k === 'en') s.className = 'active-lang';
-        nav.appendChild(s);
-    });
+    renderMap: function() {
+        return `
+            <svg width="3840" height="2160" viewBox="0 0 3840 2160" xmlns="http://www.w3.org/2000/svg">
+                <rect width="100%" height="100%" fill="#050505"/>
+                <path d="M400 1000 H3440 V1800 H400 Z" fill="none" stroke="${SYSTEM_CONFIG.primaryColor}" stroke-width="2"/>
+                <text x="1920" y="100" text-anchor="middle" font-size="48" fill="${SYSTEM_CONFIG.primaryColor}">MERCATOR_FLAT_PROJECTION_V2026</text>
+            </svg>
+        `;
+    }
 };
-</script>
-</body>
-</html>
+
+// Initialization
+(function init() {
+    const style = document.createElement('style');
+    style.innerHTML = CSS_ENFORCER;
+    document.head.appendChild(style);
+
+    const ui = document.createElement('div');
+    ui.style.cssText = "width:3840px; height:2160px; position:relative; overflow:hidden;";
+    ui.innerHTML = `
+        <div style="position:absolute; top:50px; left:50px; z-index:10; display:flex; gap:20px;">
+            <button onclick="ENGINE.startLawsuit()">${i18n.data[i18n.active].start}</button>
+            <button style="color:red; border-color:red;" onclick="ENGINE.terminate()">${i18n.data[i18n.active].term}</button>
+        </div>
+        <div id="status" style="position:absolute; bottom:50px; left:50px; font-size:24px;">${i18n.data[i18n.active].status}</div>
+        <div id="map">${ENGINE.renderMap()}</div>
+    `;
+    document.body.appendChild(ui);
+})();
