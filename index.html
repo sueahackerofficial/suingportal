@@ -119,6 +119,7 @@ const CORE = {
         document.getElementById('qh').innerText = d.q;
         document.getElementById('pt').innerText = d.p;
         document.getElementById('ll').innerText = d.l;
+        document.title = d.t;
     },
     up() {
         const types = ["BRIEF", "MOTION", "ORDER", "AFFIDAVIT"];
@@ -128,7 +129,7 @@ const CORE = {
         this.up();
         const l = document.getElementById('log');
         const d = document.createElement('div');
-        d.innerText = `> [${new Date().toISOString().split('T')[1].split('Z')[0]}] Initalizing ${document.getElementById('tid').innerText}`;
+        d.innerText = `> [${new Date().toISOString().split('T')[1].split('Z')[0]}] Complete Lawsuit: ${document.getElementById('tid').innerText}`;
         l.prepend(d);
     }
 };
