@@ -7,27 +7,41 @@
 <style>
 @font-face {
     font-family: 'Segoe UI';
-    src: local('Segoe UI'),
-         url('https://themes.googleusercontent.com/static/fonts/lifecycle/v1/segoe-ui.woff2') format('woff2');
-    unicode-range: U+0000-052F, U+00A0-00FF, U+0100-017F, U+0180-024F, U+02B0-02FF, U+0300-036F, U+0370-03FF, U+0400-04FF, U+0500-052F, U+1E00-1EFF, U+2000-206F, U+2070-209F, U+20A0-20CF, U+2100-214F, U+2150-218F, U+2190-21FF, U+2200-22FF, U+2300-23FF, U+2400-243F, U+2440-245F, U+2460-24FF, U+2500-257F, U+2580-259F, U+25A0-25FF, U+2600-26FF, U+2700-27BF, U+2800-28FF, U+2900-297F, U+2980-29FF, U+2A00-2AFF, U+2B00-2BFF, U+2C00-2C5F, U+2C60-2C7F, U+2D00-2D2F, U+2D30-2D7F, U+2DE0-2DFF, U+2E00-2E7F, U+2E80-2EFF, U+2F00-2FDF, U+2FF0-2FFF, U+3000-303F, U+3040-309F, U+30A0-30FF, U+3100-312F, U+3130-318F, U+3190-319F, U+31A0-31BF, U+31C0-31EF, U+31F0-31FF, U+3200-32FF, U+3300-33FF, U+3400-4DBF, U+4DC0-4DFF, U+4E00-9FFF, U+A000-A48F, U+A490-A4CF, U+A4D0-A4FF, U+A500-A61F, U+A640-A69F, U+A700-A71F, U+A720-A7FF, U+A800-A82F, U+A840-A87F, U+A880-A8DF, U+A900-A92F, U+A930-A95F, U+AA00-AA5F, U+AA60-AA7F, U+AB00-AB2F, U+ABC0-ABFF, U+AC00-D7AF, U+D7B0-D7FF, U+F900-FAFF, U+FB00-FB4F, U+FB50-FDFF, U+FE00-FE0F, U+FE10-FE1F, U+FE20-FE2F, U+FE30-FE4F, U+FE50-FE6F, U+FE70-FEFF, U+FF00-FFEF, U+FFF0-FFFF;
-    font-display: swap;
+    src: local('Segoe UI'), url('https://themes.googleusercontent.com/static/fonts/lifecycle/v1/segoe-ui-reg.woff2') format('woff2');
+    font-weight: 400; font-style: normal; unicode-range: U+0000-FFFF;
 }
+@font-face {
+    font-family: 'Segoe UI';
+    src: local('Segoe UI Bold'), url('https://themes.googleusercontent.com/static/fonts/lifecycle/v1/segoe-ui-bold.woff2') format('woff2');
+    font-weight: 700; font-style: normal; unicode-range: U+0000-FFFF;
+}
+@font-face {
+    font-family: 'Segoe UI';
+    src: local('Segoe UI Italic'), url('https://themes.googleusercontent.com/static/fonts/lifecycle/v1/segoe-ui-italic.woff2') format('woff2');
+    font-weight: 400; font-style: italic; unicode-range: U+0000-FFFF;
+}
+@font-face {
+    font-family: 'Segoe UI';
+    src: local('Segoe UI Bold Italic'), url('https://themes.googleusercontent.com/static/fonts/lifecycle/v1/segoe-ui-bolditalic.woff2') format('woff2');
+    font-weight: 700; font-style: italic; unicode-range: U+0000-FFFF;
+}
+
 :root { --p: #00FF41; --bg: #000; --brd: #111; }
 * { margin: 0; padding: 0; box-sizing: border-box; background: var(--bg); color: var(--p); font-family: 'Segoe UI', sans-serif !important; }
 body { width: 100vw; height: 100vh; overflow: hidden; position: relative; display: flex; flex-direction: column; }
 #ui-wrapper { position: relative; z-index: 10; padding: 3vw; height: 100%; display: flex; flex-direction: column; }
 .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--brd); padding-bottom: 20px; }
 select, button { background: #080808; color: var(--p); border: 1.5px solid var(--p); padding: 10px 25px; font-size: 16px; font-weight: bold; cursor: pointer; }
-#main-title { font-size: 2vw; opacity: 0.8; letter-spacing: 1px; }
-h1 { font-size: 4.5vw; font-weight: 300; letter-spacing: -1px; margin: 40px 0 20px 0; line-height: 1.1; }
-.desc { font-size: 1.4vw; line-height: 1.5; max-width: 85%; color: rgba(0, 255, 65, 0.85); margin-bottom: 50px; }
+#main-title { font-size: 1.8vw; font-weight: 400; opacity: 0.8; }
+h1 { font-size: 4.5vw; font-weight: 700; letter-spacing: -1px; margin: 40px 0 20px 0; line-height: 1.1; }
+.desc { font-size: 1.4vw; font-weight: 400; font-style: italic; line-height: 1.5; max-width: 85%; color: rgba(0, 255, 65, 0.85); margin-bottom: 50px; }
 .data-matrix { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
 .pnl { border: 1px solid #222; padding: 25px; position: relative; background: rgba(5,5,5,0.9); }
 .pnl::before { content: ""; position: absolute; left: 0; top: 0; width: 4px; height: 100%; background: var(--p); }
-.lbl { font-size: 10px; text-transform: uppercase; letter-spacing: 3px; opacity: 0.6; margin-bottom: 15px; display: block; }
-.val { font-size: 2.5vw; font-weight: bold; }
-.id-box { font-family: monospace !important; border: 1px dashed var(--p); padding: 8px 15px; font-size: 1.5vw; display: inline-block; }
-#log { position: absolute; bottom: 20px; right: 20px; width: 300px; height: 150px; font-family: monospace !important; font-size: 10px; color: #008822; overflow: hidden; padding: 10px; border: 1px solid #111; }
+.lbl { font-size: 10px; text-transform: uppercase; font-weight: 700; letter-spacing: 3px; opacity: 0.6; margin-bottom: 15px; display: block; }
+.val { font-size: 2.5vw; font-weight: 700; }
+.id-box { font-family: monospace !important; border: 1px dashed var(--p); padding: 8px 15px; font-size: 1.5vw; font-weight: 400; }
+#log { position: absolute; bottom: 20px; right: 20px; width: 300px; height: 150px; font-size: 10px; color: #008822; overflow: hidden; padding: 10px; border: 1px solid #111; }
 </style>
 </head>
 <body>
@@ -36,6 +50,13 @@ h1 { font-size: 4.5vw; font-weight: 300; letter-spacing: -1px; margin: 40px 0 20
         <div id="main-title"></div>
         <div style="display:flex; gap:15px;">
             <select id="l-sel" onchange="CORE.setL(this.value)"></select>
+            <select id="c-sel" onchange="CORE.setC(this.value)">
+                <option value="USD">USD ($)</option>
+                <option value="EUR">EUR (€)</option>
+                <option value="GBP">GBP (£)</option>
+                <option value="JPY">JPY (¥)</option>
+                <option value="CNY">CNY (¥)</option>
+            </select>
             <button id="btn-start" onclick="CORE.start()"></button>
         </div>
     </header>
@@ -45,7 +66,7 @@ h1 { font-size: 4.5vw; font-weight: 300; letter-spacing: -1px; margin: 40px 0 20
         <div class="data-matrix">
             <div class="pnl"><span class="lbl" id="ll"></span><span class="id-box" id="tid"></span></div>
             <div class="pnl"><span class="lbl">RECOVERY_RATE</span><div class="val">78%</div></div>
-            <div class="pnl"><span class="lbl">ESTIMATED_VALUE</span><div class="val">1,500,000 USD</div></div>
+            <div class="pnl"><span class="lbl">ESTIMATED_VALUE</span><div class="val"><span id="vn">1,500,000</span> <span id="vcur">USD</span></div></div>
             <div class="pnl"><span class="lbl">ENCRYPTION</span><div class="val" style="font-size:1.2vw;">AES-512-RSA-8192</div></div>
         </div>
     </main>
@@ -54,61 +75,61 @@ h1 { font-size: 4.5vw; font-weight: 300; letter-spacing: -1px; margin: 40px 0 20
 <script>
 const CORE = {
     i18n: {
-        EN: { t: "Sue-A-Hacker Enterprise | Official Legal Portal", b: "Start Lawsuit", q: "Do you want to sue a hacker?", p: "Then use the Sue-A-Hacker Enterprise! This formal declaration initiates the asset recovery protocol for the 2026 cycle. Our system performs a high-fidelity audit of decentralized holdings, jurisdiction conflicts, and forensic malware signatures to ensure maximum litigation success.", l: "Forensic ID" },
-        ES: { t: "Sue-A-Hacker Enterprise | Portal Legal Oficial", b: "Iniciar Demanda", q: "¿Quieres demandar a un hacker?", p: "¡Entonces usa Sue-A-Hacker Enterprise! Esta declaración formal inicia el protocolo de recuperación de activos para el ciclo 2026. Nuestro sistema realiza una auditoría de alta fidelidad.", l: "ID Forense" },
-        FR: { t: "Sue-A-Hacker Enterprise | Portail Juridique Officiel", b: "Démarrer Procès", q: "Voulez-vous poursuivre un hacker ?", p: "Alors utilisez Sue-A-Hacker Enterprise ! Cette déclaration formelle lance le protocole de récupération des avoirs pour le cycle 2026.", l: "Identifiant" },
-        DE: { t: "Sue-A-Hacker Enterprise | Offizielles Rechtsportal", b: "Klage Starten", q: "Möchten Sie einen Hacker verklagen?", p: "Dann nutzen Sie Sue-A-Hacker Enterprise! Diese formelle Erklärung leitet das Asset-Recovery-Protokoll für den Zyklus 2026 ein.", l: "Forensische ID" },
-        IT: { t: "Sue-A-Hacker Enterprise | Portale Legale Ufficiale", b: "Avvia Causa", q: "Vuoi fare causa a un hacker?", p: "Usa Sue-A-Hacker Enterprise! Questa dichiarazione formale avvia il protocollo di recupero dei beni per il ciclo 2026.", l: "ID Forense" },
-        PT: { t: "Sue-A-Hacker Enterprise | Portal Jurídico Oficial", b: "Iniciar Processo", q: "Quer processar um hacker?", p: "Use o Sue-A-Hacker Enterprise! Esta declaração formal inicia o protocolo de recuperação de ativos para o ciclo de 2026.", l: "ID Forense" },
-        RU: { t: "Sue-A-Hacker Enterprise | Официальный портал", b: "Начать иск", q: "Вы хотите подать в суд на хакера?", p: "Используйте Sue-A-Hacker Enterprise! Эта официальная декларация инициирует протокол восстановления активов на 2026 год.", l: "ID Документа" },
-        ZH: { t: "Sue-A-Hacker Enterprise | 官方法律门户", b: "开始诉讼", q: "你想起诉黑客吗？", p: "那就使用 Sue-A-Hacker Enterprise！此正式声明启动了 2026 年周期的资产追回协议。", l: "取证 ID" },
-        JP: { t: "Sue-A-Hacker Enterprise | 公式法的ポータル", b: "訴訟を開始する", q: "ハッカーを訴えたいですか？", p: "それなら Sue-A-Hacker Enterprise を使用してください！この正式な宣言により、2026 年サイクルの資産回収が開始されます。", l: "法科学 ID" },
-        KR: { t: "Sue-A-Hacker Enterprise | 공식 법률 포털", b: "소송 시작", q: "해커를 고소하고 싶습니까?", p: "Sue-A-Hacker Enterprise를 사용하십시오! 이 공식 선언은 2026년 주기의 자산 회수 프로토콜을 시작합니다.", l: "법의학 ID" },
-        NL: { t: "Sue-A-Hacker Enterprise | Officieel Juridisch Portaal", b: "Rechtszaak Starten", q: "Wilt u een hacker aanklagen?", p: "Gebruik Sue-A-Hacker Enterprise! Deze verklaring initieert het protocol voor 2026.", l: "ID" },
-        TR: { t: "Sue-A-Hacker Enterprise | Resmi Hukuk Portalı", b: "Davayı Başlat", q: "Bir bilgisayar korsanına dava açmak ister misiniz?", p: "Sue-A-Hacker Enterprise'ı kullanın! Bu beyan 2026 kurtarma protokolünü başlatır.", l: "Adli Kimlik" },
-        SV: { t: "Sue-A-Hacker Enterprise | Officiell Juridisk Portal", b: "Starta Rättegång", q: "Vill du stämma en hacker?", p: "Använd Sue-A-Hacker Enterprise! Denna deklaration inleder protokollet för 2026.", l: "ID" },
-        PL: { t: "Sue-A-Hacker Enterprise | Oficjalny Portal Prawny", b: "Rozpocznij Pozew", q: "Chcesz pozwać hakera?", p: "Użyj Sue-A-Hacker Enterprise! Ta deklaracja inicjuje protokół odzyskiwania aktywów 2026.", l: "ID" },
-        AR: { t: "Sue-A-Hacker Enterprise | البوابة القانونية الرسمية", b: "بدء المقاضاة", q: "هل تريد مقاضاة مخترق؟", p: "استخدم Sue-A-Hacker Enterprise! يبدأ هذا الإعلان بروتوكول استرداد الأصول لعام 2026.", l: "معرف" },
-        HI: { t: "Sue-A-Hacker Enterprise | आधिकारिक कानूनी पोर्टल", b: "मुकदमा शुरू करें", q: "क्या आप हैकर पर मुकदमा करना चाहते हैं?", p: "Sue-A-Hacker Enterprise का उपयोग करें! यह 2026 चक्र शुरू करता है।", l: "आईडी" },
-        VI: { t: "Sue-A-Hacker Enterprise | Cổng Pháp Lý Chính Thức", b: "Bắt Đầu Kiện", q: "Bạn có muốn kiện hacker không?", p: "Hãy sử dụng Sue-A-Hacker Enterprise! Tuyên bố này khởi động giao thức 2026.", l: "ID" },
-        TH: { t: "Sue-A-Hacker Enterprise | พอร์ทัลกฎหมายอย่างเป็นทางการ", b: "เริ่มการฟ้องร้อง", q: "คุณต้องการฟ้องแฮ็กเกอร์หรือไม่?", p: "ใช้ Sue-A-Hacker Enterprise! นี่เป็นการเริ่มต้นโปรโตคอลปี 2026.", l: "รหัส" },
-        ID: { t: "Sue-A-Hacker Enterprise | Portal Hukum Resmi", b: "Mulai Gugatan", q: "Ingin menuntut peretas?", p: "Gunakan Sue-A-Hacker Enterprise! Deklarasi ini memulai protokol 2026.", l: "ID" },
-        HE: { t: "Sue-A-Hacker Enterprise | פורטל משפטי רשמי", b: "התחל תביעה", q: "רוצה לתבוע האקר?", p: "השתמש ב-Sue-A-Hacker Enterprise! הצהרה זו יוזמת את פרוטוקול 2026.", l: "מזהה" },
-        EL: { t: "Sue-A-Hacker Enterprise | Επίσημη Νομική Πύλη", b: "Έναρξη Μήνυσης", q: "Θέλετε να μηνύσετε έναν χάκερ;", p: "Χρησιμοποιήστε το Sue-A-Hacker Enterprise για το 2026.", l: "ID" },
-        DA: { t: "Sue-A-Hacker Enterprise | Officiel Juridisk Portal", b: "Start Sag", q: "Vil du sagsøge en hacker?", p: "Brug Sue-A-Hacker Enterprise! Dette starter protokollen for 2026.", l: "ID" },
-        FI: { t: "Sue-A-Hacker Enterprise | Virallinen Lakioikeusportaali", b: "Aloita Kanne", q: "Haluatko haastaa hakkerin?", p: "Käytä Sue-A-Hacker Enterprisea vuoden 2026 protokollaan.", l: "ID" },
-        NO: { t: "Sue-A-Hacker Enterprise | Offisiell Juridisk Portal", b: "Start Søksmål", q: "Vil du saksøke en hacker?", p: "Bruk Sue-A-Hacker Enterprise! Starter 2026-protokollen.", l: "ID" },
-        CS: { t: "Sue-A-Hacker Enterprise | Oficiální Právní Portál", b: "Zahájit Žalobu", q: "Chcete žalovat hackera?", p: "Použijte Sue-A-Hacker Enterprise pro protokol 2026.", l: "ID" },
-        HU: { t: "Sue-A-Hacker Enterprise | Hivatalos Jogi Portál", b: "Per Indítása", q: "Be akar perelni egy hackert?", p: "Használja a Sue-A-Hacker Enterprise-t a 2026-os ciklushoz.", l: "ID" },
-        RO: { t: "Sue-A-Hacker Enterprise | Portal Juridic Oficial", b: "Începe Procesul", q: "Vrei să dai în judecată un hacker?", p: "Folosește Sue-A-Hacker Enterprise pentru 2026.", l: "ID" },
-        SK: { t: "Sue-A-Hacker Enterprise | Oficiálny Právny Portál", b: "Začať Žalobu", q: "Chcete žalovať hackera?", p: "Použite Sue-A-Hacker Enterprise pre rok 2026.", l: "ID" },
-        UK: { t: "Sue-A-Hacker Enterprise | Офіційний юридичний портал", b: "Розпочати позов", q: "Хочете подати в суд?", p: "Використовуйте Sue-A-Hacker Enterprise для 2026 року.", l: "ID" },
-        BG: { t: "Sue-A-Hacker Enterprise | Официален правен портал", b: "Стартирай иск", q: "Искате ли да съдите хакер?", p: "Използвайте Sue-A-Hacker Enterprise.", l: "ID" },
-        HR: { t: "Sue-A-Hacker Enterprise | Službeni pravni portal", b: "Pokreni tužbu", q: "Želite li tužiti hakera?", p: "Koristite Sue-A-Hacker Enterprise.", l: "ID" },
-        LT: { t: "Sue-A-Hacker Enterprise | Oficialus teisinių paslaugų portalas", b: "Pradėti ieškinį", q: "Norite paduoti į teismą?", p: "Naudokite Sue-A-Hacker Enterprise.", l: "ID" },
-        LV: { t: "Sue-A-Hacker Enterprise | Oficiālais juridiskais portāls", b: "Sākt tiesvedību", q: "Vai vēlaties sūdzēt tiesā?", p: "Izmantojiet Sue-A-Hacker Enterprise.", l: "ID" },
-        ET: { t: "Sue-A-Hacker Enterprise | Ametlik õigusportaal", b: "Alusta hagi", q: "Kas soovite kaevata?", p: "Kasutage Sue-A-Hacker Enterprise'i.", l: "ID" },
-        SL: { t: "Sue-A-Hacker Enterprise | Uradni pravni portal", b: "Začni tožbo", q: "Želite tožiti hekerja?", p: "Uporabite Sue-A-Hacker Enterprise.", l: "ID" },
-        MS: { t: "Sue-A-Hacker Enterprise | Portal Undang-undang Rasmi", b: "Mulakan Saman", q: "Ingin saman penggodam?", p: "Gunakan Sue-A-Hacker Enterprise.", l: "ID" },
-        FA: { t: "Sue-A-Hacker Enterprise | درگاه رسمی حقوقی", b: "شروع شکایت", q: "می‌خواهید شکایت کنید؟", p: "از Sue-A-Hacker Enterprise استفاده کنید.", l: "شناسه" },
-        BN: { t: "Sue-A-Hacker Enterprise | অফিসিয়াল আইনি পোর্টাল", b: "মামলা শুরু করুন", q: "মামলা করতে চান?", p: "Sue-A-Hacker Enterprise ব্যবহার করুন।", l: "আইডি" },
-        TA: { t: "Sue-A-Hacker Enterprise | அதிகாரப்பூர்வ சட்ட போர்டல்", b: "வழக்கைத் தொடங்கு", q: "வழக்கு தொடர வேண்டுமா?", p: "Sue-A-Hacker Enterprise ஐப் பயன்படுத்தவும்.", l: "ஐடி" },
-        TE: { t: "Sue-A-Hacker Enterprise | అధికారిక చట్టపరమైన పోర్టల్", b: "దావాను ప్రారంభించండి", q: "దావా వేయాలనుకుంటున్నారా?", p: "Sue-A-Hacker Enterprise వాడండి.", l: "ఐడి" },
-        KN: { t: "Sue-A-Hacker Enterprise | ಅಧಿಕೃತ ಕಾನೂನು ಪೋರ್ಟಲ್", b: "ದಾವೆ ಪ್ರಾರಂಭಿಸಿ", q: "ದಾವೆ ಹೂಡಬೇಕೆ?", p: "Sue-A-Hacker Enterprise ಬಳಸಿ.", l: "ಐಡಿ" },
-        ML: { t: "Sue-A-Hacker Enterprise | ഔദ്യോഗിക നിയമ പോർട്ടൽ", b: "കേസ് ആരംഭിക്കുക", q: "കേസ് കൊടുക്കണോ?", p: "Sue-A-Hacker Enterprise ഉപയോഗിക്കുക.", l: "ഐഡി" },
-        MR: { t: "Sue-A-Hacker Enterprise | अधिकृत कायदेशीर पोर्टल", b: "खटला सुरू करा", q: "खटला भरायचा आहे?", p: "Sue-A-Hacker Enterprise वापरा.", l: "आयडी" },
-        GU: { t: "Sue-A-Hacker Enterprise | સત્તાવાર કાયદાકીય પોર્ટલ", b: "દાવો શરૂ કરો", q: "દાવો માંડવો છે?", p: "Sue-A-Hacker Enterprise વાપરો.", l: "આઈડી" },
-        PA: { t: "Sue-A-Hacker Enterprise | ਅਧਿਕਾਰਤ ਕਾਨੂੰਨੀ ਪੋਰਟਲ", b: "ਮੁਕੱਦਮਾ ਸ਼ੁਰੂ ਕਰੋ", q: "ਮੁਕੱਦਮਾ ਕਰਨਾ ਹੈ?", p: "Sue-A-Hacker Enterprise ਵਰਤੋ।", l: "ਆਈਡੀ" },
-        UR: { t: "Sue-A-Hacker Enterprise | آفیشل قانونی پورٹل", b: "مقدمہ شروع کریں", q: "کیا آپ مقدمہ کرنا چاہتے ہیں؟", p: "Sue-A-Hacker Enterprise استعمال کریں۔", l: "شناخت" },
-        SW: { t: "Sue-A-Hacker Enterprise | Tovuti Rasmi ya Kisheria", b: "Anza Kesi", q: "Je, unataka kumshtaki hacker?", p: "Tumia Sue-A-Hacker Enterprise.", l: "ID" },
-        CA: { t: "Sue-A-Hacker Enterprise | Portal Legal Oficial", b: "Iniciar Demanda", q: "Vols demandar un hacker?", p: "Utilitza Sue-A-Hacker Enterprise.", l: "ID" },
-        TL: { t: "Sue-A-Hacker Enterprise | Opisyal na Legal Portal", b: "Simulan ang Demanda", q: "Gusto mo bang magdemanda?", p: "Gamitin ang Sue-A-Hacker Enterprise.", l: "ID" },
-        SR: { t: "Sue-A-Hacker Enterprise | Званични правни портал", b: "Покрени тужбу", q: "Желите да тужите хакера?", p: "Користите Sue-A-Hacker Enterprise.", l: "ID" }
+        EN: { n: "English", t: "Sue-A-Hacker Enterprise | Official Legal Portal", b: "Start Lawsuit", q: "Do you want to sue a hacker?", p: "Then use the Sue-A-Hacker Enterprise! This formal declaration initiates the asset recovery protocol for the 2026 cycle. Our system performs a high-fidelity audit of decentralized holdings, jurisdiction conflicts, and forensic malware signatures to ensure maximum litigation success.", l: "Forensic ID" },
+        ES: { n: "Español", t: "Sue-A-Hacker Enterprise | Portal Legal Oficial", b: "Iniciar Demanda", q: "¿Quieres demandar a un hacker?", p: "¡Entonces usa Sue-A-Hacker Enterprise! Esta declaración formal inicia el protocolo de recuperación de activos para el ciclo 2026. Nuestro sistema realiza una auditoría de alta fidelidad.", l: "ID Forense" },
+        FR: { n: "Français", t: "Sue-A-Hacker Enterprise | Portail Juridique Officiel", b: "Démarrer Procès", q: "Voulez-vous poursuivre un hacker ?", p: "Alors utilisez Sue-A-Hacker Enterprise ! Cette déclaration formelle lance le protocole de récupération des avoirs pour le cycle 2026.", l: "Identifiant" },
+        DE: { n: "Deutsch", t: "Sue-A-Hacker Enterprise | Offizielles Rechtsportal", b: "Klage Starten", q: "Möchten Sie einen Hacker verklagen?", p: "Dann nutzen Sie Sue-A-Hacker Enterprise! Diese formelle Erklärung leitet das Asset-Recovery-Protokoll für den Zyklus 2026 ein.", l: "Forensische ID" },
+        IT: { n: "Italiano", t: "Sue-A-Hacker Enterprise | Portale Legale Ufficiale", b: "Avvia Causa", q: "Vuoi fare causa a un hacker?", p: "Usa Sue-A-Hacker Enterprise! Questa dichiarazione formale avvia il protocollo di recupero dei beni per il ciclo 2026.", l: "ID Forense" },
+        PT: { n: "Português", t: "Sue-A-Hacker Enterprise | Portal Jurídico Oficial", b: "Iniciar Processo", q: "Quer processar um hacker?", p: "Use o Sue-A-Hacker Enterprise! Esta declaração formal inicia o protocolo de recuperação de ativos para o ciclo de 2026.", l: "ID Forense" },
+        RU: { n: "Русский", t: "Sue-A-Hacker Enterprise | Официальный портал", b: "Начать иск", q: "Вы хотите подать в суд на хакера?", p: "Используйте Sue-A-Hacker Enterprise! Эта официальная декларация инициирует протокол восстановления активов на 2026 год.", l: "ID Документа" },
+        ZH: { n: "中文", t: "Sue-A-Hacker Enterprise | 官方法律门户", b: "开始诉讼", q: "你想起诉黑客吗？", p: "那就使用 Sue-A-Hacker Enterprise！此正式声明启动了 2026 年周期的资产追回协议。", l: "取证 ID" },
+        JP: { n: "日本語", t: "Sue-A-Hacker Enterprise | 公式法的ポータル", b: "訴訟を開始する", q: "ハッカーを訴えたいですか？", p: "それなら Sue-A-Hacker Enterprise を使用してください！この正式な宣言により、2026 年サイクルの资产回収が開始されます。", l: "法科学 ID" },
+        KR: { n: "한국어", t: "Sue-A-Hacker Enterprise | 공식 법률 포털", b: "소송 시작", q: "해커를 고소하고 싶습니까?", p: "Sue-A-Hacker Enterprise를 사용하십시오! 이 공식 선언은 2026년 주기의 자산 회수 프로토콜을 시작합니다.", l: "법의학 ID" },
+        NL: { n: "Nederlands", t: "Sue-A-Hacker Enterprise | Officieel Juridisch Portaal", b: "Rechtszaak Starten", q: "Wilt u een hacker aanklagen?", p: "Gebruik Sue-A-Hacker Enterprise! Deze verklaring initieert het protocol voor 2026.", l: "ID" },
+        TR: { n: "Türkçe", t: "Sue-A-Hacker Enterprise | Resmi Hukuk Portalı", b: "Davayı Başlat", q: "Bir bilgisayar korsanına dava açmak ister misiniz?", p: "Sue-A-Hacker Enterprise'ı kullanın! Bu beyan 2026 kurtarma protokolünü başlatır.", l: "Adli Kimlik" },
+        SV: { n: "Svenska", t: "Sue-A-Hacker Enterprise | Officiell Juridisk Portal", b: "Starta Rättegång", q: "Vill du stämma en hacker?", p: "Använd Sue-A-Hacker Enterprise! Denna deklaration inleder protokollet för 2026.", l: "ID" },
+        PL: { n: "Polski", t: "Sue-A-Hacker Enterprise | Oficjalny Portal Prawny", b: "Rozpocznij Pozew", q: "Chcesz pozwać hakera?", p: "Użyj Sue-A-Hacker Enterprise! Ta deklaracja inicjuje protokół odzyskiwania aktywów 2026.", l: "ID" },
+        AR: { n: "العربية", t: "Sue-A-Hacker Enterprise | البوابة القانونية الرسمية", b: "بدء المقاضاة", q: "هل تريد مقاضاة مخترق؟", p: "استخدم Sue-A-Hacker Enterprise! يبدأ هذا الإعلان بروتوكول استرداد الأصول لعام 2026.", l: "معرف" },
+        HI: { n: "हिन्दी", t: "Sue-A-Hacker Enterprise | आधिकारिक कानूनी पोर्टल", b: "मुकदमा शुरू करें", q: "क्या आप हैकर पर मुकदमा करना चाहते हैं?", p: "Sue-A-Hacker Enterprise का उपयोग करें! यह 2026 चक्र शुरू करता है।", l: "आईडी" },
+        VI: { n: "Tiếng Việt", t: "Sue-A-Hacker Enterprise | Cổng Pháp Lý Chính Thức", b: "Bắt Đầu Kiện", q: "Bạn có muốn kiện hacker không?", p: "Hãy sử dụng Sue-A-Hacker Enterprise! Tuyên bố này khởi động giao thức 2026.", l: "ID" },
+        TH: { n: "ไทย", t: "Sue-A-Hacker Enterprise | พอร์ทัลกฎหมายอย่างเป็นทางการ", b: "เริ่มการฟ้องร้อง", q: "คุณต้องการฟ้องแฮ็กเกอร์หรือไม่?", p: "ใช้ Sue-A-Hacker Enterprise! นี่เป็นการเริ่มต้นโปรโตคอลปี 2026.", l: "รหัส" },
+        ID: { n: "Bahasa Indonesia", t: "Sue-A-Hacker Enterprise | Portal Hukum Resmi", b: "Mulai Gugatan", q: "Ingin menuntut peretas?", p: "Gunakan Sue-A-Hacker Enterprise! Deklarasi ini memulai protokol 2026.", l: "ID" },
+        HE: { n: "עברית", t: "Sue-A-Hacker Enterprise | פורטל משפטי רשמי", b: "התחל תביעה", q: "רוצה לתבוע האקר?", p: "השתמש ב-Sue-A-Hacker Enterprise! הצהרה זו יוזמת את פרוטוקול 2026.", l: "מזהה" },
+        EL: { n: "Ελληνικά", t: "Sue-A-Hacker Enterprise | Επίσημη Νομική Πύλη", b: "Έναρξη Μήνυσης", q: "Θέλετε να μηνύσετε έναν χάκερ;", p: "Χρησιμοποιήστε το Sue-A-Hacker Enterprise για το 2026.", l: "ID" },
+        DA: { n: "Dansk", t: "Sue-A-Hacker Enterprise | Officiel Juridisk Portal", b: "Start Sag", q: "Vil du sagsøge en hacker?", p: "Brug Sue-A-Hacker Enterprise! Dette starter protokollen for 2026.", l: "ID" },
+        FI: { n: "Suomi", t: "Sue-A-Hacker Enterprise | Virallinen Lakioikeusportaali", b: "Aloita Kanne", q: "Haluatko haastaa hakkerin?", p: "Käytä Sue-A-Hacker Enterprisea vuoden 2026 protokollaan.", l: "ID" },
+        NO: { n: "Norsk", t: "Sue-A-Hacker Enterprise | Offisiell Juridisk Portal", b: "Start Søksmål", q: "Vil du saksøke en hacker?", p: "Bruk Sue-A-Hacker Enterprise! Starter 2026-protokollen.", l: "ID" },
+        CS: { n: "Čeština", t: "Sue-A-Hacker Enterprise | Oficiální Právní Portál", b: "Zahájit Žalobu", q: "Chcete žalovat hackera?", p: "Použijte Sue-A-Hacker Enterprise pro protokol 2026.", l: "ID" },
+        HU: { n: "Magyar", t: "Sue-A-Hacker Enterprise | Hivatalos Jogi Portál", b: "Per Indítása", q: "Be akar perelni egy hackert?", p: "Használja a Sue-A-Hacker Enterprise-t a 2026-os ciklushoz.", l: "ID" },
+        RO: { n: "Română", t: "Sue-A-Hacker Enterprise | Portal Juridic Oficial", b: "Începe Procesul", q: "Vrei să dai în judecată un hacker?", p: "Folosește Sue-A-Hacker Enterprise pentru 2026.", l: "ID" },
+        SK: { n: "Slovenčina", t: "Sue-A-Hacker Enterprise | Oficiálny Právny Portál", b: "Začať Žalobu", q: "Chcete žalovať hackera?", p: "Použite Sue-A-Hacker Enterprise pre rok 2026.", l: "ID" },
+        UK: { n: "Українська", t: "Sue-A-Hacker Enterprise | Офіційний юридичний портал", b: "Розпочати позов", q: "Хочете подати в суд?", p: "Використовуйте Sue-A-Hacker Enterprise для 2026 року.", l: "ID" },
+        BG: { n: "Български", t: "Sue-A-Hacker Enterprise | Официален правен портал", b: "Стартирай иск", q: "Искате ли да съдите хакер?", p: "Използвайте Sue-A-Hacker Enterprise.", l: "ID" },
+        HR: { n: "Hrvatski", t: "Sue-A-Hacker Enterprise | Službeni pravni portal", b: "Pokreni tužbu", q: "Želite li tužiti hakera?", p: "Koristite Sue-A-Hacker Enterprise.", l: "ID" },
+        LT: { n: "Lietuvių", t: "Sue-A-Hacker Enterprise | Oficialus teisinių paslaugų portalas", b: "Pradėti ieškinį", q: "Norite paduoti į teismą?", p: "Naudokite Sue-A-Hacker Enterprise.", l: "ID" },
+        LV: { n: "Latviešu", t: "Sue-A-Hacker Enterprise | Oficiālais juridiskais portāls", b: "Sākt tiesvedību", q: "Vai vēlaties sūdzēt tiesā?", p: "Izmantojiet Sue-A-Hacker Enterprise.", l: "ID" },
+        ET: { n: "Eesti", t: "Sue-A-Hacker Enterprise | Ametlik õigusportaal", b: "Alusta hagi", q: "Kas soovite kaevata?", p: "Kasutage Sue-A-Hacker Enterprise'i.", l: "ID" },
+        SL: { n: "Slovenščina", t: "Sue-A-Hacker Enterprise | Uradni pravni portal", b: "Začni tožbo", q: "Želite tožiti hekerja?", p: "Uporabite Sue-A-Hacker Enterprise.", l: "ID" },
+        MS: { n: "Bahasa Melayu", t: "Sue-A-Hacker Enterprise | Portal Undang-undang Rasmi", b: "Mulakan Saman", q: "Ingin saman penggodam?", p: "Gunakan Sue-A-Hacker Enterprise.", l: "ID" },
+        FA: { n: "فارسی", t: "Sue-A-Hacker Enterprise | درگاه رسمی حقوقی", b: "شروع شکایت", q: "می‌خواهید شکایت کنید؟", p: "از Sue-A-Hacker Enterprise استفاده کنید.", l: "شناسه" },
+        BN: { n: "বাংলা", t: "Sue-A-Hacker Enterprise | অফিসিয়াল আইনি পোর্টাল", b: "মামলা শুরু করুন", q: "মামলা করতে চান?", p: "Sue-A-Hacker Enterprise ব্যবহার করুন।", l: "আইডি" },
+        TA: { n: "தமிழ்", t: "Sue-A-Hacker Enterprise | அதிகாரப்பூர்வ சட்ட போர்டல்", b: "வழக்கைத் தொடங்கு", q: "வழக்கு தொடர வேண்டுமா?", p: "Sue-A-Hacker Enterprise ஐப் பயன்படுத்தவும்.", l: "ஐடி" },
+        TE: { n: "తెలుగు", t: "Sue-A-Hacker Enterprise | అధికారిక చట్టపరమైన పోర్టల్", b: "దావాను ప్రారంభించండి", q: "దావా వేయాలనుకుంటున్నారా?", p: "Sue-A-Hacker Enterprise వాడండి.", l: "ఐడి" },
+        KN: { n: "ಕನ್ನಡ", t: "Sue-A-Hacker Enterprise | ಅಧಿಕೃತ ಕಾನೂನು ಪೋರ್ಟಲ್", b: "ದಾವೆ ಪ್ರಾರಂಭಿಸಿ", q: "ದಾವೆ ಹೂಡಬೇಕೆ?", p: "Sue-A-Hacker Enterprise ಬಳಸಿ.", l: "ಐಡಿ" },
+        ML: { n: "മലയാളം", t: "Sue-A-Hacker Enterprise | ഔദ്യോഗിക നിയമ പോർട്ടൽ", b: "കേസ് ആരംഭിക്കുക", q: "കേസ് കൊടുക്കണോ?", p: "Sue-A-Hacker Enterprise ഉപയോഗിക്കുക.", l: "ഐഡി" },
+        MR: { n: "मराठी", t: "Sue-A-Hacker Enterprise | अधिकृत कायदेशीर पोर्टल", b: "खटला सुरू करा", q: "खटला भरायचा आहे?", p: "Sue-A-Hacker Enterprise वापरा.", l: "आयडी" },
+        GU: { n: "ગુજરાતી", t: "Sue-A-Hacker Enterprise | સત્તાવાર કાયદાકીય પોર્ટલ", b: "દાવો શરૂ કરો", q: "દાવો માંડવો છે?", p: "Sue-A-Hacker Enterprise વાપરો.", l: "આઈડી" },
+        PA: { n: "ਪੰਜਾਬੀ", t: "Sue-A-Hacker Enterprise | ਅਧਿਕਾਰਤ ਕਾਨੂੰਨੀ ਪੋਰਟਲ", b: "मुਕੱਦਮਾ ਸ਼ੁਰੂ ਕਰੋ", q: "ਮੁਕੱਦਮਾ ਕਰਨਾ ਹੈ?", p: "Sue-A-Hacker Enterprise ਵਰਤੋ।", l: "ਆਈਡੀ" },
+        UR: { n: "اردو", t: "Sue-A-Hacker Enterprise | آفیشل قانونی پورٹل", b: "مقدمہ شروع کریں", q: "کیا آپ مقدمہ کرنا چاہتے ہیں؟", p: "Sue-A-Hacker Enterprise استعمال کریں۔", l: "شناخت" },
+        SW: { n: "Kiswahili", t: "Sue-A-Hacker Enterprise | Tovuti Rasmi ya Kisheria", b: "Anza Kesi", q: "Je, unataka kumshtaki hacker?", p: "Tumia Sue-A-Hacker Enterprise.", l: "ID" },
+        CA: { n: "Català", t: "Sue-A-Hacker Enterprise | Portal Legal Oficial", b: "Iniciar Demanda", q: "Vols demandar un hacker?", p: "Utilitza Sue-A-Hacker Enterprise.", l: "ID" },
+        TL: { n: "Tagalog", t: "Sue-A-Hacker Enterprise | Opisyal na Legal Portal", b: "Simulan ang Demanda", q: "Gusto mo bang magdemanda?", p: "Gamitin ang Sue-A-Hacker Enterprise.", l: "ID" },
+        SR: { n: "Српски", t: "Sue-A-Hacker Enterprise | Званични правни портал", b: "Покрени тужбу", q: "Желите да тужите хакера?", p: "Користите Sue-A-Hacker Enterprise.", l: "ID" }
     },
     init() {
         const s = document.getElementById('l-sel');
         Object.keys(this.i18n).forEach(k => {
-            let o = document.createElement('option'); o.value = k; o.innerText = k; s.appendChild(o);
+            let o = document.createElement('option'); o.value = k; o.innerText = this.i18n[k].n; s.appendChild(o);
         });
         this.setL("EN"); this.up();
     },
@@ -120,6 +141,11 @@ const CORE = {
         document.getElementById('pt').innerText = d.p;
         document.getElementById('ll').innerText = d.l;
         document.title = d.t;
+    },
+    setC(v) {
+        const r = { USD: 1, EUR: 0.92, GBP: 0.79, JPY: 151.2, CNY: 7.23 };
+        document.getElementById('vn').innerText = (1500000 * (r[v] || 1)).toLocaleString();
+        document.getElementById('vcur').innerText = v;
     },
     up() {
         const types = ["BRIEF", "MOTION", "ORDER", "AFFIDAVIT"];
