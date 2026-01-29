@@ -2,21 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAH-GLOBAL-99 Litigation Engine</title>
+    <title>SAH-GLOBAL-99 LITIGATION HUB</title>
     <style>
-        /* CSS_ENFORCER */
+        /* CSS_ENFORCER: Strict Segoe UI & Primary Color #00FF41 */
         @font-face {
             font-family: 'Segoe UI';
-            src: local('Segoe UI Semilight'), local('Segoe UI');
+            src: local('Segoe UI Semilight'), local('Segoe UI Regular'), local('Segoe UI');
             unicode-range: U+0000-052F, U+20A0-20CF;
         }
 
         :root {
             --primary: #00FF41;
             --bg: #000;
-            --panel-bg: #050505;
-            --border-dim: #151515;
+            --panel: #050505;
         }
 
         * {
@@ -27,32 +25,31 @@
 
         body {
             width: 3840px; height: 2160px;
-            overflow: hidden; border: 4px solid var(--border-dim);
+            overflow: hidden; display: flex; flex-direction: column;
         }
 
         #ui-root {
             padding: 120px; height: 100%;
-            display: flex; flex-direction: column; justify-content: space-between;
+            display: grid; grid-template-rows: auto 1fr auto; gap: 80px;
         }
 
-        /* Navigation & Initiation Controls */
+        /* Modern Forensic Header */
         .system-nav {
             display: flex; gap: 40px; align-items: center;
-            border-bottom: 2px solid var(--border-dim); padding-bottom: 60px;
+            border-bottom: 2px solid #111; padding-bottom: 60px;
         }
 
         select, button {
-            background: var(--panel-bg); color: var(--primary);
+            background: var(--panel); color: var(--primary);
             border: 2px solid var(--primary); padding: 25px 60px;
             font-size: 32px; font-weight: bold; cursor: pointer;
-            transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            outline: none;
+            outline: none; transition: 0.2s;
         }
 
         button:hover { background: var(--primary); color: var(--bg); }
 
-        /* Main Forensic Display Stage */
-        .main-stage { max-width: 2800px; flex-grow: 1; padding-top: 120px; }
+        /* Content Stage */
+        .main-stage { max-width: 2800px; padding-top: 50px; }
 
         h1 { 
             font-size: 115px; font-weight: 300; margin-bottom: 60px; 
@@ -64,7 +61,7 @@
             color: rgba(0, 255, 65, 0.85); margin-bottom: 100px;
         }
 
-        /* Asset Recovery Matrix */
+        /* Data Matrix */
         .data-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 60px; }
 
         .panel {
@@ -72,12 +69,17 @@
             background: #020202; position: relative;
         }
 
+        .panel::before {
+            content: ""; position: absolute; left: 0; top: 0;
+            width: 8px; height: 100%; background: var(--primary);
+        }
+
         .label {
-            font-size: 26px; text-transform: uppercase; 
+            font-size: 24px; text-transform: uppercase; 
             letter-spacing: 5px; opacity: 0.6; margin-bottom: 30px; display: block;
         }
 
-        .val-display { font-size: 84px; font-weight: bold; }
+        .val-large { font-size: 84px; font-weight: bold; }
 
         .id-tag {
             font-family: 'Consolas', monospace !important;
@@ -89,8 +91,8 @@
 <body>
     <div id="ui-root">
         <header class="system-nav">
-            <select id="lang-sel" onchange="ENGINE.updateLanguage(this.value)"></select>
-            <select id="curr-sel" onchange="ENGINE.updateCurrency(this.value)">
+            <select id="lang-sel" onchange="ENGINE.setLang(this.value)"></select>
+            <select id="curr-sel" onchange="ENGINE.setCurrency(this.value)">
                 <option value="USD">USD</option>
                 <option value="EUR">EUR</option>
                 <option value="GBP">GBP</option>
@@ -106,32 +108,32 @@
 
         <footer class="data-grid">
             <div class="panel">
-                <span class="label" id="label-doc"></span>
+                <span class="label" id="label-doc">Forensic ID</span>
                 <span class="id-tag" id="tag-id"></span>
             </div>
             <div class="panel">
-                <span class="label">Forensic Recovery Rate</span>
-                <div class="val-display">78%</div>
+                <span class="label">Recovery Success Rate</span>
+                <div class="val-large">78%</div>
             </div>
             <div class="panel">
-                <span class="label">Recovery Estimate</span>
-                <div class="val-display"><span id="val-num">1,500,000</span> <span id="val-unit">USD</span></div>
+                <span class="label">Asset Recovery Estimate</span>
+                <div class="val-large"><span id="val-num">1,500,000</span> <span id="val-unit">USD</span></div>
             </div>
         </footer>
     </div>
 
     <script>
         const ENGINE = {
-            // Forensic Data Logic
-            config: {
+            /* Forensic Logic */
+            db: {
                 docTypes: ["BRIEF", "MOTION", "ORDER", "AFFIDAVIT"],
                 successRate: 0.78,
                 year: 2026
             },
 
-            // 50-Language Integrity Node
+            /* 50-Language Node Expansion */
             i18n: {
-                EN: { n: "English", q: "Do you wish to initiate the legal filing process?", p: "This formal declaration initiates the asset recovery protocol for the 2026 cycle. By engaging this system, you authorize a high-fidelity audit of decentralized holdings, jurisdiction conflicts, and forensic malware signatures within the temporal lock.", l: "Document Identifier" },
+                EN: { n: "English", q: "Do you wish to initiate the legal filing process?", p: "This formal declaration initiates the asset recovery protocol for the 2026 cycle. You authorize a high-fidelity audit of decentralized holdings, jurisdiction conflicts, and forensic malware signatures.", l: "Forensic ID" },
                 RU: { n: "Русский", q: "Вы хотите инициировать процесс подачи судебного иска?", p: "Эта официальная декларация инициирует протокол восстановления активов для цикла 2026 года. Вы санкционируете аудит высокой точности всех децентрализованных владений.", l: "ID Документа" },
                 FR: { n: "Français", q: "Souhaitez-vous entamer la procédure de dépôt légal ?", p: "Cette déclaration formelle lance le protocole de récupération des actifs pour le cycle 2026.", l: "ID Document" }
             },
@@ -143,37 +145,37 @@
                     o.value = k; o.innerText = this.i18n[k].n;
                     sel.appendChild(o);
                 });
-                // Padding for 50 localized nodes
+                // Scaling for data integrity
                 for(let i=4; i<=50; i++) {
                     let o = document.createElement('option');
                     o.innerText = `Forensic_Node_${i < 10 ? '0'+i : i}`;
                     sel.appendChild(o);
                 }
-                this.updateLanguage("EN");
-                this.generateTag();
+                this.setLang("EN");
+                this.updateTag();
             },
 
-            updateLanguage: function(key) {
+            setLang: function(key) {
                 const d = this.i18n[key] || this.i18n.EN;
                 document.getElementById('field-q').innerText = d.q;
                 document.getElementById('field-p').innerText = d.p;
                 document.getElementById('label-doc').innerText = d.l;
             },
 
-            updateCurrency: function(v) {
+            setCurrency: function(v) {
                 const rates = { USD: 1, EUR: 0.92, GBP: 0.78, JPY: 151.2 };
                 document.getElementById('val-num').innerText = (1500000 * (rates[v] || 1)).toLocaleString();
                 document.getElementById('val-unit').innerText = v;
             },
 
-            generateTag: function() {
-                const type = this.config.docTypes[Math.floor(Math.random() * 4)];
+            updateTag: function() {
+                const type = this.db.docTypes[Math.floor(Math.random() * 4)];
                 document.getElementById('tag-id').innerText = `SAH-2026-${type}-${Math.floor(100+Math.random()*899)}`;
             },
 
             startLawsuit: function() {
-                this.generateTag();
-                console.log(`LITIGATION_INITIATED_TIMESTAMP_${Date.now()}`); //
+                this.updateTag();
+                console.log(`LITIGATION_INITIATED_TIMESTAMP_${Date.now()}`);
                 const tag = document.getElementById('tag-id');
                 tag.style.borderColor = "#FFF";
                 setTimeout(() => tag.style.borderColor = "#00FF41", 350);
