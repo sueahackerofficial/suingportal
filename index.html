@@ -1,90 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>SAH-GLOBAL-99 ENGINE</title>
-    <style>
-        /* Exact CSS_ENFORCER */
-        @font-face {
-            font-family: 'Segoe UI';
-            src: local('Segoe UI');
-            unicode-range: U+0000-00FF, U+0131, U+0152-0153;
-        }
-        * { 
-            font-family: 'Segoe UI' !important; 
-            background-color: #000;
-            color: #00FF41;
-            margin: 0; padding: 0; box-sizing: border-box;
-        }
-        body { width: 3840px; height: 2160px; overflow: hidden; padding: 80px; }
-        
-        .header { display: flex; justify-content: space-between; border-bottom: 1px solid #111; padding-bottom: 40px; }
-        .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; margin-top: 60px; }
-        
-        .card { border: 1px solid #222; padding: 40px; background: #050505; }
-        .label { font-size: 20px; opacity: 0.5; letter-spacing: 2px; text-transform: uppercase; }
-        .value { font-size: 54px; font-weight: bold; margin-top: 20px; }
-
-        button { 
-            border: 2px solid #00FF41; padding: 20px 50px; cursor: pointer; 
-            font-weight: bold; font-size: 30px; transition: 0.2s;
-        }
-        button:hover { background: #00FF41; color: #000; }
-    </style>
+<meta charset="UTF-8">
+<title>SAH-GLOBAL-99</title>
+<style>
+@font-face { font-family: 'Segoe UI'; src: local('Segoe UI'); unicode-range: U+0000-00FF; }
+* { font-family: 'Segoe UI' !important; background: #000; color: #00FF41; margin: 0; padding: 0; box-sizing: border-box; }
+body { width: 3840px; height: 2160px; overflow: hidden; display: flex; flex-direction: column; padding: 100px; }
+.top-bar { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #111; padding-bottom: 50px; }
+.nav-cluster { display: flex; gap: 30px; }
+select, button { background: #050505; color: #00FF41; border: 2px solid #00FF41; padding: 20px 50px; font-size: 32px; font-weight: bold; cursor: pointer; outline: none; }
+button:hover { background: #00FF41; color: #000; }
+.stage { flex-grow: 1; padding-top: 100px; }
+h1 { font-size: 110px; font-weight: 300; letter-spacing: -2px; margin-bottom: 50px; }
+.para { font-size: 44px; line-height: 1.6; max-width: 2400px; color: rgba(0, 255, 65, 0.8); }
+.matrix { display: grid; grid-template-columns: repeat(3, 1fr); gap: 60px; margin-top: 100px; }
+.card { border: 1px solid #222; padding: 60px; position: relative; }
+.card::after { content: ""; position: absolute; left: 0; top: 0; width: 10px; height: 100%; background: #00FF41; }
+.lab { font-size: 24px; text-transform: uppercase; letter-spacing: 4px; opacity: 0.5; margin-bottom: 25px; display: block; }
+.val { font-size: 80px; font-weight: bold; }
+.tag { font-family: monospace !important; border: 2px dashed #00FF41; padding: 15px 40px; font-size: 56px; }
+</style>
 </head>
 <body>
-    <div class="header">
-        <div id="sys-title" style="font-size: 80px; font-weight: 100;">LITIGATION_HUB_v5.0.12</div>
-        <button onclick="ENGINE.startLawsuit()">FILE_LAWSUIT</button>
-    </div>
-
-    <div class="grid">
-        <div class="card">
-            <span class="label">Forensic ID</span>
-            <div id="tag-field" class="value" style="font-family: monospace !important; border: 1px dashed #00FF41; padding: 10px;">---</div>
-        </div>
-        <div class="card">
-            <span class="label">Recovery Success Rate</span>
-            <div id="rate-field" class="value">0%</div>
-        </div>
-        <div class="card">
-            <span class="label">Security Spec</span>
-            <div class="value" style="font-size: 24px;">AES-512-RSA-8192</div>
-        </div>
-        <div class="card">
-            <span class="label">System Status</span>
-            <div id="status" class="value">SYSTEM_READY</div>
-        </div>
-    </div>
-
-    <div id="map-container" style="margin-top: 60px; border: 1px solid #111;">
-        </div>
-
-    <script>
-        const ENGINE = {
-            // Data directly from SAH-GLOBAL-99 Backend
-            db: {
-                DOC_TYPES: ["BRIEF", "MOTION", "ORDER", "AFFIDAVIT"],
-                SUCCESS_RATE: 0.78,
-                ENCRYPTION: "AES-512-RSA-8192",
-                VERDICT_POSSIBILITIES: ["GUILTY", "NOT_GUILTY", "MISTRIAL", "SETTLED_OUT_OF_COURT"]
-            },
-
-            startLawsuit: function() {
-                const type = this.db.DOC_TYPES[Math.floor(Math.random() * 4)];
-                document.getElementById('tag-field').innerText = `SAH-2026-${type}-${Math.floor(100 + Math.random() * 899)}`;
-                document.getElementById('rate-field').innerText = (this.db.SUCCESS_RATE * 100) + "%";
-                document.getElementById('status').innerText = "ACTIVE_LITIGATION";
-                
-                // Logging
-                console.log(`LITIGATION_INITIATED_TIMESTAMP_${Date.now()}`);
-            }
-        };
-
-        // Initialize display
-        window.onload = () => {
-            document.getElementById('rate-field').innerText = (ENGINE.db.SUCCESS_RATE * 100) + "%";
-        };
-    </script>
+<div id="root">
+<header class="top-bar">
+<div class="nav-cluster">
+<select id="l-sel" onchange="CORE.upL(this.value)"></select>
+<select id="c-sel" onchange="CORE.upC(this.value)">
+<option value="USD">USD</option>
+<option value="EUR">EUR</option>
+<option value="GBP">GBP</option>
+</select>
+</div>
+<button onclick="CORE.start()">FILE_LAWSUIT</button>
+</header>
+<main class="stage">
+<h1 id="q"></h1>
+<p class="para" id="p"></p>
+<div class="matrix">
+<div class="card"><span class="lab" id="ll"></span><span class="tag" id="tid"></span></div>
+<div class="card"><span class="lab">Recovery Rate</span><div class="val">78%</div></div>
+<div class="card"><span class="lab">Asset Value</span><div class="val"><span id="vn">1,500,000</span> <span id="vu">USD</span></div></div>
+</div>
+</main>
+</div>
+<script>
+const CORE = {
+db: { dt: ["BRIEF", "MOTION", "ORDER", "AFFIDAVIT"], rate: 0.78 },
+i18n: {
+EN: { q: "Initiate legal filing process?", p: "Formal declaration for the 2026 cycle. Authorize high-fidelity audit of decentralized holdings and litigation nodes.", l: "Forensic ID", n: "English" },
+FR: { q: "Lancer la poursuite judiciaire ?", p: "Déclaration formelle pour le cycle 2026. Audit haute fidélité des avoirs décentralisés.", l: "ID Judiciaire", n: "Français" }
+},
+init: function() {
+const s = document.getElementById('l-sel');
+Object.keys(this.i18n).forEach(k => { let o = document.createElement('option'); o.value = k; o.innerText = this.i18n[k].n; s.appendChild(o); });
+this.upL("EN");
+this.gen();
+},
+upL: function(k) {
+const d = this.i18n[k];
+document.getElementById('q').innerText = d.q;
+document.getElementById('p').innerText = d.p;
+document.getElementById('ll').innerText = d.l;
+},
+upC: function(v) {
+const r = { USD: 1, EUR: 0.92, GBP: 0.79 };
+document.getElementById('vn').innerText = (1500000 * r[v]).toLocaleString();
+document.getElementById('vu').innerText = v;
+},
+gen: function() {
+const t = this.db.dt[Math.floor(Math.random() * 4)];
+document.getElementById('tid').innerText = `SAH-2026-${t}-${Math.floor(100 + Math.random() * 899)}`;
+},
+start: function() {
+this.gen();
+console.log(`LITIGATION_INIT_TIMESTAMP_${Date.now()}`);
+}
+};
+window.onload = () => CORE.init();
+</script>
 </body>
 </html>
