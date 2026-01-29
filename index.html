@@ -1,108 +1,187 @@
-const SYSTEM_STATE = {
-    year: 2026,
-    language: "EN",
-    currency: "USD",
-    isFiled: false,
-    activeDocument: null
-};
-
-const I18N_DATA = {
-    EN: {
-        question: "Do you wish to initiate the legal filing process?",
-        paragraph: "This formal declaration initiates the asset recovery protocol. By engaging this system, you authorize a high-fidelity audit of decentralized holdings and litigation nodes locked in the 2026 temporal cycle.",
-        start: "START_LAWSUIT",
-        term: "TERMINATE_SESSION",
-        docTag: "DOCUMENT_ID"
-    },
-    RU: {
-        question: "Вы хотите инициировать процесс подачи судебного иска?",
-        paragraph: "Эта официальная декларация инициирует протокол восстановления активов. Используя эту систему, вы санкционируете аудит высокой точности всех децентрализованных владений и узлов судебных разбирательств, заблокированных в цикле 2026 года.",
-        start: "НАЧАТЬ_ИСК",
-        term: "ПРЕКРАТИТЬ_СЕССИЮ",
-        docTag: "ID_ДОКУМЕНТА"
-    },
-    DE: {
-        question: "Möchten Sie das gerichtliche Einreichungsverfahren einleiten?",
-        paragraph: "Diese formelle Erklärung leitet das Protokoll zur Wiedererlangung von Vermögenswerten ein. Durch die Nutzung dieses Systems autorisieren Sie eine Prüfung dezentraler Bestände im Zeitzyklus 2026.",
-        start: "KLAGE_STARTEN",
-        term: "SITZUNG_BEENDEN",
-        docTag: "DOKUMENT_ID"
-    }
-};
-
-const CURRENCIES = ["USD", "EUR", "GBP", "RUB", "JPY"];
-
-const ENGINE = {
-    // Generates document tags based on forensic document types
-    generateDocTag: function(typeIndex) {
-        const types = ["BRIEF", "MOTION", "ORDER", "AFFIDAVIT"];
-        const type = types[typeIndex % 4];
-        return `SAH-${SYSTEM_STATE.year}-${type}-${Math.floor(Math.random() * 1000)}`;
-    },
-
-    updateUI: function() {
-        const lang = SYSTEM_STATE.language;
-        document.getElementById('question-text').innerText = I18N_DATA[lang].question;
-        document.getElementById('para-text').innerText = I18N_DATA[lang].paragraph;
-        document.getElementById('start-btn').innerText = I18N_DATA[lang].start;
-        document.getElementById('doc-tag-label').innerText = I18N_DATA[lang].docTag;
-    },
-
-    changeLang: function(val) { SYSTEM_STATE.language = val; this.updateUI(); },
-    
-    changeCurrency: function(val) { 
-        SYSTEM_STATE.currency = val;
-        const rate = { "USD": 1.0, "EUR": 0.92, "GBP": 0.79, "RUB": 90.5, "JPY": 150.2 }[val];
-        document.getElementById('valuation-display').innerText = (1500000 * rate).toLocaleString();
-    },
-
-    terminate: function() {
-        document.body.innerHTML = `<div style="display:flex;justify-content:center;align-items:center;height:100vh;background:#000;color:#00FF41;"><h1>SESSION_WIPED_2026</h1></div>`;
-    }
-};
-
-(function init() {
-    // CSS Enforcement: Ensuring Segoe UI Regular, Bold, and Italic
-    const style = document.createElement('style');
-    style.innerHTML = `
-        @font-face { font-family: 'Segoe UI'; src: local('Segoe UI'); unicode-range: U+0000-04FF; }
-        * { font-family: 'Segoe UI', sans-serif !important; background-color: #000; color: #00FF41; box-sizing: border-box; }
-        #ui-layer { width: 3840px; height: 2160px; padding: 100px; }
-        .controls { display: flex; gap: 40px; margin-bottom: 60px; }
-        select, button { background: #111; color: #00FF41; border: 1px solid #00FF41; padding: 15px; font-size: 24px; cursor: pointer; }
-        h2 { font-weight: normal; font-size: 48px; margin-bottom: 20px; text-transform: none; }
-        .doc-tag { font-family: 'Courier New', monospace; background: #111; padding: 5px 15px; border-radius: 4px; border: 1px dashed #00FF41; }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SAH-GLOBAL-99 LITIGATION HUB</title>
+    <style>
+        @font-face { 
+            font-family: 'Segoe UI'; 
+            src: local('Segoe UI Semilight'), local('Segoe UI Regular'), local('Segoe UI'); 
+            unicode-range: U+0000-052F, U+20A0-20CF, U+2100-214F; 
+        }
+        * { 
+            font-family: 'Segoe UI', sans-serif !important; 
+            background-color: #000; 
+            color: #00FF41; 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0;
+        }
+        body { width: 3840px; height: 2160px; overflow: hidden; }
+        #ui-layer { padding: 100px; height: 100%; display: flex; flex-direction: column; }
+        .controls { display: flex; gap: 40px; margin-bottom: 60px; align-items: center; }
+        
+        /* Optimized Dropdown for 50+ entries */
+        select { 
+            background: #111; 
+            color: #00FF41; 
+            border: 1px solid #00FF41; 
+            padding: 15px 30px; 
+            font-size: 24px; 
+            font-weight: bold;
+            cursor: pointer;
+            max-height: 400px;
+        }
+        button { 
+            background: #111; 
+            color: #00FF41; 
+            border: 1px solid #00FF41; 
+            padding: 15px 45px; 
+            font-size: 24px; 
+            font-weight: 900;
+            cursor: pointer;
+        }
         #term-btn { border-color: #FF0000; color: #FF0000; }
-    `;
-    document.head.appendChild(style);
-
-    const root = document.createElement('div');
-    root.id = "ui-layer";
-    root.innerHTML = `
+        
+        h2 { font-weight: normal; font-size: 56px; margin-bottom: 30px; text-transform: none; }
+        p { font-size: 32px; line-height: 1.5; max-width: 1800px; margin-bottom: 50px; opacity: 0.9; }
+        
+        .doc-tag-container { font-size: 30px; margin-bottom: 50px; }
+        .doc-tag { font-family: 'Courier New', monospace; background: #0A0A0A; padding: 10px 20px; border: 1px dashed #00FF41; }
+        
+        .metric-panel {
+            padding: 40px;
+            border: 1px solid #222;
+            background: #050505;
+            font-size: 40px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div id="ui-layer">
         <div class="controls">
-            <select onchange="ENGINE.changeLang(this.value)">
-                <option value="EN">English</option>
-                <option value="RU">Русский</option>
-                <option value="DE">Deutsch</option>
+            <select id="lang-select" onchange="ENGINE.changeLang(this.value)"></select>
+            <select id="curr-select" onchange="ENGINE.changeCurrency(this.value)">
+                <option value="USD">USD</option>
+                <option value="EUR">EUR</option>
+                <option value="GBP">GBP</option>
+                <option value="JPY">JPY</option>
+                <option value="CHF">CHF</option>
             </select>
-            <select onchange="ENGINE.changeCurrency(this.value)">
-                ${CURRENCIES.map(c => `<option value="${c}">${c}</option>`).join('')}
-            </select>
-            <button id="start-btn" onclick="ENGINE.updateUI()">${I18N_DATA.EN.start}</button>
-            <button id="term-btn" onclick="ENGINE.terminate()">${I18N_DATA.EN.term}</button>
-        </div>
-        
-        <h2 id="question-text">${I18N_DATA.EN.question}</h2>
-        <p id="para-text">${I18N_DATA.EN.paragraph}</p>
-        
-        <div style="font-size: 28px; margin-bottom: 40px;">
-            <span id="doc-tag-label">${I18N_DATA.EN.docTag}</span>: 
-            <span class="doc-tag">${ENGINE.generateDocTag(2)}</span>
+            <button onclick="ENGINE.initiateFiling()">START_LAWSUIT</button>
+            <button id="term-btn" onclick="ENGINE.terminate()">TERMINATE_SESSION</button>
         </div>
 
-        <div style="font-size: 32px; border-top: 1px solid #333; pt: 20px;">
-            ESTIMATED RECOVERY: <span id="valuation-display">1,500,000</span> ${SYSTEM_STATE.currency}
+        <h2 id="question-text"></h2>
+        <p id="para-text"></p>
+        
+        <div class="doc-tag-container">
+            <span id="doc-tag-label"></span>: <span class="doc-tag" id="active-doc-tag"></span>
         </div>
-    `;
-    document.body.appendChild(root);
-})();
+
+        <div class="metric-panel">
+            RECOVERY_ESTIMATE: <span id="valuation-display">1,500,000</span> <span id="curr-label">USD</span>
+        </div>
+    </div>
+
+    <script>
+        const ENGINE = {
+            languages: {
+                "EN": { name: "English", q: "Do you wish to initiate the legal filing process?", p: "This formal declaration initiates the asset recovery protocol for the 2026 cycle.", label: "DOCUMENT_ID" },
+                "RU": { name: "Русский", q: "Вы хотите инициировать процесс подачи судебного иска?", p: "Эта декларация инициирует протокол восстановления активов для цикла 2026 года.", label: "ID_ДОКУМЕНТА" },
+                "DE": { name: "Deutsch", q: "Möchten Sie das gerichtliche Einreichungsverfahren einleiten?", p: "Diese formelle Erklärung leitet das Protokoll zur Wiedererlangung von Vermögenswerten ein.", label: "DOKUMENT_ID" },
+                "FR": { name: "Français", q: "Souhaitez-vous entamer la procédure de dépôt légal ?", p: "Cette déclaration formelle lance le protocole de récupération des actifs.", label: "ID_DOCUMENT" },
+                "ES": { name: "Español", q: "¿Desea iniciar el proceso de presentación legal?", p: "Esta declaración formal inicia el protocolo de recuperación de activos.", label: "ID_DOCUMENTO" },
+                "IT": { name: "Italiano", q: "Desidera avviare la procedura di deposito legale?", p: "Questa dichiarazione formale avvia il protocollo di recupero beni.", label: "ID_DOCUMENTO" },
+                "PT": { name: "Português", q: "Deseja iniciar o processo de arquivamento legal?", p: "Esta declaração formal inicia o protocolo de recuperação de ativos.", label: "ID_DOCUMENTO" },
+                "NL": { name: "Nederlands", q: "Wilt u de juridische indieningsprocedure starten?", p: "Deze formele verklaring start het protocol voor de onttrekking van activa.", label: "DOCUMENT_ID" },
+                "PL": { name: "Polski", q: "Czy chcesz rozpocząć proces składania wniosku prawnego?", p: "Niniejsza formalna deklaracja inicjuje protokół odzyskiwania aktywów.", label: "ID_DOKUMENTU" },
+                "TR": { name: "Türkçe", q: "Yasal dosyalama sürecini başlatmak istiyor musunuz?", p: "Bu resmi beyan, varlık geri kazanım protokolünü başlatır.", label: "BELGE_KIMLIĞI" },
+                "SV": { name: "Svenska", q: "Vill du initiera den juridiska ansökningsprocessen?", p: "Denna formella deklaration initierar protokollet för återvinning av tillgångar.", label: "DOKUMENT_ID" },
+                "DA": { name: "Dansk", q: "Ønsker du at indlede den juridiske ansøgningsproces?", p: "Denne formelle erklæring indleder protokollen for inddrivelse af aktiver.", label: "DOKUMENT_ID" },
+                "FI": { name: "Suomi", q: "Haluatko aloittaa oikeudellisen vireillepanoprosessin?", p: "Tämä virallinen ilmoitus käynnistää varojen palautusprotokollan.", label: "ASIAKIRJAN_TUNNUS" },
+                "NO": { name: "Norsk", q: "Ønsker du å starte den juridiske arkiveringsprosessen?", p: "Denne formelle erklæringen starter protokollen for gjenvinning av eiendeler.", label: "DOKUMENT_ID" },
+                "CS": { name: "Čeština", q: "Chcete zahájit proces právního podání?", p: "Toto formální prohlášení zahajuje protokol o vymáhání majetku.", label: "ID_DOKUMENTU" },
+                "HU": { name: "Magyar", q: "Szeretné elindítani a jogi benyújtási folyamatot?", p: "Ez a hivatalos nyilatkozat elindítja az eszköz-visszaszerzési protokollt.", label: "DOKUMENTUM_AZONOSÍTÓ" },
+                "RO": { name: "Română", q: "Doriți să inițiați procesul de depunere legală?", p: "Această declarație formală inițiază protocolul de recuperare a activelor.", label: "ID_DOCUMENT" },
+                "EL": { name: "Ελληνικά", q: "Επιθυμείτε να ξεκινήσετε τη νομική διαδικασία κατάθεσης;", p: "Αυτή η επίσημη δήλωση ξεκινά το πρωτόκολλο ανάκτησης περιουσιακών στοιχείων.", label: "ID_ΕΓΓΡΑΦΟΥ" },
+                "UK": { name: "Українська", q: "Ви хочете розпочати процес подання судового позову?", p: "Ця офіційна декларація ініціює протокол повернення активів.", label: "ID_ДОКУМЕНТА" },
+                "BG": { name: "Български", q: "Желаете ли да започнете процеса на правно подаване?", p: "Тази официална декларация инициира протокола за възстановяване на активи.", label: "ID_ДОКУМЕНТ" },
+                "HR": { name: "Hrvatski", q: "Želite li pokrenuti postupak pravnog podnošenja?", p: "Ova formalna izjava pokreće protokol za povrat imovine.", label: "ID_DOKUMENTA" },
+                "SK": { name: "Slovenčina", q: "Chcete začať proces právneho podania?", p: "Toto formálne vyhlásenie spúšťa protokol na vymáhanie majetku.", label: "ID_DOKUMENTU" },
+                "SL": { name: "Slovenščina", q: "Ali želite sprožiti postopek pravne vložitve?", p: "Ta uradna izjava sproži protokol za izterjavo premoženja.", label: "ID_DOKUMENTA" },
+                "ET": { name: "Eesti", q: "Kas soovite algatada juriidilise esitamise protsessi?", p: "See ametlik deklaratsioon käivitab varade sissenõudmise protokolli.", label: "DOKUMENDI_ID" },
+                "LV": { name: "Latviešu", q: "Vai vēlaties sākt juridisko iesniegšanas procesu?", p: "Šī oficiālā deklarācija sāk aktīvu atgūšanas protokolu.", label: "DOKUMENTA_ID" },
+                "LT": { name: "Lietuvių", q: "Ar norite pradėti teisinio pateikimo procesą?", p: "Ši oficiali deklaracija inicijuoja turto susigrąžinimo protokolą.", label: "DOKUMENTO_ID" },
+                "ID": { name: "Indonesia", q: "Apakah Anda ingin memulai proses pengarsipan hukum?", p: "Deklarasi formal ini memulai protokol pemulihan aset.", label: "ID_DOKUMEN" },
+                "MS": { name: "Melayu", q: "Adakah anda ingin memulakan proses pemfailan undang-undang?", p: "Pengisytiharan rasmi ini memulakan protokol pemulihan aset.", label: "ID_DOKUMEN" },
+                "VI": { name: "Tiếng Việt", q: "Bạn có muốn bắt đầu quá trình nộp đơn pháp lý không?", p: "Tuyên bố chính thức này bắt đầu giao thức thu hồi tài sản.", label: "ID_TÀI_LIỆU" },
+                "TH": { name: "ไทย", q: "คุณต้องการเริ่มต้นกระบวนการยื่นคำร้องทางกฎหมายหรือไม่?", p: "คำประกาศอย่างเป็นทางการนี้เริ่มต้นโปรโตคอลการเรียกคืนทรัพย์สิน", label: "รหัสเอกสาร" },
+                "KO": { name: "한국어", q: "법적 제출 절차를 시작하시겠습니까?", p: "이 공식 선언은 자산 회수 프로토콜을 시작합니다.", label: "문서_ID" },
+                "JA": { name: "日本語", q: "法的届出プロセスを開始しますか？", p: "この正式な宣言により、資産回収プロトコルが開始されます。", label: "ドキュメントID" },
+                "HE": { name: "עברית", q: "האם ברצונך להתחיל בתהליך הגשת המסמכים המשפטיים?", p: "הצהרה רשמית זו מתחילה את פרוטוקול שחזור הנכסים.", label: "מזהה_מסמך" },
+                "AR": { name: "العربية", q: "هل ترغب في بدء عملية تقديم الطلب القانوني؟", p: "يبدأ هذا الإعلان الرسمي بروتوكול استرداد الأصول.", label: "معرف_المستند" },
+                "FA": { name: "فارسی", q: "آیا می خواهید فرآیند ثبت قانونی را آغاز کنید؟", p: "این بیانیه رسمی پروتکل بازیابی دارایی را آغاز می کند.", label: "شناسه_سند" },
+                "HI": { name: "हिन्दी", q: "क्या आप कानूनी फाइलिंग प्रक्रिया शुरू करना चाहते हैं?", p: "यह औपचारिक घोषणा संपत्ति वसूली प्रोटोकॉल शुरू करती है।", label: "दस्तावेज़_आईडी" },
+                "BN": { name: "বাংলা", q: "আপনি কি আইনি ফাইলিং প্রক্রিয়া শুরু করতে চান?", p: "এই আনুষ্ঠানিক ঘোষণা সম্পদ পুনরুদ্ধার প্রোটোকল শুরু করে।", label: "নথি_আইডি" },
+                "PA": { name: "ਪੰਜਾਬੀ", q: "ਕੀ ਤੁਸੀਂ ਕਾਨੂੰਨੀ ਫਾਈਲਿੰਗ ਪ੍ਰਕਿਰਿਆ ਸ਼ੁਰੂ ਕਰਨਾ ਚਾਹੁੰਦੇ ਹੋ?", p: "ਇਹ ਰਸਮੀ ਘੋਸ਼ਣਾ ਸੰਪਤੀ ਦੀ ਵਸੂਲੀ ਪ੍ਰੋਟੋਕੋਲ ਸ਼ੁਰੂ ਕਰਦੀ ਹੈ।", label: "ਦਸਤਾਵੇਜ਼_ਆਈਡੀ" },
+                "GU": { name: "ગુજરાતી", q: "શું તમે કાનૂની ફાઇલિંગ પ્રક્રિયા શરૂ કરવા માંગો છો?", p: "આ ઔપચારિક ઘોષણા અસ્કયામતો પુનઃપ્રાપ્તિ પ્રોટોકોલ શરૂ કરે છે.", label: "દસ્તાવેજ_આઈડી" },
+                "TA": { name: "தமிழ்", q: "சட்டப்பூர்வ தாக்கல் செயல்முறையைத் தொடங்க விரும்புகிறீர்களா?", p: "இந்த முறையான அறிவிப்பு சொத்து மீட்பு நெறிமுறையைத் தொடங்குகிறது.", label: "ஆவண_ஐடி" },
+                "TE": { name: "తెలుగు", q: "మీరు చట్టపరమైన ఫైలింగ్ ప్రక్రియను ప్రారంభించాలనుకుంటున్నారా?", p: "ఈ అధికారిక ప్రకటన ఆస్తి పునరుద్ధరణ ప్రోటోకాల్‌ను ప్రారంభిస్తుంది.", label: "పత్రం_ID" },
+                "KN": { name: "ಕನ್ನಡ", q: "ನೀವು ಕಾನೂನು ಫೈಲಿಂಗ್ ಪ್ರಕ್ರಿಯೆಯನ್ನು ಪ್ರಾರಂಭಿಸಲು ಬಯಸುವಿರಾ?", p: "ಈ ಔಪಚಾರಿಕ ಘೋಷಣೆಯು ಆಸ್ತಿ ಮರುಪಡೆಯುವಿಕೆ ಪ್ರೋಟೋಕಾಲ್ ಅನ್ನು ಪ್ರಾರಂಭಿಸುತ್ತದೆ.", label: "ದಾಖಲೆ_ಐಡಿ" },
+                "ML": { name: "മലയാളം", q: "നിങ്ങൾ നിയമപരമായ ഫയലിംഗ് നടപടികൾ ആരംഭിക്കാൻ ആഗ്രഹിക്കുന്നുണ്ടോ?", p: "ഈ ഔദ്യോഗික പ്രഖ്യാപനം അസറ്റ് റിക്കവറി പ്രോട്ടോക്കോൾ ആരംഭിക്കുന്നു.", label: "രേഖ_ഐഡി" },
+                "MR": { name: "मराठी", q: "तुम्ही कायदेशीर फाइलिंग प्रक्रिया सुरू करू इच्छिता?", p: "ही औपचारिक घोषणा मालमत्ता पुनर्प्राप्ती प्रोटोकॉल सुरू करते।", label: "दस्तऐवज_आयडी" },
+                "UR": { name: "اردو", q: "کیا آپ قانونی فائلنگ کا عمل شروع کرنا چاہتے ہیں؟", p: "یہ باقاعدہ اعلان اثاثوں کی بازیابی کا پروٹوکول شروع کرتا ہے۔", label: "دستاویز_آئی_ڈی" },
+                "SW": { name: "Kiswahili", q: "Je, ungependa kuanzisha mchakato wa uwasilishaji wa kisheria?", p: "Tamko hili rasmi linaanzisha itifaki ya kurejesha mali.", label: "KITAMBULISHO_CHA_HATI" },
+                "AF": { name: "Afrikaans", q: "Wil u die wetlike indieningsproses begin?", p: "Hierdie formele verklaring begin die bateherwinningsprotokol.", label: "DOKUMENT_ID" },
+                "SQ": { name: "Shqip", q: "Dëshironi të filloni procesin e depozitimit ligjor?", p: "Kjo deklaratë formale inicion protokollin e rikuperimit të aseteve.", label: "ID_E_DOKUMENTIT" },
+                "HY": { name: "Հայերեն", q: "Ցանկանու՞մ եք սկսել իրավական փաստաթղթերի ներկայացման գործընթացը:", p: "Այս պաշտոնական հայտարարությունը սկսում է ակտիվների վերականգնման արձանագրությունը:", label: "ՓԱՍՏԱԹՂԹԻ_ID" },
+                "KA": { name: "ქართული", q: "გსურთ დაიწყოთ იურიდიული შეტანის პროცესი?", p: "ეს ოფიციალური დეკლარაცია იწყებს აქტივების აღდგენის პროტოკოლს.", label: "დოკუმენტის_ID" }
+            },
+            
+            init: function() {
+                const sel = document.getElementById('lang-select');
+                Object.keys(this.languages).forEach(key => {
+                    const opt = document.createElement('option');
+                    opt.value = key;
+                    opt.innerText = this.languages[key].name;
+                    sel.appendChild(opt);
+                });
+                this.changeLang("EN");
+                this.refreshTag();
+            },
+
+            changeLang: function(val) {
+                const data = this.languages[val];
+                document.getElementById('question-text').innerText = data.q;
+                document.getElementById('para-text').innerText = data.p;
+                document.getElementById('doc-tag-label').innerText = data.label;
+            },
+
+            changeCurrency: function(val) {
+                const rates = { "USD": 1, "EUR": 0.92, "GBP": 0.79, "JPY": 150.2, "CHF": 0.88 };
+                document.getElementById('valuation-display').innerText = (1500000 * rates[val]).toLocaleString();
+                document.getElementById('curr-label').innerText = val;
+            },
+
+            refreshTag: function() {
+                const types = ["BRIEF", "MOTION", "ORDER", "AFFIDAVIT"];
+                const type = types[Math.floor(Math.random() * types.length)];
+                document.getElementById('active-doc-tag').innerText = `SAH-2026-${type}-${Math.floor(100+Math.random()*900)}`;
+            },
+
+            initiateFiling: function() {
+                this.refreshTag();
+                alert("PROTOCOL_ENGAGED: FILING_COMPLETE");
+            },
+
+            terminate: function() {
+                document.body.innerHTML = `<div style="display:flex;justify-content:center;align-items:center;height:100vh;background:#000;color:#00FF41;"><h1>SESSION_TERMINATED_2026</h1></div>`;
+            }
+        };
+
+        window.onload = () => ENGINE.init();
+    </script>
+</body>
+</html>
