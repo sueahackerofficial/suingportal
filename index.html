@@ -2,80 +2,111 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>SAH-GLOBAL-99</title>
+<title>SAH-GLOBAL-99 ENGINE v5.0.12</title>
 <style>
 @font-face { font-family: 'Segoe UI'; src: local('Segoe UI'); unicode-range: U+0000-00FF; }
-* { font-family: 'Segoe UI' !important; background: #000; color: #00FF41; margin: 0; padding: 0; box-sizing: border-box; }
-body { width: 3840px; height: 2160px; overflow: hidden; display: flex; flex-direction: column; padding: 100px; }
-.top-bar { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #111; padding-bottom: 50px; }
-.nav-cluster { display: flex; gap: 30px; }
-select, button { background: #050505; color: #00FF41; border: 2px solid #00FF41; padding: 20px 50px; font-size: 32px; font-weight: bold; cursor: pointer; outline: none; }
+* { font-family: 'Segoe UI' !important; background: #000; color: #00FF41; margin: 0; padding: 0; box-sizing: border-box; outline: none; }
+body { width: 3840px; height: 2160px; overflow: hidden; display: flex; flex-direction: column; position: relative; }
+#bg-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; opacity: 0.15; pointer-events: none; }
+#ui-layer { position: relative; z-index: 10; padding: 120px; height: 100%; display: flex; flex-direction: column; }
+.t-bar { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #111; padding-bottom: 60px; }
+.n-box { display: flex; gap: 40px; }
+select, button { background: #080808; color: #00FF41; border: 2px solid #00FF41; padding: 30px 70px; font-size: 36px; font-weight: bold; cursor: pointer; transition: 0.2s; }
 button:hover { background: #00FF41; color: #000; }
-.stage { flex-grow: 1; padding-top: 100px; }
-h1 { font-size: 110px; font-weight: 300; letter-spacing: -2px; margin-bottom: 50px; }
-.para { font-size: 44px; line-height: 1.6; max-width: 2400px; color: rgba(0, 255, 65, 0.8); }
-.matrix { display: grid; grid-template-columns: repeat(3, 1fr); gap: 60px; margin-top: 100px; }
-.card { border: 1px solid #222; padding: 60px; position: relative; }
-.card::after { content: ""; position: absolute; left: 0; top: 0; width: 10px; height: 100%; background: #00FF41; }
-.lab { font-size: 24px; text-transform: uppercase; letter-spacing: 4px; opacity: 0.5; margin-bottom: 25px; display: block; }
-.val { font-size: 80px; font-weight: bold; }
-.tag { font-family: monospace !important; border: 2px dashed #00FF41; padding: 15px 40px; font-size: 56px; }
+.main { flex-grow: 1; padding-top: 150px; }
+h1 { font-size: 140px; font-weight: 300; letter-spacing: -4px; margin-bottom: 70px; line-height: 1; }
+.p-text { font-size: 52px; line-height: 1.5; max-width: 2600px; color: rgba(0, 255, 65, 0.7); margin-bottom: 120px; }
+.m-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 60px; }
+.pnl { border: 1px solid #222; padding: 70px; background: rgba(5, 5, 5, 0.9); position: relative; overflow: hidden; }
+.pnl::before { content: ""; position: absolute; left: 0; top: 0; width: 12px; height: 100%; background: #00FF41; }
+.lbl { font-size: 28px; text-transform: uppercase; letter-spacing: 6px; opacity: 0.4; margin-bottom: 35px; display: block; }
+.v-big { font-size: 90px; font-weight: bold; }
+.tag-ui { font-family: monospace !important; border: 3px dashed #00FF41; padding: 25px 50px; font-size: 64px; display: inline-block; margin-top: 10px; }
+.v-list { margin-top: 20px; font-size: 24px; opacity: 0.6; }
+#log { position: absolute; bottom: 40px; right: 40px; width: 800px; height: 300px; font-family: monospace !important; font-size: 18px; color: #008822; overflow: hidden; pointer-events: none; }
 </style>
 </head>
 <body>
-<div id="root">
-<header class="top-bar">
-<div class="nav-cluster">
-<select id="l-sel" onchange="CORE.upL(this.value)"></select>
-<select id="c-sel" onchange="CORE.upC(this.value)">
+<div id="bg-layer">
+<svg width="3840" height="2160" viewBox="0 0 3840 2160" xmlns="http://www.w3.org/2000/svg">
+<path d="M400 1000 H3440 V1800 H400 Z" fill="none" stroke="#00FF41" stroke-width="1"/>
+<path d="M0 540 H3840 M0 1080 H3840 M0 1620 H3840" stroke="#111" stroke-width="1"/>
+<path d="M960 0 V2160 M1920 0 V2160 M2880 0 V2160" stroke="#111" stroke-width="1"/>
+</svg>
+</div>
+<div id="ui-layer">
+<header class="t-bar">
+<div class="n-box">
+<select id="ls" onchange="CORE.setL(this.value)"></select>
+<select id="cs" onchange="CORE.setC(this.value)">
 <option value="USD">USD</option>
 <option value="EUR">EUR</option>
 <option value="GBP">GBP</option>
+<option value="JPY">JPY</option>
 </select>
 </div>
-<button onclick="CORE.start()">FILE_LAWSUIT</button>
+<button onclick="CORE.start()">INITIATE_LITIGATION</button>
 </header>
-<main class="stage">
-<h1 id="q"></h1>
-<p class="para" id="p"></p>
-<div class="matrix">
-<div class="card"><span class="lab" id="ll"></span><span class="tag" id="tid"></span></div>
-<div class="card"><span class="lab">Recovery Rate</span><div class="val">78%</div></div>
-<div class="card"><span class="lab">Asset Value</span><div class="val"><span id="vn">1,500,000</span> <span id="vu">USD</span></div></div>
+<main class="main">
+<h1 id="qh"></h1>
+<p class="p-text" id="pt"></p>
+<div class="m-grid">
+<div class="pnl"><span class="lbl" id="ll"></span><span class="tag-ui" id="ti"></span></div>
+<div class="pnl"><span class="lbl">Recovery Rate</span><div class="v-big">78%</div><div class="v-list">CONFIDENCE: HIGH</div></div>
+<div class="pnl"><span class="lbl">Asset Estimate</span><div class="v-big"><span id="nv">1,500,000</span> <span id="uv">USD</span></div><div class="v-list" id="vl"></div></div>
+<div class="pnl"><span class="lbl">Encryption</span><div class="v-big" style="font-size: 40px;">AES-512-RSA-8192</div><div class="v-list">LOCK: ACTIVE</div></div>
 </div>
 </main>
 </div>
+<div id="log"></div>
 <script>
 const CORE = {
-db: { dt: ["BRIEF", "MOTION", "ORDER", "AFFIDAVIT"], rate: 0.78 },
+db: { dt: ["BRIEF", "MOTION", "ORDER", "AFFIDAVIT"], rate: 0.78, enc: "AES-512-RSA-8192", vp: ["GUILTY", "NOT_GUILTY", "MISTRIAL", "SETTLED"] },
 i18n: {
-EN: { q: "Initiate legal filing process?", p: "Formal declaration for the 2026 cycle. Authorize high-fidelity audit of decentralized holdings and litigation nodes.", l: "Forensic ID", n: "English" },
-FR: { q: "Lancer la poursuite judiciaire ?", p: "Déclaration formelle pour le cycle 2026. Audit haute fidélité des avoirs décentralisés.", l: "ID Judiciaire", n: "Français" }
+EN: { n: "English", q: "Initiate formal legal filing?", p: "Execution of this protocol initiates asset recovery for the 2026 cycle. System will perform a high-fidelity audit of decentralized holdings, litigation nodes, and malware signatures.", l: "Forensic ID" },
+RU: { n: "Русский", q: "Начать подачу иска?", p: "Этот протокол инициирует восстановление активов. Система проведет аудит децентрализованных владений и узлов судебного разбирательства.", l: "ID Документа" },
+FR: { n: "Français", q: "Lancer le dépôt légal ?", p: "Ce protocole lance la récupération des avoirs pour le cycle 2026. Audit haute fidélité des nœuds de litige.", l: "ID Forensic" },
+DE: { n: "Deutsch", q: "Rechtsstreit einleiten?", p: "Dieses Protokoll leitet die Vermögensrückführung für 2026 ein. Prüfung dezentraler Bestände.", l: "Forensische ID" },
+ES: { n: "Español", q: "¿Iniciar demanda legal?", p: "Inicia el protocolo de recuperación de activos 2026. Auditoría de alta fidelidad de tenencias descentralizadas.", l: "ID Forense" }
 },
 init: function() {
-const s = document.getElementById('l-sel');
+const s = document.getElementById('ls');
 Object.keys(this.i18n).forEach(k => { let o = document.createElement('option'); o.value = k; o.innerText = this.i18n[k].n; s.appendChild(o); });
-this.upL("EN");
-this.gen();
+for(let i=6;i<=50;i++){let o=document.createElement('option');o.innerText=`Node_${i < 10 ? '0'+i : i}`;s.appendChild(o);}
+this.setL("EN");
+this.up();
+this.log("SYSTEM_READY_2026");
 },
-upL: function(k) {
-const d = this.i18n[k];
-document.getElementById('q').innerText = d.q;
-document.getElementById('p').innerText = d.p;
+setL: function(k) {
+const d = this.i18n[k] || this.i18n.EN;
+document.getElementById('qh').innerText = d.q;
+document.getElementById('pt').innerText = d.p;
 document.getElementById('ll').innerText = d.l;
+this.log("LANGUAGE_SYNC: " + k);
 },
-upC: function(v) {
-const r = { USD: 1, EUR: 0.92, GBP: 0.79 };
-document.getElementById('vn').innerText = (1500000 * r[v]).toLocaleString();
-document.getElementById('vu').innerText = v;
+setC: function(v) {
+const r = { USD: 1, EUR: 0.92, GBP: 0.78, JPY: 151.2 };
+document.getElementById('nv').innerText = (1500000 * (r[v] || 1)).toLocaleString();
+document.getElementById('uv').innerText = v;
+this.log("CURRENCY_RECALC: " + v);
 },
-gen: function() {
-const t = this.db.dt[Math.floor(Math.random() * 4)];
-document.getElementById('tid').innerText = `SAH-2026-${t}-${Math.floor(100 + Math.random() * 899)}`;
+up: function() {
+const t = this.db.dt[Math.floor(Math.random()*4)];
+document.getElementById('ti').innerText = `SAH-2026-${t}-${Math.floor(100+Math.random()*899)}`;
+document.getElementById('vl').innerText = "VERDICT_MODEL: " + this.db.vp[Math.floor(Math.random()*4)];
 },
 start: function() {
-this.gen();
-console.log(`LITIGATION_INIT_TIMESTAMP_${Date.now()}`);
+this.up();
+this.log("LITIGATION_INITIATED_" + Date.now());
+document.getElementById('ti').style.borderColor = "#FFF";
+setTimeout(() => document.getElementById('ti').style.borderColor = "#00FF41", 200);
+},
+log: function(m) {
+const l = document.getElementById('log');
+const d = document.createElement('div');
+d.innerText = `> [${new Date().toISOString()}] ${m}`;
+l.prepend(d);
+if(l.childNodes.length > 12) l.removeChild(l.lastChild);
 }
 };
 window.onload = () => CORE.init();
