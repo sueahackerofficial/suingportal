@@ -1,84 +1,130 @@
-/**
- * SAH-GLOBAL-99 LITIGATION ENGINE
- * VERSION: 2026.1.28 | RESOLUTION: 3840x2160
- * FONT: SEGOE UI (STRICT)
- */
-
-const SYSTEM_CONFIG = {
-    year: 2026,
-    resolution: "4K",
-    font: "Segoe UI",
-    primaryColor: "#00FF41"
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>SAH-GLOBAL-99 ENTERPRISE</title>
+<style>
+@font-face { font-family: 'Segoe UI'; src: local('Segoe UI'); unicode-range: U+0000-052F; }
+:root { --p: #00FF41; --bg: #000; --brd: #111; }
+* { margin: 0; padding: 0; box-sizing: border-box; background: var(--bg); color: var(--p); font-family: 'Segoe UI', sans-serif !important; outline: none; }
+body { width: 3840px; height: 2160px; overflow: hidden; position: relative; border: 4px solid var(--brd); display: flex; flex-direction: column; }
+#svg-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; opacity: 0.15; pointer-events: none; }
+#ui-root { position: relative; z-index: 10; padding: 120px; height: 100%; display: flex; flex-direction: column; }
+.header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--brd); padding-bottom: 60px; }
+select, button { background: #080808; color: var(--p); border: 2px solid var(--p); padding: 30px 60px; font-size: 34px; font-weight: bold; cursor: pointer; }
+button:hover { background: var(--p); color: var(--bg); }
+.content { flex-grow: 1; padding-top: 150px; }
+h1 { font-size: 130px; font-weight: 300; letter-spacing: -3px; margin-bottom: 60px; line-height: 1.1; }
+.desc { font-size: 52px; line-height: 1.6; max-width: 3200px; color: rgba(0, 255, 65, 0.8); margin-bottom: 120px; }
+.matrix { display: grid; grid-template-columns: repeat(4, 1fr); gap: 60px; }
+.pnl { border: 1px solid #222; padding: 70px; position: relative; }
+.pnl::before { content: ""; position: absolute; left: 0; top: 0; width: 12px; height: 100%; background: var(--p); }
+.lbl { font-size: 28px; text-transform: uppercase; letter-spacing: 6px; opacity: 0.5; margin-bottom: 35px; display: block; }
+.val { font-size: 84px; font-weight: bold; }
+.tag-box { font-family: monospace !important; border: 3px dashed var(--p); padding: 20px 45px; font-size: 60px; display: inline-block; margin-top: 15px; }
+#console { position: absolute; bottom: 50px; right: 50px; width: 900px; height: 400px; font-family: monospace !important; font-size: 20px; color: #008822; overflow: hidden; padding: 30px; border: 1px solid #111; }
+</style>
+</head>
+<body>
+<div id="svg-bg">
+<svg width="3840" height="2160" viewBox="0 0 3840 2160" xmlns="http://www.w3.org/2000/svg">
+<path d="M400 1000 H3440 V1800 H400 Z" fill="none" stroke="#00FF41" stroke-width="2"/><path d="M0 540 H3840 M0 1080 H3840 M0 1620 H3840" stroke="#111" stroke-width="1"/><path d="M960 0 V2160 M1920 0 V2160 M2880 0 V2160" stroke="#111" stroke-width="1"/>
+</svg>
+</div>
+<div id="ui-root">
+<header class="header">
+<div style="display:flex; gap:40px;"><select id="l-sel" onchange="CORE.setL(this.value)"></select><select id="c-sel" onchange="CORE.setC(this.value)"><option value="USD">USD</option><option value="EUR">EUR</option><option value="GBP">GBP</option></select></div>
+<button onclick="CORE.start()">START_LAWSUIT</button>
+</header>
+<main class="content">
+<h1 id="qh"></h1><p class="desc" id="pt"></p>
+<div class="matrix">
+<div class="pnl"><span class="lbl" id="ll"></span><span class="tag-box" id="tid"></span></div>
+<div class="pnl"><span class="lbl">RECOVERY_RATE</span><div class="val">78%</div></div>
+<div class="pnl"><span class="lbl">ESTIMATED_VALUE</span><div class="val"><span id="vn">1,500,000</span> <span id="vu">USD</span></div></div>
+<div class="pnl"><span class="lbl">ENCRYPTION</span><div class="val" style="font-size:38px;">AES-512-RSA-8192</div></div>
+</div>
+</main>
+</div>
+<div id="console"></div>
+<script>
+const CORE = {
+db: { dt: ["BRIEF", "MOTION", "ORDER", "AFFIDAVIT"], rate: 0.78 },
+i18n: {
+EN: { n: "English", q: "Do you want to sue a hacker?", p: "Then use the Sue-A-Hacker Enterprise! This formal declaration initiates the asset recovery protocol for the 2026 cycle. Our system performs a high-fidelity audit of decentralized holdings, jurisdiction conflicts, and forensic malware signatures to ensure maximum litigation success.", l: "Forensic ID" },
+RU: { n: "Русский", q: "Вы хотите подать в суд на хакера?", p: "Тогда используйте Sue-A-Hacker Enterprise! Эта официальная декларация инициирует протокол восстановления активов для цикла 2026 года. Наша система проводит аудит высокой точности для децентрализованных владений и конфликтов юрисдикций.", l: "ID Документа" },
+FR: { n: "Français", q: "Voulez-vous poursuivre un hacker ?", p: "Alors utilisez Sue-A-Hacker Enterprise ! Cette déclaration formelle lance le protocole de récupération des avoirs pour le cycle 2026. Notre système effectue un audit de haute fidélité des avoirs décentralisés et des conflits de juridiction.", l: "Identifiant" },
+DE: { n: "Deutsch", q: "Möchten Sie einen Hacker verklagen?", p: "Dann nutzen Sie Sue-A-Hacker Enterprise! Diese formelle Erklärung leitet das Asset-Recovery-Protokoll für den Zyklus 2026 ein. Unser System führt eine hochpräzise Prüfung dezentraler Bestände und Zuständigkeitskonflikte durch.", l: "Forensische ID" },
+ES: { n: "Español", q: "¿Quieres demandar a un hacker?", p: "¡Entonces usa Sue-A-Hacker Enterprise! Esta declaración formal inicia el protocolo de recuperación de activos para el ciclo 2026. Nuestro sistema realiza una auditoría de alta fidelidad de las tenencias descentralizadas.", l: "ID Forense" },
+ZH: { n: "中文", q: "你想起诉黑客吗？", p: "那就使用 Sue-A-Hacker Enterprise！此正式声明启动了 2026 年周期的资产追回协议。我们的系统对去中心化资产、司法管辖权冲突和取证恶意软件签名进行高保真审计。", l: "取证 ID" },
+JP: { n: "日本語", q: "ハッカーを訴えたいですか？", p: "それなら Sue-A-Hacker Enterprise を使用してください！この正式な宣言により、2026 年サイクルの資産回収プロトコルが開始されます。分散型資産、管轄権の衝突、マルウェア署名の監査を実施します。", l: "法科学 ID" },
+IT: { n: "Italiano", q: "Vuoi fare causa a un hacker?", p: "Usa Sue-A-Hacker Enterprise! Questa dichiarazione formale avvia il protocollo di recupero dei beni per il ciclo 2026. Il sistema esegue un audit ad alta fedeltà delle partecipazioni decentralizzate.", l: "ID Forense" },
+PT: { n: "Português", q: "Quer processar um hacker?", p: "Use o Sue-A-Hacker Enterprise! Esta declaração formal inicia o protocolo de recuperação de ativos para o ciclo de 2026. O sistema realiza uma auditoria de alta fidelidade das participações descentralizadas.", l: "ID Forense" },
+AR: { n: "العربية", q: "هل تريد مقاضاة مخترق؟", p: "استخدم Sue-A-Hacker Enterprise! يبدأ هذا الإعلان الرسمي بروتوكول استرداد الأصول لدورة 2026. يقوم نظامنا بإجراء تدقيق عالي الدقة للممتلكات اللامركزية وتنازع الاختصاص القضائي.", l: "معرف الطب الشرعي" },
+KR: { n: "한국어", q: "해커를 고소하고 싶습니까?", p: "Sue-A-Hacker Enterprise를 사용하십시오! 이 공식 선언은 2026년 주기의 자산 회수 프로토콜을 시작합니다. 우리 시스템은 분산 자산과 관할권 충돌에 대한 정밀 감사를 수행합니다.", l: "법의학 ID" },
+NL: { n: "Nederlands", q: "Wilt u een hacker aanklagen?", p: "Gebruik Sue-A-Hacker Enterprise! Deze formele verklaring initieert het asset recovery-protocol voor de cyclus van 2026. Ons systeem voert een high-fidelity audit uit van gedecentraliseerde holdings.", l: "Forensisch ID" },
+PL: { n: "Polski", q: "Chcesz pozwać hakera?", p: "Użyj Sue-A-Hacker Enterprise! Ta formalna deklaracja inicjuje protokół odzyskiwania aktywów w cyklu 2026. System przeprowadza precyzyjny audyt zdecentralizowanych zasobów.", l: "ID Sądowe" },
+TR: { n: "Türkçe", q: "Dava açmak mı istiyorsunuz?", p: "Sue-A-Hacker Enterprise'ı kullanın! Bu resmi beyan, 2026 döngüsü için varlık kurtarma protokolünü başlatır. Sistemimiz, merkezi olmayan varlıkların yüksek kalitede denetimini gerçekleştirir.", l: "Adli Kimlik" },
+SV: { n: "Svenska", q: "Vill du stämma en hacker?", p: "Använd Sue-A-Hacker Enterprise! Denna formella deklaration inleder protokollet för återvinning av tillgångar för 2026. Systemet utför en noggrann granskning av decentraliserade innehav.", l: "Forensiskt ID" },
+VI: { n: "Tiếng Việt", q: "Bạn muốn kiện hacker?", p: "Hãy sử dụng Sue-A-Hacker Enterprise! Tuyên bố chính thức này khởi động giao thức thu hồi tài sản cho chu kỳ 2026. Hệ thống thực hiện kiểm toán độ tin cậy cao đối với các tài sản phi tập trung.", l: "ID Pháp y" },
+HI: { n: "हिन्दी", q: "क्या आप मुकदमा करना चाहते हैं?", p: "Sue-A-Hacker Enterprise का उपयोग करें! यह औपचारिक घोषणा 2026 चक्र के लिए परिसंपत्ति वसूली प्रोटोकॉल शुरू करती है। हमारा सिस्टम विकेंद्रीकृत होल्डिंग्स का ऑडिट करता है।", l: "आईडी" },
+EL: { n: "Ελληνικά", q: "Θέλετε να μηνύσετε έναν χάκερ;", p: "Χρησιμοποιήστε το Sue-A-Hacker Enterprise! Αυτή η επίσημη δήλωση ξεκινά το πρωτόκολλο ανάκτησης περιουσιακών στοιχείων για τον κύκλο του 2026.", l: "ID" },
+HE: { n: "עברית", q: "רוצה לתבוע האקר?", p: "השתמש ב-Sue-A-Hacker Enterprise! הצהרה רשמית זו יוזמת את פרוטוקול שחזור הנכסים למחזור 2026. המערכת מבצעת ביקורת ברמת נאמנות גבוהה של אחזקות מבוזרות.", l: "מזהה" },
+TH: { n: "ไทย", q: "ฟ้องแฮ็กเกอร์หรือไม่?", p: "ใช้ Sue-A-Hacker Enterprise! คำประกาศอย่างเป็นทางการนี้เริ่มต้นโปรโตคอลการกู้คืนสินทรัพย์สำหรับรอบปี 2026 ระบบของเราดำเนินการตรวจสอบการถือครองแบบกระจายอำนาจ", l: "รหัส" },
+CS: { n: "Čeština", q: "Chcete žalovat hackera?", p: "Použijte Sue-A-Hacker Enterprise! Toto prohlášení zahajuje protokol o vymáhání majetku pro cyklus 2026.", l: "ID" },
+DA: { n: "Dansk", q: "Vil du sagsøge en hacker?", p: "Brug Sue-A-Hacker Enterprise! Denne formelle erklæring indleder protokollen for aktivgendannelse for 2026-cyklussen.", l: "ID" },
+FI: { n: "Suomi", q: "Haluatko haastaa hakkerin?", p: "Käytä Sue-A-Hacker Enterprisea! Tämä virallinen ilmoitus käynnistää omaisuuden palautusprotokollan vuodelle 2026.", l: "ID" },
+HU: { n: "Magyar", q: "Be akar perelni egy hackert?", p: "Használja a Sue-A-Hacker Enterprise-t! Ez a nyilatkozat elindítja az eszköz-visszaszerzési protokollt a 2026-os ciklusra.", l: "ID" },
+NO: { n: "Norsk", q: "Vil du saksøke en hacker?", p: "Bruk Sue-A-Hacker Enterprise! Denne erklæringen starter protokollen for gjenvinning av eiendeler for 2026.", l: "ID" },
+RO: { n: "Română", q: "Vrei să dai în judecată?", p: "Folosește Sue-A-Hacker Enterprise! Această declarație inițiază protocolul de recuperare a activelor pentru 2026.", l: "ID" },
+SK: { n: "Slovenčina", q: "Chcete žalovať hackera?", p: "Použite Sue-A-Hacker Enterprise! Toto vyhlásenie spúšťa protokol o vymáhaní majetku pre cyklus 2026.", l: "ID" },
+ID: { n: "Bahasa Indonesia", q: "Ingin menuntut peretas?", p: "Gunakan Sue-A-Hacker Enterprise! Deklarasi ini memulai protokol pemulihan aset untuk siklus 2026.", l: "ID" },
+MS: { n: "Bahasa Melayu", q: "Ingin saman penggodam?", p: "Gunakan Sue-A-Hacker Enterprise! Pengisytiharan ini memulakan protokol pemulihan aset untuk kitaran 2026.", l: "ID" },
+UK: { n: "Українська", q: "Хочете подати в суд?", p: "Використовуйте Sue-A-Hacker Enterprise! Ця декларація запускає протокол відновлення активів на 2026 рік.", l: "ID" },
+BG: { n: "Български", q: "Искате да съдите хакер?", p: "Използвайте Sue-A-Hacker Enterprise! Тази декларация инициира протокола за възстановяване на активи за 2026 г.", l: "ID" },
+HR: { n: "Hrvatski", q: "Želite tužiti hakera?", p: "Koristite Sue-A-Hacker Enterprise! Ova deklaracija pokreće protokol povrata imovine za 2026.", l: "ID" },
+LT: { n: "Lietuvių", q: "Norite paduoti į teismą?", p: "Naudokite Sue-A-Hacker Enterprise! Ši deklaracija pradeda turto atkūrimo protokolą 2026 m. ciklui.", l: "ID" },
+LV: { n: "Latviešu", q: "Vai vēlaties sūdzēt tiesā?", p: "Izmantojiet Sue-A-Hacker Enterprise! Šī deklarācija sāk aktīvu atgūšanas protokolu 2026. gadam.", l: "ID" },
+ET: { n: "Eesti", q: "Kas soovite kaevata?", p: "Kasutage Sue-A-Hacker Enterprise! See deklaratsioon käivitab varade taastamise protokolli 2026. aastaks.", l: "ID" },
+SL: { n: "Slovenščina", q: "Želite tožiti hekerja?", p: "Uporabite Sue-A-Hacker Enterprise! Ta izjava sproži protokol za obnovitev sredstev za leto 2026.", l: "ID" },
+FA: { n: "فارسی", q: "می‌خواهید شکایت کنید؟", p: "از Sue-A-Hacker Enterprise استفاده کنید! این اعلامیه پروتکل بازیابی دارایی را برای سال ۲۰۲۶ آغاز می‌کند.", l: "شناسه" },
+UR: { n: "اردو", q: "کیا آپ مقدمہ کرنا چاہتے ہیں؟", p: "Sue-A-Hacker Enterprise استعمال کریں! یہ باضابطہ اعلان 2026 کے لیے اثاثوں کی وصولی کا آغاز کرتا ہے۔", l: "شناخت" },
+BN: { n: "বাংলা", q: "মামলা করতে চান?", p: "Sue-A-Hacker Enterprise ব্যবহার করুন! এই ঘোষণাটি ২০২৬ সালের জন্য সম্পদ পুনরুদ্ধারের প্রোটোকল শুরু করে।", l: "আইডি" },
+TA: { n: "தமிழ்", q: "வழக்கு தொடர வேண்டுமா?", p: "Sue-A-Hacker Enterprise ஐப் பயன்படுத்தவும்! இந்த அறிவிப்பு 2026 ஆம் ஆண்டிற்கான சொத்து மீட்பு நெறிமுறையைத் தொடங்குகிறது.", l: "ஐடி" },
+TE: { n: "తెలుగు", q: "దావా వేయాలనుకుంటున్నారా?", p: "Sue-A-Hacker Enterprise వాడండి! ఈ ప్రకటన 2026 చక్రం కోసం ఆస్తి పునరుద్ధరణ ప్రోటోకాల్‌ను ప్రారంభిస్తుంది.", l: "ఐడి" },
+KN: { n: "ಕನ್ನಡ", q: "ದಾವೆ ಹೂಡಬೇಕೆ?", p: "Sue-A-Hacker Enterprise ಬಳಸಿ! ಈ ಘೋಷಣೆಯು 2026 ರ ಆಸ್ತಿ ಮರುಪಡೆಯುವಿಕೆ ಪ್ರೋಟೋಕಾಲ್ ಅನ್ನು ಪ್ರಾರಂಭಿಸುತ್ತದೆ.", l: "ಐಡಿ" },
+ML: { n: "മലയാളം", q: "കേസ് കൊടുക്കണো?", p: "Sue-A-Hacker Enterprise ഉപയോഗിക്കുക! ഈ പ്രഖ്യാപനം 2026-ലേക്കുള്ള അസറ്റ് റിക്കവറി പ്രോട്ടോക്കോൾ ആരംഭിക്കുന്നു.", l: "ഐഡി" },
+MR: { n: "मराठी", q: "खटला भरायचा आहे?", p: "Sue-A-Hacker Enterprise वापरा! ही घोषणा 2026 साठी मालमत्ता पुनर्प्राप्ती प्रोटोकॉल सुरू करते.", l: "आयडी" },
+GU: { n: "ગુજરાતી", q: "દાવો માંડવો છે?", p: "Sue-A-Hacker Enterprise વાપરો! આ ઘોષણા 2026 માટે સંપત્તિ પુનઃપ્રાપ્તિ પ્રોટોકોલ શરૂ કરે છે.", l: "આઈડી" },
+PA: { n: "ਪੰਜਾਬੀ", q: "ਮੁਕੱਦਮਾ ਕਰਨਾ ਹੈ?", p: "Sue-A-Hacker Enterprise ਵਰਤੋ! ਇਹ ਘੋਸ਼ਣਾ 2026 ਲਈ ਸੰਪਤੀ ਦੀ ਵਸੂਲੀ ਦੀ ਪ੍ਰਕਿਰਿਆ ਸ਼ੁਰੂ ਕਰਦੀ ਹੈ।", l: "ਆਈਡੀ" },
+SR: { n: "Српски", q: "Желите да тужите хакера?", p: "Користите Sue-A-Hacker Enterprise! Ова декларација покреће протокол поврата имовине за 2026.", l: "ID" },
+CA: { n: "Català", q: "Vols demandar un hacker?", p: "Utilitza Sue-A-Hacker Enterprise! Aquesta declaració inicia el protocol de recuperació per al 2026.", l: "ID" },
+TL: { n: "Tagalog", q: "Gusto mo bang magdemanda?", p: "Gamitin ang Sue-A-Hacker Enterprise! Ang deklarasyong ito ay nagpapasimula ng asset recovery protocol para sa 2026.", l: "ID" },
+SQ: { n: "Shqip", q: "Dëshironi të paditni?", p: "Përdorni Sue-A-Hacker Enterprise! Kjo deklaratë fillon protokollin e rikuperimit të aseteve për vitin 2026.", l: "ID" }
+},
+init: function() {
+const s = document.getElementById('l-sel'); Object.keys(this.i18n).forEach(k => { let o = document.createElement('option'); o.value = k; o.innerText = this.i18n[k].n; s.appendChild(o); });
+this.setL("EN"); this.up(); this.log("ENTERPRISE_READY_2026");
+},
+setL: function(k) {
+const d = this.i18n[k] || this.i18n.EN; document.getElementById('qh').innerText = d.q; document.getElementById('pt').innerText = d.p; document.getElementById('ll').innerText = d.l;
+this.log("LANG_NODE: " + k);
+},
+setC: function(v) {
+const r = { USD: 1, EUR: 0.92, GBP: 0.78 }; document.getElementById('vn').innerText = (1500000 * (r[v] || 1)).toLocaleString(); document.getElementById('vu').innerText = v;
+this.log("VALUATION_SYNC: " + v);
+},
+up: function() {
+const t = this.db.dt[Math.floor(Math.random()*4)]; document.getElementById('tid').innerText = `SAH-2026-${t}-${Math.floor(100+Math.random()*899)}`;
+},
+start: function() {
+this.up(); this.log("LITIGATION_STARTED_" + Date.now()); const tid = document.getElementById('tid'); tid.style.borderColor = "#FFF"; setTimeout(() => tid.style.borderColor = "#00FF41", 200);
+},
+log: function(m) {
+const l = document.getElementById('console'); const d = document.createElement('div'); d.innerText = `> [${new Date().toISOString().split('T')[1].split('Z')[0]}] ${m}`; l.prepend(d); if(l.childNodes.length > 14) l.removeChild(l.lastChild);
+}
 };
-
-const i18n = {
-    active: "EN",
-    data: {
-        EN: { title: "LITIGATION_HUB", start: "FILE_LAWSUIT", term: "TERMINATE", status: "SYSTEM_READY" },
-        FR: { title: "CENTRE_DE_LITIGE", start: "LANCER_POURSUITE", term: "TERMINER", status: "SYSTÈME_PRÊT" }
-    }
-};
-
-const CSS_ENFORCER = `
-    @font-face {
-        font-family: 'Segoe UI';
-        src: local('Segoe UI');
-        unicode-range: U+0000-00FF, U+0131, U+0152-0153;
-    }
-    * { 
-        font-family: 'Segoe UI' !important; 
-        background-color: #000;
-        color: ${SYSTEM_CONFIG.primaryColor};
-    }
-    button {
-        border: 2px solid ${SYSTEM_CONFIG.primaryColor};
-        padding: 15px 30px;
-        cursor: pointer;
-        font-weight: bold;
-    }
-`;
-
-const ENGINE = {
-    isFiled: false,
-    
-    startLawsuit: function() {
-        this.isFiled = true;
-        document.getElementById('status').innerText = i18n.data[i18n.active].status + " [ACTIVE_LITIGATION]";
-        console.log(`LITIGATION_INITIATED_TIMESTAMP_${Date.now()}`);
-    },
-
-    terminate: function() {
-        document.body.innerHTML = `<div style="display:flex; justify-content:center; align-items:center; height:100vh;">
-            <h1>SESSION_TERMINATED_2026</h1>
-        </div>`;
-    },
-
-    renderMap: function() {
-        return `
-            <svg width="3840" height="2160" viewBox="0 0 3840 2160" xmlns="http://www.w3.org/2000/svg">
-                <rect width="100%" height="100%" fill="#050505"/>
-                <path d="M400 1000 H3440 V1800 H400 Z" fill="none" stroke="${SYSTEM_CONFIG.primaryColor}" stroke-width="2"/>
-                <text x="1920" y="100" text-anchor="middle" font-size="48" fill="${SYSTEM_CONFIG.primaryColor}">MERCATOR_FLAT_PROJECTION_V2026</text>
-            </svg>
-        `;
-    }
-};
-
-// Initialization
-(function init() {
-    const style = document.createElement('style');
-    style.innerHTML = CSS_ENFORCER;
-    document.head.appendChild(style);
-
-    const ui = document.createElement('div');
-    ui.style.cssText = "width:3840px; height:2160px; position:relative; overflow:hidden;";
-    ui.innerHTML = `
-        <div style="position:absolute; top:50px; left:50px; z-index:10; display:flex; gap:20px;">
-            <button onclick="ENGINE.startLawsuit()">${i18n.data[i18n.active].start}</button>
-            <button style="color:red; border-color:red;" onclick="ENGINE.terminate()">${i18n.data[i18n.active].term}</button>
-        </div>
-        <div id="status" style="position:absolute; bottom:50px; left:50px; font-size:24px;">${i18n.data[i18n.active].status}</div>
-        <div id="map">${ENGINE.renderMap()}</div>
-    `;
-    document.body.appendChild(ui);
-})();
+window.onload = () => CORE.init();
+</script>
+</body>
+</html>
