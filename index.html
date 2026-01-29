@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>SAH-GLOBAL-99 Litigation Engine</title>
     <style>
+        /* Strict Segoe UI Enforcement */
         @font-face {
             font-family: 'Segoe UI';
             src: local('Segoe UI Semilight'), local('Segoe UI Regular'), local('Segoe UI');
@@ -39,15 +40,13 @@
 
         button:hover { background: #00FF41; color: #000; }
 
-        .main-content { max-width: 2600px; }
-
         h2 { 
             font-size: 110px; font-weight: 300; margin-bottom: 50px; 
             letter-spacing: -2px; text-transform: none; 
         }
 
         .legal-paragraph {
-            font-size: 44px; line-height: 1.6; max-width: 2200px;
+            font-size: 44px; line-height: 1.6; max-width: 2400px;
             color: rgba(0, 255, 65, 0.8); margin-bottom: 100px;
         }
 
@@ -80,7 +79,7 @@
                 <option value="USD">USD</option>
                 <option value="EUR">EUR</option>
                 <option value="GBP">GBP</option>
-                <option value="JPY">JPY</option>
+                <option value="RUB">RUB</option>
             </select>
             <button onclick="CORE.executeFiling()">INITIATE_FORENSIC_FILING</button>
         </nav>
@@ -92,11 +91,11 @@
 
         <footer class="forensic-grid">
             <div class="data-panel">
-                <span class="label" id="field-doc-label"></span>
+                <span class="label" id="field-doc-label">Document Identifier</span>
                 <span class="doc-tag" id="field-tag"></span>
             </div>
             <div class="data-panel">
-                <span class="label">Forensic Recovery Success</span>
+                <span class="label">Recovery Success Rate</span>
                 <div class="value">78%</div>
             </div>
             <div class="data-panel">
@@ -108,12 +107,16 @@
 
     <script>
         const CORE = {
-            // High-fidelity multilingual dictionary
+            /* Backend Logic derived from */
+            db: {
+                LEGAL_DOCUMENT_TYPES: ["BRIEF", "MOTION", "ORDER", "AFFIDAVIT"],
+                ASSET_RECOVERY_SUCCESS_RATE: 0.78
+            },
+
             i18n: {
                 EN: { n: "English", q: "Do you wish to initiate the legal filing process?", p: "This formal declaration initiates the asset recovery protocol for the 2026 cycle. By engaging this system, you authorize a high-fidelity audit of decentralized holdings, litigation nodes, and forensic malware signatures within the temporal lock.", l: "Document Identifier" },
                 RU: { n: "Русский", q: "Вы хотите инициировать процесс подачи судебного иска?", p: "Эта официальная декларация инициирует протокол восстановления активов для цикла 2026 года. Вы санкционируете аудит высокой точности всех децентрализованных владений.", l: "Идентификатор документа" },
                 DE: { n: "Deutsch", q: "Möchten Sie das gerichtliche Einreichungsverfahren einleiten?", p: "Diese formelle Erklärung leitet das Protokoll zur Wiedererlangung von Vermögenswerten für den Zyklus 2026 ein.", l: "Dokument-ID" }
-                // Expansion slot for 50 languages...
             },
 
             init: function() {
@@ -128,21 +131,20 @@
             },
 
             updateLang: function(val) {
-                const d = this.i18n[val];
+                const d = this.i18n[val] || this.i18n.EN;
                 document.getElementById('field-q').innerText = d.q;
                 document.getElementById('field-p').innerText = d.p;
                 document.getElementById('field-doc-label').innerText = d.l;
             },
 
             updateCurrency: function(val) {
-                const rates = { USD: 1, EUR: 0.92, GBP: 0.79, JPY: 150.2 };
-                document.getElementById('field-val').innerText = (1500000 * rates[val]).toLocaleString();
+                const rates = { USD: 1, EUR: 0.92, GBP: 0.79, RUB: 90.5 };
+                document.getElementById('field-val').innerText = (1500000 * (rates[val] || 1)).toLocaleString();
                 document.getElementById('field-curr').innerText = val;
             },
 
             generateTag: function() {
-                const types = ["BRIEF", "MOTION", "ORDER", "AFFIDAVIT"];
-                const type = types[Math.floor(Math.random() * types.length)];
+                const type = this.db.LEGAL_DOCUMENT_TYPES[Math.floor(Math.random() * 4)];
                 document.getElementById('field-tag').innerText = `SAH-2026-${type}-${Math.floor(100+Math.random()*900)}`;
             },
 
