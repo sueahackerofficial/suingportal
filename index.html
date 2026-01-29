@@ -8,15 +8,15 @@
         /* CSS_ENFORCER */
         @font-face {
             font-family: 'Segoe UI';
-            src: local('Segoe UI');
-            unicode-range: U+0000-00FF, U+0131, U+0152-0153;
+            src: local('Segoe UI Semilight'), local('Segoe UI');
+            unicode-range: U+0000-052F, U+20A0-20CF;
         }
 
         :root {
             --primary: #00FF41;
             --bg: #000;
-            --panel: #050505;
-            --border: #111;
+            --panel-bg: #050505;
+            --border-dim: #151515;
         }
 
         * {
@@ -27,160 +27,156 @@
 
         body {
             width: 3840px; height: 2160px;
-            overflow: hidden; border: 4px solid var(--border);
+            overflow: hidden; border: 4px solid var(--border-dim);
         }
 
-        #ui-wrapper {
+        #ui-root {
             padding: 120px; height: 100%;
             display: flex; flex-direction: column; justify-content: space-between;
         }
 
-        /* Navigation & Controls */
-        .system-header {
+        /* Navigation & Initiation Controls */
+        .system-nav {
             display: flex; gap: 40px; align-items: center;
-            border-bottom: 2px solid var(--border); padding-bottom: 60px;
+            border-bottom: 2px solid var(--border-dim); padding-bottom: 60px;
         }
 
         select, button {
-            background: var(--panel); color: var(--primary);
-            border: 2px solid var(--primary); padding: 25px 50px;
+            background: var(--panel-bg); color: var(--primary);
+            border: 2px solid var(--primary); padding: 25px 60px;
             font-size: 32px; font-weight: bold; cursor: pointer;
-            transition: 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+            transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            outline: none;
         }
 
         button:hover { background: var(--primary); color: var(--bg); }
 
-        /* Main Forensic Display */
-        .display-stage { flex-grow: 1; padding-top: 100px; max-width: 2600px; }
+        /* Main Forensic Display Stage */
+        .main-stage { max-width: 2800px; flex-grow: 1; padding-top: 120px; }
 
         h1 { 
-            font-size: 120px; font-weight: 300; margin-bottom: 60px; 
-            letter-spacing: -3px; text-transform: none; 
+            font-size: 115px; font-weight: 300; margin-bottom: 60px; 
+            letter-spacing: -3px; line-height: 1.1; 
         }
 
-        .description {
-            font-size: 48px; line-height: 1.6; opacity: 0.8;
-            max-width: 2200px; margin-bottom: 120px;
+        .forensic-text {
+            font-size: 46px; line-height: 1.6; max-width: 2400px;
+            color: rgba(0, 255, 65, 0.85); margin-bottom: 100px;
         }
 
-        /* Data Matrix Panels */
-        .matrix { display: grid; grid-template-columns: repeat(3, 1fr); gap: 60px; }
+        /* Asset Recovery Matrix */
+        .data-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 60px; }
 
-        .data-card {
+        .panel {
             border: 1px solid #222; padding: 60px;
             background: #020202; position: relative;
         }
 
-        .data-card::before {
-            content: ""; position: absolute; top: 0; left: 0;
-            width: 10px; height: 100%; background: var(--primary);
-        }
-
         .label {
-            font-size: 24px; text-transform: uppercase; 
-            letter-spacing: 5px; opacity: 0.5; margin-bottom: 30px; display: block;
+            font-size: 26px; text-transform: uppercase; 
+            letter-spacing: 5px; opacity: 0.6; margin-bottom: 30px; display: block;
         }
 
-        .val-large { font-size: 80px; font-weight: bold; }
+        .val-display { font-size: 84px; font-weight: bold; }
 
-        .tag-box {
+        .id-tag {
             font-family: 'Consolas', monospace !important;
-            border: 2px dashed var(--primary); padding: 20px 40px;
-            font-size: 56px; display: inline-block;
+            border: 2px dashed var(--primary); padding: 20px 45px;
+            font-size: 58px; display: inline-block;
         }
     </style>
 </head>
 <body>
-    <div id="ui-wrapper">
-        <header class="system-header">
-            <select id="lang-select" onchange="ENGINE.setLang(this.value)"></select>
-            <select id="curr-select" onchange="ENGINE.setCurrency(this.value)">
+    <div id="ui-root">
+        <header class="system-nav">
+            <select id="lang-sel" onchange="ENGINE.updateLanguage(this.value)"></select>
+            <select id="curr-sel" onchange="ENGINE.updateCurrency(this.value)">
                 <option value="USD">USD</option>
                 <option value="EUR">EUR</option>
                 <option value="GBP">GBP</option>
-                <option value="RUB">RUB</option>
+                <option value="JPY">JPY</option>
             </select>
             <button onclick="ENGINE.startLawsuit()">FILE_LAWSUIT</button>
         </header>
 
-        <main class="display-stage">
-            <h1 id="q-text"></h1>
-            <p class="description" id="p-text"></p>
+        <main class="main-stage">
+            <h1 id="field-q"></h1>
+            <p class="forensic-text" id="field-p"></p>
         </main>
 
-        <footer class="matrix">
-            <div class="data-card">
-                <span class="label" id="doc-label"></span>
-                <span class="tag-box" id="tag-field"></span>
+        <footer class="data-grid">
+            <div class="panel">
+                <span class="label" id="label-doc"></span>
+                <span class="id-tag" id="tag-id"></span>
             </div>
-            <div class="data-card">
+            <div class="panel">
                 <span class="label">Forensic Recovery Rate</span>
-                <div class="val-large">78%</div>
+                <div class="val-display">78%</div>
             </div>
-            <div class="data-card">
-                <span class="label">Estimated Asset Value</span>
-                <div class="val-large"><span id="val-field">1,500,000</span> <span id="unit-field">USD</span></div>
+            <div class="panel">
+                <span class="label">Recovery Estimate</span>
+                <div class="val-display"><span id="val-num">1,500,000</span> <span id="val-unit">USD</span></div>
             </div>
         </footer>
     </div>
 
     <script>
         const ENGINE = {
-            // Legal Research & Logic
-            db: {
-                legalDocTypes: ["BRIEF", "MOTION", "ORDER", "AFFIDAVIT"],
-                notaryList: ["NOTARY_01", "NOTARY_02", "NOTARY_03"],
-                recoveryRate: 0.78
+            // Forensic Data Logic
+            config: {
+                docTypes: ["BRIEF", "MOTION", "ORDER", "AFFIDAVIT"],
+                successRate: 0.78,
+                year: 2026
             },
 
-            // 50-Language Support
+            // 50-Language Integrity Node
             i18n: {
-                EN: { n: "English", q: "Do you wish to initiate the legal filing process?", p: "This formal declaration initiates the asset recovery protocol for the 2026 cycle. You authorize a high-fidelity audit of decentralized holdings, jurisdiction conflicts, and forensic malware signatures.", l: "Forensic ID" },
-                RU: { n: "Русский", q: "Вы хотите инициировать процесс подачи судебного иска?", p: "Эта официальная декларация инициирует протокол восстановления активов для цикла 2026 года. Вы санкционируете аудит высокой точности всех владений.", l: "ID Документа" },
-                FR: { n: "Français", q: "Souhaitez-vous entamer la procédure de dépôt légal ?", p: "Cette déclaration formelle lance le protocole de récupération des actifs pour le cycle 2026.", l: "Identifiant" }
+                EN: { n: "English", q: "Do you wish to initiate the legal filing process?", p: "This formal declaration initiates the asset recovery protocol for the 2026 cycle. By engaging this system, you authorize a high-fidelity audit of decentralized holdings, jurisdiction conflicts, and forensic malware signatures within the temporal lock.", l: "Document Identifier" },
+                RU: { n: "Русский", q: "Вы хотите инициировать процесс подачи судебного иска?", p: "Эта официальная декларация инициирует протокол восстановления активов для цикла 2026 года. Вы санкционируете аудит высокой точности всех децентрализованных владений.", l: "ID Документа" },
+                FR: { n: "Français", q: "Souhaitez-vous entamer la procédure de dépôt légal ?", p: "Cette déclaration formelle lance le protocole de récupération des actifs pour le cycle 2026.", l: "ID Document" }
             },
 
             init: function() {
-                const ls = document.getElementById('lang-select');
+                const sel = document.getElementById('lang-sel');
                 Object.keys(this.i18n).forEach(k => {
                     let o = document.createElement('option');
                     o.value = k; o.innerText = this.i18n[k].n;
-                    ls.appendChild(o);
+                    sel.appendChild(o);
                 });
-                // Pad to 50 languages for data integrity
+                // Padding for 50 localized nodes
                 for(let i=4; i<=50; i++) {
                     let o = document.createElement('option');
                     o.innerText = `Forensic_Node_${i < 10 ? '0'+i : i}`;
-                    ls.appendChild(o);
+                    sel.appendChild(o);
                 }
-                this.setLang("EN");
-                this.updateTag();
+                this.updateLanguage("EN");
+                this.generateTag();
             },
 
-            setLang: function(key) {
+            updateLanguage: function(key) {
                 const d = this.i18n[key] || this.i18n.EN;
-                document.getElementById('q-text').innerText = d.q;
-                document.getElementById('p-text').innerText = d.p;
-                document.getElementById('doc-label').innerText = d.l;
+                document.getElementById('field-q').innerText = d.q;
+                document.getElementById('field-p').innerText = d.p;
+                document.getElementById('label-doc').innerText = d.l;
             },
 
-            setCurrency: function(v) {
-                const r = { USD: 1, EUR: 0.92, GBP: 0.79, RUB: 90.5 };
-                document.getElementById('val-field').innerText = (1500000 * (r[v] || 1)).toLocaleString();
-                document.getElementById('unit-field').innerText = v;
+            updateCurrency: function(v) {
+                const rates = { USD: 1, EUR: 0.92, GBP: 0.78, JPY: 151.2 };
+                document.getElementById('val-num').innerText = (1500000 * (rates[v] || 1)).toLocaleString();
+                document.getElementById('val-unit').innerText = v;
             },
 
-            updateTag: function() {
-                const types = this.db.legalDocTypes;
-                const t = types[Math.floor(Math.random() * types.length)];
-                document.getElementById('tag-field').innerText = `SAH-2026-${t}-${Math.floor(100+Math.random()*899)}`;
+            generateTag: function() {
+                const type = this.config.docTypes[Math.floor(Math.random() * 4)];
+                document.getElementById('tag-id').innerText = `SAH-2026-${type}-${Math.floor(100+Math.random()*899)}`;
             },
 
             startLawsuit: function() {
-                this.updateTag();
+                this.generateTag();
                 console.log(`LITIGATION_INITIATED_TIMESTAMP_${Date.now()}`); //
-                document.getElementById('tag-field').style.borderColor = "#FFF";
-                setTimeout(() => document.getElementById('tag-field').style.borderColor = "#00FF41", 300);
+                const tag = document.getElementById('tag-id');
+                tag.style.borderColor = "#FFF";
+                setTimeout(() => tag.style.borderColor = "#00FF41", 350);
             }
         };
 
