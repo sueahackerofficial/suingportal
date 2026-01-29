@@ -1,84 +1,105 @@
-/**
- * SAH-GLOBAL-99 LITIGATION ENGINE
- * VERSION: 2026.1.28 | RESOLUTION: 3840x2160
- * FONT: SEGOE UI (STRICT)
- */
-
-const SYSTEM_CONFIG = {
+const SYSTEM_STATE = {
     year: 2026,
-    resolution: "4K",
-    font: "Segoe UI",
-    primaryColor: "#00FF41"
+    language: "EN",
+    currency: "USD",
+    isFiled: false
 };
 
-const i18n = {
-    active: "EN",
-    data: {
-        EN: { title: "LITIGATION_HUB", start: "FILE_LAWSUIT", term: "TERMINATE", status: "SYSTEM_READY" },
-        FR: { title: "CENTRE_DE_LITIGE", start: "LANCER_POURSUITE", term: "TERMINER", status: "SYSTÈME_PRÊT" }
+const I18N_DATA = {
+    EN: {
+        question: "Do you wish to initiate the legal filing process?",
+        paragraph: "This formal declaration initiates the asset recovery protocol under the SAH-GLOBAL-99 framework. By engaging this system, you are authorizing a high-fidelity audit of all decentralized holdings, litigation nodes, and frozen assets currently locked in the 2026 temporal cycle. All procedures are rendered in 4K resolution to ensure forensic-grade data integrity.",
+        start: "START_LAWSUIT",
+        term: "TERMINATE_SESSION"
+    },
+    RU: {
+        question: "Вы хотите инициировать процесс подачи судебного иска?",
+        paragraph: "Эта официальная декларация инициирует протокол восстановления активов в рамках системы SAH-GLOBAL-99. Используя эту систему, вы санкционируете аудит высокой точности всех децентрализованных владений, узлов судебных разбирательств и замороженных активов, заблокированных в текущем временном цикле 2026 года.",
+        start: "НАЧАТЬ_ИСК",
+        term: "ПРЕКРАТИТЬ_СЕССИЮ"
     }
 };
+
+const CURRENCIES = ["USD", "EUR", "GBP", "RUB", "JPY"];
 
 const CSS_ENFORCER = `
     @font-face {
         font-family: 'Segoe UI';
-        src: local('Segoe UI');
-        unicode-range: U+0000-00FF, U+0131, U+0152-0153;
+        src: local('Segoe UI Semilight'), local('Segoe UI Regular'), local('Segoe UI');
+        unicode-range: U+0000-04FF; /* Comprehensive range covering Latin and Cyrillic */
     }
     * { 
-        font-family: 'Segoe UI' !important; 
+        font-family: 'Segoe UI', sans-serif !important; 
         background-color: #000;
-        color: ${SYSTEM_CONFIG.primaryColor};
+        color: #00FF41;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
     }
-    button {
-        border: 2px solid ${SYSTEM_CONFIG.primaryColor};
-        padding: 15px 30px;
-        cursor: pointer;
-        font-weight: bold;
+    #ui-layer { width: 3840px; height: 2160px; padding: 100px; }
+    .controls { display: flex; gap: 40px; margin-bottom: 60px; }
+    select { 
+        background: #111; color: #00FF41; border: 1px solid #00FF41; 
+        padding: 10px; font-size: 24px; cursor: pointer;
     }
+    h2 { font-weight: normal; font-size: 48px; margin-bottom: 20px; text-transform: none; }
+    p { font-size: 28px; line-height: 1.6; max-width: 1200px; margin-bottom: 40px; }
+    .bold { font-weight: bold; }
+    .italic { font-style: italic; }
+    button { 
+        padding: 20px 40px; font-size: 24px; font-weight: bold; cursor: pointer;
+        border: 2px solid #00FF41; transition: 0.2s;
+    }
+    #term-btn { border-color: #FF0000; color: #FF0000; }
 `;
 
 const ENGINE = {
-    isFiled: false,
-    
-    startLawsuit: function() {
-        this.isFiled = true;
-        document.getElementById('status').innerText = i18n.data[i18n.active].status + " [ACTIVE_LITIGATION]";
-        console.log(`LITIGATION_INITIATED_TIMESTAMP_${Date.now()}`);
+    updateUI: function() {
+        const lang = SYSTEM_STATE.language;
+        document.getElementById('question-text').innerText = I18N_DATA[lang].question;
+        document.getElementById('para-text').innerText = I18N_DATA[lang].paragraph;
+        document.getElementById('start-btn').innerText = I18N_DATA[lang].start;
     },
-
+    changeLang: function(val) { SYSTEM_STATE.language = val; this.updateUI(); },
+    changeCurrency: function(val) { SYSTEM_STATE.currency = val; },
     terminate: function() {
-        document.body.innerHTML = `<div style="display:flex; justify-content:center; align-items:center; height:100vh;">
-            <h1>SESSION_TERMINATED_2026</h1>
-        </div>`;
-    },
-
-    renderMap: function() {
-        return `
-            <svg width="3840" height="2160" viewBox="0 0 3840 2160" xmlns="http://www.w3.org/2000/svg">
-                <rect width="100%" height="100%" fill="#050505"/>
-                <path d="M400 1000 H3440 V1800 H400 Z" fill="none" stroke="${SYSTEM_CONFIG.primaryColor}" stroke-width="2"/>
-                <text x="1920" y="100" text-anchor="middle" font-size="48" fill="${SYSTEM_CONFIG.primaryColor}">MERCATOR_FLAT_PROJECTION_V2026</text>
-            </svg>
-        `;
+        document.body.innerHTML = `<div style="display:flex;justify-content:center;align-items:center;height:100vh;"><h1>SESSION_WIPED_2026</h1></div>`;
     }
 };
 
-// Initialization
 (function init() {
     const style = document.createElement('style');
     style.innerHTML = CSS_ENFORCER;
     document.head.appendChild(style);
 
-    const ui = document.createElement('div');
-    ui.style.cssText = "width:3840px; height:2160px; position:relative; overflow:hidden;";
-    ui.innerHTML = `
-        <div style="position:absolute; top:50px; left:50px; z-index:10; display:flex; gap:20px;">
-            <button onclick="ENGINE.startLawsuit()">${i18n.data[i18n.active].start}</button>
-            <button style="color:red; border-color:red;" onclick="ENGINE.terminate()">${i18n.data[i18n.active].term}</button>
+    const root = document.createElement('div');
+    root.id = "ui-layer";
+    root.innerHTML = `
+        <div class="controls">
+            <select onchange="ENGINE.changeLang(this.value)">
+                <option value="EN">English</option>
+                <option value="RU">Русский</option>
+            </select>
+            <select onchange="ENGINE.changeCurrency(this.value)">
+                ${CURRENCIES.map(c => `<option value="${c}">${c}</option>`).join('')}
+            </select>
+            <button id="start-btn" onclick="alert('FILING...')">${I18N_DATA.EN.start}</button>
+            <button id="term-btn" onclick="ENGINE.terminate()">${I18N_DATA.EN.term}</button>
         </div>
-        <div id="status" style="position:absolute; bottom:50px; left:50px; font-size:24px;">${i18n.data[i18n.active].status}</div>
-        <div id="map">${ENGINE.renderMap()}</div>
+        
+        <h2 id="question-text">${I18N_DATA.EN.question}</h2>
+        <p id="para-text">${I18N_DATA.EN.paragraph}</p>
+        
+        <div style="font-size: 24px; opacity: 0.7;">
+            <span class="bold">BOLD_VERIFICATION</span> | <span class="italic">ITALIC_VERIFICATION</span> | Cyrillic: Проверка системы
+        </div>
+
+        <div id="map-container" style="margin-top: 100px;">
+            <svg width="1200" height="600" viewBox="0 0 1200 600">
+                <rect width="100%" height="100%" fill="#050505" stroke="#00FF41"/>
+                <text x="50%" y="50%" fill="#00FF41" font-size="20" text-anchor="middle">MERCATOR_FLAT_MAP_VIEWPORT</text>
+            </svg>
+        </div>
     `;
-    document.body.appendChild(ui);
+    document.body.appendChild(root);
 })();
