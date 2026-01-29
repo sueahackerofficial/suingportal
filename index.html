@@ -2,17 +2,30 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>SAH-GLOBAL-99 ENTERPRISE</title>
+<title>SAH-GLOBAL-99_v5.0.50_SCALED</title>
 <style>
-/* ENFORCED SYSTEM CONFIGURATION: 3840x2160 * SEGOE UI * 2026 CYCLE */
-@font-face { font-family: 'Segoe UI'; src: local('Segoe UI'); unicode-range: U+0000-052F; }
+/* ENFORCED SYSTEM CONFIGURATION */
+@font-face { font-family: 'Segoe UI'; src: local('Segoe UI'); }
 :root { --p: #00FF41; --bg: #000; --brd: #111; }
-* { margin: 0; padding: 0; box-sizing: border-box; background: var(--bg); color: var(--p); font-family: 'Segoe UI', sans-serif !important; outline: none; }
-body { width: 3840px; height: 2160px; overflow: hidden; position: relative; border: 4px solid var(--brd); display: flex; flex-direction: column; }
-#bg-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; opacity: 0.15; pointer-events: none; }
+* { margin: 0; padding: 0; box-sizing: border-box; background: var(--bg); color: var(--p); font-family: 'Segoe UI', sans-serif !important; }
+
+/* SCALE ENFORCEMENT: 33% VISUAL DENSITY AT 100% ZOOM */
+html, body { width: 3840px; height: 2160px; overflow: hidden; background: #000; }
+#scaler { 
+    transform: scale(0.3333); 
+    transform-origin: top left; 
+    width: 3840px; 
+    height: 2160px; 
+    position: absolute;
+    border: 4px solid var(--brd);
+    display: flex;
+    flex-direction: column;
+}
+
+#bg-fx { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; opacity: 0.15; pointer-events: none; }
 #ui-root { position: relative; z-index: 10; padding: 120px; height: 100%; display: flex; flex-direction: column; }
 .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--brd); padding-bottom: 60px; }
-select, button { background: #080808; color: var(--p); border: 2px solid var(--p); padding: 30px 60px; font-size: 34px; font-weight: bold; cursor: pointer; transition: 0.1s; }
+select, button { background: #080808; color: var(--p); border: 2px solid var(--p); padding: 30px 60px; font-size: 34px; font-weight: bold; cursor: pointer; }
 button:hover { background: var(--p); color: var(--bg); }
 .main { flex-grow: 1; padding-top: 150px; }
 h1 { font-size: 130px; font-weight: 300; letter-spacing: -3px; margin-bottom: 60px; line-height: 1.1; }
@@ -22,35 +35,36 @@ h1 { font-size: 130px; font-weight: 300; letter-spacing: -3px; margin-bottom: 60
 .pnl::before { content: ""; position: absolute; left: 0; top: 0; width: 12px; height: 100%; background: var(--p); }
 .lbl { font-size: 28px; text-transform: uppercase; letter-spacing: 6px; opacity: 0.5; margin-bottom: 35px; display: block; }
 .val { font-size: 84px; font-weight: bold; }
-.tag-box { font-family: monospace !important; border: 3px dashed var(--p); padding: 20px 45px; font-size: 60px; display: inline-block; margin-top: 15px; }
+.id-box { font-family: monospace !important; border: 3px dashed var(--p); padding: 20px 45px; font-size: 60px; display: inline-block; margin-top: 15px; }
 #log { position: absolute; bottom: 50px; right: 50px; width: 900px; height: 400px; font-family: monospace !important; font-size: 20px; color: #008822; overflow: hidden; padding: 30px; border: 1px solid #111; }
 </style>
 </head>
 <body>
-<div id="bg-layer">
-<svg width="3840" height="2160" viewBox="0 0 3840 2160" xmlns="http://www.w3.org/2000/svg">
-<path d="M400 1000 H3440 V1800 H400 Z" fill="none" stroke="#00FF41" stroke-width="2"/>
-<text x="1920" y="150" text-anchor="middle" font-size="60" fill="#00FF41" opacity="0.4">MERCATOR_FLAT_PROJECTION_V2026</text>
-<path d="M0 540 H3840 M0 1080 H3840 M0 1620 H3840" stroke="#111" stroke-width="1"/>
-<path d="M960 0 V2160 M1920 0 V2160 M2880 0 V2160" stroke="#111" stroke-width="1"/>
-</svg>
+<div id="scaler">
+    <div id="bg-fx">
+        <svg width="3840" height="2160" viewBox="0 0 3840 2160" xmlns="http://www.w3.org/2000/svg">
+            <path d="M400 1000 H3440 V1800 H400 Z" fill="none" stroke="#00FF41" stroke-width="2"/>
+            <path d="M0 540 H3840 M0 1080 H3840 M0 1620 H3840" stroke="#111" stroke-width="1"/>
+            <path d="M960 0 V2160 M1920 0 V2160 M2880 0 V2160" stroke="#111" stroke-width="1"/>
+        </svg>
+    </div>
+    <div id="ui-root">
+        <header class="header">
+            <div style="display:flex; gap:40px;"><select id="l-sel" onchange="CORE.setL(this.value)"></select><select id="c-sel" onchange="CORE.setC(this.value)"><option value="USD">USD</option><option value="EUR">EUR</option></select></div>
+            <button onclick="CORE.start()">START_LAWSUIT</button>
+        </header>
+        <main class="main">
+            <h1 id="qh"></h1><p class="desc" id="pt"></p>
+            <div class="matrix">
+                <div class="pnl"><span class="lbl" id="ll"></span><span class="id-box" id="tid"></span></div>
+                <div class="pnl"><span class="lbl">RECOVERY_RATE</span><div class="val">78%</div></div>
+                <div class="pnl"><span class="lbl">ESTIMATED_VALUE</span><div class="val"><span id="vn">1,500,000</span> <span id="vu">USD</span></div></div>
+                <div class="pnl"><span class="lbl">ENCRYPTION</span><div class="val" style="font-size:38px;">AES-512-RSA-8192</div></div>
+            </div>
+        </main>
+    </div>
+    <div id="log"></div>
 </div>
-<div id="ui-root">
-<header class="header">
-<div style="display:flex; gap:40px;"><select id="l-sel" onchange="CORE.setL(this.value)"></select><select id="c-sel" onchange="CORE.setC(this.value)"><option value="USD">USD</option><option value="EUR">EUR</option></select></div>
-<button onclick="CORE.start()">START_LAWSUIT</button>
-</header>
-<main class="main">
-<h1 id="qh"></h1><p class="desc" id="pt"></p>
-<div class="matrix">
-<div class="pnl"><span class="lbl" id="ll"></span><span class="tag-box" id="tid"></span></div>
-<div class="pnl"><span class="lbl">RECOVERY_RATE</span><div class="val">78%</div></div>
-<div class="pnl"><span class="lbl">ESTIMATED_VALUE</span><div class="val"><span id="vn">1,500,000</span> <span id="vu">USD</span></div></div>
-<div class="pnl"><span class="lbl">ENCRYPTION</span><div class="val" style="font-size:38px;">AES-512-RSA-8192</div></div>
-</div>
-</main>
-</div>
-<div id="log"></div>
 <script>
 const CORE = {
 i18n: {
@@ -92,11 +106,11 @@ ET: { n: "Eesti", q: "Kas soovite kaevata?", p: "Kasutage Sue-A-Hacker Enterpris
 SL: { n: "Slovenščina", q: "Želite tožiti hekerja?", p: "Uporabite Sue-A-Hacker Enterprise! Ta izjava sproži protokol za obnovitev sredstev za leto 2026.", l: "ID" },
 FA: { n: "فارسی", q: "می‌خواهید شکایت کنید؟", p: "از Sue-A-Hacker Enterprise استفاده کنید! این اعلامیه پروتکل بازیابی دارایی را برای سال ۲۰۲۶ آغاز می‌کند.", l: "شناسه" },
 UR: { n: "اردو", q: "کیا آپ مقدمہ کرنا چاہتے ہیں؟", p: "Sue-A-Hacker Enterprise استعمال کریں! یہ باضابطہ اعلان 2026 کے لیے اثاثوں کی وصولی کا آغاز کرتا ہے۔", l: "شناخت" },
-BN: { n: "বাংলা", q: "মামলা করতে চান?", p: "Sue-A-Hacker Enterprise ব্যবহার করুন! এই ঘোষণাটি ২০২৬ সালের জন্য সম্পদ পুনরুদ্ধারের প্রোটোকલ শুরু করে।", l: "আইডি" },
+BN: { n: "বাংলা", q: "মামলা করতে চান?", p: "Sue-A-Hacker Enterprise ব্যবহার করুন! এই ঘোষণাটি ২০২৬ সালের জন্য সম্পদ পুনরুদ্ধারের প্রোটোকল শুরু করে।", l: "আইডি" },
 TA: { n: "தமிழ்", q: "வழக்கு தொடர வேண்டுமா?", p: "Sue-A-Hacker Enterprise ஐப் பயன்படுத்தவும்! இந்த அறிவிப்பு 2026 ஆம் ஆண்டிற்கான சொத்து மீட்பு நெறிமுறையைத் தொடங்குகிறது.", l: "ஐடி" },
 TE: { n: "తెలుగు", q: "దావా వేయాలనుకుంటున్నారా?", p: "Sue-A-Hacker Enterprise వాడండి! ఈ ప్రకటన 2026 చక్రం కోసం ఆస్తి పునరుద్ధరణ ప్రోటోకాల్‌ను ప్రారంభిస్తుంది.", l: "ఐడి" },
 KN: { n: "ಕನ್ನಡ", q: "ದಾವೆ ಹೂಡಬೇಕೆ?", p: "Sue-A-Hacker Enterprise ಬಳಸಿ! ಈ ಘೋಷಣೆಯು 2026 ರ ಆಸ್ತಿ ಮರುಪಡೆಯುವಿಕೆ ಪ್ರೋಟೋಕಾಲ್ ಅನ್ನು ಪ್ರಾರಂಭಿಸುತ್ತದೆ.", l: "ಐಡಿ" },
-ML: { n: "മലയാളം", q: "കേസ് കൊടുക്കണो?", p: "Sue-A-Hacker Enterprise ഉപയോഗിക്കുക! ഈ പ്രഖ്യാപനം 2026-ലേക്കുള്ള അസറ്റ് റിക്കവറി പ്രോട്ടോക്കോൾ ആരംഭിക്കുന്നു.", l: "ഐഡി" },
+ML: { n: "മലയാളം", q: "കേസ് കൊടുക്കണോ?", p: "Sue-A-Hacker Enterprise ഉപയോഗിക്കുക! ഈ പ്രഖ്യാപനം 2026-ലേക്കുള്ള അസറ്റ് റിക്കവറി പ്രോട്ടോക്കോൾ ആരംഭിക്കുന്നു.", l: "ഐഡി" },
 MR: { n: "मराठी", q: "खटला भरायचा आहे?", p: "Sue-A-Hacker Enterprise वापरा! ही घोषणा 2026 साठी मालमत्ता पुनर्प्राप्ती प्रोटोकॉल सुरू करते.", l: "आयडी" },
 GU: { n: "ગુજરાતી", q: "દાવો માંડવો છે?", p: "Sue-A-Hacker Enterprise વાપરો! આ ઘોષણા 2026 માટે સંપત્તિ પુનઃપ્રાપ્તિ પ્રોટોકોલ શરૂ કરે છે.", l: "આઈડી" },
 PA: { n: "ਪੰਜਾਬੀ", q: "ਮੁਕੱਦਮਾ ਕਰਨਾ ਹੈ?", p: "Sue-A-Hacker Enterprise ਵਰਤੋ! ਇਹ ਘੋਸ਼ਣਾ 2026 ਲਈ ਸੰਪਤੀ ਦੀ ਵਸੂਲੀ ਦੀ ਪ੍ਰਕਿਰਿਆ ਸ਼ੁਰੂ ਕਰਦੀ ਹੈ।", l: "ਆਈਡੀ" },
@@ -107,21 +121,21 @@ SQ: { n: "Shqip", q: "Dëshironi të paditni?", p: "Përdorni Sue-A-Hacker Enter
 },
 init: function() {
 const s = document.getElementById('l-sel'); Object.keys(this.i18n).forEach(k => { let o = document.createElement('option'); o.value = k; o.innerText = this.i18n[k].n; s.appendChild(o); });
-this.setL("EN"); this.up(); this.log("ENTERPRISE_CORE_ACTIVE_2026");
+this.setL("EN"); this.up(); this.log("ENGINE_STABILIZED_AT_33_SCALE");
 },
 setL: function(k) {
 const d = this.i18n[k]; document.getElementById('qh').innerText = d.q; document.getElementById('pt').innerText = d.p; document.getElementById('ll').innerText = d.l;
-this.log("CORE_SYNC_SUCCESS: " + k);
+this.log("LANG_SYNC: " + k);
 },
 setC: function(v) {
 const r = { USD: 1, EUR: 0.92 }; document.getElementById('vn').innerText = (1500000 * (r[v] || 1)).toLocaleString(); document.getElementById('vu').innerText = v;
-this.log("VALUATION_UPDATE: " + v);
+this.log("VALUATION_SYNC: " + v);
 },
 up: function() {
 const types = ["BRIEF", "MOTION", "ORDER", "AFFIDAVIT"]; document.getElementById('tid').innerText = `SAH-2026-${types[Math.floor(Math.random()*4)]}-${Math.floor(100+Math.random()*899)}`;
 },
 start: function() {
-this.up(); this.log("LAWSUIT_INITIATED_" + Date.now()); const tid = document.getElementById('tid'); tid.style.borderColor = "#FFF"; setTimeout(() => tid.style.borderColor = "#00FF41", 200);
+this.up(); this.log("LITIGATION_START_ID_" + document.getElementById('tid').innerText);
 },
 log: function(m) {
 const l = document.getElementById('log'); const d = document.createElement('div'); d.innerText = `> [${new Date().toISOString().split('T')[1].split('Z')[0]}] ${m}`; l.prepend(d); if(l.childNodes.length > 14) l.removeChild(l.lastChild);
