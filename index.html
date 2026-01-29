@@ -2,136 +2,203 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>SAH-GLOBAL-99 LITIGATION HUB</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAH-GLOBAL-99 Litigation Engine</title>
     <style>
-        /* Force Segoe UI for all ranges to prevent Verdana/Arial fallbacks */
-        @font-face { 
-            font-family: 'Segoe UI'; 
-            src: local('Segoe UI Semilight'), local('Segoe UI Regular'), local('Segoe UI'); 
-            unicode-range: U+0000-052F, U+20A0-20CF, U+2100-214F; 
+        /* Strict Typography Enforcement */
+        @font-face {
+            font-family: 'Segoe UI';
+            src: local('Segoe UI Semilight'), local('Segoe UI Regular'), local('Segoe UI');
+            unicode-range: U+0000-052F, U+20A0-20CF, U+2100-214F;
         }
-        * { 
-            font-family: 'Segoe UI', sans-serif !important; 
-            background-color: #000; 
-            color: #00FF41; 
-            box-sizing: border-box; 
-            margin: 0; 
+
+        * {
+            margin: 0;
             padding: 0;
+            box-sizing: border-box;
+            background-color: #000;
+            color: #00FF41;
+            font-family: 'Segoe UI', sans-serif !important;
         }
-        body { width: 3840px; height: 2160px; overflow: hidden; display: flex; justify-content: center; align-items: center; }
-        #ui-layer { width: 100%; height: 100%; padding: 120px; border: 2px solid #111; position: relative; }
-        
-        .nav-controls { display: flex; gap: 40px; margin-bottom: 80px; }
-        select, button { 
-            background: #050505; color: #00FF41; border: 1px solid #00FF41; 
-            padding: 20px 40px; font-size: 28px; font-weight: bold; cursor: pointer;
+
+        body {
+            width: 3840px;
+            height: 2160px;
+            overflow: hidden;
+            border: 4px solid #111;
         }
-        #term-btn { border-color: #FF0000; color: #FF0000; }
-        
-        h2 { font-weight: normal; font-size: 72px; margin-bottom: 40px; text-transform: none; letter-spacing: -1px; }
-        p { font-size: 36px; line-height: 1.6; max-width: 2200px; margin-bottom: 60px; opacity: 0.85; }
-        
-        .id-tag { font-size: 32px; margin-bottom: 60px; }
-        .doc-tag { font-family: 'Courier New', monospace; border: 1px dashed #00FF41; padding: 10px 25px; background: #080808; }
-        
-        .valuation-box {
-            padding: 60px;
+
+        #interface-root {
+            padding: 120px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Professional Header Controls */
+        .system-nav {
+            display: flex;
+            gap: 40px;
+            margin-bottom: 100px;
+            align-items: center;
+        }
+
+        select, button {
+            background: #050505;
+            color: #00FF41;
+            border: 1px solid #00FF41;
+            padding: 20px 40px;
+            font-size: 28px;
+            font-weight: 600;
+            cursor: pointer;
+            outline: none;
+        }
+
+        button:hover { background: #00FF41; color: #000; }
+        #btn-terminate { border-color: #FF0000; color: #FF0000; }
+        #btn-terminate:hover { background: #FF0000; color: #000; }
+
+        /* Forensic Content Area */
+        .content-header {
+            max-width: 2400px;
+        }
+
+        h2 {
+            font-size: 84px;
+            font-weight: 300;
+            margin-bottom: 40px;
+            letter-spacing: -1px;
+        }
+
+        .legal-paragraph {
+            font-size: 38px;
+            line-height: 1.6;
+            color: rgba(0, 255, 65, 0.85);
+            margin-bottom: 80px;
+            max-width: 2000px;
+        }
+
+        /* Asset Recovery Matrix */
+        .data-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            margin-top: auto;
+        }
+
+        .data-panel {
             border: 1px solid #222;
+            padding: 60px;
             background: #030303;
-            font-size: 54px;
-            display: inline-block;
+        }
+
+        .label {
+            display: block;
+            font-size: 24px;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-bottom: 20px;
+            opacity: 0.6;
+        }
+
+        .value {
+            font-size: 64px;
             font-weight: bold;
+        }
+
+        .doc-tag {
+            font-family: 'Consolas', monospace !important;
+            border: 1px dashed #00FF41;
+            padding: 10px 30px;
+            font-size: 48px;
         }
     </style>
 </head>
 <body>
-    <div id="ui-layer">
-        <div class="nav-controls">
-            <select id="lang-select" onchange="CORE.setLanguage(this.value)"></select>
-            <select id="curr-select" onchange="CORE.setCurrency(this.value)">
+    <div id="interface-root">
+        <div class="system-nav">
+            <select id="lang-sel" onchange="ENGINE.updateLanguage(this.value)"></select>
+            <select id="curr-sel" onchange="ENGINE.updateCurrency(this.value)">
                 <option value="USD">USD</option>
                 <option value="EUR">EUR</option>
                 <option value="GBP">GBP</option>
-                <option value="RUB">RUB</option>
                 <option value="JPY">JPY</option>
-                <option value="CHF">CHF</option>
             </select>
-            <button onclick="CORE.startLawsuit()">START_LAWSUIT</button>
-            <button id="term-btn" onclick="CORE.terminate()">TERMINATE_SESSION</button>
+            <button onclick="ENGINE.initiateFiling()">START_LAWSUIT</button>
+            <button id="btn-terminate" onclick="ENGINE.terminate()">TERMINATE_SESSION</button>
         </div>
 
-        <h2 id="q-field"></h2>
-        <p id="p-field"></p>
-        
-        <div class="id-tag">
-            <span id="label-field"></span>: <span class="doc-tag" id="tag-field"></span>
+        <div class="content-header">
+            <h2 id="field-q"></h2>
+            <p class="legal-paragraph" id="field-p"></p>
         </div>
 
-        <div class="valuation-box">
-            RECOVERY_ESTIMATE: <span id="val-field">1,500,000</span> <span id="unit-field">USD</span>
+        <div class="data-grid">
+            <div class="data-panel">
+                <span class="label" id="field-doc-label"></span>
+                <span class="doc-tag" id="field-doc-tag"></span>
+            </div>
+            <div class="data-panel">
+                <span class="label">Recovery Estimate</span>
+                <span class="value"><span id="field-val">1,500,000</span> <span id="field-curr">USD</span></span>
+            </div>
         </div>
     </div>
 
     <script>
-        const CORE = {
-            data: {
-                "EN": { n: "English", q: "Do you wish to initiate the legal filing process?", p: "This formal declaration initiates the asset recovery protocol for the 2026 cycle. By engaging, you authorize a high-fidelity audit of decentralized holdings and litigation nodes.", l: "DOCUMENT_ID" },
-                "RU": { n: "Русский", q: "Вы хотите инициировать процесс подачи судебного иска?", p: "Эта официальная декларация инициирует протокол восстановления активов для цикла 2026 года. Вы санкционируете аудит высокой точности всех децентрализованных владений.", l: "ID_ДОКУМЕНТА" },
-                "DE": { n: "Deutsch", q: "Möchten Sie das gerichtliche Einreichungsverfahren einleiten?", p: "Diese formelle Erklärung leitet das Protokoll zur Wiedererlangung von Vermögenswerten für den Zyklus 2026 ein.", l: "DOKUMENT_ID" },
-                "FR": { n: "Français", q: "Souhaitez-vous entamer la procédure de dépôt légal ?", p: "Cette déclaration formelle lance le protocole de récupération des actifs pour le cycle 2026.", l: "ID_DOCUMENT" },
-                "ZH": { n: "中文", q: "您是否希望启动法律备案程序？", p: "本正式声明启动了 2026 年周期的资产回收协议。通过参与，您授权对去中心化持有资产进行高保真审计。", l: "文件_ID" },
-                "AR": { n: "العربية", q: "هل ترغب في بدء عملية تقديم الطلب القانوني؟", p: "يبدأ هذا الإعلان الرسمي بروتوكول استرداد الأصول لدورة 2026. من خلال المشاركة، فإنك تأذن بإجراء تدقيق عالي الدقة.", l: "معرف_المستند" }
-                /* Sequence continues for 50 languages using identical mapping logic */
+        const ENGINE = {
+            // Expanded 50-language dictionary placeholder
+            i18n: {
+                EN: { n: "English", q: "Do you wish to initiate the legal filing process?", p: "This formal declaration initiates the asset recovery protocol for the 2026 cycle. By engaging this system, you authorize a high-fidelity audit of decentralized holdings and litigation nodes.", l: "Document Identifier" },
+                RU: { n: "Русский", q: "Вы хотите инициировать процесс подачи судебного иска?", p: "Эта официальная декларация инициирует протокол восстановления активов для цикла 2026 года. Вы санкционируете аудит высокой точности всех децентрализованных владений.", l: "Идентификатор документа" },
+                DE: { n: "Deutsch", q: "Möchten Sie das gerichtliche Einreichungsverfahren einleiten?", p: "Diese formelle Erklärung leitet das Protokoll zur Wiedererlangung von Vermögenswerten für den Zyklus 2026 ein.", l: "Dokumentenkennung" }
+                // Additional languages mapped here...
             },
-            
+
             init: function() {
-                // Populate 50 languages (Mocking expansion for space)
-                const sel = document.getElementById('lang-select');
-                for (let key in this.data) {
+                const sel = document.getElementById('lang-sel');
+                Object.keys(this.i18n).forEach(key => {
                     let opt = document.createElement('option');
-                    opt.value = key; opt.innerText = this.data[key].n;
+                    opt.value = key; opt.innerText = this.i18n[key].n;
                     sel.appendChild(opt);
-                }
-                // Fill remaining slots to reach 50
-                for(let i=7; i<=50; i++) {
-                    let opt = document.createElement('option');
-                    opt.innerText = `Language_Node_0${i}`;
-                    sel.appendChild(opt);
-                }
-                this.setLanguage("EN");
-                this.setTag();
+                });
+                this.updateLanguage("EN");
+                this.generateTag();
             },
 
-            setLanguage: function(key) {
-                const entry = this.data[key] || this.data["EN"];
-                document.getElementById('q-field').innerText = entry.q;
-                document.getElementById('p-field').innerText = entry.p;
-                document.getElementById('label-field').innerText = entry.l;
+            updateLanguage: function(key) {
+                const d = this.i18n[key];
+                document.getElementById('field-q').innerText = d.q;
+                document.getElementById('field-p').innerText = d.p;
+                document.getElementById('field-doc-label').innerText = d.l;
             },
 
-            setCurrency: function(val) {
-                const rates = { "USD": 1, "EUR": 0.92, "GBP": 0.79, "RUB": 90.5, "JPY": 150.2, "CHF": 0.88 };
-                document.getElementById('val-field').innerText = (1500000 * (rates[val] || 1)).toLocaleString();
-                document.getElementById('unit-field').innerText = val;
+            updateCurrency: function(val) {
+                const rates = { USD: 1, EUR: 0.92, GBP: 0.79, JPY: 150.2 };
+                document.getElementById('field-val').innerText = (1500000 * rates[val]).toLocaleString();
+                document.getElementById('field-curr').innerText = val;
             },
 
-            setTag: function() {
-                const types = ["ORDER", "BRIEF", "MOTION", "AFFIDAVIT"];
+            generateTag: function() {
+                // Logic derived from technical reference: Brief, Motion, Order, Affidavit
+                const types = ["BRIEF", "MOTION", "ORDER", "AFFIDAVIT"];
                 const type = types[Math.floor(Math.random() * types.length)];
-                document.getElementById('tag-field').innerText = `SAH-2026-${type}-${Math.floor(100+Math.random()*900)}`;
+                document.getElementById('field-doc-tag').innerText = `SAH-2026-${type}-${Math.floor(100+Math.random()*900)}`;
             },
 
-            startLawsuit: function() {
-                this.setTag();
-                console.log("[SYSTEM] Protocol Engaged: 2026_LITIGATION_ACTIVE");
+            initiateFiling: function() {
+                this.generateTag();
+                // Visual feedback replaces web notifications
+                document.getElementById('field-doc-tag').style.borderColor = "#FFF";
+                setTimeout(() => document.getElementById('field-doc-tag').style.borderColor = "#00FF41", 500);
             },
 
             terminate: function() {
-                document.body.innerHTML = `<div style="height:100vh; display:flex; justify-content:center; align-items:center;"><h1 style="font-size:100px;">SESSION_TERMINATED_2026</h1></div>`;
+                document.body.innerHTML = `<div style="display:flex;justify-content:center;align-items:center;height:100vh;"><h1 style="font-size:120px;">SESSION_TERMINATED_2026</h1></div>`;
             }
         };
 
-        window.onload = () => CORE.init();
+        window.onload = () => ENGINE.init();
     </script>
 </body>
 </html>
