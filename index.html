@@ -2,74 +2,78 @@ const SYSTEM_STATE = {
     year: 2026,
     language: "EN",
     currency: "USD",
-    isFiled: false
+    isFiled: false,
+    activeDocument: null
 };
 
 const I18N_DATA = {
     EN: {
         question: "Do you wish to initiate the legal filing process?",
-        paragraph: "This formal declaration initiates the asset recovery protocol under the SAH-GLOBAL-99 framework. By engaging this system, you are authorizing a high-fidelity audit of all decentralized holdings, litigation nodes, and frozen assets currently locked in the 2026 temporal cycle. All procedures are rendered in 4K resolution to ensure forensic-grade data integrity.",
+        paragraph: "This formal declaration initiates the asset recovery protocol. By engaging this system, you authorize a high-fidelity audit of decentralized holdings and litigation nodes locked in the 2026 temporal cycle.",
         start: "START_LAWSUIT",
-        term: "TERMINATE_SESSION"
+        term: "TERMINATE_SESSION",
+        docTag: "DOCUMENT_ID"
     },
     RU: {
         question: "Вы хотите инициировать процесс подачи судебного иска?",
-        paragraph: "Эта официальная декларация инициирует протокол восстановления активов в рамках системы SAH-GLOBAL-99. Используя эту систему, вы санкционируете аудит высокой точности всех децентрализованных владений, узлов судебных разбирательств и замороженных активов, заблокированных в текущем временном цикле 2026 года.",
+        paragraph: "Эта официальная декларация инициирует протокол восстановления активов. Используя эту систему, вы санкционируете аудит высокой точности всех децентрализованных владений и узлов судебных разбирательств, заблокированных в цикле 2026 года.",
         start: "НАЧАТЬ_ИСК",
-        term: "ПРЕКРАТИТЬ_СЕССИЮ"
+        term: "ПРЕКРАТИТЬ_СЕССИЮ",
+        docTag: "ID_ДОКУМЕНТА"
+    },
+    DE: {
+        question: "Möchten Sie das gerichtliche Einreichungsverfahren einleiten?",
+        paragraph: "Diese formelle Erklärung leitet das Protokoll zur Wiedererlangung von Vermögenswerten ein. Durch die Nutzung dieses Systems autorisieren Sie eine Prüfung dezentraler Bestände im Zeitzyklus 2026.",
+        start: "KLAGE_STARTEN",
+        term: "SITZUNG_BEENDEN",
+        docTag: "DOKUMENT_ID"
     }
 };
 
 const CURRENCIES = ["USD", "EUR", "GBP", "RUB", "JPY"];
 
-const CSS_ENFORCER = `
-    @font-face {
-        font-family: 'Segoe UI';
-        src: local('Segoe UI Semilight'), local('Segoe UI Regular'), local('Segoe UI');
-        unicode-range: U+0000-04FF; /* Comprehensive range covering Latin and Cyrillic */
-    }
-    * { 
-        font-family: 'Segoe UI', sans-serif !important; 
-        background-color: #000;
-        color: #00FF41;
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-    #ui-layer { width: 3840px; height: 2160px; padding: 100px; }
-    .controls { display: flex; gap: 40px; margin-bottom: 60px; }
-    select { 
-        background: #111; color: #00FF41; border: 1px solid #00FF41; 
-        padding: 10px; font-size: 24px; cursor: pointer;
-    }
-    h2 { font-weight: normal; font-size: 48px; margin-bottom: 20px; text-transform: none; }
-    p { font-size: 28px; line-height: 1.6; max-width: 1200px; margin-bottom: 40px; }
-    .bold { font-weight: bold; }
-    .italic { font-style: italic; }
-    button { 
-        padding: 20px 40px; font-size: 24px; font-weight: bold; cursor: pointer;
-        border: 2px solid #00FF41; transition: 0.2s;
-    }
-    #term-btn { border-color: #FF0000; color: #FF0000; }
-`;
-
 const ENGINE = {
+    // Generates document tags based on forensic document types
+    generateDocTag: function(typeIndex) {
+        const types = ["BRIEF", "MOTION", "ORDER", "AFFIDAVIT"];
+        const type = types[typeIndex % 4];
+        return `SAH-${SYSTEM_STATE.year}-${type}-${Math.floor(Math.random() * 1000)}`;
+    },
+
     updateUI: function() {
         const lang = SYSTEM_STATE.language;
         document.getElementById('question-text').innerText = I18N_DATA[lang].question;
         document.getElementById('para-text').innerText = I18N_DATA[lang].paragraph;
         document.getElementById('start-btn').innerText = I18N_DATA[lang].start;
+        document.getElementById('doc-tag-label').innerText = I18N_DATA[lang].docTag;
     },
+
     changeLang: function(val) { SYSTEM_STATE.language = val; this.updateUI(); },
-    changeCurrency: function(val) { SYSTEM_STATE.currency = val; },
+    
+    changeCurrency: function(val) { 
+        SYSTEM_STATE.currency = val;
+        const rate = { "USD": 1.0, "EUR": 0.92, "GBP": 0.79, "RUB": 90.5, "JPY": 150.2 }[val];
+        document.getElementById('valuation-display').innerText = (1500000 * rate).toLocaleString();
+    },
+
     terminate: function() {
-        document.body.innerHTML = `<div style="display:flex;justify-content:center;align-items:center;height:100vh;"><h1>SESSION_WIPED_2026</h1></div>`;
+        document.body.innerHTML = `<div style="display:flex;justify-content:center;align-items:center;height:100vh;background:#000;color:#00FF41;"><h1>SESSION_WIPED_2026</h1></div>`;
     }
 };
 
 (function init() {
+    // CSS Enforcement: Ensuring Segoe UI Regular, Bold, and Italic
     const style = document.createElement('style');
-    style.innerHTML = CSS_ENFORCER;
+    style.innerHTML = `
+        @font-face { font-family: 'Segoe UI'; src: local('Segoe UI'); unicode-range: U+0000-04FF; }
+        * { font-family: 'Segoe UI', sans-serif !important; background-color: #000; color: #00FF41; box-sizing: border-box; }
+        #ui-layer { width: 3840px; height: 2160px; padding: 100px; }
+        .controls { display: flex; gap: 40px; margin-bottom: 60px; }
+        select, button { background: #111; color: #00FF41; border: 1px solid #00FF41; padding: 15px; font-size: 24px; cursor: pointer; }
+        h2 { font-weight: normal; font-size: 48px; margin-bottom: 20px; text-transform: none; }
+        .doc-tag { font-family: 'Courier New', monospace; background: #111; padding: 5px 15px; border-radius: 4px; border: 1px dashed #00FF41; }
+        #term-btn { border-color: #FF0000; color: #FF0000; }
+    `;
     document.head.appendChild(style);
 
     const root = document.createElement('div');
@@ -79,26 +83,25 @@ const ENGINE = {
             <select onchange="ENGINE.changeLang(this.value)">
                 <option value="EN">English</option>
                 <option value="RU">Русский</option>
+                <option value="DE">Deutsch</option>
             </select>
             <select onchange="ENGINE.changeCurrency(this.value)">
                 ${CURRENCIES.map(c => `<option value="${c}">${c}</option>`).join('')}
             </select>
-            <button id="start-btn" onclick="alert('FILING...')">${I18N_DATA.EN.start}</button>
+            <button id="start-btn" onclick="ENGINE.updateUI()">${I18N_DATA.EN.start}</button>
             <button id="term-btn" onclick="ENGINE.terminate()">${I18N_DATA.EN.term}</button>
         </div>
         
         <h2 id="question-text">${I18N_DATA.EN.question}</h2>
         <p id="para-text">${I18N_DATA.EN.paragraph}</p>
         
-        <div style="font-size: 24px; opacity: 0.7;">
-            <span class="bold">BOLD_VERIFICATION</span> | <span class="italic">ITALIC_VERIFICATION</span> | Cyrillic: Проверка системы
+        <div style="font-size: 28px; margin-bottom: 40px;">
+            <span id="doc-tag-label">${I18N_DATA.EN.docTag}</span>: 
+            <span class="doc-tag">${ENGINE.generateDocTag(2)}</span>
         </div>
 
-        <div id="map-container" style="margin-top: 100px;">
-            <svg width="1200" height="600" viewBox="0 0 1200 600">
-                <rect width="100%" height="100%" fill="#050505" stroke="#00FF41"/>
-                <text x="50%" y="50%" fill="#00FF41" font-size="20" text-anchor="middle">MERCATOR_FLAT_MAP_VIEWPORT</text>
-            </svg>
+        <div style="font-size: 32px; border-top: 1px solid #333; pt: 20px;">
+            ESTIMATED RECOVERY: <span id="valuation-display">1,500,000</span> ${SYSTEM_STATE.currency}
         </div>
     `;
     document.body.appendChild(root);
