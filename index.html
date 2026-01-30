@@ -3,28 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sue-A-Hacker Enterprise | Official Legal Portal</title>
+    <title>SAH Enterprise | Global Recovery Protocol</title>
     <style>
-        /* VERDANA & SERIF KILLER: STACKED SEGOE UI OVERRIDE */
+        /* VERDANA KILLER: STRICT SEGOE UI ENFORCEMENT */
         @font-face {
-            font-family: 'Segoe UI Custom';
-            src: local('Segoe UI'), local('Segoe UI Regular'), local('SegoeWP'), local('Segoe UI Webfont');
+            font-family: 'Segoe UI';
+            src: local('Segoe UI'), local('Segoe UI Regular');
             font-weight: 400;
         }
         @font-face {
-            font-family: 'Segoe UI Custom';
-            src: local('Segoe UI Bold'), local('Segoe UI Semibold');
+            font-family: 'Segoe UI';
+            src: local('Segoe UI Bold');
             font-weight: 700;
         }
 
         :root {
             --neon-green: #00ff41;
-            --alert-red: #ff0033;
             --bg-black: #000000;
             --card-bg: #050505;
             --border-dim: #111111;
-            /* Forcing Segoe UI exclusively */
-            --forced-font: 'Segoe UI Custom', 'Segoe UI', sans-serif;
+            /* No Arial, No Tahoma, No Times New Roman */
+            --forced-font: 'Segoe UI';
         }
 
         * {
@@ -39,10 +38,9 @@
             color: var(--neon-green);
             margin: 0;
             padding: 40px;
-            overflow-x: hidden;
         }
 
-        /* HEADER & DASHBOARD */
+        /* HEADER */
         .header-nav {
             display: flex;
             justify-content: space-between;
@@ -52,6 +50,21 @@
             margin-bottom: 60px;
         }
 
+        .nav-controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        select {
+            background: #000;
+            color: var(--neon-green);
+            border: 1px solid var(--neon-green);
+            padding: 5px 10px;
+            font-size: 13px;
+            outline: none;
+        }
+
+        /* HERO */
         .title-main {
             font-size: 68px;
             font-weight: 700;
@@ -68,6 +81,7 @@
             margin-bottom: 50px;
         }
 
+        /* DASHBOARD */
         .dashboard-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -79,9 +93,8 @@
             background: var(--card-bg);
             border-left: 3px solid var(--neon-green);
             padding: 20px;
-            border-top: 1px solid var(--border-dim);
-            border-right: 1px solid var(--border-dim);
-            border-bottom: 1px solid var(--border-dim);
+            border: 1px solid var(--border-dim);
+            border-left: 3px solid var(--neon-green);
         }
 
         .label {
@@ -89,12 +102,11 @@
             letter-spacing: 2px;
             text-transform: uppercase;
             margin-bottom: 15px;
-            color: var(--neon-green);
             opacity: 0.6;
         }
 
         .value {
-            font-size: 32px;
+            font-size: 28px;
             font-weight: 700;
         }
 
@@ -108,25 +120,20 @@
             font-size: 18px;
             cursor: pointer;
             text-transform: uppercase;
-            letter-spacing: 1px;
         }
 
-        .btn-primary:hover {
-            opacity: 0.8;
-        }
-
-        /* FORM MODAL OVERLAY */
-        #litigation-overlay {
+        /* FORM OVERLAY */
+        #form-overlay {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.98);
-            z-index: 10000;
+            background: rgba(0,0,0,0.98);
+            z-index: 999;
             justify-content: center;
             align-items: center;
         }
 
-        .litigation-form {
+        .form-container {
             width: 90%;
             max-width: 600px;
             border: 1px solid var(--neon-green);
@@ -134,185 +141,119 @@
             background: #080808;
         }
 
-        .form-row { margin-bottom: 25px; }
-
-        label {
-            display: block;
-            font-size: 12px;
-            text-transform: uppercase;
-            margin-bottom: 8px;
-            color: var(--neon-green);
-        }
-
-        input, select, textarea {
+        .field-group { margin-bottom: 20px; }
+        label { display: block; font-size: 12px; text-transform: uppercase; margin-bottom: 8px; }
+        
+        input, textarea, .form-select {
             width: 100%;
             background: #000;
             border: 1px solid #333;
             color: var(--neon-green);
-            padding: 14px;
+            padding: 12px;
             font-size: 16px;
-            outline: none;
         }
 
-        input:focus, textarea:focus {
-            border-color: var(--neon-green);
-        }
-
-        /* WARRANT PROTOCOL SCREEN */
+        /* WARRANT SCREEN */
         #warrant-screen {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background: var(--bg-black);
-            z-index: 20000;
+            z-index: 1000;
             padding: 40px;
-        }
-
-        .terminal-output {
-            border: 1px solid #222;
-            padding: 20px;
-            height: 400px;
-            overflow-y: auto;
-            font-family: monospace !important; /* Specific to logs */
-            font-size: 14px;
         }
     </style>
 </head>
 <body>
 
 <div class="header-nav">
-    <div style="font-size: 20px; font-weight: 400;">Sue-A-Hacker Enterprise | Official Legal Portal</div>
-    <div style="display: flex; gap: 15px;">
-        <select style="width: auto; padding: 5px; border: 1px solid var(--neon-green);"><option>EN</option></select>
-        <button class="btn-primary" style="padding: 8px 20px; font-size: 14px;" onclick="toggleLitigation(true)">Start Lawsuit</button>
+    <div style="font-size: 18px; font-weight: 400;">SAH ENTERPRISE</div>
+    <div class="nav-controls">
+        <select id="lang-drop"></select>
+        <select id="currency-drop">
+            <option>USD ($)</option><option>EUR (€)</option><option>GBP (£)</option>
+            <option>JPY (¥)</option><option>CAD ($)</option><option>AUD ($)</option>
+            <option>CNY (¥)</option><option>BTC (₿)</option><option>ETH (Ξ)</option>
+        </select>
+        <button class="btn-primary" style="padding: 5px 15px; font-size: 12px;" onclick="openForm()">Start Lawsuit</button>
     </div>
 </div>
 
 <h1 class="title-main">Do you want to sue a hacker?</h1>
-
 <p class="description">
-    Then use the Sue-A-Hacker Enterprise! This formal declaration initiates the asset recovery protocol for the 2026 cycle. 
-    Our system performs a high-fidelity audit of decentralized holdings, jurisdiction conflicts, and forensic malware signatures.
+    Use the Sue-A-Hacker Enterprise protocol. This formal declaration initiates a high-fidelity audit of decentralized holdings and forensic signatures for the 2026 litigation cycle.
 </p>
 
 <div class="dashboard-grid">
-    <div class="data-card">
-        <div class="label">Forensic ID</div>
-        <div class="value" style="font-size: 16px; border: 1px dashed var(--neon-green); padding: 5px;">SAH-2026-AFFIDAVIT-5095</div>
-    </div>
-    <div class="data-card">
-        <div class="label">Recovery Probability</div>
-        <div class="value">91.4%</div>
-    </div>
-    <div class="data-card">
-        <div class="label">Estimated Value</div>
-        <div class="value">1,500,000 USD</div>
-    </div>
-    <div class="data-card">
-        <div class="label">AI Core Status</div>
-        <div class="value" style="font-size: 20px;">NEURAL JURISDICTION V4</div>
-    </div>
+    <div class="data-card"><div class="label">Forensic ID</div><div class="value" style="font-size:14px">SAH-2026-AF-5095</div></div>
+    <div class="data-card"><div class="label">Recovery Prob.</div><div class="value">91.4%</div></div>
+    <div class="data-card"><div class="label">Est. Value</div><div class="value">1.5M</div></div>
+    <div class="data-card"><div class="label">AI Status</div><div class="value" style="font-size:18px">NEURAL V4</div></div>
 </div>
 
-<center>
-    <button class="btn-primary" onclick="toggleLitigation(true)">Open Litigation Center</button>
-</center>
+<center><button class="btn-primary" onclick="openForm()">Open Litigation Center</button></center>
 
-<div id="litigation-overlay">
-    <div class="litigation-form">
-        <h2 style="margin-top:0; text-transform: uppercase;">Litigation Data Entry</h2>
-        
-        <div class="form-row">
-            <label>Threat Actor IP / Alias</label>
-            <input type="text" id="target-id" placeholder="192.XXX.X.X or Identifier">
+<div id="form-overlay">
+    <div class="form-container">
+        <h2 style="margin-top:0">Litigation Entry</h2>
+        <div class="field-group">
+            <label>IP Name / Identity</label>
+            <input type="text" id="target" placeholder="127.0.0.1">
         </div>
-
-        <div class="form-row">
-            <label>Malware Classification</label>
-            <select id="malware-type">
-                <option>Ransomware (Lock-Bit Type)</option>
-                <option>Trojan Horse (Banker)</option>
-                <option>Neural-Jacking Protocol</option>
-                <option>Spyware / Data Exfiltration</option>
+        <div class="field-group">
+            <label>Malware Type</label>
+            <select class="form-select">
+                <option>Ransomware</option><option>Spyware</option><option>Trojan</option>
             </select>
         </div>
-
-        <div class="form-row">
-            <label>Case Narrative (Evidence Details)</label>
-            <textarea id="case-desc" placeholder="Describe the intrusion event..." rows="4"></textarea>
+        <div class="field-group">
+            <label>Description (Evidence)</label>
+            <textarea id="desc" rows="4"></textarea>
         </div>
-
-        <div class="form-row">
-            <label>Suit Recovery Value ($)</label>
-            <input type="number" id="suit-price" value="1500000">
+        <div class="field-group">
+            <label>Lawsuit Price</label>
+            <input type="number" placeholder="50000">
         </div>
-
-        <button class="btn-primary" style="width:100%" onclick="executeWarrant()">Serve Global Warrant</button>
-        <button onclick="toggleLitigation(false)" style="background:none; border:none; color:#666; margin-top:20px; cursor:pointer; width:100%; text-transform: uppercase; font-size: 12px;">Discard Filing</button>
+        <button class="btn-primary" style="width:100%" onclick="serveWarrant()">Serve Global Warrant</button>
+        <button onclick="closeForm()" style="background:none; border:none; color:#555; width:100%; margin-top:15px; cursor:pointer">Cancel</button>
     </div>
 </div>
 
 <div id="warrant-screen">
-    <h2 style="text-transform: uppercase;">Global Serving Protocol: Active</h2>
-    <div id="gps-status" style="margin-bottom:20px; color:#666;">GPS: DETECTING TRIANGULATION...</div>
-    <div class="terminal-output" id="log-box"></div>
-    
-    <div id="outcome-container" style="display:none; text-align:center; margin-top:40px;">
-        <h1 id="outcome-msg" style="font-size: 56px;"></h1>
-        <button class="btn-primary" onclick="location.reload()">Return to Dashboard</button>
+    <h2 id="warrant-header">SERVING GLOBAL WARRANT...</h2>
+    <div id="terminal" style="border:1px solid #222; height:300px; padding:20px; font-family:monospace !important; overflow-y:auto"></div>
+    <div id="outcome" style="display:none; text-align:center; margin-top:50px;">
+        <h1 id="res-text" style="font-size:60px"></h1>
+        <button class="btn-primary" onclick="location.reload()">Return</button>
     </div>
 </div>
 
 <script>
-    function toggleLitigation(show) {
-        document.getElementById('litigation-overlay').style.display = show ? 'flex' : 'none';
-    }
+    const langs = ["English", "Spanish", "French", "German", "Italian", "Portuguese", "Russian", "Chinese", "Japanese", "Korean", "Arabic", "Hindi", "Bengali", "Turkish", "Vietnamese", "Polish", "Dutch", "Thai", "Swedish", "Indonesian", "Malay", "Persian", "Greek", "Czech", "Romanian", "Ukrainian", "Hungarian", "Hebrew", "Danish", "Finnish", "Norwegian", "Slovak", "Bulgarian", "Croatian", "Lithuanian", "Slovenian", "Latvian", "Estonian", "Filipino", "Swahili", "Amharic", "Tamil", "Telugu", "Kannada", "Marathi", "Gujarati", "Punjabi", "Burmese", "Khmer", "Lao"];
+    const lDrop = document.getElementById('lang-drop');
+    langs.forEach(l => { let o = document.createElement('option'); o.text = l; lDrop.add(o); });
 
-    function executeWarrant() {
-        document.getElementById('litigation-overlay').style.display = 'none';
+    function openForm() { document.getElementById('form-overlay').style.display = 'flex'; }
+    function closeForm() { document.getElementById('form-overlay').style.display = 'none'; }
+
+    function serveWarrant() {
+        document.getElementById('form-overlay').style.display = 'none';
         document.getElementById('warrant-screen').style.display = 'block';
-        
-        const logBox = document.getElementById('log-box');
-        const logs = [
-            "> INITIALIZING NEURAL JURISDICTION HANDSHAKE...",
-            "> TRACING IP: " + (document.getElementById('target-id').value || "ANONYMOUS"),
-            "> BYPASSING REGIONAL FIREWALLS...",
-            "> SERVING DIGITAL AFFIDAVIT TO ISP GATEWAY...",
-            "> ASSET FREEZE COMMAND ISSUED...",
-            "> PROTOCOL FINALIZED."
-        ];
-
+        const term = document.getElementById('terminal');
+        const logs = ["> Neural Link Active", "> Tracing IP...", "> Serving Affidavit...", "> Global Warrant Issued", "> Case Finalized"];
         let i = 0;
-        const interval = setInterval(() => {
-            if (i < logs.length) {
-                const line = document.createElement('div');
-                line.style.marginBottom = "8px";
-                line.innerText = `[${new Date().toLocaleTimeString()}] ${logs[i]}`;
-                logBox.appendChild(line);
-                logBox.scrollTop = logBox.scrollHeight;
-                i++;
+        const itv = setInterval(() => {
+            if(i < logs.length) {
+                term.innerHTML += `<div>[${new Date().toLocaleTimeString()}] ${logs[i++]}</div>`;
             } else {
-                clearInterval(interval);
-                finalizeLitigation();
+                clearInterval(itv);
+                document.getElementById('outcome').style.display = 'block';
+                const success = Math.random() > 0.1;
+                document.getElementById('res-text').innerText = success ? "SUCCESSFUL" : "FAILED";
+                document.getElementById('res-text').style.color = success ? "var(--neon-green)" : "red";
             }
         }, 1000);
     }
-
-    function finalizeLitigation() {
-        const success = Math.random() > 0.1;
-        const container = document.getElementById('outcome-container');
-        const msg = document.getElementById('outcome-msg');
-        
-        container.style.display = 'block';
-        if (success) {
-            msg.innerText = "LAWSUIT FILED SUCCESSFULLY";
-            msg.style.color = "var(--neon-green)";
-        } else {
-            msg.innerText = "LITIGATION DENIED BY TRIBUNAL";
-            msg.style.color = "var(--alert-red)";
-        }
-    }
 </script>
-
 </body>
 </html>
