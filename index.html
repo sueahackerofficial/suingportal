@@ -3,226 +3,200 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAH Enterprise | Litigation Suite</title>
+    <title>SAH Enterprise | Global Multi-Currency</title>
     <style>
         :root {
             --win-blue: #0078d4;
-            --win-dark: #111111;
+            --win-dark: #000000;
             --win-bg: #f3f2f1;
             --text-main: #323130;
             --border: #d2d0ce;
-            --white: #ffffff;
             --neon-green: #00ff41;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
         body { background: var(--win-bg); color: var(--text-main); display: flex; height: 100vh; overflow: hidden; }
 
-        .sidebar { width: 280px; background: var(--win-dark); color: white; padding: 40px 20px; }
-        .sidebar h2 { font-size: 18px; letter-spacing: 2px; margin-bottom: 40px; border-bottom: 1px solid #333; padding-bottom: 10px; }
-        .nav-item { padding: 12px; color: #aaa; cursor: pointer; transition: 0.2s; font-size: 14px; }
-        .nav-item:hover { color: white; background: #222; }
-        .nav-item.active { color: var(--win-blue); font-weight: bold; }
+        /* SIDEBAR */
+        .sidebar { width: 280px; background: var(--win-dark); color: white; padding: 40px 20px; flex-shrink: 0; }
+        .sidebar h2 { font-size: 18px; letter-spacing: 2px; margin-bottom: 20px; border-bottom: 1px solid #333; padding-bottom: 10px; }
+        
+        .lang-selector { width: 100%; background: #222; color: #ddd; border: 1px solid #444; padding: 8px; font-size: 12px; margin-bottom: 30px; outline: none; }
 
+        .nav-item { padding: 15px; color: #888; cursor: pointer; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; }
+        .nav-item.active { color: var(--win-blue); font-weight: bold; border-left: 4px solid var(--win-blue); background: #111; }
+
+        /* MAIN AREA */
         .main { flex-grow: 1; padding: 60px; overflow-y: auto; }
-        h1 { font-size: 28px; margin-bottom: 30px; font-weight: 600; }
-
-        .btn-primary { 
-            background: var(--win-blue); color: white; border: none; padding: 16px 32px; 
-            font-weight: 700; cursor: pointer; text-transform: uppercase; transition: 0.3s;
+        .header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
+        
+        .btn-file { 
+            background: #003a66; color: white; border: none; padding: 12px 24px; 
+            font-weight: 600; cursor: pointer; transition: 0.3s;
         }
-        .btn-primary:hover { background: #005a9e; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+        .btn-file:hover { background: var(--win-blue); }
 
-        /* MODAL & FORM */
+        /* MODAL */
         .modal-overlay { 
-            display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); 
-            z-index: 1000; align-items: center; justify-content: center; padding: 20px;
+            display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); 
+            z-index: 1000; align-items: center; justify-content: center;
         }
-        .modal-content { 
-            background: white; width: 100%; max-width: 650px; padding: 40px; 
-            max-height: 90vh; overflow-y: auto; animation: slideIn 0.3s ease-out;
-        }
-        @keyframes slideIn { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .modal-content { background: white; width: 600px; padding: 0; box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+        .modal-header { padding: 20px 30px; border-bottom: 1px solid var(--border); }
+        .modal-body { padding: 30px; max-height: 80vh; overflow-y: auto; }
+        
+        .form-label { display: block; font-size: 11px; font-weight: 700; color: #666; margin-bottom: 8px; text-transform: uppercase; }
+        .input-field { width: 100%; padding: 10px; border: 1px solid var(--border); margin-bottom: 20px; font-size: 14px; outline: none; }
 
-        .form-group { margin-bottom: 20px; }
-        label { display: block; font-size: 12px; font-weight: 700; margin-bottom: 8px; text-transform: uppercase; color: #666; }
-        input, select, textarea { 
-            width: 100%; padding: 12px; border: 1px solid var(--border); 
-            font-size: 14px; outline: none; transition: 0.2s;
-        }
-        input:focus, select:focus, textarea:focus { border-color: var(--win-blue); }
-
-        .price-summary { background: #f9f9f9; padding: 20px; border: 1px solid var(--border); margin: 20px 0; }
-        .price-row { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 14px; }
+        .price-box { background: #f9f9f9; border: 1px solid var(--border); padding: 20px; margin-bottom: 20px; }
+        .price-line { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 13px; }
 
         /* SERVING SCREEN */
         #serving-screen { 
             display: none; position: fixed; inset: 0; background: black; 
             z-index: 2000; flex-direction: column; align-items: center; justify-content: center; color: var(--neon-green);
         }
-        .scanner { width: 300px; height: 2px; background: var(--neon-green); position: absolute; top: 50%; animation: scanMove 2s infinite; opacity: 0.5; }
-        @keyframes scanMove { 0% { transform: translateY(-100px); } 100% { transform: translateY(100px); } }
-
-        .toast-container { position: fixed; bottom: 20px; right: 20px; z-index: 3000; }
-        .toast { background: white; border-left: 4px solid var(--win-blue); padding: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); margin-top: 10px; }
+        .scanner-bar { width: 400px; height: 1px; background: var(--neon-green); position: absolute; animation: move 1.5s infinite; }
+        @keyframes move { 0% { top: 30%; } 100% { top: 70%; } }
+        .status-text { margin-top: 20px; font-family: monospace; font-size: 18px; letter-spacing: 2px; }
     </style>
 </head>
 <body>
 
 <aside class="sidebar">
-    <h2>SAH ENTERPRISE</h2>
-    <div class="nav-item active">DASHBOARD</div>
-    <div class="nav-item">FORENSIC INTEL</div>
-    <div class="nav-item">LEGAL VAULT</div>
+    <h2 id="brand-name">SAH ENTERPRISE</h2>
+    
+    <label class="form-label" style="color: #666;">Interface Language</label>
+    <select class="lang-selector" id="global-lang" onchange="Engine.updateLanguage()"></select>
+
+    <div class="nav-item active" id="nav-dash">Dashboard</div>
+    <div class="nav-item">Forensic Intel</div>
+    <div class="nav-item">Legal Vault</div>
 </aside>
 
 <main class="main">
-    <h1>Global Operations</h1>
-    <div style="background: white; padding: 40px; border: 1px solid var(--border);">
-        <p style="margin-bottom: 20px; color: #666;">Ready to initiate new legal proceedings against detected threats.</p>
-        <button class="btn-primary" onclick="UI.openForm()">File Injunction</button>
+    <div class="header-row">
+        <h1 id="title-ops">Operations Hub</h1>
+        <button class="btn-file" id="btn-inj" onclick="Engine.openForm()">FILE INJUNCTION</button>
+    </div>
+    
+    <div style="background:white; border:1px solid var(--border); padding: 40px; text-align:center; color:#888;">
+        [ System Dashboard Content - Node 1,024 Active ]
     </div>
 </main>
 
-<div id="modal" class="modal-overlay">
+<div id="litigation-modal" class="modal-overlay">
     <div class="modal-content">
-        <h2 style="margin-bottom: 25px; border-bottom: 2px solid var(--win-blue); padding-bottom: 10px;">LITIGATION FILING FORM</h2>
-        
-        <div class="form-group">
-            <label>IP Name / Identity</label>
-            <input type="text" id="ip-name" placeholder="e.g. 192.168.1.104 or ShadowThread-X">
-        </div>
+        <div class="modal-header"><h2 id="form-title">LITIGATION FILING FORM</h2></div>
+        <div class="modal-body">
+            <label class="form-label">IP Name / Identity</label>
+            <input type="text" id="ip-identity" class="input-field" placeholder="192.168.1.104">
 
-        <div class="form-group">
-            <label>Malware Classification</label>
-            <select id="malware-type">
-                <option value="Trojan.Generic">Trojan.Generic</option>
-                <option value="Ransomware.Encrypted">Ransomware.Encrypted</option>
-                <option value="Spyware.NodeSiphon">Spyware.NodeSiphon</option>
-                <option value="Adware.Persistent">Adware.Persistent</option>
+            <label class="form-label">Malware Classification</label>
+            <select id="malware-class" class="input-field">
+                <option>Trojan.Generic</option>
+                <option>Ransomware.Encrypted</option>
+                <option>Spyware.NodeSiphon</option>
             </select>
-        </div>
 
-        <div class="form-group">
-            <label>Violation Description</label>
-            <textarea id="desc" rows="3" placeholder="Describe the infringement details..."></textarea>
-        </div>
+            <label class="form-label">Violation Description</label>
+            <textarea id="violation-desc" class="input-field" style="height: 60px;"></textarea>
 
-        <div class="form-group">
-            <label>Evidence Link / Hash</label>
-            <input type="text" id="evidence" placeholder="Forensic data hash or cloud storage link">
-        </div>
+            <label class="form-label">Sue Amount (Target Recovery)</label>
+            <input type="number" id="sue-val" class="input-field" value="5000" oninput="Engine.updatePrice()">
 
-        <div class="form-group">
-            <label>Sue Amount (Target Recovery)</label>
-            <input type="number" id="sue-amount" value="5000" oninput="UI.calcPrice()">
-        </div>
-
-        <div class="price-summary">
-            <div class="price-row"><span>Filing Fee (2%):</span> <span id="filing-fee">$100.00</span></div>
-            <div class="price-row"><span>Forensic Processing:</span> <span>$250.00</span></div>
-            <div class="price-row" style="border-top: 1px solid #ccc; margin-top: 10px; padding-top: 10px; font-weight: bold;">
-                <span>Total Lawsuit Cost:</span> <span id="total-cost">$350.00</span>
+            <div class="price-box">
+                <div class="price-line"><span>Filing Fee (2%):</span> <span id="fee-display">$100.00</span></div>
+                <div class="price-line" style="font-weight:700; border-top:1px solid #ddd; padding-top:10px; margin-top:10px;">
+                    <span>Total Lawsuit Cost:</span> <span id="total-display">$350.00</span>
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            <label>Payment Method</label>
-            <select id="payment-method">
-                <option value="Credit Card">Enterprise Credit Card</option>
-                <option value="Bank Wire">International Bank Wire</option>
-                <option value="Crypto">Secure Crypto Transfer</option>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label>Currency</label>
-            <select id="currency" onchange="UI.calcPrice()">
+            <label class="form-label">Currency</label>
+            <select id="pay-currency" class="input-field" onchange="Engine.updatePrice()">
                 <option value="USD">USD ($)</option>
                 <option value="EUR">EUR (€)</option>
                 <option value="GBP">GBP (£)</option>
+                <option value="JPY">JPY (¥)</option>
+                <option value="AUD">AUD ($)</option>
+                <option value="CAD">CAD ($)</option>
+                <option value="CHF">CHF (Fr)</option>
+                <option value="CNY">CNY (¥)</option>
+                <option value="INR">INR (₹)</option>
                 <option value="BTC">BTC (₿)</option>
             </select>
-        </div>
 
-        <div style="display: flex; gap: 10px; margin-top: 30px;">
-            <button class="btn-primary" style="flex-grow: 1;" onclick="UI.submitInjunction()">Submit Litigation</button>
-            <button class="btn-primary" style="background: #ccc; color: #333;" onclick="UI.closeForm()">Cancel</button>
+            <label class="form-label">Payment Method</label>
+            <select class="input-field">
+                <option>Enterprise Credit Card</option>
+                <option>International Bank Wire</option>
+                <option>Crypto Transfer</option>
+            </select>
+
+            <div style="display:flex; gap:10px;">
+                <button class="btn-file" style="flex:1; background:var(--win-blue);" onclick="Engine.startServing()">SUBMIT</button>
+                <button class="btn-file" style="flex:1; background:#eee; color:#333;" onclick="Engine.closeForm()">CANCEL</button>
+            </div>
         </div>
     </div>
 </div>
 
 <div id="serving-screen">
-    <div class="scanner"></div>
-    <h1 style="color: var(--neon-green); letter-spacing: 5px;">SERVING GLOBAL WARRANT...</h1>
-    <p id="serving-status">Initializing Node Cluster 1,024...</p>
+    <div class="scanner-bar"></div>
+    <div class="status-text" id="serving-msg">SERVING GLOBAL WARRANT...</div>
 </div>
 
-<div id="toast-bin" class="toast-container"></div>
-
 <script>
-const UI = {
-    openForm() {
-        document.getElementById('modal').style.display = 'flex';
+const Engine = {
+    languages: ["English", "Spanish", "French", "German", "Chinese", "Japanese", "Russian", "Arabic", "Portuguese", "Italian", "Dutch", "Korean", "Hindi", "Turkish", "Swedish", "Norwegian", "Danish", "Finnish", "Polish", "Greek", "Hebrew", "Thai", "Vietnamese", "Indonesian", "Malay", "Czech", "Hungarian", "Romanian", "Bulgarian", "Ukrainian", "Slovak", "Croatian", "Serbian", "Lithuanian", "Latvian", "Estonian", "Slovenian", "Icelandic", "Irish", "Welsh", "Scottish", "Maltese", "Albanian", "Georgian", "Armenian", "Kazakh", "Uzbek", "Mongolian", "Persian", "Urdu"],
+    
+    init() {
+        const sel = document.getElementById('global-lang');
+        this.languages.forEach(l => {
+            const opt = document.createElement('option');
+            opt.innerText = l; sel.appendChild(opt);
+        });
+        this.updatePrice();
     },
 
-    closeForm() {
-        document.getElementById('modal').style.display = 'none';
+    updateLanguage() {
+        const l = document.getElementById('global-lang').value;
+        const map = {
+            "Spanish": { title: "Centro de Operaciones", btn: "PRESENTAR MANDATO", form: "FORMULARIO DE DEMANDA" },
+            "French": { title: "Centre d'Opérations", btn: "DÉPOSER UNE INJONCTION", form: "FORMULAIRE DE LITIGE" }
+        };
+        const text = map[l] || { title: "Operations Hub", btn: "FILE INJUNCTION", form: "LITIGATION FILING FORM" };
+        document.getElementById('title-ops').innerText = text.title;
+        document.getElementById('btn-inj').innerText = text.btn;
+        document.getElementById('form-title').innerText = text.form;
     },
 
-    calcPrice() {
-        const sueAmount = parseFloat(document.getElementById('sue-amount').value) || 0;
-        const currency = document.getElementById('currency').value;
+    openForm() { document.getElementById('litigation-modal').style.display = 'flex'; },
+    closeForm() { document.getElementById('litigation-modal').style.display = 'none'; },
+
+    updatePrice() {
+        const sue = parseFloat(document.getElementById('sue-val').value) || 0;
+        const curr = document.getElementById('pay-currency').value;
+        const rates = { USD: 1, EUR: 0.92, GBP: 0.79, JPY: 148, AUD: 1.52, CAD: 1.35, CHF: 0.86, CNY: 7.19, INR: 83, BTC: 0.000015 };
+        const syms = { USD: '$', EUR: '€', GBP: '£', JPY: '¥', AUD: '$', CAD: '$', CHF: 'Fr', CNY: '¥', INR: '₹', BTC: '₿' };
         
-        let fee = sueAmount * 0.02;
-        let base = 250;
-        let total = fee + base;
+        const rate = rates[curr];
+        const fee = (sue * 0.02) * rate;
+        const total = (sue * 0.02 + 250) * rate;
 
-        let symbol = '$';
-        if(currency === 'EUR') { total *= 0.92; symbol = '€'; fee *= 0.92; }
-        if(currency === 'GBP') { total *= 0.79; symbol = '£'; fee *= 0.79; }
-        if(currency === 'BTC') { total *= 0.000015; symbol = '₿'; fee *= 0.000015; }
-
-        document.getElementById('filing-fee').innerText = symbol + fee.toFixed(currency === 'BTC' ? 6 : 2);
-        document.getElementById('total-cost').innerText = symbol + total.toFixed(currency === 'BTC' ? 6 : 2);
+        document.getElementById('fee-display').innerText = syms[curr] + fee.toLocaleString(undefined, {minimumFractionDigits: curr==='BTC'?6:2});
+        document.getElementById('total-display').innerText = syms[curr] + total.toLocaleString(undefined, {minimumFractionDigits: curr==='BTC'?6:2});
     },
 
-    async submitInjunction() {
-        const name = document.getElementById('ip-name').value;
-        if(!name) { alert("Please enter the IP Name."); return; }
-
+    async startServing() {
         this.closeForm();
-        const screen = document.getElementById('serving-screen');
-        const status = document.getElementById('serving-status');
-        screen.style.display = 'flex';
-
-        const steps = [
-            "Encrypting Legal Affidavit...",
-            "Routing through Node Cluster 1,024...",
-            "Locating Hacker Infrastructure...",
-            "Serving Warrant to Global Jurisdictions...",
-            "Anchoring Evidence to Decentralized Ledger...",
-            "Service Complete. Case Filed."
-        ];
-
-        for(let step of steps) {
-            status.innerText = step;
-            await new Promise(r => setTimeout(r, 1200));
-        }
-
-        screen.style.display = 'none';
-        this.toast(`Lawsuit against ${name} has been officially recorded.`);
-    },
-
-    toast(msg) {
-        const bin = document.getElementById('toast-bin');
-        const t = document.createElement('div');
-        t.className = 'toast';
-        t.innerHTML = `<strong>LITIGATION SUCCESS</strong><br>${msg}`;
-        bin.appendChild(t);
-        setTimeout(() => t.remove(), 5000);
+        document.getElementById('serving-screen').style.display = 'flex';
+        await new Promise(r => setTimeout(r, 4000));
+        document.getElementById('serving-screen').style.display = 'none';
+        alert("Warrant Served Globally.");
     }
 };
+Engine.init();
 </script>
 </body>
 </html>
