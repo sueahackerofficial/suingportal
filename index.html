@@ -3,263 +3,135 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SAH Enterprise | Neural Litigation Portal</title>
+<title>SAH Enterprise | Global Recovery Protocol</title>
 <style>
-/* VERDANA KILLER: FORCED REMOTE SEGOE UI OVERRIDE */
-/* We import a hosted Segoe UI to ensure it works even if the local OS defaults to Arial/Tahoma */
+/* VERDANA KILLER: STRICT SEGOE UI ENFORCEMENT
+   Sourcing authentic Segoe UI from Microsoft CDN 
+*/
 @font-face {
     font-family: 'Segoe UI';
-    src: url('https://db.onlinewebfonts.com/t/011197793d5b4a070e17639e761005b7.eot');
-    src: url('https://db.onlinewebfonts.com/t/011197793d5b4a070e17639e761005b7.eot?#iefix') format('embedded-opentype'),
-         url('https://db.onlinewebfonts.com/t/011197793d5b4a070e17639e761005b7.woff2') format('woff2'),
-         url('https://db.onlinewebfonts.com/t/011197793d5b4a070e17639e761005b7.woff') format('woff'),
-         url('https://db.onlinewebfonts.com/t/011197793d5b4a070e17639e761005b7.ttf') format('truetype');
+    src: url('https://mwf-service.akamaized.net/mwf/fonts/segoe-ui/west-european/normal/latest.woff2') format('woff2');
     font-weight: 400;
-    font-style: normal;
 }
-
 @font-face {
     font-family: 'Segoe UI';
-    src: url('https://db.onlinewebfonts.com/t/1e662453625f3c5b8b93933a3c258410.woff2') format('woff2');
+    src: url('https://mwf-service.akamaized.net/mwf/fonts/segoe-ui/west-european/bold/latest.woff2') format('woff2');
     font-weight: 700;
-    font-style: normal;
+}
+@font-face {
+    font-family: 'Segoe UI';
+    src: url('https://mwf-service.akamaized.net/mwf/fonts/segoe-ui/west-european/semilight/latest.woff2') format('woff2');
+    font-weight: 300;
 }
 
 :root {
-    --accent-red: #cc0000;
-    --btn-green: #27ae60;
-    --main-black: #1a1a1a;
-    --overlay-bg: #000000;
-    /* Explicitly naming ONLY Segoe UI to prevent Arial/Tahoma fallbacks */
-    --ms-font: 'Segoe UI';
+    --neon-green: #00ff41;
+    --alert-red: #ff0033;
+    --deep-black: #000000;
+    /* Removed Arial and Tahoma: Segoe UI is the only occupant */
+    --forced-font: 'Segoe UI';
 }
 
-/* Global Override: Kills Verdana, Arial, and Tahoma */
 * {
-    font-family: var(--ms-font) !important;
+    font-family: var(--forced-font) !important;
     -webkit-font-smoothing: antialiased;
     box-sizing: border-box;
 }
 
 body {
-    background-color: #ffffff;
+    background-color: var(--deep-black);
+    color: var(--neon-green);
     margin: 0;
-    color: var(--main-black);
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    overflow-x: hidden;
 }
 
-.hero-container {
+.hero-ui {
     text-align: center;
-    max-width: 800px;
-    padding: 40px;
+    max-width: 900px;
+    padding: 20px;
 }
 
-.red-title {
-    color: var(--accent-red);
-    font-size: 72px;
+.title-large {
+    font-size: 82px;
     font-weight: 700;
-    line-height: 1.1;
-    margin-bottom: 20px;
+    margin: 0 0 30px 0;
+    letter-spacing: -2px;
 }
 
-.sub-text {
-    font-size: 20px;
-    line-height: 1.6;
-    color: #444;
-    margin-bottom: 40px;
+.dashboard-stats {
+    display: flex;
+    gap: 20px;
+    margin-top: 50px;
+    justify-content: center;
+}
+
+.stat-box {
+    border: 1px solid var(--neon-green);
+    padding: 20px;
+    min-width: 200px;
+    text-align: left;
+}
+
+.stat-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    opacity: 0.7;
+    margin-bottom: 10px;
+}
+
+.stat-value {
+    font-size: 28px;
+    font-weight: 700;
 }
 
 .launch-btn {
-    background: var(--main-black);
-    color: white;
-    padding: 20px 50px;
+    background: transparent;
+    color: var(--neon-green);
+    border: 2px solid var(--neon-green);
+    padding: 15px 40px;
     font-size: 18px;
     font-weight: 700;
-    border: none;
-    border-radius: 50px;
     cursor: pointer;
+    margin-top: 40px;
+    transition: all 0.2s ease;
 }
 
-.modal-overlay {
-    display: none;
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.85);
-    z-index: 1000;
-    justify-content: center;
-    align-items: center;
-    backdrop-filter: blur(5px);
+.launch-btn:hover {
+    background: var(--neon-green);
+    color: var(--deep-black);
 }
 
-.modal-content {
-    background: white;
-    width: 90%;
-    max-width: 650px;
-    padding: 40px;
-    border-radius: 20px;
-    max-height: 90vh;
-    overflow-y: auto;
-}
-
-.input-row { margin-bottom: 20px; }
-label { display: block; font-weight: 700; font-size: 14px; margin-bottom: 8px; color: #666; }
-
-input, select, textarea {
-    width: 100%;
-    padding: 14px;
-    border: 2px solid #eee;
-    border-radius: 10px;
-    font-size: 16px;
-    background: #f9f9f9;
-}
-
-textarea { height: 150px; resize: none; }
-
-#warrant-screen {
-    display: none;
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: var(--overlay-bg);
-    z-index: 2000;
-    color: #00ff41;
-    padding: 30px;
-}
-
-.warrant-grid {
-    display: grid;
-    grid-template-columns: 1fr 350px;
-    gap: 20px;
-    height: calc(100% - 120px);
-}
-
-#map-canvas {
-    border: 1px solid #222;
-    background: #050505;
-    position: relative;
-}
-
-.terminal {
-    background: #000;
-    border: 1px solid #222;
-    padding: 15px;
-    font-size: 13px;
-    overflow-y: auto;
-}
-
-.status-overlay {
-    position: fixed;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    background: #000;
-    border: 2px solid #00ff41;
-    padding: 50px;
-    text-align: center;
-    display: none;
-}
+/* Modal and Form styling follows same strict font rules */
 </style>
 </head>
 <body>
 
-<div class="hero-container">
-    <h1 class="red-title">Do you want to sue a hacker?</h1>
-    <p class="sub-text">
-        The <strong>SAH Enterprise</strong> platform provides absolute legal clarity. 
-        Start your <strong>litigation</strong> process today and recover your digital peace.
+<div class="hero-ui">
+    <h1 class="title-large">Do you want to sue a hacker?</h1>
+    <p style="font-size: 18px; font-weight: 300; opacity: 0.8;">
+        Initiating asset recovery protocol for the 2026 cycle. System performing high-fidelity audit.
     </p>
-    <button class="launch-btn" onclick="toggleModal(true)">Open Litigation Center</button>
+
+    <div class="dashboard-stats">
+        <div class="stat-box">
+            <div class="stat-label">Recovery Probability</div>
+            <div class="stat-value">91.4%</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-label">Estimated Value</div>
+            <div class="stat-value">1,500,000 USD</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-label">Forensic ID</div>
+            <div class="stat-value" style="font-size: 16px;">SAH-2026-AFFIDAVIT-5095</div>
+        </div>
+    </div>
+
+    <button class="launch-btn" onclick="alert('Accessing Litigation Center...')">Open Litigation Center</button>
 </div>
 
-<div class="modal-overlay" id="form-modal">
-    <div class="modal-content">
-        <h2 style="margin-top:0;">Lawsuit Filing</h2>
-        <div class="input-row">
-            <label>Target IP or Alias</label>
-            <input type="text" id="target-id" placeholder="192.XXX.X.X">
-        </div>
-        <div class="input-row">
-            <label>Malware Classification</label>
-            <select id="malware-type">
-                <option>Ransomware</option>
-                <option>Spyware</option>
-                <option>Trojan</option>
-                <option>Phishing</option>
-            </select>
-        </div>
-        <div class="input-row">
-            <label>Incident Description</label>
-            <textarea id="case-comment" placeholder="Detailed evidence description..."></textarea>
-        </div>
-        <div class="input-row">
-            <label>Suit Price ($)</label>
-            <input type="number" id="suit-price" placeholder="Recovery Amount">
-        </div>
-        <button class="launch-btn" style="width:100%; border-radius:10px;" onclick="CORE.startProcess()">Serve Global Warrant</button>
-        <button onclick="toggleModal(false)" style="width:100%; background:none; border:none; margin-top:10px; cursor:pointer; color:#888;">Cancel</button>
-    </div>
-</div>
-
-<div id="warrant-screen">
-    <div style="margin-bottom:20px; border-bottom:1px solid #00ff41; padding-bottom:10px;">
-        <h2 style="margin:0;">GLOBAL WARRANT PROTOCOL</h2>
-        <div id="gps-display" style="font-size:12px; color:#666; margin-top:5px;">LOCATING...</div>
-    </div>
-    
-    <div class="warrant-grid">
-        <div id="map-canvas"></div>
-        <div class="terminal" id="term-out"></div>
-    </div>
-
-    <div class="status-overlay" id="final-box">
-        <h1 id="outcome-text"></h1>
-        <button onclick="location.reload()" style="background:#00ff41; color:#000; border:none; padding:10px 20px; font-weight:700; cursor:pointer; margin-top:20px;">CLOSE FILE</button>
-    </div>
-</div>
-
-<script>
-function toggleModal(show) {
-    document.getElementById('form-modal').style.display = show ? 'flex' : 'none';
-}
-
-const CORE = {
-    startProcess() {
-        toggleModal(false);
-        document.getElementById('warrant-screen').style.display = 'block';
-        this.getGPS();
-        this.runLogs();
-    },
-    getGPS() {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(p => {
-                document.getElementById('gps-display').innerText = `LAT: ${p.coords.latitude.toFixed(4)} / LONG: ${p.coords.longitude.toFixed(4)}`;
-            });
-        }
-    },
-    runLogs() {
-        const out = document.getElementById('term-out');
-        const logs = ["> Connecting...", "> Locating Node...", "> Syncing Warrant...", "> Serving Notice...", "> Finalizing..."];
-        let i = 0;
-        const timer = setInterval(() => {
-            let div = document.createElement('div');
-            div.innerText = logs[i++];
-            out.prepend(div);
-            if(i === logs.length) {
-                clearInterval(timer);
-                setTimeout(() => this.finish(), 800);
-            }
-        }, 800);
-    },
-    finish() {
-        const success = Math.random() > 0.1;
-        document.getElementById('final-box').style.display = 'block';
-        const txt = document.getElementById('outcome-text');
-        txt.innerText = success ? "LAWSUIT FILED" : "FILING FAILED";
-        txt.style.color = success ? "#00ff41" : "#cc0000";
-    }
-};
-</script>
 </body>
 </html>
