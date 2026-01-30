@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAH Enterprise | Neural Litigation Portal</title>
+    <title>SAH Enterprise | Official Legal Portal</title>
     <style>
-        /* MICROSOFT FRAMEWORK FONT ENFORCEMENT (Segoe UI) */
+        /* MICROSOFT CDN SOURCE - BYPASSES LOCAL SYSTEM FALLBACKS */
         @font-face {
             font-family: 'Segoe UI';
             src: url('https://mwf-service.akamaized.net/mwf/fonts/segoe-ui/west-european/normal/latest.woff2') format('woff2');
@@ -22,7 +22,9 @@
             --alert-red: #ff0033;
             --bg-black: #000000;
             --card-bg: #050505;
-            --forced-font: 'Segoe UI', sans-serif;
+            /* STRICT STACK: No fallbacks allowed. 
+               We use 'sans-serif' as the ultimate fail-safe to block Times New Roman. */
+            --forced-font: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
         }
 
         * {
@@ -39,7 +41,7 @@
             padding: 40px;
         }
 
-        /* DASHBOARD UI */
+        /* HEADER NAV */
         .header-nav {
             display: flex;
             justify-content: space-between;
@@ -49,31 +51,80 @@
             margin-bottom: 40px;
         }
 
+        select {
+            background: #000;
+            color: var(--neon-green);
+            border: 1px solid var(--neon-green);
+            padding: 8px;
+            font-size: 13px;
+        }
+
+        /* DASHBOARD */
         .title-main {
             font-size: 68px;
             font-weight: 700;
-            margin: 0 0 20px 0;
-            letter-spacing: -1.5px;
+            margin-bottom: 30px;
+            letter-spacing: -2px;
         }
 
         .dashboard-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 20px;
-            margin-bottom: 40px;
+            margin-bottom: 50px;
         }
 
         .data-card {
             background: var(--card-bg);
-            border: 1px solid #111;
             border-left: 3px solid var(--neon-green);
             padding: 20px;
+            border-top: 1px solid #111;
+            border-right: 1px solid #111;
+            border-bottom: 1px solid #111;
         }
 
         .label { font-size: 11px; text-transform: uppercase; opacity: 0.6; margin-bottom: 10px; }
-        .value { font-size: 26px; font-weight: 700; }
+        .value { font-size: 28px; font-weight: 700; }
 
-        /* BUTTONS */
+        /* MODAL & FORM */
+        #form-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.98);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .form-box {
+            width: 850px;
+            background: #080808;
+            border: 1px solid var(--neon-green);
+            padding: 40px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .full-width { grid-column: span 2; }
+
+        label { display: block; font-size: 11px; text-transform: uppercase; margin-bottom: 8px; color: var(--neon-green); }
+
+        input, select, textarea {
+            width: 100%;
+            background: #000;
+            border: 1px solid #333;
+            color: var(--neon-green);
+            padding: 12px;
+            font-size: 16px;
+        }
+
+        textarea#case-comment { height: 180px; resize: none; }
+
         .btn-launch {
             background: var(--neon-green);
             color: black;
@@ -85,41 +136,6 @@
             text-transform: uppercase;
         }
 
-        /* LITIGATION FORM OVERLAY */
-        #form-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.98);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .form-content {
-            width: 800px;
-            background: #080808;
-            border: 1px solid var(--neon-green);
-            padding: 40px;
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-
-        .form-row { margin-bottom: 20px; }
-        label { display: block; font-size: 12px; margin-bottom: 8px; color: var(--neon-green); text-transform: uppercase; }
-        
-        input, select, textarea {
-            width: 100%;
-            background: #000;
-            border: 1px solid #333;
-            color: var(--neon-green);
-            padding: 12px;
-            font-size: 16px;
-        }
-
-        /* DESCRIPTION BOX EXTENSION */
-        textarea#case-comment { height: 200px; resize: vertical; }
-
         /* WARRANT SCREEN */
         #warrant-screen {
             display: none;
@@ -130,144 +146,123 @@
             padding: 40px;
         }
 
-        .map-container {
+        #map-display {
             border: 1px solid #222;
             height: 400px;
-            background: radial-gradient(circle, #0a0a0a 0%, #000 100%);
+            background-color: #020202;
             position: relative;
-            overflow: hidden;
             margin-bottom: 20px;
         }
 
-        .gps-ping {
-            position: absolute;
-            width: 10px; height: 10px;
-            background: var(--neon-green);
-            border-radius: 50%;
-            box-shadow: 0 0 15px var(--neon-green);
-            display: none;
-        }
+        .log-line { font-family: 'Segoe UI', sans-serif; font-size: 14px; margin-bottom: 5px; }
     </style>
 </head>
 <body>
 
 <div class="header-nav">
-    <div style="font-weight: 700;">SAH_ENTERPRISE_CORE</div>
+    <div style="font-weight: 700;">SAH_ENTERPRISE_2026</div>
     <div style="display: flex; gap: 10px;">
-        <select id="lang-selector" style="width: auto; padding: 5px;"></select>
-        <select id="currency-selector" style="width: auto; padding: 5px;">
+        <select id="lang-drop" style="width: 150px;"></select>
+        <select id="curr-drop">
             <option>USD ($)</option><option>EUR (€)</option><option>GBP (£)</option>
-            <option>JPY (¥)</option><option>BTC (₿)</option><option>ETH (Ξ)</option>
+            <option>JPY (¥)</option><option>BTC (₿)</option>
         </select>
+        <button class="btn-launch" style="font-size: 12px; padding: 5px 15px;" onclick="toggleForm(true)">Litigation Center</button>
     </div>
 </div>
 
 <h1 class="title-main">Do you want to sue a hacker?</h1>
+
 <div class="dashboard-grid">
-    <div class="data-card"><div class="label">Forensic ID</div><div class="value">SAH-2026-AF-5095</div></div>
-    <div class="data-card"><div class="label">Recovery Prob.</div><div class="value">91.4%</div></div>
-    <div class="data-card"><div class="label">Estimated Value</div><div class="value">1.5M</div></div>
-    <div class="data-card"><div class="label">AI Status</div><div class="value">NEURAL_V4</div></div>
+    <div class="data-card"><div class="label">Forensic ID</div><div class="value" style="font-size:16px;">SAH-2026-AF-5095</div></div>
+    <div class="data-card"><div class="label">Recovery Probability</div><div class="value">91.4%</div></div>
+    <div class="data-card"><div class="label">Estimated Value</div><div class="value">1,500,000</div></div>
+    <div class="data-card"><div class="label">AI Core</div><div class="value">NEURAL_V4</div></div>
 </div>
 
-<button class="btn-launch" onclick="toggleForm(true)">Open Litigation Center</button>
+<center><button class="btn-launch" onclick="toggleForm(true)">Open Litigation Center</button></center>
 
 <div id="form-overlay">
-    <div class="form-content">
+    <div class="form-box">
         <h2 style="margin-top:0;">LITIGATION DATA ENTRY</h2>
-        <div class="form-row">
-            <label>Target IP Name / Identity</label>
-            <input type="text" id="target-id" placeholder="Enter target identity">
+        <div class="form-grid">
+            <div>
+                <label>Target IP Name</label>
+                <input type="text" id="ip-name" placeholder="Target Alias">
+            </div>
+            <div>
+                <label>Malware Classification</label>
+                <select id="mal-type">
+                    <option>Ransomware</option><option>Spyware</option><option>Trojan</option>
+                </select>
+            </div>
+            <div class="full-width">
+                <label>Comment (Extended Description Space)</label>
+                <textarea id="case-comment" placeholder="Describe the intrusion event..."></textarea>
+            </div>
+            <div>
+                <label>File Upload Space</label>
+                <input type="file" style="border:none; padding:0;">
+            </div>
+            <div>
+                <label>Lawsuit Price</label>
+                <input type="number" id="price" value="50000">
+            </div>
         </div>
-        <div class="form-row">
-            <label>Malware Classification</label>
-            <select id="malware-drop">
-                <option>Ransomware</option>
-                <option>Neural-Jacking</option>
-                <option>Spyware</option>
-                <option>DDoS Botnet</option>
-            </select>
-        </div>
-        <div class="form-row">
-            <label>Comment (Extended Description Space)</label>
-            <textarea id="case-comment" placeholder="Describe the intrusion event in full detail for forensic logging..."></textarea>
-        </div>
-        <div class="form-row">
-            <label>File Upload Space</label>
-            <input type="file" style="border:none;">
-        </div>
-        <div class="form-row">
-            <label>Lawsuit Price</label>
-            <input type="number" id="suit-price" value="50000">
-        </div>
-        <button class="btn-launch" style="width:100%" onclick="startWarrant()">Serve Global Warrant</button>
-        <button onclick="toggleForm(false)" style="width:100%; border:none; color:#555; margin-top:10px; cursor:pointer;">Discard</button>
+        <button class="btn-launch" style="width:100%; margin-top:30px;" onclick="runWarrant()">Serve Global Warrant</button>
     </div>
 </div>
 
 <div id="warrant-screen">
-    <h2 style="border-bottom: 1px solid var(--neon-green); padding-bottom: 10px;">GLOBAL SERVING PROTOCOL: ACTIVE</h2>
-    <div id="gps-detector" style="font-size: 12px; margin-bottom: 10px;">GPS: DETECTING...</div>
-    
-    <div class="map-container" id="map-view">
-        <div class="gps-ping" id="ping"></div>
-    </div>
-
-    <div id="terminal" style="border:1px solid #111; padding:15px; height:150px; overflow-y:auto; font-family: monospace !important; color:#00ff41; font-size:13px;"></div>
-
-    <div id="outcome-box" style="display:none; text-align:center; margin-top:20px;">
-        <h1 id="outcome-text" style="font-size: 48px;"></h1>
-        <button class="btn-launch" onclick="location.reload()">Return to Dashboard</button>
+    <h2>GLOBAL SERVING PROTOCOL: ACTIVE</h2>
+    <div id="gps-out" style="font-size:12px; margin-bottom:10px;">GPS: DETECTING...</div>
+    <div id="map-display"></div>
+    <div id="logs" style="height:150px; overflow-y:auto;"></div>
+    <div id="final-outcome" style="display:none; text-align:center;">
+        <h1 id="out-text" style="font-size:60px;"></h1>
+        <button class="btn-launch" onclick="location.reload()">Return</button>
     </div>
 </div>
 
 <script>
+    // 50 Languages Population
     const langs = ["English", "Spanish", "French", "German", "Italian", "Portuguese", "Russian", "Chinese", "Japanese", "Korean", "Arabic", "Hindi", "Bengali", "Turkish", "Vietnamese", "Polish", "Dutch", "Thai", "Swedish", "Indonesian", "Malay", "Persian", "Greek", "Czech", "Romanian", "Ukrainian", "Hungarian", "Hebrew", "Danish", "Finnish", "Norwegian", "Slovak", "Bulgarian", "Croatian", "Lithuanian", "Slovenian", "Latvian", "Estonian", "Filipino", "Swahili", "Amharic", "Tamil", "Telugu", "Kannada", "Marathi", "Gujarati", "Punjabi", "Burmese", "Khmer", "Lao"];
-    const lSel = document.getElementById('lang-selector');
-    langs.forEach(l => { let o = document.createElement('option'); o.text = l; lSel.add(o); });
+    const lDrop = document.getElementById('lang-drop');
+    langs.forEach(l => { let o = document.createElement('option'); o.text = l; lDrop.add(o); });
 
     function toggleForm(s) { document.getElementById('form-overlay').style.display = s ? 'flex' : 'none'; }
 
-    function startWarrant() {
+    function runWarrant() {
         toggleForm(false);
         document.getElementById('warrant-screen').style.display = 'block';
-        detectGPS();
-        runLogs();
-    }
-
-    function detectGPS() {
+        
+        // GPS Detector
         navigator.geolocation.getCurrentPosition(p => {
-            document.getElementById('gps-detector').innerText = `LAT: ${p.coords.latitude.toFixed(4)} / LONG: ${p.coords.longitude.toFixed(4)}`;
+            document.getElementById('gps-out').innerText = `COORDINATES: ${p.coords.latitude.toFixed(4)}, ${p.coords.longitude.toFixed(4)}`;
         }, () => {
-            document.getElementById('gps-detector').innerText = `GPS: GLOBAL SATELLITE OVERRIDE ACTIVE`;
+            document.getElementById('gps-out').innerText = `COORDINATES: SATELLITE OVERRIDE [51.5074, 0.1278]`;
         });
-    }
 
-    function runLogs() {
-        const term = document.getElementById('terminal');
-        const ping = document.getElementById('ping');
-        const logs = ["> Neural Link Active", "> Mapping Target IP...", "> Serving Digital Affidavit...", "> Protocol Complete."];
+        // Logs and Map Mapping
+        const logBox = document.getElementById('logs');
+        const map = document.getElementById('map-display');
+        const lines = ["> Syncing Neural Link...", "> Tracing " + document.getElementById('ip-name').value, "> Finalizing Warrant..."];
+        
         let i = 0;
         const itv = setInterval(() => {
-            if(i < logs.length) {
-                term.innerHTML += `<div>[${new Date().toLocaleTimeString()}] ${logs[i++]}</div>`;
-                ping.style.display = 'block';
-                ping.style.left = Math.random() * 90 + "%";
-                ping.style.top = Math.random() * 90 + "%";
+            if(i < lines.length) {
+                logBox.innerHTML += `<div class="log-line">${lines[i++]}</div>`;
+                let dot = document.createElement('div');
+                dot.style.cssText = `position:absolute; width:10px; height:10px; background:#0f4; border-radius:50%; left:${Math.random()*90}%; top:${Math.random()*90}%;`;
+                map.appendChild(dot);
             } else {
                 clearInterval(itv);
-                finish();
+                document.getElementById('final-outcome').style.display = 'block';
+                const success = Math.random() > 0.1;
+                document.getElementById('out-text').innerText = success ? "SUCCESSFUL" : "UNSUCCESSFUL";
+                document.getElementById('out-text').style.color = success ? "var(--neon-green)" : "var(--alert-red)";
             }
-        }, 1200);
-    }
-
-    function finish() {
-        const win = Math.random() > 0.1;
-        const box = document.getElementById('outcome-box');
-        const txt = document.getElementById('outcome-text');
-        box.style.display = 'block';
-        txt.innerText = win ? "SUCCESSFUL" : "UNSUCCESSFUL";
-        txt.style.color = win ? "var(--neon-green)" : "var(--alert-red)";
+        }, 1500);
     }
 </script>
 </body>
