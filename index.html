@@ -1,126 +1,154 @@
-<div id="sah-enterprise-app">
-    <aside class="sah-sidebar">
-        <div class="sah-logo">SAH ENTERPRISE</div>
-        <nav>
-            <a href="#" class="active">Dashboard</a>
-            <a href="#">Analytics</a>
-            <a href="#">Resources</a>
-            <a href="#">Settings</a>
-        </nav>
-    </aside>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAH Enterprise | Global Forensic Portal</title>
+    <style>
+        /* High-Priority Font Loading */
+        @font-face {
+            font-family: 'Segoe UI';
+            src: local('Segoe UI'), 
+                 url('https://mwf-service.akamaized.net/mwf/fonts/segoe-ui/west-european/normal/latest.woff2') format('woff2');
+            font-weight: 400;
+        }
+        @font-face {
+            font-family: 'Segoe UI';
+            src: local('Segoe UI Bold'), 
+                 url('https://mwf-service.akamaized.net/mwf/fonts/segoe-ui/west-european/bold/latest.woff2') format('woff2');
+            font-weight: 700;
+        }
 
-    <main class="sah-main">
-        <header class="sah-top-bar">
-            <h1>System Overview</h1>
-            <div class="user-profile">Admin User</div>
-        </header>
+        :root {
+            --neon-green: #00ff41;
+            --alert-red: #ff0033;
+            --deep-bg: #000000;
+            /* Stripped Verdana out of the stack entirely */
+            --legal-stack: 'Segoe UI', sans-serif;
+        }
 
-        <section class="sah-grid">
-            <div class="sah-card">
-                <h3>Total Revenue</h3>
-                <p class="stat">$4,290.00</p>
-            </div>
-            <div class="sah-card">
-                <h3>Active Nodes</h3>
-                <p class="stat">1,024</p>
-            </div>
-        </section>
-    </main>
+        /* The Global Force: No exceptions for SAH Enterprise */
+        * {
+            font-family: var(--legal-stack) !important;
+            box-sizing: border-box;
+            background: transparent;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background-color: var(--deep-bg);
+            color: var(--neon-green);
+            margin: 0;
+            padding: 20px;
+            overflow-x: hidden;
+            line-height: 1.4;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid #1a1a1a;
+            margin-bottom: 30px;
+        }
+
+        .main-title {
+            font-size: clamp(32px, 5vw, 64px);
+            font-weight: 700;
+            letter-spacing: -1.5px; /* Tighter tracking for Segoe UI impact */
+            margin: 0 0 20px 0;
+            text-transform: uppercase;
+        }
+
+        .grid-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .stat-box {
+            border: 1px solid #222;
+            padding: 20px;
+            border-left: 4px solid var(--neon-green);
+        }
+
+        .stat-box label { 
+            font-size: 11px; 
+            opacity: 0.7; 
+            text-transform: uppercase; 
+            letter-spacing: 1px;
+        }
+        
+        .stat-box span { 
+            display: block; 
+            font-size: 24px; 
+            font-weight: 700; 
+            margin-top: 5px; 
+            font-feature-settings: "tnum" 1; /* Tabular numbers for alignment */
+        }
+
+        /* Strict UI Controls */
+        input, select, textarea, button {
+            font-family: 'Segoe UI' !important;
+            font-size: 14px;
+        }
+
+        .btn-action {
+            background: var(--neon-green);
+            color: black;
+            border: none;
+            padding: 15px 30px;
+            font-weight: 700;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-action:hover { 
+            box-shadow: 0 0 20px var(--neon-green); 
+            transform: translateY(-1px);
+        }
+
+        #log-feed {
+            font-family: 'Segoe UI' !important;
+            font-size: 13px;
+            height: 180px;
+            background: rgba(0, 255, 65, 0.05);
+            padding: 15px;
+            border: 1px solid #111;
+            overflow-y: auto;
+            margin: 20px auto;
+            color: #888;
+            max-width: 800px;
+            border-radius: 4px;
+        }
+
+        /* SVG Text enforcement */
+        svg text {
+            font-family: 'Segoe UI' !important;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div style="font-weight: 700; letter-spacing: 1px;">SAH_ENTERPRISE_CORE_v.2.6</div>
+    <div style="display:flex; gap:10px;">
+        <select id="lang-switch" style="background: #111; border: 1px solid #444; color: #fff; padding: 5px;"></select>
+        <button class="btn-action" style="padding: 5px 15px; font-size: 11px;" onclick="toggleUI(true)">Launch Center</button>
+    </div>
 </div>
 
-<style>
-    /* 1. Global Enterprise Reset */
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: "Segoe UI", -apple-system, sans-serif !important;
-    }
+<h1 class="main-title">Do you want to sue a hacker?</h1>
 
-    body {
-        background-color: #f3f2f1; /* Windows Neutral background */
-        display: flex;
-    }
+<div class="grid-stats">
+    <div class="stat-box"><label>Forensic Hash</label><span>0x7f...SAH26</span></div>
+    <div class="stat-box"><label>Recovery Odds</label><span style="font-style: italic;">94.2% Estimated</span></div>
+    <div class="stat-box"><label>Network Load</label><span style="font-weight: 700; font-style: italic;">Optimal</span></div>
+    <div class="stat-box"><label>Jurisdiction</label><span>Global</span></div>
+</div>
 
-    #sah-enterprise-app {
-        display: flex;
-        width: 100vw;
-        height: 100vh;
-    }
-
-    /* 2. Sidebar Styling */
-    .sah-sidebar {
-        width: 250px;
-        background: #201f1e; /* Deep Enterprise Grey */
-        color: white;
-        padding: 20px;
-    }
-
-    .sah-logo {
-        font-weight: 700;
-        font-size: 1.2rem;
-        margin-bottom: 40px;
-        letter-spacing: 1px;
-    }
-
-    .sah-sidebar nav a {
-        display: block;
-        color: #d2d0ce;
-        text-decoration: none;
-        padding: 12px 0;
-        font-size: 0.9rem;
-        border-bottom: 1px solid #323130;
-    }
-
-    .sah-sidebar nav a.active {
-        color: #0078d4;
-        font-weight: 600;
-    }
-
-    /* 3. Main Content */
-    .sah-main {
-        flex-grow: 1;
-        padding: 40px;
-    }
-
-    .sah-top-bar {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 30px;
-    }
-
-    .sah-top-bar h1 {
-        font-size: 1.5rem;
-        font-weight: 600;
-        color: #323130;
-    }
-
-    /* 4. Stat Cards */
-    .sah-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 20px;
-    }
-
-    .sah-card {
-        background: white;
-        padding: 20px;
-        border: 1px solid #edebe9;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    }
-
-    .sah-card h3 {
-        font-size: 0.85rem;
-        color: #605e5c;
-        margin-bottom: 10px;
-        text-transform: uppercase;
-    }
-
-    .sah-card .stat {
-        font-size: 1.8rem;
-        font-weight: 700;
-        color: #0078d4;
-        font-feature-settings: "tnum" 1; /* Aligns numbers perfectly */
-    }
-</style>
+</body>
+</html>
