@@ -5,21 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SAH Enterprise | Global Forensic Command</title>
     <style>
-        /* AUTHENTIC SEGOE UI WEB FONTS */
         @font-face {
             font-family: 'Segoe UI';
-            src: url('https://mwf-service.akamaized.net/mwf/fonts/segoe-ui/west-european/normal/latest.woff2') format('woff2');
+            src: url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/normal/latest.woff2') format('woff2');
             font-weight: 400;
+            font-style: normal;
         }
         @font-face {
             font-family: 'Segoe UI';
-            src: url('https://mwf-service.akamaized.net/mwf/fonts/segoe-ui/west-european/semibold/latest.woff2') format('woff2');
+            src: url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/semibold/latest.woff2') format('woff2');
             font-weight: 600;
+            font-style: normal;
         }
         @font-face {
             font-family: 'Segoe UI';
-            src: url('https://mwf-service.akamaized.net/mwf/fonts/segoe-ui/west-european/bold/latest.woff2') format('woff2');
+            src: url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/bold/latest.woff2') format('woff2');
             font-weight: 700;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'Segoe UI';
+            src: url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/italic/latest.woff2') format('woff2');
+            font-weight: 400;
+            font-style: italic;
+        }
+        @font-face {
+            font-family: 'Segoe UI';
+            src: url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/semibold-italic/latest.woff2') format('woff2');
+            font-weight: 600;
+            font-style: italic;
+        }
+        @font-face {
+            font-family: 'Segoe UI';
+            src: url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/bold-italic/latest.woff2') format('woff2');
+            font-weight: 700;
+            font-style: italic;
         }
 
         :root {
@@ -31,10 +51,9 @@
             --neon-green: #00ff41;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', -apple-system, sans-serif; }
         body { background: var(--win-bg); color: var(--text-main); display: flex; height: 100vh; overflow: hidden; }
 
-        /* SIDEBAR */
         .sidebar { width: 300px; background: var(--win-dark); color: white; padding: 40px 20px; display: flex; flex-direction: column; flex-shrink: 0; }
         .sidebar h2 { font-size: 18px; letter-spacing: 2px; margin-bottom: 30px; border-bottom: 1px solid #333; padding-bottom: 10px; font-weight: 600; }
         
@@ -43,7 +62,6 @@
         .nav-item:hover { background: #111; color: white; }
         .nav-item.active { color: var(--win-blue); font-weight: 700; border-left-color: var(--win-blue); background: #111; }
 
-        /* MAIN AREA */
         .viewport { flex-grow: 1; padding: 60px; overflow-y: auto; }
         .panel { display: none; }
         .panel.active { display: block; animation: fadeIn 0.3s ease-out; }
@@ -55,7 +73,6 @@
         .btn-inj { background: #003a66; color: white; border: none; padding: 14px 28px; font-weight: 600; cursor: pointer; transition: 0.3s; }
         .btn-inj:hover { background: var(--win-blue); }
 
-        /* FORM MODAL */
         .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 1000; align-items: center; justify-content: center; }
         .modal { background: white; width: 650px; border-top: 4px solid var(--win-blue); box-shadow: 0 30px 60px rgba(0,0,0,0.5); }
         .modal-pad { padding: 40px; }
@@ -66,14 +83,12 @@
         .price-summary { background: #f9f9f9; padding: 20px; border: 1px solid var(--border); margin-bottom: 20px; }
         .price-line { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 13px; }
 
-        /* SERVING SCREEN (IMAGE 4) */
         #serve-ui { display: none; position: fixed; inset: 0; background: black; z-index: 2000; flex-direction: column; align-items: center; justify-content: center; }
         .scanner { width: 50%; height: 1px; background: var(--neon-green); position: absolute; box-shadow: 0 0 15px var(--neon-green); animation: scanline 2.5s infinite; }
         @keyframes scanline { 0% { top: 30%; } 100% { top: 70%; } }
         .terminal-text { color: var(--neon-green); font-family: monospace; font-size: 24px; letter-spacing: 4px; text-align: center; }
         .btn-done { margin-top: 40px; background: transparent; border: 1px solid var(--neon-green); color: var(--neon-green); padding: 10px 30px; cursor: pointer; display: none; }
 
-        /* TABLES */
         table { width: 100%; border-collapse: collapse; background: white; border: 1px solid var(--border); }
         th { text-align: left; padding: 15px; background: #fafafa; border-bottom: 1px solid var(--border); font-size: 12px; color: #666; font-weight: 700; }
         td { padding: 15px; border-bottom: 1px solid #eee; font-size: 14px; }
@@ -97,7 +112,7 @@
     <section id="v-dash" class="panel active">
         <div class="header-box"><h1>Global Operations</h1><button class="btn-inj" onclick="Core.openInj()">FILE INJUNCTION</button></div>
         <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:20px;">
-            <div class="price-summary"><label style="font-size:11px; font-weight:700; color:#888;">GLOBAL ASSETS</label><div style="font-size:32px; font-weight:700; color:var(--win-blue);">$4,290.00</div></div>
+            <div class="price-summary"><label style="font-size:11px; font-weight:700; color:#888;">GLOBAL ASSETS</label><div style="font-size:32px; font-weight:700; color:var(--win-blue);">$4,290.025</div></div>
             <div class="price-summary"><label style="font-size:11px; font-weight:700; color:#888;">NODES ACTIVE</label><div style="font-size:32px; font-weight:700; color:var(--win-blue);">1,024</div></div>
             <div class="price-summary"><label style="font-size:11px; font-weight:700; color:#888;">NETWORK HEALTH</label><div style="font-size:32px; font-weight:700; color:#107c10;">99.8%</div></div>
         </div>
@@ -107,19 +122,27 @@
         <div class="header-box"><h1>Forensic Intelligence</h1></div>
         <table>
             <thead><tr><th>Target Hash</th><th>Identity</th><th>Threat Level</th></tr></thead>
-            <tbody><tr><td>0x8C92-77</td><td>ShadowThread-X</td><td style="color:#a4262c; font-weight:700;">CRITICAL</td></tr></tbody>
+            <tbody>
+                <tr><td>0x8C92-77</td><td>ShadowThread-X</td><td style="color:#a4262c; font-weight:700;">CRITICAL</td></tr>
+                <tr><td>0x3F21-99</td><td>VoidPacket-Alpha</td><td style="color:#e0a500; font-weight:700;">MODERATE</td></tr>
+            </tbody>
         </table>
     </section>
 
     <section id="v-vault" class="panel">
         <div class="header-box"><h1>Legal Vault</h1></div>
-        <div class="price-summary"><h3>Warrant_Master_V10.pdf</h3></div>
-        <div class="price-summary"><h3>Jurisdiction_Map_2026.html</h3></div>
+        <div class="price-summary"><h3 style="font-weight:600;">Warrant_Master_V10.pdf</h3><p style="font-style:italic; font-size:12px;">Authenticated Legal Instrument</p></div>
+        <div class="price-summary"><h3 style="font-weight:600;">Jurisdiction_Map_2026.html</h3><p style="font-style:italic; font-size:12px;">Real-time Node Coverage</p></div>
     </section>
 
     <section id="v-node" class="panel">
         <div class="header-box"><h1>Node Health</h1></div>
-        <div style="color:#107c10; font-weight:700;">All Node Clusters [1,024] Reporting Optimal Throughput.</div>
+        <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:10px;">
+            <div style="padding:15px; background:white; border:1px solid var(--border); border-left:4px solid var(--neon-green);">Cluster A: Online</div>
+            <div style="padding:15px; background:white; border:1px solid var(--border); border-left:4px solid var(--neon-green);">Cluster B: Online</div>
+            <div style="padding:15px; background:white; border:1px solid var(--border); border-left:4px solid var(--neon-green);">Cluster C: Online</div>
+            <div style="padding:15px; background:white; border:1px solid var(--border); border-left:4px solid var(--neon-green);">Cluster D: Online</div>
+        </div>
     </section>
 
     <section id="v-reg" class="panel">
@@ -133,6 +156,7 @@
     <section id="v-set" class="panel">
         <div class="header-box"><h1>Settings</h1></div>
         <div class="field" style="max-width:400px;"><label>Auto-Serve Protocol</label><select class="input-box"><option>Enabled</option><option>Manual Approval</option></select></div>
+        <div class="field" style="max-width:400px;"><label>Latency Optimization</label><select class="input-box"><option>Priority Node 1024</option><option>Balanced</option></select></div>
     </section>
 </main>
 
@@ -143,10 +167,12 @@
             <div class="field"><label>IP Name / Identity</label><input type="text" id="f-ip" class="input-box" placeholder="e.g. 192.168.1.104 or ShadowThread-X"></div>
             <div class="field"><label>Malware Classification</label><select id="f-mal" class="input-box"><option>Trojan.Generic</option><option>Ransomware.Encrypted</option><option>Spyware.NodeSiphon</option></select></div>
             <div class="field"><label>Violation Description</label><textarea id="f-desc" class="input-box" style="height:60px;"></textarea></div>
+            <div class="field"><label>Evidence Link / Hash</label><input type="text" id="f-ev" class="input-box"></div>
             <div class="field"><label>Sue Amount</label><input type="number" id="f-sue" class="input-box" value="5000" oninput="Core.calc()"></div>
             
             <div class="price-summary">
                 <div class="price-line"><span>Filing Fee (2%):</span> <span id="p-fee">$100.00</span></div>
+                <div class="price-line"><span>Forensic Processing:</span> <span>$250.00</span></div>
                 <div class="price-line" style="font-weight:700; border-top:1px solid #ddd; padding-top:10px; margin-top:10px;"><span>Total Lawsuit Cost:</span> <span id="p-total">$350.00</span></div>
             </div>
 
@@ -155,6 +181,14 @@
                 <select id="f-curr" class="input-box" onchange="Core.calc()">
                     <option value="USD">USD ($)</option><option value="EUR">EUR (€)</option><option value="BTC">BTC (₿)</option>
                     <option value="GBP">GBP (£)</option><option value="JPY">JPY (¥)</option>
+                </select>
+            </div>
+            <div class="field">
+                <label>Payment Method</label>
+                <select class="input-box">
+                    <option>Enterprise Credit Card</option>
+                    <option>International Bank Wire</option>
+                    <option>Secure Crypto Transfer</option>
                 </select>
             </div>
             <div style="display:flex; gap:10px;">
@@ -205,23 +239,22 @@ const Core = {
         ui.style.display = 'flex';
         btn.style.display = 'none';
 
-        const steps = ["ROUTING VIA NODE 1,024...", "ATTACHING EVIDENCE...", "WARRANT SERVED GLOBALLY.", `LITIGATION FILED AGAINST ${ip.toUpperCase()}.` ];
+        const steps = ["ROUTING VIA NODE 1,024...", "ATTACHING EVIDENCE...", "SERVING GLOBAL WARRANT...", "WARRANT SERVED GLOBALLY.", `LITIGATION FILED AGAINST ${ip.toUpperCase()}.` ];
         for(let s of steps) {
             txt.innerText = s;
             await new Promise(r => setTimeout(r, 1200));
         }
         
-        // Add to registry table
         const body = document.querySelector('#reg-table tbody');
         if(body.innerText.includes("No lawsuits")) body.innerHTML = "";
         body.innerHTML = `<tr><td>CAS-${Math.floor(Math.random()*9000)}</td><td>${ip}</td><td>${document.getElementById('f-curr').value}</td><td style="color:#107c10; font-weight:700;">FILED</td></tr>` + body.innerHTML;
         
-        btn.style.display = 'block'; // Show the "Continue" button instead of an alert
+        btn.style.display = 'block';
     },
 
     resetUI() {
         document.getElementById('serve-ui').style.display = 'none';
-        this.tab('v-reg', document.querySelectorAll('.nav-item')[4]); // Go to registry
+        this.tab('v-reg', document.querySelectorAll('.nav-item')[4]);
     }
 };
 </script>
