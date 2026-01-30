@@ -5,26 +5,24 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SAH Enterprise | Neural Litigation Portal</title>
 <style>
-/* VERDANA KILLER: STRICT SEGOE UI OVERRIDE */
+/* VERDANA KILLER: FORCED REMOTE SEGOE UI OVERRIDE */
+/* We import a hosted Segoe UI to ensure it works even if the local OS defaults to Arial/Tahoma */
 @font-face {
     font-family: 'Segoe UI';
-    src: local('Segoe UI'), local('Segoe UI Regular');
-    font-weight: 400; font-style: normal; unicode-range: U+0000-FFFF;
+    src: url('https://db.onlinewebfonts.com/t/011197793d5b4a070e17639e761005b7.eot');
+    src: url('https://db.onlinewebfonts.com/t/011197793d5b4a070e17639e761005b7.eot?#iefix') format('embedded-opentype'),
+         url('https://db.onlinewebfonts.com/t/011197793d5b4a070e17639e761005b7.woff2') format('woff2'),
+         url('https://db.onlinewebfonts.com/t/011197793d5b4a070e17639e761005b7.woff') format('woff'),
+         url('https://db.onlinewebfonts.com/t/011197793d5b4a070e17639e761005b7.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
 }
+
 @font-face {
     font-family: 'Segoe UI';
-    src: local('Segoe UI Bold');
-    font-weight: 700; font-style: normal; unicode-range: U+0000-FFFF;
-}
-@font-face {
-    font-family: 'Segoe UI';
-    src: local('Segoe UI Italic');
-    font-weight: 400; font-style: italic; unicode-range: U+0000-FFFF;
-}
-@font-face {
-    font-family: 'Segoe UI';
-    src: local('Segoe UI Bold Italic');
-    font-weight: 700; font-style: italic; unicode-range: U+0000-FFFF;
+    src: url('https://db.onlinewebfonts.com/t/1e662453625f3c5b8b93933a3c258410.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
 }
 
 :root {
@@ -32,10 +30,11 @@
     --btn-green: #27ae60;
     --main-black: #1a1a1a;
     --overlay-bg: #000000;
-    /* Removed Tahoma and Arial to ensure Segoe UI is the only active face */
+    /* Explicitly naming ONLY Segoe UI to prevent Arial/Tahoma fallbacks */
     --ms-font: 'Segoe UI';
 }
 
+/* Global Override: Kills Verdana, Arial, and Tahoma */
 * {
     font-family: var(--ms-font) !important;
     -webkit-font-smoothing: antialiased;
@@ -102,7 +101,6 @@ body {
     max-width: 650px;
     padding: 40px;
     border-radius: 20px;
-    position: relative;
     max-height: 90vh;
     overflow-y: auto;
 }
@@ -117,7 +115,6 @@ input, select, textarea {
     border-radius: 10px;
     font-size: 16px;
     background: #f9f9f9;
-    color: #000;
 }
 
 textarea { height: 150px; resize: none; }
@@ -151,7 +148,6 @@ textarea { height: 150px; resize: none; }
     padding: 15px;
     font-size: 13px;
     overflow-y: auto;
-    color: #00ff41;
 }
 
 .status-overlay {
@@ -163,7 +159,6 @@ textarea { height: 150px; resize: none; }
     padding: 50px;
     text-align: center;
     display: none;
-    z-index: 3000;
 }
 </style>
 </head>
@@ -172,39 +167,34 @@ textarea { height: 150px; resize: none; }
 <div class="hero-container">
     <h1 class="red-title">Do you want to sue a hacker?</h1>
     <p class="sub-text">
-        The <strong>SAH Enterprise</strong> offers high-fidelity legal recovery. 
-        Don't let <em>cyber-criminals</em> discourage you. Start your <strong>neural litigation</strong> today.
+        The <strong>SAH Enterprise</strong> platform provides absolute legal clarity. 
+        Start your <strong>litigation</strong> process today and recover your digital peace.
     </p>
     <button class="launch-btn" onclick="toggleModal(true)">Open Litigation Center</button>
 </div>
 
 <div class="modal-overlay" id="form-modal">
     <div class="modal-content">
-        <h2 style="margin-top:0;">Lawsuit Documentation</h2>
+        <h2 style="margin-top:0;">Lawsuit Filing</h2>
         <div class="input-row">
-            <label>IP Name or Threat Actor Identity</label>
-            <input type="text" id="target-id" placeholder="Enter target identity">
+            <label>Target IP or Alias</label>
+            <input type="text" id="target-id" placeholder="192.XXX.X.X">
         </div>
         <div class="input-row">
             <label>Malware Classification</label>
             <select id="malware-type">
                 <option>Ransomware</option>
-                <option>Trojan Horse</option>
                 <option>Spyware</option>
-                <option>Phishing Node</option>
-                <option>DDoS Botnet</option>
+                <option>Trojan</option>
+                <option>Phishing</option>
             </select>
         </div>
         <div class="input-row">
-            <label>Case Description (Evidence Narrative)</label>
-            <textarea id="case-comment" placeholder="Describe the intrusion and evidence in detail..."></textarea>
+            <label>Incident Description</label>
+            <textarea id="case-comment" placeholder="Detailed evidence description..."></textarea>
         </div>
         <div class="input-row">
-            <label>Evidence File Upload</label>
-            <input type="file" style="border:none; padding:0; background:none;">
-        </div>
-        <div class="input-row">
-            <label>Lawsuit Recovery Price ($)</label>
+            <label>Suit Price ($)</label>
             <input type="number" id="suit-price" placeholder="Recovery Amount">
         </div>
         <button class="launch-btn" style="width:100%; border-radius:10px;" onclick="CORE.startProcess()">Serve Global Warrant</button>
@@ -214,8 +204,8 @@ textarea { height: 150px; resize: none; }
 
 <div id="warrant-screen">
     <div style="margin-bottom:20px; border-bottom:1px solid #00ff41; padding-bottom:10px;">
-        <h2 style="margin:0;">GLOBAL WARRANT SERVING PROTOCOL</h2>
-        <div id="gps-display" style="font-size:12px; color:#666; margin-top:5px;">DETECTING GPS COORDINATES...</div>
+        <h2 style="margin:0;">GLOBAL WARRANT PROTOCOL</h2>
+        <div id="gps-display" style="font-size:12px; color:#666; margin-top:5px;">LOCATING...</div>
     </div>
     
     <div class="warrant-grid">
@@ -225,7 +215,7 @@ textarea { height: 150px; resize: none; }
 
     <div class="status-overlay" id="final-box">
         <h1 id="outcome-text"></h1>
-        <button onclick="location.reload()" style="background:#00ff41; color:#000; border:none; padding:10px 20px; font-weight:700; cursor:pointer; margin-top:20px;">CLOSE CASE FILE</button>
+        <button onclick="location.reload()" style="background:#00ff41; color:#000; border:none; padding:10px 20px; font-weight:700; cursor:pointer; margin-top:20px;">CLOSE FILE</button>
     </div>
 </div>
 
@@ -244,63 +234,30 @@ const CORE = {
     getGPS() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(p => {
-                document.getElementById('gps-display').innerText = `GPS DATA: LAT ${p.coords.latitude.toFixed(4)} / LONG ${p.coords.longitude.toFixed(4)}`;
-            }, () => {
-                document.getElementById('gps-display').innerText = `GPS DATA: SATELLITE TRIANGULATION ACTIVE (GLOBAL)`;
+                document.getElementById('gps-display').innerText = `LAT: ${p.coords.latitude.toFixed(4)} / LONG: ${p.coords.longitude.toFixed(4)}`;
             });
         }
     },
     runLogs() {
         const out = document.getElementById('term-out');
-        const logs = [
-            "> Initializing secure neural handshake...",
-            "> Locating Target Node: " + (document.getElementById('target-id').value || "UNKNOWN"),
-            "> Syncing Global Enforcement Warrants...",
-            "> Verifying evidence against digital fingerprint...",
-            "> Deploying international legal assets...",
-            "> Serving digital papers to ISP gateways...",
-            "> Court filing protocol finalized."
-        ];
+        const logs = ["> Connecting...", "> Locating Node...", "> Syncing Warrant...", "> Serving Notice...", "> Finalizing..."];
         let i = 0;
         const timer = setInterval(() => {
             let div = document.createElement('div');
-            div.style.marginBottom = "5px";
-            div.innerText = `[${new Date().toLocaleTimeString()}] ${logs[i]}`;
+            div.innerText = logs[i++];
             out.prepend(div);
-            this.dropPin();
-            i++;
             if(i === logs.length) {
                 clearInterval(timer);
-                setTimeout(() => this.finish(), 1000);
+                setTimeout(() => this.finish(), 800);
             }
-        }, 1000);
-    },
-    dropPin() {
-        const map = document.getElementById('map-canvas');
-        const pin = document.createElement('div');
-        pin.style.position = 'absolute';
-        pin.style.width = '10px';
-        pin.style.height = '10px';
-        pin.style.background = '#00ff41';
-        pin.style.borderRadius = '50%';
-        pin.style.left = Math.random() * 95 + "%";
-        pin.style.top = Math.random() * 95 + "%";
-        pin.style.boxShadow = "0 0 15px #00ff41";
-        map.appendChild(pin);
+        }, 800);
     },
     finish() {
-        const success = Math.random() > 0.15;
-        const box = document.getElementById('final-box');
+        const success = Math.random() > 0.1;
+        document.getElementById('final-box').style.display = 'block';
         const txt = document.getElementById('outcome-text');
-        box.style.display = 'block';
-        if(success) {
-            txt.innerText = "LAWSUIT SUCCESSFULLY FILED";
-            txt.style.color = "#00ff41";
-        } else {
-            txt.innerText = "LAWSUIT FILING FAILED";
-            txt.style.color = "#cc0000";
-            box.style.borderColor = "#cc0000";
-        }
+        txt.innerText = success ? "LAWSUIT FILED" : "FILING FAILED";
+        txt.style.color = success ? "#00ff41" : "#cc0000";
     }
 };
 </script>
