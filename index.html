@@ -23,6 +23,24 @@
             font-weight: 700;
             font-style: normal;
         }
+        @font-face {
+            font-family: 'Segoe UI';
+            src: url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/italic/latest.woff2') format('woff2');
+            font-weight: 400;
+            font-style: italic;
+        }
+        @font-face {
+            font-family: 'Segoe UI';
+            src: url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/semibold-italic/latest.woff2') format('woff2');
+            font-weight: 600;
+            font-style: italic;
+        }
+        @font-face {
+            font-family: 'Segoe UI';
+            src: url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/bold-italic/latest.woff2') format('woff2');
+            font-weight: 700;
+            font-style: italic;
+        }
 
         :root {
             --win-blue: #0078d4;
@@ -33,7 +51,13 @@
             --neon-green: #00ff41;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI'; }
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+            font-family: 'Segoe UI'; 
+        }
+
         body { background: var(--win-bg); color: var(--text-main); display: flex; height: 100vh; overflow: hidden; }
 
         .sidebar { width: 300px; background: var(--win-dark); color: white; padding: 40px 20px; display: flex; flex-direction: column; flex-shrink: 0; }
@@ -44,10 +68,6 @@
         .nav-item:hover { background: #111; color: white; }
         .nav-item.active { color: var(--win-blue); font-weight: 700; border-left-color: var(--win-blue); background: #111; }
 
-        .lang-container { margin-top: auto; padding-top: 20px; border-top: 1px solid #333; }
-        .lang-label { font-size: 10px; color: #555; font-weight: 700; margin-bottom: 8px; display: block; text-transform: uppercase; }
-        .lang-select { width: 100%; background: #111; color: #ccc; border: 1px solid #444; padding: 10px; font-size: 12px; outline: none; cursor: pointer; }
-
         .viewport { flex-grow: 1; padding: 60px; overflow-y: auto; }
         .panel { display: none; }
         .panel.active { display: block; animation: fadeIn 0.3s ease-out; }
@@ -56,78 +76,120 @@
         .header-box { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; border-bottom: 1px solid var(--border); padding-bottom: 20px; }
         h1 { font-weight: 600; font-size: 28px; }
 
-        .btn-inj { background: #003a66; color: white; border: none; padding: 14px 28px; font-weight: 600; cursor: pointer; transition: 0.3s; text-transform: uppercase; }
+        .btn-inj { background: #003a66; color: white; border: none; padding: 14px 28px; font-weight: 600; cursor: pointer; transition: 0.3s; }
         .btn-inj:hover { background: var(--win-blue); }
 
-        .price-summary { background: white; padding: 25px; border: 1px solid var(--border); }
-        .price-val { font-size: 32px; font-weight: 700; color: var(--win-blue); margin-top: 5px; }
-        .price-label { font-size: 11px; font-weight: 700; color: #888; text-transform: uppercase; }
-
         .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 1000; align-items: center; justify-content: center; }
-        .modal { background: white; width: 650px; border-top: 4px solid var(--win-blue); }
+        .modal { background: white; width: 650px; border-top: 4px solid var(--win-blue); box-shadow: 0 30px 60px rgba(0,0,0,0.5); }
         .modal-pad { padding: 40px; }
+        .field { margin-bottom: 20px; }
+        .field label { display: block; font-size: 11px; font-weight: 700; margin-bottom: 8px; text-transform: uppercase; color: #555; }
+        .input-box { width: 100%; padding: 12px; border: 1px solid var(--border); outline: none; font-size: 14px; color: var(--text-main); font-family: 'Segoe UI'; }
+
+        .price-summary { background: #f9f9f9; padding: 20px; border: 1px solid var(--border); margin-bottom: 20px; }
+        .price-line { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 13px; }
 
         #serve-ui { display: none; position: fixed; inset: 0; background: black; z-index: 2000; flex-direction: column; align-items: center; justify-content: center; }
         .scanner { width: 50%; height: 1px; background: var(--neon-green); position: absolute; box-shadow: 0 0 15px var(--neon-green); animation: scanline 2.5s infinite; }
         @keyframes scanline { 0% { top: 30%; } 100% { top: 70%; } }
         .terminal-text { color: var(--neon-green); font-family: monospace; font-size: 24px; letter-spacing: 4px; text-align: center; }
+        .btn-done { margin-top: 40px; background: transparent; border: 1px solid var(--neon-green); color: var(--neon-green); padding: 10px 30px; cursor: pointer; display: none; font-family: 'Segoe UI'; text-transform: uppercase; font-weight: 600; }
+
+        table { width: 100%; border-collapse: collapse; background: white; border: 1px solid var(--border); }
+        th { text-align: left; padding: 15px; background: #fafafa; border-bottom: 1px solid var(--border); font-size: 12px; color: #666; font-weight: 700; }
+        td { padding: 15px; border-bottom: 1px solid #eee; font-size: 14px; }
     </style>
 </head>
 <body>
 
 <aside class="sidebar">
-    <h2 id="t-brand">SAH ENTERPRISE</h2>
+    <h2>SAH ENTERPRISE</h2>
     <div class="nav-list">
-        <div class="nav-item active" onclick="Core.tab('v-dash', this)" id="n-dash">Dashboard</div>
-        <div class="nav-item" onclick="Core.tab('v-intel', this)" id="n-intel">Forensic Intel</div>
-        <div class="nav-item" onclick="Core.tab('v-vault', this)" id="n-vault">Legal Vault</div>
-        <div class="nav-item" onclick="Core.tab('v-node', this)" id="n-node">Node Health</div>
-        <div class="nav-item" onclick="Core.tab('v-reg', this)" id="n-reg">Registry</div>
-    </div>
-    <div class="lang-container">
-        <label class="lang-label">System Language</label>
-        <select class="lang-select" id="lang-set" onchange="Core.updateLang(this.value)"></select>
+        <div class="nav-item active" onclick="Core.tab('v-dash', this)">Dashboard</div>
+        <div class="nav-item" onclick="Core.tab('v-intel', this)">Forensic Intel</div>
+        <div class="nav-item" onclick="Core.tab('v-vault', this)">Legal Vault</div>
+        <div class="nav-item" onclick="Core.tab('v-node', this)">Node Health</div>
+        <div class="nav-item" onclick="Core.tab('v-reg', this)">Registry</div>
+        <div class="nav-item" onclick="Core.tab('v-set', this)">Settings</div>
     </div>
 </aside>
 
 <main class="viewport">
     <section id="v-dash" class="panel active">
-        <div class="header-box"><h1 id="h-dash">Global Operations</h1><button class="btn-inj" onclick="Core.openInj()" id="b-inj">File Injunction</button></div>
+        <div class="header-box"><h1>Global Operations</h1><button class="btn-inj" onclick="Core.openInj()">FILE INJUNCTION</button></div>
         <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:20px;">
-            <div class="price-summary"><div class="price-label" id="l-assets">Global Assets</div><div class="price-val">$4,290.025</div></div>
-            <div class="price-summary"><div class="price-label" id="l-nodes">Nodes Active</div><div class="price-val">1,024</div></div>
-            <div class="price-summary"><div class="price-label" id="l-health">Network Health</div><div class="price-val" style="color:#107c10;">99.8%</div></div>
+            <div class="price-summary"><label style="font-size:11px; font-weight:700; color:#888;">GLOBAL ASSETS</label><div style="font-size:32px; font-weight:700; color:var(--win-blue);">$4,290.025</div></div>
+            <div class="price-summary"><label style="font-size:11px; font-weight:700; color:#888;">NODES ACTIVE</label><div style="font-size:32px; font-weight:700; color:var(--win-blue);">1,024</div></div>
+            <div class="price-summary"><label style="font-size:11px; font-weight:700; color:#888;">NETWORK HEALTH</label><div style="font-size:32px; font-weight:700; color:#107c10;">99.8%</div></div>
         </div>
     </section>
 
     <section id="v-intel" class="panel">
-        <div class="header-box"><h1 id="h-intel">Forensic Intelligence</h1></div>
-        <div class="price-summary" id="t-intel-body">Loading Forensic Data...</div>
+        <div class="header-box"><h1>Forensic Intelligence</h1></div>
+        <table>
+            <thead><tr><th>Target Hash</th><th>Identity</th><th>Threat Level</th></tr></thead>
+            <tbody>
+                <tr><td>0x8C92-77</td><td>ShadowThread-X</td><td style="color:#a4262c; font-weight:700;">CRITICAL</td></tr>
+                <tr><td>0x3F21-99</td><td>VoidPacket-Alpha</td><td style="color:#e0a500; font-weight:700;">MODERATE</td></tr>
+            </tbody>
+        </table>
     </section>
 
     <section id="v-vault" class="panel">
-        <div class="header-box"><h1 id="h-vault">Legal Vault</h1></div>
-        <div class="price-summary">Warrant_Master_V12.pdf</div>
+        <div class="header-box"><h1>Legal Vault</h1></div>
+        <div class="price-summary"><h3 style="font-weight:600;">Warrant_Master_V10.pdf</h3><p style="font-style:italic; font-size:12px;">Authenticated Legal Instrument</p></div>
+        <div class="price-summary"><h3 style="font-weight:600;">Jurisdiction_Map_2026.html</h3><p style="font-style:italic; font-size:12px;">Real-time Node Coverage</p></div>
     </section>
 
     <section id="v-node" class="panel">
-        <div class="header-box"><h1 id="h-node">Node Health</h1></div>
-        <div class="price-summary">Node 1,024 [Synchronized]</div>
+        <div class="header-box"><h1>Node Health</h1></div>
+        <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:10px;">
+            <div style="padding:15px; background:white; border:1px solid var(--border); border-left:4px solid var(--neon-green);">Cluster A: Online</div>
+            <div style="padding:15px; background:white; border:1px solid var(--border); border-left:4px solid var(--neon-green);">Cluster B: Online</div>
+            <div style="padding:15px; background:white; border:1px solid var(--border); border-left:4px solid var(--neon-green);">Cluster C: Online</div>
+            <div style="padding:15px; background:white; border:1px solid var(--border); border-left:4px solid var(--neon-green);">Cluster D: Online</div>
+        </div>
     </section>
 
     <section id="v-reg" class="panel">
-        <div class="header-box"><h1 id="h-reg">Lawsuit Registry</h1></div>
-        <div class="price-summary" id="t-reg-empty">No lawsuits currently on record.</div>
+        <div class="header-box"><h1>Lawsuit Registry</h1></div>
+        <table id="reg-table">
+            <thead><tr><th>Case ID</th><th>Entity</th><th>Currency</th><th>Status</th></tr></thead>
+            <tbody><tr><td colspan="4" style="text-align:center; color:#888; padding:40px;">No lawsuits currently on record.</td></tr></tbody>
+        </table>
+    </section>
+
+    <section id="v-set" class="panel">
+        <div class="header-box"><h1>Settings</h1></div>
+        <div class="field" style="max-width:400px;"><label>Auto-Serve Protocol</label><select class="input-box"><option>Enabled</option><option>Manual Approval</option></select></div>
     </section>
 </main>
 
 <div id="modal-inj" class="overlay">
     <div class="modal">
         <div class="modal-pad">
-            <h2 id="m-title" style="margin-bottom:20px;">LITIGATION FILING FORM</h2>
-            <div style="display:flex; gap:10px; margin-top:20px;">
-                <button class="btn-inj" style="flex:1" onclick="Core.execute()" id="b-submit">Submit</button>
-                <button class="btn-inj" style="flex:1; background:#eee; color:#333;" onclick="Core.closeInj()" id="b-cancel">Cancel</button>
+            <h2 style="margin-bottom: 25px; font-weight: 700;">LITIGATION FILING FORM</h2>
+            <div class="field"><label>IP Name / Identity</label><input type="text" id="f-ip" class="input-box" placeholder="e.g. 192.168.1.104 or ShadowThread-X"></div>
+            <div class="field"><label>Malware Classification</label><select id="f-mal" class="input-box"><option>Trojan.Generic</option><option>Ransomware.Encrypted</option><option>Spyware.NodeSiphon</option></select></div>
+            <div class="field"><label>Violation Description</label><textarea id="f-desc" class="input-box" style="height:60px; font-family: 'Segoe UI';"></textarea></div>
+            <div class="field"><label>Sue Amount</label><input type="number" id="f-sue" class="input-box" value="5000" oninput="Core.calc()"></div>
+            
+            <div class="price-summary">
+                <div class="price-line"><span>Filing Fee (2%):</span> <span id="p-fee">$100.00</span></div>
+                <div class="price-line"><span>Forensic Processing:</span> <span>$250.00</span></div>
+                <div class="price-line" style="font-weight:700; border-top:1px solid #ddd; padding-top:10px; margin-top:10px;"><span>Total Lawsuit Cost:</span> <span id="p-total">$350.00</span></div>
+            </div>
+
+            <div class="field">
+                <label>Currency</label>
+                <select id="f-curr" class="input-box" onchange="Core.calc()">
+                    <option value="USD">USD ($)</option><option value="EUR">EUR (€)</option><option value="BTC">BTC (₿)</option>
+                    <option value="GBP">GBP (£)</option><option value="JPY">JPY (¥)</option>
+                </select>
+            </div>
+            <div style="display:flex; gap:10px;">
+                <button class="btn-inj" style="flex:1" onclick="Core.execute()">SUBMIT LITIGATION</button>
+                <button class="btn-inj" style="flex:1; background:#eee; color:#333;" onclick="Core.closeInj()">CANCEL</button>
             </div>
         </div>
     </div>
@@ -136,50 +198,13 @@
 <div id="serve-ui">
     <div class="scanner"></div>
     <div class="terminal-text" id="serve-txt">SERVING GLOBAL WARRANT...</div>
+    <button class="btn-done" id="btn-done" onclick="Core.resetUI()">CONTINUE TO DASHBOARD</button>
 </div>
 
 <script>
 const Core = {
-    languages: [
-        { n: "English", v: "en" }, { n: "Español", v: "es" }, { n: "Français", v: "fr" }, { n: "Deutsch", v: "de" },
-        { n: "中文", v: "zh" }, { n: "日本語", v: "ja" }, { n: "Русский", v: "ru" }, { n: "Português", v: "pt" },
-        { n: "Italiano", v: "it" }, { n: "한국어", v: "ko" }, { n: "हिन्दी", v: "hi" }, { n: "العربية", v: "ar" }
-    ],
-    
-    dict: {
-        en: { dash: "Dashboard", intel: "Forensic Intel", vault: "Legal Vault", node: "Node Health", reg: "Registry", ops: "Global Operations", file: "File Injunction", assets: "Global Assets", nodes: "Nodes Active", health: "Network Health", submit: "Submit", cancel: "Cancel" },
-        es: { dash: "Tablero", intel: "Intel Forense", vault: "Bóveda Legal", node: "Salud del Nodo", reg: "Registro", ops: "Operaciones Globales", file: "Presentar Mandamiento", assets: "Activos Globales", nodes: "Nodos Activos", health: "Salud de Red", submit: "Enviar", cancel: "Cancelar" },
-        fr: { dash: "Tableau", intel: "Intel Forense", vault: "Coffre Légal", node: "Santé du Nœud", reg: "Registre", ops: "Opérations Globales", file: "Déposer Injonction", assets: "Activos Globaux", nodes: "Nœuds Actifs", health: "Santé Réseau", submit: "Soumettre", cancel: "Annuler" },
-        zh: { dash: "仪表板", intel: "取证情报", vault: "法律库", node: "节点健康", reg: "登记处", ops: "全球运营", file: "提交禁令", assets: "全球资产", nodes: "活跃节点", health: "网络健康", submit: "提交", cancel: "取消" },
-        ja: { dash: "ダッシュボード", intel: "フォレンジック", vault: "法的保管庫", node: "ノードの状態", reg: "レジストリ", ops: "グローバルオペレーション", file: "差し止め命令", assets: "グローバル資産", nodes: "アクティブノード", health: "ネットワークの状態", submit: "送信", cancel: "キャンセル" },
-        ru: { dash: "Панель", intel: "Разведка", vault: "Хранилище", node: "Узлы", reg: "Реестр", ops: "Глобальные операции", file: "Подать иск", assets: "Активы", nodes: "Активные узлы", health: "Здоровье сети", submit: "Отправить", cancel: "Отмена" }
-    },
-
-    init() {
-        const sel = document.getElementById('lang-set');
-        this.languages.forEach(l => {
-            const opt = document.createElement('option');
-            opt.value = l.v; opt.innerText = l.n;
-            sel.appendChild(opt);
-        });
-        this.updateLang('en');
-    },
-
-    updateLang(v) {
-        const d = this.dict[v] || this.dict['en'];
-        document.getElementById('n-dash').innerText = d.dash;
-        document.getElementById('n-intel').innerText = d.intel;
-        document.getElementById('n-vault').innerText = d.vault;
-        document.getElementById('n-node').innerText = d.node;
-        document.getElementById('n-reg').innerText = d.reg;
-        document.getElementById('h-dash').innerText = d.ops;
-        document.getElementById('b-inj').innerText = d.file;
-        document.getElementById('l-assets').innerText = d.assets;
-        document.getElementById('l-nodes').innerText = d.nodes;
-        document.getElementById('l-health').innerText = d.health;
-        document.getElementById('b-submit').innerText = d.submit;
-        document.getElementById('b-cancel').innerText = d.cancel;
-    },
+    rates: { USD: 1, EUR: 0.92, BTC: 0.000015, GBP: 0.79, JPY: 148 },
+    syms: { USD: '$', EUR: '€', BTC: '₿', GBP: '£', JPY: '¥' },
 
     tab(id, el) {
         document.querySelectorAll('.panel, .nav-item').forEach(x => x.classList.remove('active'));
@@ -190,15 +215,44 @@ const Core = {
     openInj() { document.getElementById('modal-inj').style.display = 'flex'; },
     closeInj() { document.getElementById('modal-inj').style.display = 'none'; },
 
+    calc() {
+        const val = parseFloat(document.getElementById('f-sue').value) || 0;
+        const cur = document.getElementById('f-curr').value;
+        const r = this.rates[cur];
+        const fee = (val * 0.02) * r;
+        const total = (val * 0.02 + 250) * r;
+        document.getElementById('p-fee').innerText = this.syms[cur] + fee.toFixed(cur === 'BTC' ? 6 : 2);
+        document.getElementById('p-total').innerText = this.syms[cur] + total.toFixed(cur === 'BTC' ? 6 : 2);
+    },
+
     async execute() {
+        const ip = document.getElementById('f-ip').value || "Unknown Entity";
         this.closeInj();
-        document.getElementById('serve-ui').style.display = 'flex';
-        await new Promise(r => setTimeout(r, 3000));
+        const ui = document.getElementById('serve-ui');
+        const txt = document.getElementById('serve-txt');
+        const btn = document.getElementById('btn-done');
+        
+        ui.style.display = 'flex';
+        btn.style.display = 'none';
+
+        const steps = ["ROUTING VIA NODE 1,024...", "ATTACHING EVIDENCE...", "SERVING GLOBAL WARRANT...", "WARRANT SERVED GLOBALLY.", `LITIGATION FILED AGAINST ${ip.toUpperCase()}.` ];
+        for(let s of steps) {
+            txt.innerText = s;
+            await new Promise(r => setTimeout(r, 1200));
+        }
+        
+        const body = document.querySelector('#reg-table tbody');
+        if(body.innerText.includes("No lawsuits")) body.innerHTML = "";
+        body.innerHTML = `<tr><td>CAS-${Math.floor(Math.random()*9000)}</td><td>${ip}</td><td>${document.getElementById('f-curr').value}</td><td style="color:#107c10; font-weight:700;">FILED</td></tr>` + body.innerHTML;
+        
+        btn.style.display = 'block';
+    },
+
+    resetUI() {
         document.getElementById('serve-ui').style.display = 'none';
         this.tab('v-reg', document.querySelectorAll('.nav-item')[4]);
     }
 };
-Core.init();
 </script>
 </body>
 </html>
