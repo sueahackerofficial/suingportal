@@ -51,7 +51,13 @@
             --neon-green: #00ff41;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', -apple-system, sans-serif; }
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+            font-family: 'Segoe UI'; 
+        }
+
         body { background: var(--win-bg); color: var(--text-main); display: flex; height: 100vh; overflow: hidden; }
 
         .sidebar { width: 300px; background: var(--win-dark); color: white; padding: 40px 20px; display: flex; flex-direction: column; flex-shrink: 0; }
@@ -78,7 +84,7 @@
         .modal-pad { padding: 40px; }
         .field { margin-bottom: 20px; }
         .field label { display: block; font-size: 11px; font-weight: 700; margin-bottom: 8px; text-transform: uppercase; color: #555; }
-        .input-box { width: 100%; padding: 12px; border: 1px solid var(--border); outline: none; font-size: 14px; color: var(--text-main); }
+        .input-box { width: 100%; padding: 12px; border: 1px solid var(--border); outline: none; font-size: 14px; color: var(--text-main); font-family: 'Segoe UI'; }
 
         .price-summary { background: #f9f9f9; padding: 20px; border: 1px solid var(--border); margin-bottom: 20px; }
         .price-line { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 13px; }
@@ -87,7 +93,7 @@
         .scanner { width: 50%; height: 1px; background: var(--neon-green); position: absolute; box-shadow: 0 0 15px var(--neon-green); animation: scanline 2.5s infinite; }
         @keyframes scanline { 0% { top: 30%; } 100% { top: 70%; } }
         .terminal-text { color: var(--neon-green); font-family: monospace; font-size: 24px; letter-spacing: 4px; text-align: center; }
-        .btn-done { margin-top: 40px; background: transparent; border: 1px solid var(--neon-green); color: var(--neon-green); padding: 10px 30px; cursor: pointer; display: none; }
+        .btn-done { margin-top: 40px; background: transparent; border: 1px solid var(--neon-green); color: var(--neon-green); padding: 10px 30px; cursor: pointer; display: none; font-family: 'Segoe UI'; }
 
         table { width: 100%; border-collapse: collapse; background: white; border: 1px solid var(--border); }
         th { text-align: left; padding: 15px; background: #fafafa; border-bottom: 1px solid var(--border); font-size: 12px; color: #666; font-weight: 700; }
@@ -166,7 +172,7 @@
             <h2 style="margin-bottom: 25px; font-weight: 700;">LITIGATION FILING FORM</h2>
             <div class="field"><label>IP Name / Identity</label><input type="text" id="f-ip" class="input-box" placeholder="e.g. 192.168.1.104 or ShadowThread-X"></div>
             <div class="field"><label>Malware Classification</label><select id="f-mal" class="input-box"><option>Trojan.Generic</option><option>Ransomware.Encrypted</option><option>Spyware.NodeSiphon</option></select></div>
-            <div class="field"><label>Violation Description</label><textarea id="f-desc" class="input-box" style="height:60px;"></textarea></div>
+            <div class="field"><label>Violation Description</label><textarea id="f-desc" class="input-box" style="height:60px; font-family: 'Segoe UI';"></textarea></div>
             <div class="field"><label>Evidence Link / Hash</label><input type="text" id="f-ev" class="input-box"></div>
             <div class="field"><label>Sue Amount</label><input type="number" id="f-sue" class="input-box" value="5000" oninput="Core.calc()"></div>
             
