@@ -6,25 +6,34 @@
     <title>Sue-A-Hacker Enterprise | Official Legal Portal</title>
     
     <style>
+        /* Segoe UI Font Family Implementation across all 4 styles */
         @font-face {
             font-family: 'Segoe UI';
             src: local('Segoe UI'), local('Segoe UI Regular');
-            font-weight: 400; font-style: normal; unicode-range: U+0000-FFFF;
+            font-weight: 400;
+            font-style: normal;
+            unicode-range: U+0000-FFFF;
         }
         @font-face {
             font-family: 'Segoe UI';
             src: local('Segoe UI Bold');
-            font-weight: 700; font-style: normal; unicode-range: U+0000-FFFF;
+            font-weight: 700;
+            font-style: normal;
+            unicode-range: U+0000-FFFF;
         }
         @font-face {
             font-family: 'Segoe UI';
             src: local('Segoe UI Italic');
-            font-weight: 400; font-style: italic; unicode-range: U+0000-FFFF;
+            font-weight: 400;
+            font-style: italic;
+            unicode-range: U+0000-FFFF;
         }
         @font-face {
             font-family: 'Segoe UI';
             src: local('Segoe UI Bold Italic');
-            font-weight: 700; font-style: italic; unicode-range: U+0000-FFFF;
+            font-weight: 700;
+            font-style: italic;
+            unicode-range: U+0000-FFFF;
         }
 
         :root {
@@ -32,9 +41,11 @@
             --btn-green: #27ae60;
             --main-black: #1a1a1a;
             --overlay-bg: rgba(0, 0, 0, 0.95);
-            --ms-font: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            /* Verdana Killer Logic: Hard-setting Segoe UI as the primary font */
+            --ms-font: 'Segoe UI', Tahoma, Arial, sans-serif;
         }
 
+        /* The Ultimate Override: Forces the specified font and kills Verdana/Open Sans */
         * {
             font-family: var(--ms-font) !important;
             -webkit-font-smoothing: antialiased;
@@ -88,7 +99,7 @@
         .red-title { 
             color: var(--accent-red); 
             font-size: 56px; 
-            font-weight: 700;
+            font-weight: 700; 
             margin: 0; 
             line-height: 1.1; 
             letter-spacing: -0.03em;
@@ -101,6 +112,11 @@
             color: #2b2b2b;
             font-weight: 400;
         }
+
+        /* Specific weight triggers for Segoe UI styles */
+        strong { font-weight: 700; }
+        em { font-style: italic; }
+        strong em, em strong { font-weight: 700; font-style: italic; }
 
         .portal-card {
             background: #fff; padding: 40px; width: 360px; border-radius: 20px;
