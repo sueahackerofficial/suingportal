@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SAH Enterprise | Neural Litigation Portal</title>
 <style>
-/* VERDANA KILLER: FORCED SEGOE UI OVERRIDE */
+/* VERDANA KILLER: STRICT SEGOE UI OVERRIDE */
 @font-face {
     font-family: 'Segoe UI';
     src: local('Segoe UI'), local('Segoe UI Regular');
@@ -32,7 +32,8 @@
     --btn-green: #27ae60;
     --main-black: #1a1a1a;
     --overlay-bg: #000000;
-    --ms-font: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    /* Removed Tahoma and Arial to ensure Segoe UI is the only active face */
+    --ms-font: 'Segoe UI';
 }
 
 * {
@@ -52,7 +53,6 @@ body {
     overflow-x: hidden;
 }
 
-/* HERO SECTION */
 .hero-container {
     text-align: center;
     max-width: 800px;
@@ -83,14 +83,8 @@ body {
     border: none;
     border-radius: 50px;
     cursor: pointer;
-    transition: transform 0.2s;
 }
 
-.launch-btn:hover {
-    transform: scale(1.05);
-}
-
-/* MODAL SYSTEM */
 .modal-overlay {
     display: none;
     position: fixed;
@@ -105,7 +99,7 @@ body {
 .modal-content {
     background: white;
     width: 90%;
-    max-width: 600px;
+    max-width: 650px;
     padding: 40px;
     border-radius: 20px;
     position: relative;
@@ -123,11 +117,11 @@ input, select, textarea {
     border-radius: 10px;
     font-size: 16px;
     background: #f9f9f9;
+    color: #000;
 }
 
-textarea { height: 120px; resize: none; }
+textarea { height: 150px; resize: none; }
 
-/* WARRANT INTERFACE */
 #warrant-screen {
     display: none;
     position: fixed;
@@ -142,7 +136,7 @@ textarea { height: 120px; resize: none; }
     display: grid;
     grid-template-columns: 1fr 350px;
     gap: 20px;
-    height: calc(100% - 100px);
+    height: calc(100% - 120px);
 }
 
 #map-canvas {
@@ -169,6 +163,7 @@ textarea { height: 120px; resize: none; }
     padding: 50px;
     text-align: center;
     display: none;
+    z-index: 3000;
 }
 </style>
 </head>
@@ -187,7 +182,7 @@ textarea { height: 120px; resize: none; }
     <div class="modal-content">
         <h2 style="margin-top:0;">Lawsuit Documentation</h2>
         <div class="input-row">
-            <label>IP Name or Threat Actor</label>
+            <label>IP Name or Threat Actor Identity</label>
             <input type="text" id="target-id" placeholder="Enter target identity">
         </div>
         <div class="input-row">
@@ -201,16 +196,16 @@ textarea { height: 120px; resize: none; }
             </select>
         </div>
         <div class="input-row">
-            <label>Comment (Case Description)</label>
-            <textarea id="case-comment" placeholder="Provide detailed evidence description..."></textarea>
+            <label>Case Description (Evidence Narrative)</label>
+            <textarea id="case-comment" placeholder="Describe the intrusion and evidence in detail..."></textarea>
         </div>
         <div class="input-row">
-            <label>File Upload</label>
-            <input type="file" style="border:none; padding:0;">
+            <label>Evidence File Upload</label>
+            <input type="file" style="border:none; padding:0; background:none;">
         </div>
         <div class="input-row">
-            <label>Lawsuit Price ($)</label>
-            <input type="number" id="suit-price" placeholder="Amount to recover">
+            <label>Lawsuit Recovery Price ($)</label>
+            <input type="number" id="suit-price" placeholder="Recovery Amount">
         </div>
         <button class="launch-btn" style="width:100%; border-radius:10px;" onclick="CORE.startProcess()">Serve Global Warrant</button>
         <button onclick="toggleModal(false)" style="width:100%; background:none; border:none; margin-top:10px; cursor:pointer; color:#888;">Cancel</button>
@@ -220,7 +215,7 @@ textarea { height: 120px; resize: none; }
 <div id="warrant-screen">
     <div style="margin-bottom:20px; border-bottom:1px solid #00ff41; padding-bottom:10px;">
         <h2 style="margin:0;">GLOBAL WARRANT SERVING PROTOCOL</h2>
-        <div id="gps-display" style="font-size:12px; color:#666;">DETECTING GPS...</div>
+        <div id="gps-display" style="font-size:12px; color:#666; margin-top:5px;">DETECTING GPS COORDINATES...</div>
     </div>
     
     <div class="warrant-grid">
@@ -230,7 +225,7 @@ textarea { height: 120px; resize: none; }
 
     <div class="status-overlay" id="final-box">
         <h1 id="outcome-text"></h1>
-        <button onclick="location.reload()" style="background:#00ff41; color:#000; border:none; padding:10px 20px; font-weight:700; cursor:pointer; margin-top:20px;">CLOSE CASE</button>
+        <button onclick="location.reload()" style="background:#00ff41; color:#000; border:none; padding:10px 20px; font-weight:700; cursor:pointer; margin-top:20px;">CLOSE CASE FILE</button>
     </div>
 </div>
 
@@ -247,22 +242,24 @@ const CORE = {
         this.runLogs();
     },
     getGPS() {
-        navigator.geolocation.getCurrentPosition(p => {
-            document.getElementById('gps-display').innerText = `GPS DATA: LAT ${p.coords.latitude.toFixed(4)} / LONG ${p.coords.longitude.toFixed(4)}`;
-        }, () => {
-            document.getElementById('gps-display').innerText = `GPS DATA: GLOBAL SATELLITE OVERRIDE ACTIVE`;
-        });
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(p => {
+                document.getElementById('gps-display').innerText = `GPS DATA: LAT ${p.coords.latitude.toFixed(4)} / LONG ${p.coords.longitude.toFixed(4)}`;
+            }, () => {
+                document.getElementById('gps-display').innerText = `GPS DATA: SATELLITE TRIANGULATION ACTIVE (GLOBAL)`;
+            });
+        }
     },
     runLogs() {
         const out = document.getElementById('term-out');
         const logs = [
-            "> Initializing neural link...",
-            "> Locating Target: " + (document.getElementById('target-id').value || "UNKNOWN"),
-            "> Syncing Global Warrants...",
-            "> Evidence verified at scale...",
-            "> Deploying legal assets...",
-            "> Serving digital papers...",
-            "> Protocol finalized."
+            "> Initializing secure neural handshake...",
+            "> Locating Target Node: " + (document.getElementById('target-id').value || "UNKNOWN"),
+            "> Syncing Global Enforcement Warrants...",
+            "> Verifying evidence against digital fingerprint...",
+            "> Deploying international legal assets...",
+            "> Serving digital papers to ISP gateways...",
+            "> Court filing protocol finalized."
         ];
         let i = 0;
         const timer = setInterval(() => {
@@ -274,25 +271,25 @@ const CORE = {
             i++;
             if(i === logs.length) {
                 clearInterval(timer);
-                this.finish();
+                setTimeout(() => this.finish(), 1000);
             }
-        }, 900);
+        }, 1000);
     },
     dropPin() {
         const map = document.getElementById('map-canvas');
         const pin = document.createElement('div');
         pin.style.position = 'absolute';
-        pin.style.width = '8px';
-        pin.style.height = '8px';
+        pin.style.width = '10px';
+        pin.style.height = '10px';
         pin.style.background = '#00ff41';
         pin.style.borderRadius = '50%';
         pin.style.left = Math.random() * 95 + "%";
         pin.style.top = Math.random() * 95 + "%";
-        pin.style.boxShadow = "0 0 10px #00ff41";
+        pin.style.boxShadow = "0 0 15px #00ff41";
         map.appendChild(pin);
     },
     finish() {
-        const success = Math.random() > 0.1;
+        const success = Math.random() > 0.15;
         const box = document.getElementById('final-box');
         const txt = document.getElementById('outcome-text');
         box.style.display = 'block';
@@ -300,7 +297,7 @@ const CORE = {
             txt.innerText = "LAWSUIT SUCCESSFULLY FILED";
             txt.style.color = "#00ff41";
         } else {
-            txt.innerText = "LAWSUIT UNSUCCESSFUL";
+            txt.innerText = "LAWSUIT FILING FAILED";
             txt.style.color = "#cc0000";
             box.style.borderColor = "#cc0000";
         }
