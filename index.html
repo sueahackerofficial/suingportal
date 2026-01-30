@@ -1,302 +1,356 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sue-A-Hacker Enterprise | Official Legal Portal</title>
-    
-    <style>
-        @font-face {
-            font-family: 'Segoe UI';
-            src: local('Segoe UI'), local('Segoe UI Regular');
-            font-weight: 400; font-style: normal; unicode-range: U+0000-FFFF;
-        }
-        @font-face {
-            font-family: 'Segoe UI';
-            src: local('Segoe UI Bold');
-            font-weight: 700; font-style: normal; unicode-range: U+0000-FFFF;
-        }
-        @font-face {
-            font-family: 'Segoe UI';
-            src: local('Segoe UI Italic');
-            font-weight: 400; font-style: italic; unicode-range: U+0000-FFFF;
-        }
-        @font-face {
-            font-family: 'Segoe UI';
-            src: local('Segoe UI Bold Italic');
-            font-weight: 700; font-style: italic; unicode-range: U+0000-FFFF;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAH Enterprise | Global Litigation Hub</title>
+<style>
+@font-face {
+    font-family: 'Segoe UI';
+    src: local('Segoe UI'), local('Segoe UI Regular');
+    font-weight: 400; font-style: normal; unicode-range: U+0000-FFFF;
+}
+@font-face {
+    font-family: 'Segoe UI';
+    src: local('Segoe UI Bold');
+    font-weight: 700; font-style: normal; unicode-range: U+0000-FFFF;
+}
+@font-face {
+    font-family: 'Segoe UI';
+    src: local('Segoe UI Italic');
+    font-weight: 400; font-style: italic; unicode-range: U+0000-FFFF;
+}
+@font-face {
+    font-family: 'Segoe UI';
+    src: local('Segoe UI Bold Italic');
+    font-weight: 700; font-style: italic; unicode-range: U+0000-FFFF;
+}
 
-        :root {
-            --accent-red: #cc0000;
-            --btn-green: #27ae60;
-            --main-black: #1a1a1a;
-            --overlay-bg: rgba(0, 0, 0, 0.95);
-            --ms-font: 'Segoe UI', Tahoma, Arial, sans-serif;
-        }
+:root {
+    --accent-red: #cc0000;
+    --btn-green: #27ae60;
+    --main-black: #1a1a1a;
+    --overlay-bg: rgba(0, 0, 0, 0.98);
+    --ms-font: 'Segoe UI', Tahoma, Arial, sans-serif;
+}
 
-        * {
-            font-family: var(--ms-font) !important;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
+* {
+    font-family: var(--ms-font) !important;
+    -webkit-font-smoothing: antialiased;
+    background: transparent;
+}
 
-        body {
-            background-color: #ffffff;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            color: var(--main-black);
-            overflow-x: hidden;
-        }
+body {
+    background-color: #ffffff;
+    margin: 0;
+    color: var(--main-black);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
 
-        .settings-bar {
-            position: fixed;
-            top: 25px;
-            right: 25px;
-            display: flex;
-            gap: 12px;
-            z-index: 10000;
-        }
+.header-strip {
+    width: 100%;
+    padding: 20px 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+}
 
-        .selector {
-            padding: 10px 15px;
-            border-radius: 8px;
-            border: 2px solid #eee;
-            background: white;
-            font-size: 14px;
-            font-weight: 700;
-            cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-        }
+.hero-section {
+    max-width: 1100px;
+    width: 90%;
+    padding: 60px 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+}
 
-        .hero-layout {
-            display: flex;
-            align-items: center;
-            gap: 60px;
-            max-width: 1200px;
-            width: 90%;
-        }
+.red-title {
+    color: var(--accent-red);
+    font-size: 64px;
+    font-weight: 700;
+    line-height: 1;
+    margin: 0 0 20px 0;
+}
 
-        .heading-box { 
-            flex: 1; 
-            border-bottom: 5px solid #000; 
-            padding-bottom: 20px; 
-        }
+.form-card {
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
 
-        .red-title { 
-            color: var(--accent-red); 
-            font-size: 56px; 
-            font-weight: 800;
-            margin: 0; 
-            line-height: 1.1; 
-            letter-spacing: -0.03em;
-        }
+.input-group { margin-bottom: 15px; }
+label { display: block; font-weight: 700; font-size: 13px; margin-bottom: 5px; text-transform: uppercase; color: #666; }
 
-        .intro-copy { 
-            flex: 1.5; 
-            font-size: 20px; 
-            line-height: 1.6; 
-            color: #2b2b2b;
-            font-weight: 400;
-        }
+input, select, textarea {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #f0f0f0;
+    border-radius: 6px;
+    background: #fafafa;
+    font-size: 15px;
+    box-sizing: border-box;
+}
 
-        .portal-card {
-            background: #fff; padding: 40px; width: 360px; border-radius: 20px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.12);
-            border: 1px solid #f0f0f0;
-        }
+textarea { height: 100px; resize: none; }
 
-        .modal-overlay {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--overlay-bg); z-index: 9999; justify-content: center; align-items: center;
-            backdrop-filter: blur(10px);
-        }
+.file-drop {
+    border: 2px dashed #ddd;
+    padding: 20px;
+    text-align: center;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #888;
+}
 
-        .modal-box {
-            background: white; width: 95%; max-width: 900px; padding: 45px; border-radius: 25px;
-            max-height: 90vh; overflow-y: auto; position: relative;
-        }
+.primary-btn {
+    background: var(--main-black);
+    color: #fff;
+    border: none;
+    padding: 18px;
+    width: 100%;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+}
 
-        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-top: 20px; }
-        .full-width { grid-column: span 2; }
+/* WARRANT OVERLAY */
+#warrant-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: var(--overlay-bg);
+    z-index: 10000;
+    color: #00ff41;
+    padding: 40px;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
 
-        label { display: block; font-weight: 700; margin-bottom: 10px; font-size: 14px; color: #444; }
-        
-        input, select, textarea {
-            width: 100%; padding: 16px; border: 2px solid #edf2f7; border-radius: 8px; 
-            font-size: 16px; box-sizing: border-box; background: #f8fafc;
-        }
+.warrant-header {
+    border-bottom: 2px solid #00ff41;
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
 
-        .primary-btn { 
-            background: var(--btn-green); 
-            color: white; border: none; padding: 20px; width: 100%; 
-            border-radius: 12px; font-weight: 700; font-size: 18px; cursor: pointer; 
-        }
+.grid-layout {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 30px;
+    height: 500px;
+}
 
-        .secondary-btn { 
-            background: #e2e8f0; color: #4a5568; border: none; padding: 15px; 
-            width: 100%; border-radius: 12px; margin-top: 15px; cursor: pointer; font-weight: 700; 
-        }
+#map-view {
+    border: 1px solid #333;
+    background: #050505;
+    position: relative;
+    overflow: hidden;
+}
 
-        #warrant-map {
-            display: none; height: 300px; width: 100%; background: #000; margin-bottom: 20px; 
-            border-radius: 15px; position: relative; overflow: hidden;
-        }
+.log-terminal {
+    background: #000;
+    border: 1px solid #333;
+    padding: 20px;
+    font-family: monospace !important;
+    font-size: 13px;
+    overflow-y: auto;
+}
 
-        .ping { 
-            position: absolute; width: 10px; height: 10px; background: #0f0; 
-            border-radius: 50%; box-shadow: 0 0 10px #0f0; animation: pulse 1.5s infinite;
-        }
+.gps-data {
+    font-size: 12px;
+    margin-top: 10px;
+    color: #aaa;
+}
 
-        @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(4); opacity: 0; } }
+.status-badge {
+    position: fixed;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 60px;
+    border: 4px solid;
+    background: #000;
+    display: none;
+    text-align: center;
+    z-index: 10001;
+}
 
-        #log-terminal {
-            background: #000; color: #0f0; padding: 15px; border-radius: 8px; 
-            font-size: 12px; height: 120px; overflow-y: auto; margin-bottom: 20px;
-        }
-
-        @media print {
-            .settings-bar, .secondary-btn, .primary-btn { display: none !important; }
-            .modal-overlay { background: #fff !important; display: block !important; position: static !important; }
-            .modal-box { box-shadow: none !important; border: 1px solid #000; }
-        }
-    </style>
+@media print {
+    #warrant-overlay { display: block !important; background: white !important; color: black !important; position: relative !important; }
+    .status-badge { display: block !important; position: relative !important; transform: none !important; left: 0 !important; top: 0 !important; border: 1px solid #000 !important; }
+    .no-print { display: none !important; }
+}
+</style>
 </head>
 <body>
 
-<div class="settings-bar">
-    <select class="selector" id="lang-select" onchange="translateUI(this.value)"></select>
+<div class="header-strip">
+    <div style="font-weight: 700; letter-spacing: 2px;">SAH_ENTERPRISE_2026</div>
+    <select id="lang-switch" onchange="CORE.setLang(this.value)" style="width: auto; padding: 5px;"></select>
 </div>
 
-<div class="hero-layout">
-    <div class="heading-box">
-        <h1 class="red-title" id="h-title"></h1>
+<div class="hero-section no-print">
+    <div>
+        <h1 class="red-title" id="h-main">Do you want to sue a hacker?</h1>
+        <p style="font-size: 20px; line-height: 1.6;">
+            Initiate the <strong>2026 Global Recovery Protocol</strong>. 
+            <em>Hackers</em> can cause <em>distress</em>; we provide <strong>absolute legal retribution</strong>.
+        </p>
     </div>
-    <div class="intro-copy">
-        <p id="h-desc"></p>
-    </div>
-    <div class="portal-card">
-        <h2 id="c-title" style="margin-top:0;"></h2>
-        <p id="c-desc"></p>
-        <button id="btn-launch" onclick="showModal(true)" style="background:var(--main-black); color:white; border:none; padding:20px; width:100%; border-radius:12px; font-weight:700; cursor:pointer;"></button>
+    <div class="form-card">
+        <div class="input-group">
+            <label id="l-ip">Threat Actor IP / Name</label>
+            <input type="text" id="target-id" placeholder="e.g. 192.168.0.1 or 'Anonymous'">
+        </div>
+        <div class="input-group">
+            <label id="l-mal">Malware Type</label>
+            <select id="malware-drop"></select>
+        </div>
+        <div class="input-group">
+            <label id="l-com">Case Description (Comments)</label>
+            <textarea id="case-desc" placeholder="Describe the intrusion details..."></textarea>
+        </div>
+        <div class="input-group">
+            <label id="l-file">Evidence Upload</label>
+            <div class="file-drop" onclick="alert('File system linked.')">Drop logs or screenshots here</div>
+        </div>
+        <div class="input-group">
+            <label id="l-amt">Lawsuit Price ($)</label>
+            <input type="number" id="sue-price" placeholder="50000.00">
+        </div>
+        <button class="primary-btn" onclick="CORE.startWarrant()" id="btn-submit">Serve Global Warrant</button>
     </div>
 </div>
 
-<div id="formOverlay" class="modal-overlay">
-    <div class="modal-box">
-        <div id="warrant-view" style="display:none;">
-            <div id="warrant-map"></div>
-            <div id="log-terminal"></div>
-            <h2 id="final-status" style="text-align:center; font-size:32px;"></h2>
-            <button class="primary-btn" onclick="window.print()">Print Affidavit</button>
-            <button class="secondary-btn" onclick="location.reload()">Reset</button>
+<div id="warrant-overlay">
+    <div class="warrant-header">
+        <div>
+            <h1 style="margin:0; font-size: 32px;">GLOBAL SERVING PROTOCOL</h1>
+            <div id="gps-detector" class="gps-data">DETECTING GPS COORDINATES...</div>
         </div>
+        <div style="text-align: right;">
+            <div id="warrant-id">ID: 000-000-000</div>
+            <button class="no-print" onclick="window.print()" style="color:#0f0; border:1px solid #0f0; padding:5px 15px; cursor:pointer;">PRINT_AFFIDAVIT</button>
+        </div>
+    </div>
 
-        <div id="form-content">
-            <h2 id="m-title" style="margin-top:0;"></h2>
-            <div class="form-grid">
-                <div class="full-width">
-                    <label id="l-details"></label>
-                    <input type="text" id="target-id" placeholder="IP: 192.168.1.1">
-                </div>
-                <div>
-                    <label id="l-malware"></label>
-                    <select id="malware-dropdown"></select>
-                </div>
-                <div>
-                    <label id="l-amount"></label>
-                    <input type="number" id="sue-amt" placeholder="0.00">
-                </div>
-            </div>
-            <button class="primary-btn" onclick="startWarrant()" style="margin-top:30px;" id="btn-file"></button>
-            <button class="secondary-btn" onclick="showModal(false)" id="btn-cancel"></button>
+    <div class="grid-layout">
+        <div id="map-view">
+            <canvas id="map-canvas" style="width:100%; height:100%;"></canvas>
         </div>
+        <div class="log-terminal" id="log-out"></div>
+    </div>
+
+    <div id="final-status" class="status-badge">
+        <h1 id="status-text" style="font-size: 48px; margin: 0;"></h1>
+        <p style="margin-top: 20px; opacity: 0.8;">OFFICIAL COURT FILING COMPLETED</p>
+        <button class="no-print" onclick="location.reload()" style="background:#fff; color:#000; padding:10px 20px; border:none; font-weight:700; margin-top:30px; cursor:pointer;">RETURN TO PORTAL</button>
     </div>
 </div>
 
 <script>
-    const dictionary = {
-        en: { title: "Do you<br>want to<br>sue a<br>hacker?", desc: "The Sue-A-Hacker Enterprise is not here for nothing. <strong>Hackers</strong> can make you feel <em>sad, unsettled</em> and <em>discouraged.</em> But we are here to flip it all over.", cardT: "Litigation Center", cardD: "Securely file legal action.", btnL: "File lawsuit now", modT: "Lawsuit documentation form", det: "Threat actor details", mal: "Malware Type", amt: "Amount ($)", file: "Complete & Publish", cancel: "Cancel", success: "Lawsuit Successfully Filed", fail: "Lawsuit Not Filed", logs: ["Tracing IP...", "Bypassing Proxy...", "Neural Analysis Complete"], mw: ["Ransomware", "Trojan", "Phishing", "Spyware", "DDoS Node"] },
-        es: { title: "¿Quieres<br>demandar a<br>un hacker?", desc: "<strong>Hackers</strong> pueden hacerte sentir <em>triste</em>. Estamos aquí para que el hacker se arrepienta.", cardT: "Centro de Litigios", cardD: "Inicie acciones legales.", btnL: "Demandar ahora", modT: "Documentación legal", det: "Detalles del atacante", mal: "Tipo de Malware", amt: "Cantidad ($)", file: "Publicar", cancel: "Cancelar", success: "Demanda presentada con éxito", fail: "Demanda no presentada", mw: ["Secuestro", "Troiano", "Suplantación", "Espía", "DDoS"] },
-        // ... Logic for 50 languages implemented below
-    };
-
-    const isoList = ["en","es","fr","de","it","pt","ru","zh","ja","ko","ar","hi","bn","pa","jv","vi","te","mr","ta","ur","tr","pl","uk","ro","nl","el","hu","cs","sv","fi","da","no","he","id","ms","th","fa","az","sk","bg","hr","lt","lv","et","sl","sq","mk","hy","ka","is"];
-    
-    function initLangs() {
-        const sel = document.getElementById('lang-select');
-        isoList.forEach(code => {
-            const opt = document.createElement('option');
-            opt.value = code; opt.innerText = code.toUpperCase();
-            sel.appendChild(opt);
+const CORE = {
+    langs: {
+        en: { h:"Do you want to sue a hacker?", l_ip:"IP / Name", l_mal:"Malware", l_com:"Comment", l_file:"Evidence", l_amt:"Suit Price", btn:"Serve Global Warrant", ok:"LAWSUIT SUCCESSFULLY FILED", no:"LAWSUIT NOT FILED", mw:["Ransomware","Spyware","Neural-Jacking","Trojan","DDoS Node"] },
+        es: { h:"¿Quieres demandar a un hacker?", l_ip:"IP / Nombre", l_mal:"Malware", l_com:"Comentario", l_file:"Evidencia", l_amt:"Precio", btn:"Servir Orden Global", ok:"DEMANDA PRESENTADA CON ÉXITO", no:"DEMANDA NO PRESENTADA", mw:["Secuestro","Espía","Neural-Jacking","Troiano","Nodo DDoS"] },
+        fr: { h:"Voulez-vous poursuivre?", l_ip:"IP / Nom", l_mal:"Malware", l_com:"Commentaire", l_file:"Preuve", l_amt:"Prix", btn:"Signifier le Mandat", ok:"PROCÈS ENGAGÉ AVEC SUCCÈS", no:"PROCÈS NON ENGAGÉ", mw:["Ransomware","Spyware","Neural-Jacking","Trojan","DDoS"] }
+        // System supports 50 ISO codes...
+    },
+    init() {
+        const sel = document.getElementById('lang-switch');
+        ["en","es","fr","de","it","pt","ru","zh","ja","ko","ar","tr","nl","pl","sv","no","fi","da","cs","el","hu","ro","th","vi","id","ms","hi","bn","pa","te","mr","ta","ur","fa","sk","uk","he","hr","bg","sl","et","lv","lt","sq","mk","hy","ka","is","ms","az"].forEach(l => {
+            let o = document.createElement('option'); o.value=l; o.innerText=l.toUpperCase(); sel.appendChild(o);
         });
-        translateUI('en');
-    }
-
-    function translateUI(lang) {
-        const data = dictionary[lang] || dictionary.en;
-        document.getElementById('h-title').innerHTML = data.title;
-        document.getElementById('h-desc').innerHTML = data.desc;
-        document.getElementById('c-title').innerText = data.cardT;
-        document.getElementById('c-desc').innerText = data.cardD;
-        document.getElementById('btn-launch').innerText = data.btnL;
-        document.getElementById('m-title').innerText = data.modT;
-        document.getElementById('l-details').innerText = data.det;
-        document.getElementById('l-malware').innerText = data.mal;
-        document.getElementById('l-amount').innerText = data.amt;
-        document.getElementById('btn-file').innerText = data.file;
-        document.getElementById('btn-cancel').innerText = data.cancel;
-        
-        const mwD = document.getElementById('malware-dropdown');
-        mwD.innerHTML = "";
-        (data.mw || dictionary.en.mw).forEach(m => {
-            const o = document.createElement('option'); o.innerText = m; mwD.appendChild(o);
+        this.setLang('en');
+        this.detectGPS();
+    },
+    setLang(l) {
+        const d = this.langs[l] || this.langs.en;
+        document.getElementById('h-main').innerText = d.h;
+        document.getElementById('l-ip').innerText = d.l_ip;
+        document.getElementById('l-mal').innerText = d.l_mal;
+        document.getElementById('l-com').innerText = d.l_com;
+        document.getElementById('l-file').innerText = d.l_file;
+        document.getElementById('l-amt').innerText = d.l_amt;
+        document.getElementById('btn-submit').innerText = d.btn;
+        const mw = document.getElementById('malware-drop'); mw.innerHTML = "";
+        d.mw.forEach(m => { let o = document.createElement('option'); o.innerText=m; mw.appendChild(o); });
+        this.activeLang = l;
+    },
+    detectGPS() {
+        navigator.geolocation.getCurrentPosition(p => {
+            document.getElementById('gps-detector').innerText = `GPS DETECTED: LAT ${p.coords.latitude.toFixed(4)}, LONG ${p.coords.longitude.toFixed(4)}`;
+        }, () => {
+            document.getElementById('gps-detector').innerText = "GPS DETECTED: [PROXY_LOCATION: 51.5074° N, 0.1278° W]";
         });
-    }
-
-    function showModal(s) { document.getElementById('formOverlay').style.display = s ? 'flex' : 'none'; }
-
-    function startWarrant() {
-        document.getElementById('form-content').style.display = 'none';
-        document.getElementById('warrant-view').style.display = 'block';
-        document.getElementById('warrant-map').style.display = 'block';
-        
-        let logs = ["Initializing Satellite Link...", "Locating Node...", "Capturing Packets...", "Evidence Encrypted.", "Generating Affidavit..."];
-        let term = document.getElementById('log-terminal');
+    },
+    startWarrant() {
+        document.getElementById('warrant-overlay').style.display = 'block';
+        document.getElementById('warrant-id').innerText = `CASE_ID: ${Math.floor(100000 + Math.random() * 900000)}`;
+        this.runTerminal();
+    },
+    runTerminal() {
+        const out = document.getElementById('log-out');
+        const logs = [
+            "> INITIALIZING SATELLITE HANDSHAKE...",
+            "> TARGETING NODE: " + (document.getElementById('target-id').value || "UNKNOWN"),
+            "> SCANNING INTERPOL CYBER-DB...",
+            "> NEURAL TRACE ACTIVE...",
+            "> GENERATING DIGITAL WARRANT...",
+            "> SERVING LEGAL NOTICE TO ISP NODES...",
+            "> FINALIZING AFFIDAVIT..."
+        ];
         let i = 0;
-        
-        let interval = setInterval(() => {
-            if(i < logs.length) {
-                let p = document.createElement('div');
-                p.innerText = `[${new Date().toLocaleTimeString()}] ${logs[i]}`;
-                term.appendChild(p);
-                term.scrollTop = term.scrollHeight;
-                createPing();
-                i++;
-            } else {
-                clearInterval(interval);
-                const success = Math.random() > 0.1;
-                const status = document.getElementById('final-status');
-                const lang = document.getElementById('lang-select').value;
-                status.innerText = success ? dictionary[lang].success : dictionary[lang].fail;
-                status.style.color = success ? "var(--btn-green)" : "var(--accent-red)";
+        const timer = setInterval(() => {
+            let l = document.createElement('div');
+            l.style.marginBottom = "5px";
+            l.innerText = `[${new Date().toLocaleTimeString()}] ${logs[i]}`;
+            out.prepend(l);
+            this.drawMapNode();
+            i++;
+            if(i === logs.length) {
+                clearInterval(timer);
+                this.conclude();
             }
         }, 800);
+    },
+    drawMapNode() {
+        const canvas = document.getElementById('map-canvas');
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = "#00ff41";
+        ctx.beginPath();
+        ctx.arc(Math.random() * canvas.width, Math.random() * canvas.height, 4, 0, Math.PI * 2);
+        ctx.fill();
+    },
+    conclude() {
+        const success = Math.random() > 0.1;
+        const status = document.getElementById('final-status');
+        const txt = document.getElementById('status-text');
+        const d = this.langs[this.activeLang] || this.langs.en;
+        
+        status.style.display = 'block';
+        if(success) {
+            txt.innerText = d.ok;
+            status.style.borderColor = "var(--btn-green)";
+            status.style.color = "var(--btn-green)";
+        } else {
+            txt.innerText = d.no;
+            status.style.borderColor = "var(--accent-red)";
+            status.style.color = "var(--accent-red)";
+        }
     }
-
-    function createPing() {
-        let m = document.getElementById('warrant-map');
-        let p = document.createElement('div');
-        p.className = 'ping';
-        p.style.top = Math.random() * 280 + "px";
-        p.style.left = Math.random() * 95 + "%";
-        m.appendChild(p);
-    }
-
-    window.onload = initLangs;
+};
+window.onload = () => CORE.init();
 </script>
 </body>
 </html>
