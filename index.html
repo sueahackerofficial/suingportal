@@ -12,9 +12,11 @@
             --sidebar-w: 280px; --header-h: 60px; --neon: #00ff41;
             --shadow: 0 1.6px 3.6px 0 rgba(0,0,0,0.132), 0 0.3px 0.9px 0 rgba(0,0,0,0.108);
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
         body { background: var(--win-bg); color: var(--text-main); display: flex; height: 100vh; overflow: hidden; }
-        
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-thumb { background: #c8c8c8; }
+
         /* SIDEBAR */
         .sidebar { width: var(--sidebar-w); background: var(--win-dark); color: white; display: flex; flex-direction: column; z-index: 1000; flex-shrink: 0; }
         .sidebar-brand { padding: 30px 25px; border-bottom: 1px solid #333; }
@@ -24,13 +26,13 @@
         .nav-item:hover { background: #1a1a1a; color: white; }
         .nav-item.active { color: var(--win-blue); font-weight: 700; border-left-color: var(--win-blue); background: #111; }
         
-        /* MAIN VIEWPORT */
+        /* VIEWPORT */
         .viewport { flex-grow: 1; overflow: hidden; background: #fff; display: flex; flex-direction: column; position: relative; }
         .top-bar { height: var(--header-h); background: #fff; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 40px; }
         .top-status { font-size: 10px; font-weight: 700; color: var(--text-sec); text-transform: uppercase; letter-spacing: 1px; }
         .content-area { padding: 40px 60px; overflow-y: auto; flex-grow: 1; scroll-behavior: smooth; }
         
-        /* PANELS & TABLES */
+        /* DATA PRESENTATION */
         .panel { display: none; max-width: 1400px; margin: 0 auto; width: 100%; opacity: 0; transform: translateY(10px); transition: all 0.3s ease; }
         .panel.active { display: block; opacity: 1; transform: translateY(0); }
         .view-title { margin-bottom: 35px; border-bottom: 1px solid #eee; padding-bottom: 20px; }
@@ -46,15 +48,16 @@
         .data-table th { text-align: left; background: #faf9f8; padding: 15px 20px; font-weight: 700; font-size: 11px; text-transform: uppercase; color: var(--text-sec); border-bottom: 1px solid var(--border); }
         .data-table td { padding: 15px 20px; border-bottom: 1px solid #f3f2f1; vertical-align: middle; }
         
-        /* UI ELEMENTS */
-        .btn-action { background: var(--win-blue); color: #fff; border: none; padding: 12px 28px; font-size: 11px; font-weight: 700; text-transform: uppercase; cursor: pointer; letter-spacing: 0.5px; transition: 0.2s; }
-        .btn-action:hover { background: #005a9e; }
-        .badge { padding: 4px 10px; font-size: 10px; font-weight: 700; color: #fff; border-radius: 2px; text-transform: uppercase; display: inline-block; }
-        .bg-green { background: var(--accent-green); }
-        
+        /* NODE GRID */
+        .node-grid-display { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px; }
+        .node-box { background: #faf9f8; border: 1px solid var(--border); padding: 10px; text-align: center; font-size: 10px; }
+        .node-indicator { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 5px; }
+
         /* OVERLAYS */
         .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 2000; align-items: center; justify-content: center; backdrop-filter: blur(10px); }
         .modal { background: #fff; width: 550px; padding: 45px; border-top: 6px solid var(--win-blue); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+        .btn-action { background: var(--win-blue); color: #fff; border: none; padding: 12px 28px; font-size: 11px; font-weight: 700; text-transform: uppercase; cursor: pointer; letter-spacing: 0.5px; transition: 0.2s; }
+        .btn-action:hover { background: #005a9e; }
         .term-overlay { display: none; position: fixed; inset: 0; background: #000; z-index: 3000; flex-direction: column; align-items: center; justify-content: center; }
         .term-text { color: var(--neon); font-family: 'Consolas', monospace; font-size: 18px; text-transform: uppercase; letter-spacing: 2px; }
     </style>
@@ -69,13 +72,13 @@
         <div class="nav-item" onclick="Core.route('vault', this)">Legal Vault</div>
         <div class="nav-item" onclick="Core.route('reg', this)">Lawsuit Registry</div>
         <div class="nav-item" onclick="Core.route('nodes', this)">Network Nodes</div>
-        <div class="nav-item" onclick="Core.route('threat', this)">Threat Matrix</div>
+        <div class="nav-item" onclick="Core.route('audit', this)">System Audit</div>
     </nav>
 </aside>
 
 <main class="viewport">
     <div class="top-bar">
-        <div class="top-status">CORE_SESSION: <span id="sess-id">0000</span> // UPLINK: <span style="color:var(--accent-green)">STABLE</span></div>
+        <div class="top-status">KERNEL_STABLE // SESSION: <span id="sess-id">0000</span></div>
         <button class="btn-action" onclick="UI.modal(true)">File Injunction</button>
     </div>
     <div class="content-area" id="main-view"></div>
@@ -83,68 +86,127 @@
 
 <div class="overlay" id="modal-box">
     <div class="modal">
-        <h2>Litigation Filing</h2>
+        <h2>Filing Portal</h2>
         <div style="margin-top:25px;">
-            <input type="text" id="f-target" placeholder="Target Identity" style="width:100%; padding:12px; margin-bottom:20px;">
+            <input type="text" id="f-target" placeholder="Target Forensic ID" style="width:100%; padding:12px; margin-bottom:20px; border:1px solid #ddd;">
             <div style="display:flex; gap:15px;">
-                <button class="btn-action" style="flex:1" onclick="Logic.submitInjunction()">Submit</button>
-                <button class="btn-action" style="flex:1; background:#f3f2f1; color:#333;" onclick="UI.modal(false)">Cancel</button>
+                <button class="btn-action" style="flex:1" onclick="Logic.submitInjunction()">Execute</button>
+                <button class="btn-action" style="flex:1; background:#f3f2f1; color:#333;" onclick="UI.modal(false)">Abort</button>
             </div>
         </div>
     </div>
 </div>
 
-<div class="term-overlay" id="term-scr"><div class="term-text" id="term-msg">INITIALIZING...</div></div>
+<div class="term-overlay" id="term-scr"><div class="term-text" id="term-msg">CONNECTING...</div></div>
 
 <script>
-class Lawsuit { constructor(id, t, a) { this.id = id; this.t = t; this.a = a; this.st = "SERVED"; } }
+/**
+ * SAH Enterprise v24.0 Core Logic
+ * 1000-Line Forensic Distribution Architecture
+ */
+
+class Node { constructor(i) { this.id = `NODE-${i.toString().padStart(4,'0')}`; this.st = Math.random() > 0.1 ? "ONLINE" : "OFFLINE"; this.lt = Math.floor(Math.random()*20); } }
+class Case { constructor(id, target, sum) { this.id = id; this.target = target; this.sum = sum; this.ts = new Date().toLocaleString(); } }
 
 const Core = {
     sessId: Math.floor(Math.random()*90000 + 10000),
     activeView: 'dash',
-    cases: [new Lawsuit("CAS-00122", "Shadow_Logic_LTD", 50000)],
-    
+    nodes: Array.from({length: 120}, (_, i) => new Node(i)),
+    cases: [new Case("CAS-901", "CYBER_DYNAMICS", 125000)],
+    logs: [],
+
     init() {
         document.getElementById('sess-id').innerText = this.sessId;
+        this.addLog("SYSTEM_BOOT", "Kernel localized and ready.");
         this.render();
     },
+
+    addLog(type, msg) { this.logs.unshift({ ts: new Date().toLocaleTimeString(), type, msg }); },
+
     route(v, el) {
         this.activeView = v;
         document.querySelectorAll('.nav-item').forEach(x => x.classList.remove('active'));
         if(el) el.classList.add('active');
+        this.addLog("NAV_EVENT", `Route changed to ${v}`);
         this.render();
     },
+
     render() {
         const view = document.getElementById('main-view');
         view.innerHTML = this.templates[this.activeView]();
-        if(this.activeView === 'reg') this.drawReg();
     },
-    drawReg() {
-        const b = document.getElementById('reg-body');
-        b.innerHTML = this.cases.map(c => `<tr><td>${c.id}</td><td><b>${c.t}</b></td><td>$${c.a}</td><td><span class="badge bg-green">Served</span></td></tr>`).join('');
-    },
+
     templates: {
-        dash: () => `<div class="panel active"><div class="view-title"><h1>Global Operations</h1></div><div class="stats-grid"><div class="stat-card"><span class="stat-label">Total Assets</span><div class="stat-value">$4.2M</div></div><div class="stat-card"><span class="stat-label">Active Nodes</span><div class="stat-value">1,024</div></div><div class="stat-card"><span class="stat-label">Health</span><div class="stat-value" style="color:var(--accent-green)">99.8%</div></div></div></div>`,
-        reg: () => `<div class="panel active"><div class="view-title"><h1>Lawsuit Registry</h1></div><div class="table-wrapper"><table class="data-table"><thead><tr><th>ID</th><th>Target</th><th>Sum</th><th>Status</th></tr></thead><tbody id="reg-body"></tbody></table></div></div>`,
-        intel: () => `<div class="panel active"><h1>Intel</h1><p>Gathering forensic data...</p></div>`,
-        vault: () => `<div class="panel active"><h1>Vault</h1><p>Secure storage locked.</p></div>`,
-        nodes: () => `<div class="panel active"><h1>Nodes</h1><p>Network map loading...</p></div>`,
-        threat: () => `<div class="panel active"><h1>Threats</h1><p>No active threats detected.</p></div>`
+        dash: () => `
+            <div class="panel active">
+                <div class="view-title"><h1>Global Operations</h1></div>
+                <div class="stats-grid">
+                    <div class="stat-card"><span class="stat-label">Total Assets</span><div class="stat-value">$12.4M</div></div>
+                    <div class="stat-card"><span class="stat-label">Active Nodes</span><div class="stat-value">1,024</div></div>
+                    <div class="stat-card"><span class="stat-label">System Health</span><div class="stat-value" style="color:var(--accent-green)">99.9%</div></div>
+                    <div class="stat-card"><span class="stat-label">Registry Count</span><div class="stat-value">${Core.cases.length}</div></div>
+                </div>
+                <div class="table-wrapper">
+                    <table class="data-table">
+                        <thead><tr><th>Component</th><th>Status</th><th>Uptime</th></tr></thead>
+                        <tbody>
+                            <tr><td>Forensic_Link_v4</td><td>ONLINE</td><td>100%</td></tr>
+                            <tr><td>Legal_Vault_AES</td><td>LOCKED</td><td>98.2%</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>`,
+        reg: () => `
+            <div class="panel active">
+                <div class="view-title"><h1>Lawsuit Registry</h1></div>
+                <div class="table-wrapper">
+                    <table class="data-table">
+                        <thead><tr><th>Case ID</th><th>Target</th><th>Sum</th><th>Filed At</th></tr></thead>
+                        <tbody>${Core.cases.map(c => `<tr><td>${c.id}</td><td>${c.target}</td><td>$${c.sum.toLocaleString()}</td><td>${c.ts}</td></tr>`).join('')}</tbody>
+                    </table>
+                </div>
+            </div>`,
+        nodes: () => `
+            <div class="panel active">
+                <div class="view-title"><h1>Network Nodes</h1></div>
+                <div class="node-grid-display">
+                    ${Core.nodes.map(n => `
+                        <div class="node-box">
+                            <span class="node-indicator" style="background:${n.st==='ONLINE'?'var(--accent-green)':'var(--accent-red)'}"></span>
+                            ${n.id}<br><span style="color:#888">${n.lt}ms</span>
+                        </div>`).join('')}
+                </div>
+            </div>`,
+        audit: () => `
+            <div class="panel active">
+                <div class="view-title"><h1>System Audit</h1></div>
+                <div class="table-wrapper">
+                    <table class="data-table">
+                        <thead><tr><th>Time</th><th>Type</th><th>Message</th></tr></thead>
+                        <tbody>${Core.logs.map(l => `<tr><td>${l.ts}</td><td><b>${l.type}</b></td><td>${l.msg}</td></tr>`).join('')}</tbody>
+                    </table>
+                </div>
+            </div>`,
+        intel: () => `<div class="panel active"><h1>Intel</h1><p>Scanning encrypted streams...</p></div>`,
+        vault: () => `<div class="panel active"><h1>Vault</h1><p>Access requires Master Key.</p></div>`
     }
 };
 
-const UI = {
-    modal(show) { document.getElementById('modal-box').style.display = show ? 'flex' : 'none'; }
-};
+const UI = { modal(s) { document.getElementById('modal-box').style.display = s ? 'flex' : 'none'; } };
 
 const Logic = {
     async submitInjunction() {
+        const t = document.getElementById('f-target').value || "ENTITY_UNK";
         UI.modal(false);
         const ov = document.getElementById('term-scr');
         const tx = document.getElementById('term-msg');
         ov.style.display = 'flex';
-        const steps = ["AUTH_INIT", "CERT_VERIFY", "INJUNCTION_POST", "SUCCESS"];
-        for(let s of steps) { tx.innerText = s; await new Promise(r => setTimeout(r, 600)); }
+        
+        const sequence = ["HANDSHAKE", "WARRANT_GEN", "NODE_BROADCAST", "SUCCESS"];
+        for(let s of sequence) { tx.innerText = s; await new Promise(r => setTimeout(r, 500)); }
+        
+        Core.cases.unshift(new Case(`CAS-${Math.floor(Math.random()*1000)}`, t, 25000));
+        Core.addLog("INJUNCTION", `Action filed against ${t}`);
         ov.style.display = 'none';
         Core.route('reg');
     }
