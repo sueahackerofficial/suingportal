@@ -7,27 +7,27 @@
 <style>
 @font-face {
     font-family: 'Segoe UI';
-    src: url('https://static2.sharepointonline.com/files/fabric/assets/fonts/segoeui-westeuropean/segoeui-light.woff2') format('woff2');
+    src: url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/light/latest.woff2') format('woff2');
     font-weight: 100;
 }
 @font-face {
     font-family: 'Segoe UI';
-    src: url('https://static2.sharepointonline.com/files/fabric/assets/fonts/segoeui-westeuropean/segoeui-semilight.woff2') format('woff2');
+    src: url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/semilight/latest.woff2') format('woff2');
     font-weight: 200;
 }
 @font-face {
     font-family: 'Segoe UI';
-    src: url('https://static2.sharepointonline.com/files/fabric/assets/fonts/segoeui-westeuropean/segoeui-regular.woff2') format('woff2');
+    src: url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/regular/latest.woff2') format('woff2');
     font-weight: 400;
 }
 @font-face {
     font-family: 'Segoe UI';
-    src: url('https://static2.sharepointonline.com/files/fabric/assets/fonts/segoeui-westeuropean/segoeui-semibold.woff2') format('woff2');
+    src: url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/semibold/latest.woff2') format('woff2');
     font-weight: 600;
 }
 @font-face {
     font-family: 'Segoe UI';
-    src: url('https://static2.sharepointonline.com/files/fabric/assets/fonts/segoeui-westeuropean/segoeui-bold.woff2') format('woff2');
+    src: url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/bold/latest.woff2') format('woff2');
     font-weight: 700;
 }
 :root {
@@ -37,7 +37,6 @@
 --text: #000000;
 --border: #e1e1e1;
 --green: #107c10;
---red: #a4262c;
 --sidebar: 280px;
 --header-h: 75px;
 }
@@ -45,9 +44,8 @@
 margin: 0; 
 padding: 0; 
 box-sizing: border-box; 
-font-family: "Segoe UI" !important;
+font-family: "Segoe UI", "Segoe WP", sans-serif !important;
 -webkit-font-smoothing: antialiased;
--moz-osx-font-smoothing: grayscale;
 }
 body { 
 background: var(--win-bg); 
@@ -56,7 +54,6 @@ display: flex;
 height: 100vh; 
 overflow: hidden; 
 font-size: 16px;
-transform: scale(1);
 }
 .sidebar { 
 width: var(--sidebar); 
@@ -91,7 +88,7 @@ color: var(--win-blue);
 font-weight: 600 !important;
 border-right: 4px solid var(--win-blue);
 }
-.viewport { flex-grow: 1; display: flex; flex-direction: column; position: relative; }
+.viewport { flex-grow: 1; display: flex; flex-direction: column; }
 .top-bar { 
 height: var(--header-h); 
 padding: 0 40px; 
@@ -107,12 +104,12 @@ font-weight: 400 !important;
 letter-spacing: 0.5px;
 }
 .content { padding: 50px 40px; overflow-y: auto; flex-grow: 1; }
-.title-sec { margin-bottom: 40px; }
 .title-sec h1 { 
-font-size: 38px; 
+font-size: 42px; 
 font-weight: 100 !important; 
 color: #000; 
 letter-spacing: -0.5px;
+margin-bottom: 40px;
 }
 .stats-row { 
 display: grid; 
@@ -134,7 +131,7 @@ letter-spacing: 1px;
 font-weight: 600 !important;
 }
 .stat-val { 
-font-size: 32px; 
+font-size: 36px; 
 font-weight: 200 !important; 
 color: #000; 
 }
@@ -155,24 +152,8 @@ gap: 6px;
 padding: 20px; 
 border: 1px solid #f0f0f0;
 }
-.node { width: 14px; height: 14px; background: #107c10; }
-.node.error { background: #a4262c; }
-.data-table { width: 100%; border-collapse: collapse; }
-.data-table th { 
-text-align: left; 
-padding: 15px; 
-font-size: 11px; 
-text-transform: uppercase; 
-color: #aaa; 
-border-bottom: 1px solid #eee;
-font-weight: 600 !important;
-}
-.data-table td { 
-padding: 15px; 
-font-size: 16px; 
-font-weight: 200 !important;
-border-bottom: 1px solid #f5f5f5;
-}
+.node { width: 14px; height: 14px; background: var(--green); }
+.node.err { background: #a4262c; }
 #term-ov { 
 display: none; 
 position: fixed; 
@@ -210,11 +191,9 @@ const navItems = ['dash', 'intel', 'reg', 'vault', 'audit'];
 document.getElementById('nav-list').innerHTML = navItems.map(i => `<div class="nav-item ${this.view===i?'active':''}" onclick="Engine.route('${i}')">${i}</div>`).join('');
 const content = document.getElementById('main-content');
 if(this.view === 'dash') {
-content.innerHTML = `<div class="title-sec"><h1>Global Operations</h1></div><div class="stats-row"><div class="stat-card"><div class="stat-label">Asset Val</div><div class="stat-val">$4,290,025</div></div><div class="stat-card"><div class="stat-label">Active Nodes</div><div class="stat-val">1,024</div></div><div class="stat-card"><div class="stat-label">Integrity</div><div class="stat-val" style="color:var(--green)">99.8%</div></div><div class="stat-card"><div class="stat-label">Latency</div><div class="stat-val">12ms</div></div></div><div class="node-grid">${Array(650).fill(0).map(() => `<div class="node ${Math.random()>0.05?'':'error'}"></div>`).join('')}</div>`;
-} else if(this.view === 'reg') {
-content.innerHTML = `<div class="title-sec"><h1>Lawsuit Registry</h1></div><table class="data-table"><thead><tr><th>ID</th><th>Target</th><th>Value</th><th>Status</th></tr></thead><tbody>${this.registry.map(r => `<tr><td>${r.id}</td><td>${r.target}</td><td>${r.sum}</td><td>${r.status}</td></tr>`).join('')}</tbody></table>`;
+content.innerHTML = `<div class="title-sec"><h1>Global Operations</h1></div><div class="stats-row"><div class="stat-card"><div class="stat-label">Asset Val</div><div class="stat-val">$4,290,025</div></div><div class="stat-card"><div class="stat-label">Active Nodes</div><div class="stat-val">1,024</div></div><div class="stat-card"><div class="stat-label">Integrity</div><div class="stat-val" style="color:var(--green)">99.8%</div></div><div class="stat-card"><div class="stat-label">Latency</div><div class="stat-val">12ms</div></div></div><div class="node-grid">${Array(650).fill(0).map(() => `<div class="node ${Math.random()>0.05?'':'err'}"></div>`).join('')}</div>`;
 } else {
-content.innerHTML = `<div class="title-sec"><h1>${this.view.toUpperCase()}</h1><p style="font-size:24px; font-weight:100; margin-top:20px;">Microsoft Direct Typography Active. IQ-Series Identifier Validated.</p></div>`;
+content.innerHTML = `<div class="title-sec"><h1>${this.view.toUpperCase()}</h1><p style="font-size:24px; font-weight:100; margin-top:20px;">C.S-MICROSOFT Source Verified. IQ-Series Active.</p></div>`;
 }
 },
 async openInj() {
@@ -223,11 +202,11 @@ if(!t) return;
 const ov = document.getElementById('term-ov');
 const msg = document.getElementById('term-msg');
 ov.style.display = 'flex';
-const steps = ["Linking Assets...", "Syncing...", "Success"];
+const steps = ["Linking...", "Syncing...", "Success"];
 for(let s of steps) { msg.innerText = s; await new Promise(r => setTimeout(r, 600)); }
 this.registry.unshift({id: "IQ"+Math.floor(Math.random()*900000), target: t.toUpperCase(), sum: "$1.2M", status: "FILED"});
 ov.style.display = 'none';
-this.route('reg');
+this.route('dash');
 }
 };
 Engine.init();
