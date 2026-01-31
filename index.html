@@ -5,7 +5,31 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SAH ENTERPRISE | Global Command</title>
 <style>
-@import url('https://fonts.cdnfonts.com/css/segoe-ui-4');
+@font-face {
+    font-family: 'Segoe UI';
+    src: url('https://static2.sharepointonline.com/files/fabric/assets/fonts/segoeui-westeuropean/segoeui-light.woff2') format('woff2');
+    font-weight: 100;
+}
+@font-face {
+    font-family: 'Segoe UI';
+    src: url('https://static2.sharepointonline.com/files/fabric/assets/fonts/segoeui-westeuropean/segoeui-semilight.woff2') format('woff2');
+    font-weight: 200;
+}
+@font-face {
+    font-family: 'Segoe UI';
+    src: url('https://static2.sharepointonline.com/files/fabric/assets/fonts/segoeui-westeuropean/segoeui-regular.woff2') format('woff2');
+    font-weight: 400;
+}
+@font-face {
+    font-family: 'Segoe UI';
+    src: url('https://static2.sharepointonline.com/files/fabric/assets/fonts/segoeui-westeuropean/segoeui-semibold.woff2') format('woff2');
+    font-weight: 600;
+}
+@font-face {
+    font-family: 'Segoe UI';
+    src: url('https://static2.sharepointonline.com/files/fabric/assets/fonts/segoeui-westeuropean/segoeui-bold.woff2') format('woff2');
+    font-weight: 700;
+}
 :root {
 --win-blue: #0078d4;
 --win-black: #000;
@@ -21,7 +45,7 @@
 margin: 0; 
 padding: 0; 
 box-sizing: border-box; 
-font-family: "Segoe UI", "Segoe UI Web", "Segoe UI Symbol", sans-serif !important;
+font-family: "Segoe UI" !important;
 -webkit-font-smoothing: antialiased;
 -moz-osx-font-smoothing: grayscale;
 }
@@ -31,7 +55,8 @@ color: var(--text);
 display: flex; 
 height: 100vh; 
 overflow: hidden; 
-font-size: 100%;
+font-size: 16px;
+transform: scale(1);
 }
 .sidebar { 
 width: var(--sidebar); 
@@ -45,15 +70,12 @@ z-index: 100;
 .sidebar-header { 
 padding: 40px 30px; 
 font-size: 20px; 
-font-weight: 350 !important; 
+font-weight: 200 !important; 
 letter-spacing: 2px; 
 text-transform: uppercase;
 border-bottom: 1px solid #1a1a1a; 
 }
-.nav-list { 
-flex-grow: 1; 
-padding-top: 20px; 
-}
+.nav-list { flex-grow: 1; padding-top: 20px; }
 .nav-item { 
 padding: 15px 30px; 
 color: #888; 
@@ -61,23 +83,15 @@ cursor: pointer;
 font-size: 12px; 
 text-transform: uppercase; 
 letter-spacing: 1.5px; 
-font-weight: 350 !important;
+font-weight: 300 !important;
 }
-.nav-item:hover { 
-color: #fff; 
-background: #0d0d0d;
-}
+.nav-item:hover { color: #fff; background: #0d0d0d; }
 .nav-item.active { 
 color: var(--win-blue); 
 font-weight: 600 !important;
 border-right: 4px solid var(--win-blue);
 }
-.viewport { 
-flex-grow: 1; 
-display: flex; 
-flex-direction: column; 
-position: relative; 
-}
+.viewport { flex-grow: 1; display: flex; flex-direction: column; position: relative; }
 .top-bar { 
 height: var(--header-h); 
 padding: 0 40px; 
@@ -92,17 +106,11 @@ color: #999;
 font-weight: 400 !important;
 letter-spacing: 0.5px;
 }
-.content { 
-padding: 50px 40px; 
-overflow-y: auto; 
-flex-grow: 1; 
-}
-.title-sec { 
-margin-bottom: 40px; 
-}
+.content { padding: 50px 40px; overflow-y: auto; flex-grow: 1; }
+.title-sec { margin-bottom: 40px; }
 .title-sec h1 { 
 font-size: 38px; 
-font-weight: 300 !important; 
+font-weight: 100 !important; 
 color: #000; 
 letter-spacing: -0.5px;
 }
@@ -116,7 +124,6 @@ margin-bottom: 40px;
 padding: 25px; 
 border: 1px solid var(--border); 
 background: #fff; 
-border-bottom: 3px solid var(--win-blue);
 }
 .stat-label { 
 font-size: 11px; 
@@ -128,7 +135,7 @@ font-weight: 600 !important;
 }
 .stat-val { 
 font-size: 32px; 
-font-weight: 350 !important; 
+font-weight: 200 !important; 
 color: #000; 
 }
 .btn-blue { 
@@ -163,7 +170,7 @@ font-weight: 600 !important;
 .data-table td { 
 padding: 15px; 
 font-size: 16px; 
-font-weight: 350 !important;
+font-weight: 200 !important;
 border-bottom: 1px solid #f5f5f5;
 }
 #term-ov { 
@@ -191,7 +198,7 @@ color: var(--win-blue);
 </div>
 <div class="content" id="main-content"></div>
 </main>
-<div id="term-ov"><div id="term-msg" style="font-size:32px; font-weight:300;"></div></div>
+<div id="term-ov"><div id="term-msg" style="font-size:32px; font-weight:100;"></div></div>
 <script>
 const Engine = {
 view: 'dash',
@@ -207,7 +214,7 @@ content.innerHTML = `<div class="title-sec"><h1>Global Operations</h1></div><div
 } else if(this.view === 'reg') {
 content.innerHTML = `<div class="title-sec"><h1>Lawsuit Registry</h1></div><table class="data-table"><thead><tr><th>ID</th><th>Target</th><th>Value</th><th>Status</th></tr></thead><tbody>${this.registry.map(r => `<tr><td>${r.id}</td><td>${r.target}</td><td>${r.sum}</td><td>${r.status}</td></tr>`).join('')}</tbody></table>`;
 } else {
-content.innerHTML = `<div class="title-sec"><h1>${this.view.toUpperCase()}</h1><p style="font-size:24px; font-weight:300; margin-top:20px;">Typography Sync: IQ124578 Active.</p></div>`;
+content.innerHTML = `<div class="title-sec"><h1>${this.view.toUpperCase()}</h1><p style="font-size:24px; font-weight:100; margin-top:20px;">Microsoft Direct Typography Active. IQ-Series Identifier Validated.</p></div>`;
 }
 },
 async openInj() {
@@ -216,7 +223,7 @@ if(!t) return;
 const ov = document.getElementById('term-ov');
 const msg = document.getElementById('term-msg');
 ov.style.display = 'flex';
-const steps = ["Linking IQ Layers...", "Syncing Geometry...", "Success"];
+const steps = ["Linking Assets...", "Syncing...", "Success"];
 for(let s of steps) { msg.innerText = s; await new Promise(r => setTimeout(r, 600)); }
 this.registry.unshift({id: "IQ"+Math.floor(Math.random()*900000), target: t.toUpperCase(), sum: "$1.2M", status: "FILED"});
 ov.style.display = 'none';
