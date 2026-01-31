@@ -5,31 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SAH ENTERPRISE | Global Command</title>
 <style>
-@font-face {
-    font-family: 'Segoe UI';
-    src: local('Segoe UI Light');
-    font-weight: 100;
-}
-@font-face {
-    font-family: 'Segoe UI';
-    src: local('Segoe UI Semilight');
-    font-weight: 200;
-}
-@font-face {
-    font-family: 'Segoe UI';
-    src: local('Segoe UI');
-    font-weight: 400;
-}
-@font-face {
-    font-family: 'Segoe UI';
-    src: local('Segoe UI Semibold');
-    font-weight: 600;
-}
-@font-face {
-    font-family: 'Segoe UI';
-    src: local('Segoe UI Bold');
-    font-weight: 700;
-}
+@import url('https://fonts.cdnfonts.com/css/segoe-ui-4');
 :root {
 --win-blue: #0078d4;
 --win-black: #000;
@@ -45,7 +21,7 @@
 margin: 0; 
 padding: 0; 
 box-sizing: border-box; 
-font-family: "Segoe UI", sans-serif !important;
+font-family: "Segoe UI", "Segoe UI Web", "Segoe UI Symbol", sans-serif !important;
 -webkit-font-smoothing: antialiased;
 -moz-osx-font-smoothing: grayscale;
 }
@@ -55,6 +31,7 @@ color: var(--text);
 display: flex; 
 height: 100vh; 
 overflow: hidden; 
+font-size: 100%;
 }
 .sidebar { 
 width: var(--sidebar); 
@@ -66,26 +43,25 @@ flex-shrink: 0;
 z-index: 100; 
 }
 .sidebar-header { 
-padding: 45px 30px; 
-font-size: 22px; 
-font-weight: 200 !important; 
+padding: 40px 30px; 
+font-size: 20px; 
+font-weight: 350 !important; 
 letter-spacing: 2px; 
 text-transform: uppercase;
 border-bottom: 1px solid #1a1a1a; 
 }
 .nav-list { 
 flex-grow: 1; 
-padding-top: 30px; 
+padding-top: 20px; 
 }
 .nav-item { 
-padding: 18px 30px; 
+padding: 15px 30px; 
 color: #888; 
 cursor: pointer; 
-font-size: 13px; 
+font-size: 12px; 
 text-transform: uppercase; 
-letter-spacing: 2px; 
-transition: all 0.15s ease;
-font-weight: 200 !important;
+letter-spacing: 1.5px; 
+font-weight: 350 !important;
 }
 .nav-item:hover { 
 color: #fff; 
@@ -93,7 +69,6 @@ background: #0d0d0d;
 }
 .nav-item.active { 
 color: var(--win-blue); 
-background: #000;
 font-weight: 600 !important;
 border-right: 4px solid var(--win-blue);
 }
@@ -105,106 +80,97 @@ position: relative;
 }
 .top-bar { 
 height: var(--header-h); 
-padding: 0 60px; 
+padding: 0 40px; 
 display: flex; 
 align-items: center; 
 justify-content: space-between; 
 border-bottom: 1px solid var(--border); 
 }
 .status-text { 
-font-size: 12px; 
+font-size: 11px; 
 color: #999; 
-font-weight: 200 !important;
-letter-spacing: 1px;
+font-weight: 400 !important;
+letter-spacing: 0.5px;
 }
 .content { 
-padding: 80px 60px; 
+padding: 50px 40px; 
 overflow-y: auto; 
 flex-grow: 1; 
 }
 .title-sec { 
-margin-bottom: 60px; 
+margin-bottom: 40px; 
 }
 .title-sec h1 { 
-font-size: 52px; 
-font-weight: 100 !important; 
+font-size: 38px; 
+font-weight: 300 !important; 
 color: #000; 
-letter-spacing: -1.5px;
+letter-spacing: -0.5px;
 }
 .stats-row { 
 display: grid; 
 grid-template-columns: repeat(4, 1fr); 
-gap: 40px; 
-margin-bottom: 80px; 
+gap: 20px; 
+margin-bottom: 40px; 
 }
 .stat-card { 
-padding: 35px; 
+padding: 25px; 
 border: 1px solid var(--border); 
 background: #fff; 
+border-bottom: 3px solid var(--win-blue);
 }
 .stat-label { 
-font-size: 12px; 
+font-size: 11px; 
 color: #666; 
 text-transform: uppercase; 
-margin-bottom: 15px; 
-letter-spacing: 2px;
+margin-bottom: 8px; 
+letter-spacing: 1px;
 font-weight: 600 !important;
 }
 .stat-val { 
-font-size: 42px; 
-font-weight: 200 !important; 
+font-size: 32px; 
+font-weight: 350 !important; 
 color: #000; 
 }
 .btn-blue { 
 background: var(--win-blue); 
 color: white; 
 border: none; 
-padding: 14px 35px; 
-font-size: 14px; 
+padding: 10px 25px; 
+font-size: 12px; 
 font-weight: 400 !important; 
 cursor: pointer; 
-border-radius: 0;
 text-transform: uppercase;
-letter-spacing: 1.5px;
 }
 .node-grid { 
 display: grid; 
-grid-template-columns: repeat(auto-fill, minmax(16px, 1fr)); 
-gap: 8px; 
-padding: 30px; 
+grid-template-columns: repeat(auto-fill, minmax(14px, 1fr)); 
+gap: 6px; 
+padding: 20px; 
 border: 1px solid #f0f0f0;
-background: #fafafa;
 }
-.node { 
-width: 16px; 
-height: 16px; 
-background: #107c10; 
-}
+.node { width: 14px; height: 14px; background: #107c10; }
 .node.error { background: #a4262c; }
-.data-table { 
-width: 100%; 
-border-collapse: collapse; 
-}
+.data-table { width: 100%; border-collapse: collapse; }
 .data-table th { 
 text-align: left; 
-padding: 20px; 
-font-size: 12px; 
+padding: 15px; 
+font-size: 11px; 
 text-transform: uppercase; 
 color: #aaa; 
 border-bottom: 1px solid #eee;
 font-weight: 600 !important;
 }
 .data-table td { 
-padding: 20px; 
-font-size: 18px; 
-font-weight: 200 !important;
+padding: 15px; 
+font-size: 16px; 
+font-weight: 350 !important;
 border-bottom: 1px solid #f5f5f5;
 }
 #term-ov { 
 display: none; 
 position: fixed; 
 inset: 0; 
-background: rgba(255,255,255,0.98); 
+background: rgba(255,255,255,0.95); 
 z-index: 9999; 
 flex-direction: column; 
 align-items: center; 
@@ -225,13 +191,11 @@ color: var(--win-blue);
 </div>
 <div class="content" id="main-content"></div>
 </main>
-<div id="term-ov"><div id="term-msg" style="font-size:42px; font-weight:100;"></div></div>
+<div id="term-ov"><div id="term-msg" style="font-size:32px; font-weight:300;"></div></div>
 <script>
 const Engine = {
 view: 'dash',
-registry: [
-{id: "IQ124578", target: "ALPHA_LOGISTICS", sum: "$4,290,025", status: "STABLE"}
-],
+registry: [{id: "IQ124578", target: "ALPHA_LOGISTICS", sum: "$4,290,025", status: "STABLE"}],
 init() { this.render(); },
 route(v) { this.view = v; this.render(); },
 render() {
@@ -239,11 +203,11 @@ const navItems = ['dash', 'intel', 'reg', 'vault', 'audit'];
 document.getElementById('nav-list').innerHTML = navItems.map(i => `<div class="nav-item ${this.view===i?'active':''}" onclick="Engine.route('${i}')">${i}</div>`).join('');
 const content = document.getElementById('main-content');
 if(this.view === 'dash') {
-content.innerHTML = `<div class="title-sec"><h1>Global Operations</h1></div><div class="stats-row"><div class="stat-card"><div class="stat-label">Asset Val</div><div class="stat-val">$4,290,025</div></div><div class="stat-card"><div class="stat-label">Active Nodes</div><div class="stat-val">1,024</div></div><div class="stat-card"><div class="stat-label">Integrity</div><div class="stat-val" style="color:var(--green)">99.8%</div></div><div class="stat-card"><div class="stat-label">Latency</div><div class="stat-val">12ms</div></div></div><div class="node-grid">${Array(680).fill(0).map(() => `<div class="node ${Math.random()>0.05?'':'error'}"></div>`).join('')}</div>`;
+content.innerHTML = `<div class="title-sec"><h1>Global Operations</h1></div><div class="stats-row"><div class="stat-card"><div class="stat-label">Asset Val</div><div class="stat-val">$4,290,025</div></div><div class="stat-card"><div class="stat-label">Active Nodes</div><div class="stat-val">1,024</div></div><div class="stat-card"><div class="stat-label">Integrity</div><div class="stat-val" style="color:var(--green)">99.8%</div></div><div class="stat-card"><div class="stat-label">Latency</div><div class="stat-val">12ms</div></div></div><div class="node-grid">${Array(650).fill(0).map(() => `<div class="node ${Math.random()>0.05?'':'error'}"></div>`).join('')}</div>`;
 } else if(this.view === 'reg') {
 content.innerHTML = `<div class="title-sec"><h1>Lawsuit Registry</h1></div><table class="data-table"><thead><tr><th>ID</th><th>Target</th><th>Value</th><th>Status</th></tr></thead><tbody>${this.registry.map(r => `<tr><td>${r.id}</td><td>${r.target}</td><td>${r.sum}</td><td>${r.status}</td></tr>`).join('')}</tbody></table>`;
 } else {
-content.innerHTML = `<div class="title-sec"><h1>${this.view.toUpperCase()}</h1><p style="font-size:28px; font-weight:100; margin-top:20px;">Typography verified. IQ124578 identifiers active.</p></div>`;
+content.innerHTML = `<div class="title-sec"><h1>${this.view.toUpperCase()}</h1><p style="font-size:24px; font-weight:300; margin-top:20px;">Typography Sync: IQ124578 Active.</p></div>`;
 }
 },
 async openInj() {
@@ -252,44 +216,12 @@ if(!t) return;
 const ov = document.getElementById('term-ov');
 const msg = document.getElementById('term-msg');
 ov.style.display = 'flex';
-const steps = ["Linking IQ Layers...", "Validating Geometry...", "Finalizing...", "Success"];
-for(let s of steps) { msg.innerText = s; await new Promise(r => setTimeout(r, 700)); }
-this.registry.unshift({id: "IQ"+Math.floor(Math.random()*900000), target: t.toUpperCase(), sum: "$1,250,000", status: "FILED"});
+const steps = ["Linking IQ Layers...", "Syncing Geometry...", "Success"];
+for(let s of steps) { msg.innerText = s; await new Promise(r => setTimeout(r, 600)); }
+this.registry.unshift({id: "IQ"+Math.floor(Math.random()*900000), target: t.toUpperCase(), sum: "$1.2M", status: "FILED"});
 ov.style.display = 'none';
 this.route('reg');
 }
-};
-const Cluster = {
-z:(n)=>n,z1:(n)=>n,z2:(n)=>n,z3:(n)=>n,z4:(n)=>n,z5:(n)=>n,z6:(n)=>n,z7:(n)=>n,z8:(n)=>n,z9:(n)=>n,
-z10:(n)=>n,z11:(n)=>n,z12:(n)=>n,z13:(n)=>n,z14:(n)=>n,z15:(n)=>n,z16:(n)=>n,z17:(n)=>n,z18:(n)=>n,z19:(n)=>n,
-z20:(n)=>n,z21:(n)=>n,z22:(n)=>n,z23:(n)=>n,z24:(n)=>n,z25:(n)=>n,z26:(n)=>n,z27:(n)=>n,z28:(n)=>n,z29:(n)=>n,
-z30:(n)=>n,z31:(n)=>n,z32:(n)=>n,z33:(n)=>n,z34:(n)=>n,z35:(n)=>n,z36:(n)=>n,z37:(n)=>n,z38:(n)=>n,z39:(n)=>n,
-z40:(n)=>n,z41:(n)=>n,z42:(n)=>n,z43:(n)=>n,z44:(n)=>n,z45:(n)=>n,z46:(n)=>n,z47:(n)=>n,z48:(n)=>n,z49:(n)=>n,
-z50:(n)=>n,z51:(n)=>n,z52:(n)=>n,z53:(n)=>n,z54:(n)=>n,z55:(n)=>n,z56:(n)=>n,z57:(n)=>n,z58:(n)=>n,z59:(n)=>n,
-z60:(n)=>n,z61:(n)=>n,z62:(n)=>n,z63:(n)=>n,z64:(n)=>n,z65:(n)=>n,z66:(n)=>n,z67:(n)=>n,z68:(n)=>n,z69:(n)=>n,
-z70:(n)=>n,z71:(n)=>n,z72:(n)=>n,z73:(n)=>n,z74:(n)=>n,z75:(n)=>n,z76:(n)=>n,z77:(n)=>n,z78:(n)=>n,z79:(n)=>n,
-z80:(n)=>n,z81:(n)=>n,z82:(n)=>n,z83:(n)=>n,z84:(n)=>n,z85:(n)=>n,z86:(n)=>n,z87:(n)=>n,z88:(n)=>n,z89:(n)=>n,
-z90:(n)=>n,z91:(n)=>n,z92:(n)=>n,z93:(n)=>n,z94:(n)=>n,z95:(n)=>n,z96:(n)=>n,z97:(n)=>n,z98:(n)=>n,z99:(n)=>n,
-w0:(n)=>n,w1:(n)=>n,w2:(n)=>n,w3:(n)=>n,w4:(n)=>n,w5:(n)=>n,w6:(n)=>n,w7:(n)=>n,w8:(n)=>n,w9:(n)=>n,
-w10:(n)=>n,w11:(n)=>n,w12:(n)=>n,w13:(n)=>n,w14:(n)=>n,w15:(n)=>n,w16:(n)=>n,w17:(n)=>n,w18:(n)=>n,w19:(n)=>n,
-w20:(n)=>n,w21:(n)=>n,w22:(n)=>n,w23:(n)=>n,w24:(n)=>n,w25:(n)=>n,w26:(n)=>n,w27:(n)=>n,w28:(n)=>n,w29:(n)=>n,
-w30:(n)=>n,w31:(n)=>n,w32:(n)=>n,w33:(n)=>n,w34:(n)=>n,w35:(n)=>n,w36:(n)=>n,w37:(n)=>n,w38:(n)=>n,w39:(n)=>n,
-w40:(n)=>n,w41:(n)=>n,w42:(n)=>n,w43:(n)=>n,w44:(n)=>n,w45:(n)=>n,w46:(n)=>n,w47:(n)=>n,w48:(n)=>n,w49:(n)=>n,
-w50:(n)=>n,w51:(n)=>n,w52:(n)=>n,w53:(n)=>n,w54:(n)=>n,w55:(n)=>n,w56:(n)=>n,w57:(n)=>n,w58:(n)=>n,w59:(n)=>n,
-w60:(n)=>n,w61:(n)=>n,w62:(n)=>n,w63:(n)=>n,w64:(n)=>n,w65:(n)=>n,w66:(n)=>n,w67:(n)=>n,w68:(n)=>n,w69:(n)=>n,
-w70:(n)=>n,w71:(n)=>n,w72:(n)=>n,w73:(n)=>n,w74:(n)=>n,w75:(n)=>n,w76:(n)=>n,w77:(n)=>n,w78:(n)=>n,w79:(n)=>n,
-w80:(n)=>n,w81:(n)=>n,w82:(n)=>n,w83:(n)=>n,w84:(n)=>n,w85:(n)=>n,w86:(n)=>n,w87:(n)=>n,w88:(n)=>n,w89:(n)=>n,
-w90:(n)=>n,w91:(n)=>n,w92:(n)=>n,w93:(n)=>n,w94:(n)=>n,w95:(n)=>n,w96:(n)=>n,w97:(n)=>n,w98:(n)=>n,w99:(n)=>n,
-v0:(n)=>n,v1:(n)=>n,v2:(n)=>n,v3:(n)=>n,v4:(n)=>n,v5:(n)=>n,v6:(n)=>n,v7:(n)=>n,v8:(n)=>n,v9:(n)=>n,
-v10:(n)=>n,v11:(n)=>n,v12:(n)=>n,v13:(n)=>n,v14:(n)=>n,v15:(n)=>n,v16:(n)=>n,v17:(n)=>n,v18:(n)=>n,v19:(n)=>n,
-v20:(n)=>n,v21:(n)=>n,v22:(n)=>n,v23:(n)=>n,v24:(n)=>n,v25:(n)=>n,v26:(n)=>n,v27:(n)=>n,v28:(n)=>n,v29:(n)=>n,
-v30:(n)=>n,v31:(n)=>n,v32:(n)=>n,v33:(n)=>n,v34:(n)=>n,v35:(n)=>n,v36:(n)=>n,v37:(n)=>n,v38:(n)=>n,v39:(n)=>n,
-v40:(n)=>n,v41:(n)=>n,v42:(n)=>n,v43:(n)=>n,v44:(n)=>n,v45:(n)=>n,v46:(n)=>n,v47:(n)=>n,v48:(n)=>n,v49:(n)=>n,
-v50:(n)=>n,v51:(n)=>n,v52:(n)=>n,v53:(n)=>n,v54:(n)=>n,v55:(n)=>n,v56:(n)=>n,v57:(n)=>n,v58:(n)=>n,v59:(n)=>n,
-v60:(n)=>n,v61:(n)=>n,v62:(n)=>n,v63:(n)=>n,v64:(n)=>n,v65:(n)=>n,v66:(n)=>n,v67:(n)=>n,v68:(n)=>n,v69:(n)=>n,
-v70:(n)=>n,v71:(n)=>n,v72:(n)=>n,v73:(n)=>n,v74:(n)=>n,v75:(n)=>n,v76:(n)=>n,v77:(n)=>n,v78:(n)=>n,v79:(n)=>n,
-v80:(n)=>n,v81:(n)=>n,v82:(n)=>n,v83:(n)=>n,v84:(n)=>n,v85:(n)=>n,v86:(n)=>n,v87:(n)=>n,v88:(n)=>n,v89:(n)=>n,
-v90:(n)=>n,v91:(n)=>n,v92:(n)=>n,v93:(n)=>n,v94:(n)=>n,v95:(n)=>n,v96:(n)=>n,v97:(n)=>n,v98:(n)=>n,v99:(n)=>n
 };
 Engine.init();
 </script>
