@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAH Enterprise v25.0 | High-Density Forensic Core</title>
+    <title>SAH Enterprise v26.0 | Secure Forensic Core</title>
     <style>
         :root {
             --win-blue: #0078d4; --win-dark: #000000; --win-bg: #f3f2f1;
@@ -12,7 +12,7 @@
             --sidebar-w: 280px; --header-h: 60px;
             --shadow: 0 1.6px 3.6px 0 rgba(0,0,0,0.132), 0 0.3px 0.9px 0 rgba(0,0,0,0.108);
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Segoe UI", "Segoe UI Web", Arial, sans-serif; }
         body { background: var(--win-bg); color: var(--text-main); display: flex; height: 100vh; overflow: hidden; }
         .sidebar { width: var(--sidebar-w); background: var(--win-dark); color: white; display: flex; flex-direction: column; z-index: 1000; flex-shrink: 0; }
         .sidebar-brand { padding: 30px 25px; border-bottom: 1px solid #333; }
@@ -21,7 +21,7 @@
         .nav-item { padding: 14px 25px; color: #adadad; cursor: pointer; font-size: 11px; text-transform: uppercase; letter-spacing: 1.2px; border-left: 4px solid transparent; display: flex; align-items: center; transition: 0.2s; }
         .nav-item:hover { background: #1a1a1a; color: white; }
         .nav-item.active { color: var(--win-blue); font-weight: 700; border-left-color: var(--win-blue); background: #111; }
-        .nav-item.locked { opacity: 0.4; cursor: not-allowed; }
+        .nav-item.locked { opacity: 0.3; cursor: not-allowed; }
         .sidebar-footer { padding: 20px; background: #0a0a0a; border-top: 1px solid #222; }
         .lang-select { width: 100%; background: #111; color: #888; border: 1px solid #333; padding: 10px; font-size: 11px; outline: none; cursor: pointer; }
         .viewport { flex-grow: 1; overflow: hidden; background: #fff; display: flex; flex-direction: column; position: relative; }
@@ -30,7 +30,7 @@
         .panel { display: none; max-width: 1400px; margin: 0 auto; width: 100%; }
         .panel.active { display: block; }
         .view-title { margin-bottom: 35px; border-bottom: 1px solid #eee; padding-bottom: 20px; }
-        .view-title h1 { font-size: 28px; font-weight: 600; }
+        .view-title h1 { font-size: 28px; font-weight: 600; letter-spacing: -0.5px; }
         .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 40px; }
         .stat-card { background: #fff; border: 1px solid var(--border); padding: 25px; border-bottom: 4px solid var(--win-blue); box-shadow: var(--shadow); }
         .table-wrapper { border: 1px solid var(--border); border-radius: 2px; overflow: hidden; background: #fff; margin-bottom: 40px; }
@@ -38,21 +38,18 @@
         .data-table th { text-align: left; background: #faf9f8; padding: 15px 20px; font-weight: 700; font-size: 11px; text-transform: uppercase; color: var(--text-sec); border-bottom: 1px solid var(--border); }
         .data-table td { padding: 15px 20px; border-bottom: 1px solid #f3f2f1; }
         .btn-action { background: var(--win-blue); color: #fff; border: none; padding: 12px 28px; font-size: 11px; font-weight: 700; text-transform: uppercase; cursor: pointer; }
-        .dl-link { color: var(--win-blue); text-decoration: none; font-weight: 700; font-size: 11px; text-transform: uppercase; cursor: pointer; padding: 6px 12px; border: 1px solid var(--win-blue); }
-        .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 2000; align-items: center; justify-content: center; backdrop-filter: blur(10px); }
-        .modal { background: #fff; width: 450px; padding: 40px; border-top: 6px solid var(--win-blue); }
-        .form-input { width: 100%; padding: 12px; border: 1px solid var(--border); margin-bottom: 20px; outline: none; }
-        .node-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px; }
-        .node-box { background: #faf9f8; border: 1px solid var(--border); padding: 15px; text-align: center; font-size: 12px; }
+        .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 2000; align-items: center; justify-content: center; backdrop-filter: blur(15px); }
+        .modal { background: #fff; width: 400px; padding: 40px; border-top: 6px solid var(--win-blue); box-shadow: 0 25px 50px rgba(0,0,0,0.5); }
+        .form-input { width: 100%; padding: 12px; border: 1px solid var(--border); margin-bottom: 20px; outline: none; background: #fcfcfc; }
         .badge { padding: 4px 8px; font-size: 10px; font-weight: 700; color: #fff; border-radius: 2px; text-transform: uppercase; }
-        .setting-row { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid #eee; }
-        .toggle-btn { width: 40px; height: 20px; background: #ccc; border-radius: 10px; position: relative; cursor: pointer; transition: 0.3s; }
+        .setting-row { display: flex; justify-content: space-between; align-items: center; padding: 18px 0; border-bottom: 1px solid #eee; }
+        .toggle-btn { width: 44px; height: 22px; background: #ccc; border-radius: 11px; position: relative; cursor: pointer; transition: 0.3s; }
         .toggle-btn.on { background: var(--win-blue); }
-        .toggle-btn::after { content: ''; position: absolute; width: 16px; height: 16px; background: white; border-radius: 50%; top: 2px; left: 2px; transition: 0.3s; }
-        .toggle-btn.on::after { left: 22px; }
+        .toggle-btn::after { content: ''; position: absolute; width: 18px; height: 18px; background: white; border-radius: 50%; top: 2px; left: 2px; transition: 0.2s; }
+        .toggle-btn.on::after { left: 24px; }
     </style>
 </head>
-<body>
+<body onbeforeunload="Auth.volatileWipe()">
 <aside class="sidebar">
     <div class="sidebar-brand"><h2>SAH Enterprise</h2></div>
     <nav class="nav-list" id="nav-container"></nav>
@@ -62,28 +59,28 @@
 </aside>
 <main class="viewport">
     <div class="top-bar">
-        <div id="user-status" style="font-size:10px; font-weight:700; text-transform:uppercase;">Guest Access</div>
+        <div id="user-status" style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px;">Guest Access</div>
         <button class="btn-action" id="auth-btn" onclick="UI.toggleAuth()">Sign In</button>
     </div>
     <div class="content-area" id="view-port"></div>
 </main>
 <div class="overlay" id="auth-modal">
     <div class="modal">
-        <h2 style="margin-bottom:20px;">Admin Authentication</h2>
-        <input type="text" id="adm-user" class="form-input" placeholder="Username">
-        <input type="password" id="adm-pass" class="form-input" placeholder="Password">
-        <button class="btn-action" style="width:100%;" onclick="Auth.login()">Verify Credentials</button>
-        <button class="btn-action" style="width:100%; background:none; color:#333; margin-top:10px;" onclick="UI.toggleAuth()">Cancel</button>
+        <h2 style="margin-bottom:25px; font-size:18px;">Admin Uplink</h2>
+        <input type="text" id="adm-user" class="form-input" placeholder="User ID" autocomplete="off">
+        <input type="password" id="adm-pass" class="form-input" placeholder="Access Key" autocomplete="off">
+        <button class="btn-action" style="width:100%;" onclick="Auth.login()">Establish Link</button>
+        <button class="btn-action" style="width:100%; background:none; color:#666; margin-top:10px;" onclick="UI.toggleAuth()">Abort</button>
     </div>
 </div>
 <script>
 const Lexicon = {
-    en: { dash:"Dashboard", intel:"Intel", vault:"Vault", reg:"Registry", nodes:"Nodes", threat:"Threats", audit:"Audit", set:"Settings", assets:"Assets", ops:"Global Operations", active:"Active Nodes", sum:"Sum", status:"Status", dl:"Download", user_set:"User Preferences", dark:"Dark Mode", notify:"Enable Alerts", tele:"Telemetry Data", auto:"Auto-Update" },
-    ru: { dash:"Панель", intel:"Разведка", vault:"Сейф", reg:"Реестр", nodes:"Узлы", threat:"Угрозы", audit:"Аудит", set:"Настройки", assets:"Активы", ops:"Глобальные операции", active:"Активные узлы", sum:"Сумма", status:"Статус", dl:"Скачать", user_set:"Настройки пользователя", dark:"Темный режим", notify:"Оповещения", tele:"Телеметрия", auto:"Автообновление" },
-    zh: { dash:"仪表板", intel:"情报", vault:"金库", reg:"登记处", nodes:"节点", threat:"威胁", audit:"审计", set:"设置", assets:"资产", ops:"全球运营", active:"活跃节点", sum:"金额", status:"状态", dl:"下载", user_set:"用户偏好", dark:"深色模式", notify:"启用警报", tele:"遥测数据", auto:"自动更新" },
-    fr: { dash:"Tableau", intel:"Intel", vault:"Coffre", reg:"Registre", nodes:"Nœuds", threat:"Menaces", audit:"Audit", set:"Réglages", assets:"Actifs", ops:"Opérations", active:"Nœuds", sum:"Somme", status:"Statut", dl:"Télécharger", user_set:"Préférences", dark:"Mode Sombre", notify:"Alertes", tele:"Télémétrie", auto:"Mise à jour" },
-    de: { dash:"Dashboard", intel:"Fahndung", vault:"Tresor", reg:"Register", nodes:"Knoten", threat:"Gefahr", audit:"Audit", set:"Einstell", assets:"Bestand", ops:"Betrieb", active:"Knoten", sum:"Summe", status:"Status", dl:"Laden", user_set:"Präferenzen", dark:"Dunkelmodus", notify:"Alarme", tele:"Telemetrie", auto:"Auto-Update" },
-    es: { dash:"Tablero", intel:"Intel", vault:"Bóveda", reg:"Registro", nodes:"Nodos", threat:"Amenazas", audit:"Auditoría", set:"Ajustes", assets:"Activos", ops:"Operaciones", active:"Nodos", sum:"Suma", status:"Estado", dl:"Bajar", user_set:"Preferencias", dark:"Modo Oscuro", notify:"Alertas", tele:"Telemetría", auto:"Auto-Update" },
+    en: { dash:"Dashboard", intel:"Forensic Intel", vault:"Legal Vault", reg:"Lawsuit Registry", nodes:"Network Nodes", threat:"Threat Matrix", audit:"Compliance Audit", set:"Settings", assets:"Asset Inventory", ops:"Global Operations", active:"Active Nodes", sum:"Recovery Sum", status:"Status", dl:"Download", user_set:"System Settings", dark:"Dark Mode", notify:"Enable Alerts", tele:"Telemetry Data", auto:"Auto-Update" },
+    ru: { dash:"Панель", intel:"Разведка", vault:"Хранилище", reg:"Реестр", nodes:"Узлы", threat:"Угрозы", audit:"Аудит", set:"Настройки", assets:"Активы", ops:"Глобальные операции", active:"Активные узлы", sum:"Сумма", status:"Статус", dl:"Скачать", user_set:"Системные настройки", dark:"Темный режим", notify:"Оповещения", tele:"Телеметрия", auto:"Автообновление" },
+    zh: { dash:"仪表板", intel:"取证情报", vault:"法律金库", reg:"诉讼登记处", nodes:"网络节点", threat:"威胁矩阵", audit:"合规审计", set:"设置", assets:"资产清单", ops:"全球运营中心", active:"活跃节点", sum:"回收金额", status:"状态", dl:"下载", user_set:"系统设置", dark:"深色模式", notify:"启用警报", tele:"遥测数据数据", auto:"自动更新" },
+    fr: { dash:"Tableau", intel:"Forensics", vault:"Coffre-fort", reg:"Registre", nodes:"Nœuds", threat:"Menaces", audit:"Audit", set:"Réglages", assets:"Inventaire", ops:"Opérations", active:"Nœuds", sum:"Somme", status:"Statut", dl:"Télécharger", user_set:"Paramètres", dark:"Mode Sombre", notify:"Alertes", tele:"Télémétrie", auto:"Mise à jour" },
+    es: { dash:"Tablero", intel:"Intel", vault:"Bóveda", reg:"Registro", nodes:"Nodos", threat:"Amenazas", audit:"Auditoría", set:"Ajustes", assets:"Activos", ops:"Operaciones", active:"Nodos", sum:"Suma", status:"Estado", dl:"Bajar", user_set:"Ajustes", dark:"Modo Oscuro", notify:"Alertas", tele:"Telemetría", auto:"Auto-Update" },
+    de: { dash:"Dashboard", intel:"Fahndung", vault:"Tresor", reg:"Register", nodes:"Knoten", threat:"Gefahr", audit:"Audit", set:"Einstell", assets:"Bestand", ops:"Betrieb", active:"Knoten", sum:"Summe", status:"Status", dl:"Laden", user_set:"System", dark:"Dunkelmodus", notify:"Alarme", tele:"Telemetrie", auto:"Auto-Update" },
     it: { dash:"Cruscotto", intel:"Intel", vault:"Caveau", reg:"Registro", nodes:"Nodi", threat:"Minacce", audit:"Audit", set:"Impostazioni", assets:"Asset", ops:"Operazioni", active:"Nodi", sum:"Somma", status:"Stato", dl:"Scarica", user_set:"Preferenze", dark:"Modo Scura", notify:"Avvisi", tele:"Telemetria", auto:"Auto-Aggiornamento" },
     ja: { dash:"ダッシュボード", intel:"インテル", vault:"保管庫", reg:"レジストリ", nodes:"ノード", threat:"脅威", audit:"監査", set:"設定", assets:"資産", ops:"グローバル運用", active:"ノード", sum:"金額", status:"ステータス", dl:"ダウンロード", user_set:"ユーザー設定", dark:"ダークモード", notify:"アラート有効", tele:"テレメトリ", auto:"自動更新" },
     ko: { dash:"대시보드", intel:"인텔", vault:"금고", reg:"레지스트리", nodes:"노드", threat:"위협", audit:"감사", set:"설정", assets:"자산", ops:"글로벌 운영", active:"노드", sum:"합계", status:"상태", dl:"다운로드", user_set:"사용자 환경 설정", dark:"다크 모드", notify:"알림 활성화", tele:"원격 측정", auto:"자동 업데이트" },
@@ -109,11 +106,11 @@ const Lexicon = {
     bg: { dash:"Табло", intel:"Интел", vault:"Сейф", reg:"Регистър", nodes:"Възли", threat:"Заплахи", audit:"Одит", set:"Настройки", assets:"Активи", ops:"Операции", active:"Възли", sum:"Сума", status:"Статус", dl:"Изтегли", user_set:"Предпочитания", dark:"Тъмен режим", notify:"Сигнали", tele:"Телеметрия", auto:"Обновяване" },
     uk: { dash:"Панель", intel:"Розвідка", vault:"Сейф", reg:"Реєстр", nodes:"Вузли", threat:"Загрози", audit:"Аудит", set:"Налаштування", assets:"Активи", ops:"Операції", active:"Вузли", sum:"Сума", status:"Статус", dl:"Завантажити", user_set:"Налаштування", dark:"Темний режим", notify:"Сповіщення", tele:"Телеметрія", auto:"Оновлення" },
     hr: { dash:"Nadzorna", intel:"Intel", vault:"Trezor", reg:"Registar", nodes:"Čvorovi", threat:"Prijetnje", audit:"Revizija", set:"Postavke", assets:"Imovina", ops:"Operacije", active:"Čvorovi", sum:"Iznos", status:"Status", dl:"Preuzmi", user_set:"Postavke", dark:"Tamni način", notify:"Upozorenja", tele:"Telemetrija", auto:"Ažuriranje" },
-    sk: { dash:"Panel", intel:"Intel", vault:"Trezor", reg:"Register", nodes:"Uzly", threat:"Hrozby", audit:"Audit", set:"Nastavenia", assets:"Aktíva", ops:"Operácie", active:"Uzly", sum:"Suma", status:"Stav", dl:"Stiahnuť", user_set:"Predvoľby", dark:"Tmavý režim", notify:"Upozornenia", tele:"Telemetria", auto:"Aktualizácia" },
+    sk: { dash:"Panel", intel:"Intel", vault:"Trezor", reg:"Register", nodes:"Uzly", threat:"Hrozby", audit:"Audit", set:"Nastavenia", assets:"Aktíva", ops:"Operácie", active:"Uzly", sum:"Suma", status:"Stav", dl:"Stiahnuť", user_set:"Predvoľby", dark:"Tmavý režim", notify:"Upozorenja", tele:"Telemetria", auto:"Aktualizácia" },
     sl: { dash:"Nadzorna", intel:"Intel", vault:"Trezor", reg:"Register", nodes:"Vozlišča", threat:"Grožnje", audit:"Revizija", set:"Nastavitve", assets:"Sredstva", ops:"Operacije", active:"Vozlišča", sum:"Znesek", status:"Status", dl:"Prenos", user_set:"Nastavitve", dark:"Temni način", notify:"Opozorila", tele:"Telemetrija", auto:"Posodobitev" },
     et: { dash:"Töölaud", intel:"Intel", vault:"Hoidla", reg:"Register", nodes:"Sõlmed", threat:"Ohud", audit:"Audit", set:"Seaded", assets:"Varad", ops:"Operatsioonid", active:"Sõlmed", sum:"Summa", status:"Staatus", dl:"Laadi", user_set:"Eelistused", dark:"Tume režiim", notify:"Hoiatused", tele:"Telemeetria", auto:"Värskendus" },
     lv: { dash:"Panelis", intel:"Intel", vault:"Glabātuve", reg:"Reģistrs", nodes:"Mezgli", threat:"Draudi", audit:"Audits", set:"Iestatījumi", assets:"Aktīvi", ops:"Operācijas", active:"Mezgli", sum:"Summa", status:"Statuss", dl:"Lejupielādēt", user_set:"Iestatījumi", dark:"Tumšais režīms", notify:"Brīdinājumi", tele:"Telemetrija", auto:"Atjaunināšana" },
-    lt: { dash:"Skydelis", intel:"Intel", vault:"Saugykla", reg:"Registras", nodes:"Mazgai", threat:"Grėsmės", audit:"Auditas", set:"Nustatymai", assets:"Turtas", ops:"Operacijos", active:"Mazgai", sum:"Suma", status:"Statusas", dl:"Atsisiųsti", user_set:"Nustatymai", dark:"Tamsus režimas", notify:"Įspėjimai", tele:"Telemetrija", auto:"Atnaujinimas" },
+    lt: { dash:"Skydelis", intel:"Intel", vault:"Saugykla", reg:"Registras", nodes:"Mazgai", threat:"Grėsmės", audit:"Auditas", set:"Nustatymai", assets:"Turtas", ops:"Operacijos", active:"Mazgai", sum:"Suma", status:"Statusas", dl:"Atsisiüsti", user_set:"Nustatymai", dark:"Tamsus režimas", notify:"Įspėjimai", tele:"Telemetrija", auto:"Atnaujinimas" },
     sr: { dash:"Табла", intel:"Интел", vault:"Трезор", reg:"Регистар", nodes:"Чворови", threat:"Претње", audit:"Ревизија", set:"Подешавања", assets:"Имовина", ops:"Операције", active:"Чворови", sum:"Сума", status:"Статус", dl:"Преузми", user_set:"Подешавања", dark:"Тамни режим", notify:"Обавештења", tele:"Телеметрија", auto:"Ажурирање" },
     sq: { dash:"Paneli", intel:"Intel", vault:"Kasafortë", reg:"Regjistri", nodes:"Nyjet", threat:"Kërcënimet", audit:"Auditimi", set:"Cilësimet", assets:"Asetet", ops:"Operacionet", active:"Nyjet", sum:"Shuma", status:"Statusi", dl:"Shkarko", user_set:"Preferencat", dark:"Mënyra e errët", notify:"Njoftimet", tele:"Telemetria", auto:"Përditësimi" },
     mk: { dash:"Табла", intel:"Интел", vault:"Стрела", reg:"Регистар", nodes:"Јазли", threat:"Закани", audit:"Ревизија", set:"Поставки", assets:"Средства", ops:"Операции", active:"Јазли", sum:"Сума", status:"Статус", dl:"Преземи", user_set:"Поставки", dark:"Темен режим", notify:"Известувања", tele:"Телеметрија", auto:"Ажурирање" },
@@ -124,7 +121,7 @@ const Lexicon = {
     cy: { dash:"Bwrdd", intel:"Intel", vault:"Claddgell", reg:"Cofrestr", nodes:"Nodau", threat:"Bygythiadau", audit:"Archwiliad", set:"Settings", assets:"Asedau", ops:"Gweithrediadau", active:"Nodau", sum:"Swm", status:"Statws", dl:"Llwytho", user_set:"Dewisiadau", dark:"Modd Tywyll", notify:"Rhybuddion", tele:"Telemetreg", auto:"Diweddaru" },
     af: { dash:"Paneel", intel:"Intel", vault:"Kluis", reg:"Register", nodes:"Nodes", threat:"Bedreigings", audit:"Oudit", set:"Instellings", assets:"Bates", ops:"Operasies", active:"Nodes", sum:"Som", status:"Status", dl:"Aflaai", user_set:"Voorkeure", dark:"Donker modus", notify:"Waarskuwings", tele:"Telemetrie", auto:"Opdatering" },
     sw: { dash:"Dashibodi", intel:"Intel", vault:"Vault", reg:"Sajili", nodes:"Nodi", threat:"Vitisho", audit:"Ukaguzi", set:"Mipangilio", assets:"Rasilimali", ops:"Operesheni", active:"Nodi", sum:"Jumla", status:"Hali", dl:"Pakua", user_set:"Mapendeleo", dark:"Njia ya Giza", notify:"Tahadhari", tele:"Telemetria", auto:"Sasisha" },
-    vi_full: { dash:"Bảng điều khiển", intel:"Tình báo", vault:"Kho lưu trữ", reg:"Sổ đăng ký", nodes:"Nút", threat:"Mối đe dọa", audit:"Kiểm toán", set:"Cài đặt", assets:"Tài sản", ops:"Hoạt động", active:"Nút", sum:"Tổng", status:"Trạng thái", dl:"Tải xuống", user_set:"Sở thích", dark:"Tối", notify:"Cảnh báo", tele:"Từ xa", auto:"Tự động" },
+    vi_alt: { dash:"Bảng", intel:"Tình báo", vault:"Kho", reg:"Sổ", nodes:"Nút", threat:"Đe dọa", audit:"Kiểm toán", set:"Cài đặt", assets:"Tài sản", ops:"Hoạt động", active:"Nút", sum:"Tổng", status:"Trạng thái", dl:"Tải", user_set:"Sở thích", dark:"Tối", notify:"Cảnh báo", tele:"Viễn thám", auto:"Tự động" },
     tl: { dash:"Dashboard", intel:"Intel", vault:"Vault", reg:"Registry", nodes:"Nodes", threat:"Banta", audit:"Audit", set:"Settings", assets:"Asset", ops:"Operasyon", active:"Nodes", sum:"Halaga", status:"Katayuan", dl:"I-download", user_set:"Kagustuhan", dark:"Dark Mode", notify:"Alerto", tele:"Telemetry", auto:"Auto-Update" },
     zu: { dash:"Idashibodi", intel:"Intel", vault:"Vault", reg:"Registry", nodes:"Nodes", threat:"Izinsongo", audit:"Audit", set:"Izilungiselelo", assets:"Impahla", ops:"Imisebenzi", active:"Nodes", sum:"Isamba", status:"Isimo", dl:"Landa", user_set:"Okukhethayo", dark:"Imodi Emnyama", notify:"Izexwayiso", tele:"Telemetry", auto:"Auto-Update" }
 };
@@ -135,30 +132,41 @@ const Auth = {
         const p = document.getElementById('adm-pass').value;
         if(u === 'admin' && p === 'SAH_CORE_2026') {
             this.isAdmin = true;
+            this.clearInputs();
             UI.toggleAuth();
             UI.refreshNav();
             document.getElementById('user-status').innerText = 'Admin Session: Active';
             document.getElementById('user-status').style.color = 'var(--accent-green)';
-            document.getElementById('auth-btn').innerText = 'Sign Out';
+            document.getElementById('auth-btn').innerText = 'Disconnect';
             document.getElementById('auth-btn').onclick = () => Auth.logout();
             Core.render();
-        } else { alert('Access Denied'); }
+        } else { alert('Access Denied: Invalid Key'); this.clearInputs(); }
     },
     logout() {
         this.isAdmin = false;
+        this.clearInputs();
         UI.refreshNav();
         document.getElementById('user-status').innerText = 'Guest Access';
         document.getElementById('user-status').style.color = 'inherit';
         document.getElementById('auth-btn').innerText = 'Sign In';
         document.getElementById('auth-btn').onclick = () => UI.toggleAuth();
         Core.route('dash');
+    },
+    clearInputs() {
+        document.getElementById('adm-user').value = '';
+        document.getElementById('adm-pass').value = '';
+    },
+    volatileWipe() {
+        this.isAdmin = false;
+        this.clearInputs();
     }
 };
+document.addEventListener("visibilitychange", () => { if (document.visibilityState === 'hidden') Auth.volatileWipe(); });
 const Core = {
     view: 'dash', lang: 'en',
-    nodes: Array.from({length: 40}, (_, i) => ({id: i+1, ip: `10.5.${i}.2`})),
+    nodes: Array.from({length: 48}, (_, i) => ({id: i+1, ip: `10.44.${i}.255`})),
     route(v) {
-        if((v === 'assets' || v === 'set') && !Auth.isAdmin) return alert('Auth Required');
+        if((v === 'assets' || v === 'set') && !Auth.isAdmin) return alert('Administrative Privileges Required');
         this.view = v;
         this.render();
     },
@@ -169,24 +177,24 @@ const Core = {
         document.querySelectorAll('.nav-item').forEach(i => i.classList.toggle('active', i.id === `n-${this.view}`));
     },
     tpl: {
-        dash: (d) => `<div class="panel active"><div class="view-title"><h1>${d.ops}</h1></div><div class="stats-grid"><div class="stat-card">Asset Val<br><b>$4.2M</b></div><div class="stat-card">${d.active}<br><b>1024</b></div><div class="stat-card">Uptime<br><b>99%</b></div><div class="stat-card">Lat<br><b>12ms</b></div></div></div>`,
-        intel: (d) => `<div class="panel active"><div class="view-title"><h1>${d.intel}</h1></div><p>Scanning global vectors...</p></div>`,
-        reg: (d) => `<div class="panel active"><div class="view-title"><h1>${d.reg}</h1></div><table class="data-table"><tr><th>ID</th><th>${d.sum}</th><th>${d.status}</th><th>Action</th></tr><tr><td>CAS-99</td><td>$5k</td><td><span class="badge" style="background:green">OK</span></td><td><span class="dl-link">${d.dl}</span></td></tr></table></div>`,
-        nodes: (d) => `<div class="panel active"><div class="view-title"><h1>${d.nodes}</h1></div><div class="node-grid">${Core.nodes.map(n => `<div class="node-box">NODE_${n.id}<br><b>${n.ip}</b></div>`).join('')}</div></div>`,
-        threat: (d) => `<div class="panel active"><div class="view-title"><h1>${d.threat}</h1></div><p>No active threats detected.</p></div>`,
-        audit: (d) => `<div class="panel active"><div class="view-title"><h1>${d.audit}</h1></div><p>Compliance log synchronized.</p></div>`,
-        assets: (d) => `<div class="panel active"><div class="view-title"><h1>${d.assets}</h1></div><p>Valuation: $4,290,000.00 USD</p></div>`,
+        dash: (d) => `<div class="panel active"><div class="view-title"><h1>${d.ops}</h1></div><div class="stats-grid"><div class="stat-card">Asset Val<br><b>$4,290,025</b></div><div class="stat-card">${d.active}<br><b>1,024</b></div><div class="stat-card">System Health<br><b style="color:var(--accent-green)">99.8%</b></div><div class="stat-card">Latency<br><b>12ms</b></div></div></div>`,
+        intel: (d) => `<div class="panel active"><div class="view-title"><h1>${d.intel}</h1></div><div style="padding:40px; border:1px dashed #ccc; text-align:center; color:#999;">ANALYZING_GLOBAL_THREAT_VECTORS...</div></div>`,
+        reg: (d) => `<div class="panel active"><div class="view-title"><h1>${d.reg}</h1></div><table class="data-table"><thead><tr><th>Case ID</th><th>${d.sum}</th><th>${d.status}</th><th>Action</th></tr></thead><tbody><tr><td>CAS-00122</td><td>$50,000</td><td><span class="badge" style="background:var(--accent-green)">Served</span></td><td><span style="color:var(--win-blue); cursor:pointer; font-weight:700;">${d.dl}</span></td></tr></tbody></table></div>`,
+        nodes: (d) => `<div class="panel active"><div class="view-title"><h1>${d.nodes}</h1></div><div class="node-grid">${Core.nodes.map(n => `<div class="node-box">NODE_${n.id.toString().padStart(3,'0')}<br><b>${n.ip}</b><br><span style="color:var(--accent-green); font-size:9px;">● ONLINE</span></div>`).join('')}</div></div>`,
+        threat: (d) => `<div class="panel active"><div class="view-title"><h1>${d.threat}</h1></div><p>Threat mitigation protocols active. Perimeter secure.</p></div>`,
+        audit: (d) => `<div class="panel active"><div class="view-title"><h1>${d.audit}</h1></div><p>Log Integrity: Verified. No anomalies detected.</p></div>`,
+        assets: (d) => `<div class="panel active"><div class="view-title"><h1>${d.assets}</h1></div><div class="table-wrapper"><table class="data-table"><tr><td>Quantum Core</td><td>Hardware</td><td>$1.2M</td></tr><tr><td>Neural Net V4</td><td>IP</td><td>$850k</td></tr></table></div></div>`,
         set: (d) => `<div class="panel active"><div class="view-title"><h1>${d.user_set}</h1></div>
             <div class="setting-row"><span>${d.dark}</span><div class="toggle-btn" onclick="UI.tog(this)"></div></div>
             <div class="setting-row"><span>${d.notify}</span><div class="toggle-btn on" onclick="UI.tog(this)"></div></div>
             <div class="setting-row"><span>${d.tele}</span><div class="toggle-btn on" onclick="UI.tog(this)"></div></div>
             <div class="setting-row"><span>${d.auto}</span><div class="toggle-btn" onclick="UI.tog(this)"></div></div>
         </div>`,
-        vault: (d) => `<div class="panel active"><div class="view-title"><h1>${d.vault}</h1></div><p>Files encrypted.</p></div>`
+        vault: (d) => `<div class="panel active"><div class="view-title"><h1>${d.vault}</h1></div><p>Accessing encrypted legal archives...</p></div>`
     }
 };
 const UI = {
-    toggleAuth() { const m = document.getElementById('auth-modal'); m.style.display = m.style.display === 'flex' ? 'none' : 'flex'; },
+    toggleAuth() { const m = document.getElementById('auth-modal'); m.style.display = m.style.display === 'flex' ? 'none' : 'flex'; if(m.style.display==='none') Auth.clearInputs(); },
     tog(e) { e.classList.toggle('on'); },
     refreshNav() {
         const n = document.getElementById('nav-container');
@@ -202,22 +210,25 @@ const UI = {
 const Lang = {
     init() {
         const s = document.getElementById('lang-switch');
-        Object.keys(Lexicon).forEach(k => { const o = document.createElement('option'); o.value = k; o.innerText = k.toUpperCase(); s.appendChild(o); });
+        Object.keys(Lexicon).sort().forEach(k => { const o = document.createElement('option'); o.value = k; o.innerText = k.toUpperCase(); s.appendChild(o); });
         UI.refreshNav(); Core.render();
     },
     update(v) { Core.lang = v; UI.refreshNav(); Core.render(); }
 };
-class ForensicEngine { constructor() { this.active = true; } scan() { return 'OK'; } }
-class SecurityShield { constructor() { this.lvl = 5; } block() { return true; } }
-class ThermalMonitor { constructor() { this.tmp = 35; } get() { return this.tmp; } }
-class NetworkMapper { constructor() { this.hops = 3; } trace() { return 'DONE'; } }
-class CryptoLayer { constructor() { this.bits = 256; } hash(v) { return btoa(v); } }
-class AuditLogger { constructor() { this.logs = []; } add(m) { this.logs.push(m); } }
-class SystemPulse { constructor() { this.hz = 60; } beat() { return true; } }
-class AssetVault { constructor() { this.locked = true; } unlock() { this.locked = false; } }
-const SE1 = new ForensicEngine(); const SE2 = new SecurityShield(); const SE3 = new ThermalMonitor();
-const SE4 = new NetworkMapper(); const SE5 = new CryptoLayer(); const SE6 = new AuditLogger();
-const SE7 = new SystemPulse(); const SE8 = new AssetVault();
+class ForensicKern { constructor() { this.ver = "26.0"; } }
+class SecurePipe { constructor() { this.id = Math.random(); } }
+class DataVault { constructor() { this.size = "TB"; } }
+class NodeWatch { constructor() { this.active = true; } }
+class LogicNode { constructor() { this.type = "A"; } }
+class TaskBus { constructor() { this.tasks = []; } }
+class EventLog { constructor() { this.logs = []; } }
+class MemCache { constructor() { this.store = {}; } }
+class AuthGuard { constructor() { this.lvl = 10; } }
+class ShieldX { constructor() { this.on = true; } }
+const K1 = new ForensicKern(); const K2 = new SecurePipe(); const K3 = new DataVault();
+const K4 = new NodeWatch(); const K5 = new LogicNode(); const K6 = new TaskBus();
+const K7 = new EventLog(); const K8 = new MemCache(); const K9 = new AuthGuard();
+const K10 = new ShieldX();
 Lang.init();
 </script>
 </body>
