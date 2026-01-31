@@ -5,10 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SAH ENTERPRISE | GLOBAL COMMAND 95018</title>
 <style>
-/**
- * SEGOE UI FULL WEIGHT SPECTRUM
- * Ensuring brand compliance across all rendering engines.
- */
 @font-face { font-family: 'Segoe UI'; src: url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/light/latest.woff2') format('woff2'); font-weight: 100; }
 @font-face { font-family: 'Segoe UI'; src: url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/semilight/latest.woff2') format('woff2'); font-weight: 200; }
 @font-face { font-family: 'Segoe UI'; src: url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/regular/latest.woff2') format('woff2'); font-weight: 400; }
@@ -20,17 +16,19 @@
     --win-black: #000;
     --win-bg: #fff;
     --border: #e1e1e1;
-    --locked-bg: #f9f9f9;
-    --sidebar: 280px;
-    --error: #d83b01;
-    --success: #107c10;
+    --locked-bg: #f3f3f3;
+    --sidebar-width: 300px;
+    --error-red: #d83b01;
+    --success-green: #107c10;
+    --hover-gray: #2b2b2b;
 }
 
 * { 
     margin: 0; 
     padding: 0; 
     box-sizing: border-box; 
-    font-family: "Segoe UI", "Tahoma", sans-serif !important; 
+    font-family: "Segoe UI", sans-serif !important; 
+    -webkit-font-smoothing: antialiased;
 }
 
 body { 
@@ -40,58 +38,72 @@ body {
     overflow: hidden; 
 }
 
-/* NAVIGATION ASYNC SIDEBAR */
 .sidebar { 
-    width: var(--sidebar); 
+    width: var(--sidebar-width); 
     background: var(--win-black); 
     color: white; 
     display: flex; 
     flex-direction: column; 
     flex-shrink: 0; 
-    z-index: 10;
+    transition: width 0.3s;
 }
 
 .sidebar-header { 
-    padding: 45px 30px; 
-    font-size: 22px; 
+    padding: 40px 30px; 
+    font-size: 20px; 
     font-weight: 100; 
-    letter-spacing: 2px; 
-    border-bottom: 1px solid #1a1a1a; 
+    letter-spacing: 3px; 
+    text-transform: uppercase;
+    border-bottom: 1px solid #222; 
+}
+
+.sidebar-group {
+    padding: 20px 0;
+    border-bottom: 1px solid #111;
+}
+
+.sidebar-label {
+    padding: 0 30px 10px 30px;
+    font-size: 10px;
+    font-weight: 700;
+    color: #555;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .nav-item { 
-    padding: 18px 30px; 
-    color: #888; 
+    padding: 14px 30px; 
+    color: #999; 
     cursor: pointer; 
-    font-size: 11px; 
-    text-transform: uppercase; 
-    letter-spacing: 1.5px; 
-    font-weight: 600; 
-    transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1); 
+    font-size: 12px; 
+    font-weight: 400; 
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    transition: 0.1s; 
 }
 
 .nav-item:hover { 
     color: #fff; 
-    background: #111; 
+    background: var(--hover-gray); 
 }
 
 .nav-item.active { 
     color: var(--win-blue); 
-    border-right: 4px solid var(--win-blue); 
-    background: #0a0a0a; 
+    background: #111;
+    font-weight: 600;
+    border-left: 4px solid var(--win-blue);
 }
 
-/* MAIN VIEWPORT */
 .viewport { 
     flex-grow: 1; 
     display: flex; 
     flex-direction: column; 
-    position: relative; 
     background: #fff;
 }
 
 .top-bar { 
-    height: 75px; 
+    height: 60px; 
     padding: 0 40px; 
     display: flex; 
     align-items: center; 
@@ -100,351 +112,340 @@ body {
 }
 
 .content { 
-    padding: 60px 50px; 
+    padding: 60px 80px; 
     overflow-y: auto; 
     flex-grow: 1; 
 }
 
-/* FORM LAYOUTS */
-.form-grid { 
-    display: grid; 
-    grid-template-columns: 1fr 1fr; 
-    gap: 30px; 
-    max-width: 1100px; 
+.form-container {
+    max-width: 900px;
+}
+
+.grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
 }
 
 .field { 
-    display: flex; 
-    flex-direction: column; 
-    gap: 10px; 
+    margin-bottom: 25px;
+    display: flex;
+    flex-direction: column;
 }
 
 .field label { 
     font-size: 11px; 
-    text-transform: uppercase; 
-    color: #444; 
     font-weight: 700; 
-    letter-spacing: 0.5px; 
+    margin-bottom: 8px; 
+    color: #333;
+    text-transform: uppercase;
 }
 
 .field input, .field select, .field textarea { 
-    padding: 14px; 
-    border: 1px solid var(--border); 
-    font-size: 15px; 
-    font-weight: 200; 
-    outline: none; 
-    background: #fff;
-    transition: all 0.2s; 
+    padding: 12px; 
+    border: 1px solid #ccc; 
+    font-size: 14px; 
+    font-weight: 400;
+    outline: none;
 }
 
-.field input:focus { 
-    border-color: var(--win-blue); 
-    box-shadow: 0 0 0 1px var(--win-blue);
+.field input:focus, .field select:focus {
+    border: 1px solid var(--win-blue);
 }
 
-/* ADMIN LOCKS */
+.field.error input {
+    border: 1px solid var(--error-red);
+}
+
+.error-text {
+    color: var(--error-red);
+    font-size: 11px;
+    margin-top: 5px;
+    font-weight: 600;
+    display: none;
+}
+
 .restricted { 
     background: var(--locked-bg); 
-    border: 1px dashed #ccc !important; 
-    opacity: 0.75; 
-    position: relative; 
+    border: 1px dashed #aaa; 
+    padding: 15px;
+    opacity: 0.8;
 }
 
-.restricted::after {
-    content: ''; /* MDL2 Assets Lock Icon */
-    font-family: 'Segoe MDL2 Assets';
-    position: absolute;
-    right: 15px;
-    top: 40px;
-    color: var(--error);
+.lock-info {
+    color: var(--error-red);
+    font-size: 10px;
+    font-weight: 700;
+    margin-top: 5px;
 }
 
-.lock-tag { 
-    color: var(--error); 
-    font-size: 10px; 
-    font-weight: 700; 
-    text-transform: uppercase; 
-    margin-top: 5px; 
-}
-
-/* AUDIT LOG COMPONENT */
-.audit-container {
-    margin-top: 50px;
-    border-top: 1px solid var(--border);
-    padding-top: 30px;
-}
-
-.audit-entry {
-    font-size: 12px;
-    font-weight: 400;
-    padding: 8px 0;
-    border-bottom: 1px solid #f2f2f2;
-    color: #666;
-}
-
-.audit-entry.alert { color: var(--error); font-weight: 600; }
-
-/* BUTTONS & MODALS */
 .btn-primary { 
     background: var(--win-blue); 
-    color: #fff; 
+    color: white; 
     border: none; 
-    padding: 18px 60px; 
-    font-size: 13px; 
+    padding: 15px 40px; 
+    font-size: 12px; 
     font-weight: 600; 
     cursor: pointer; 
-    text-transform: uppercase; 
-    letter-spacing: 1.5px; 
-    margin-top: 40px; 
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
-.btn-primary:hover { filter: brightness(1.1); }
-
-#processing-ov { 
-    display: none; 
-    position: absolute; 
-    inset: 0; 
-    background: rgba(255,255,255,0.98); 
-    z-index: 2000; 
-    flex-direction: column; 
-    align-items: center; 
-    justify-content: center; 
+.btn-primary:disabled {
+    background: #ccc;
+    cursor: not-allowed;
 }
 
-/* SCROLLBAR CUSTOMIZATION */
-::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: #f1f1f1; }
-::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: #999; }
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.8);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 40px;
+    width: 500px;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+#processing {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: white;
+    z-index: 2000;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid var(--win-blue);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin { 100% { transform: rotate(360deg); } }
 </style>
 </head>
 <body>
 
 <aside class="sidebar">
     <div class="sidebar-header">SAH 95018</div>
-    <div id="nav-list"></div>
+    
+    <div class="sidebar-group">
+        <div class="sidebar-label">Operations</div>
+        <div class="nav-item active" onclick="CORE.route('suit')">Lawsuit Form</div>
+        <div class="nav-item" onclick="CORE.route('auth')">System Auth</div>
+        <div class="nav-item">Global Dashboard</div>
+    </div>
+
+    <div class="sidebar-group">
+        <div class="sidebar-label">Assets & Intel</div>
+        <div class="nav-item">Entity Search</div>
+        <div class="nav-item">Ledger Audit</div>
+        <div class="nav-item">Node Mapping</div>
+    </div>
+
+    <div class="sidebar-group">
+        <div class="sidebar-label">Advanced</div>
+        <div class="nav-item">Protocol 95-A</div>
+        <div class="nav-item">Vulnerability Scan</div>
+        <div class="nav-item">Settings</div>
+    </div>
 </aside>
 
 <main class="viewport">
     <div class="top-bar">
-        <div style="font-size:11px; color:#999; font-weight: 600;">
-            SESSION: <span id="sess-id">95018-A</span> // 
-            STATUS: <span style="color:var(--success)">ENCRYPTED</span>
+        <div style="font-size:11px; color:#666; font-weight: 600;">
+            UPLINK: <span style="color:var(--success-green)">STABLE</span> // ID: 95018-SYS
         </div>
-        <select id="lang-picker" style="font-size:12px; padding:6px; font-weight:400;" onchange="CORE.setLang(this.value)"></select>
+        <select id="lang-select" onchange="CORE.setLang(this.value)"></select>
     </div>
-    
-    <div class="content" id="main-view"></div>
 
-    <div id="processing-ov">
-        <div class="spinner" style="width:40px; height:40px; border:3px solid #eee; border-top:3px solid var(--win-blue); border-radius:50%; animation: spin 1s linear infinite;"></div>
-        <h2 id="proc-msg" style="font-weight:100; font-size:42px; margin-top:20px;">Initializing...</h2>
-    </div>
+    <div class="content" id="main-view"></div>
 </main>
 
+<div class="modal" id="review-modal">
+    <div class="modal-content">
+        <h2 style="font-weight:100; font-size:28px; margin-bottom:20px;">Review Filing</h2>
+        <div id="summary-list"></div>
+        <div style="margin-top:30px; display:flex; gap:10px;">
+            <button class="btn-primary" onclick="CORE.finalize()">Confirm Filing</button>
+            <button style="background:#eee; border:none; padding:15px 20px; font-size:12px; cursor:pointer;" onclick="CORE.closeModal()">Back</button>
+        </div>
+    </div>
+</div>
+
+<div id="processing">
+    <div class="spinner"></div>
+    <h2 id="proc-status" style="font-weight:100; margin-top:20px;">Syncing Ledger...</h2>
+</div>
+
 <script>
-/**
- * CORE LOGIC & LOCALIZATION
- * Supporting 150 unique language identifiers.
- */
 const CORE = {
-    view: 'auth', 
-    lang: 'EN', 
+    lang: 'EN',
     isAdmin: false,
-    audit: [],
-    langs: ["EN","FR","DE","ES","IT","PT","NL","RU","ZH","JA","KO","AR","TR","PL","SV","UK","HE","TH","VI","ID","MS","BN","PA","GU","TA","TE","KN","ML","KA","AM","SQ","HY","AZ","EU","BE","BS","BG","CA","CO","CY","EO","FY","GL","HT","HA","IS","IG","GA","JW","KK","RW","KY","LA","LB","MK","MG","MT","MI","MR","MN","NE","NY","OR","PS","QU","SM","GD","ST","SN","SD","SI","SU","SW","TG","TT","TS","TK","UZ","XH","YI","YO","ZU","AF","AK","AS","AY","BM","BHO","CEB","CHR","DOG","DV","DUI","EWE","FIL","GOM","GN","IL","KL","KRI","KRU","LUG","MAI","MNI","LUS","MHR","MDR","MYV","NAH","NAS","NEW","NIV","NOG","NOM","NON","NOS","NUK","NYA","OCH","OCI","OJI","ORM","OSS","OTM","PAL","PAM","PAP","PAU","PEI","PHN","PIH","PIL","PON","PRG","QUE","RAJ","RAR","RMN","RUN","SAF","SAG","SAH","SAI","SAL","SAM","SAN","SAS","SAT","SCN","SCO","SDA","SEL","SGS","SHN","SIB","SID","SKS","SND","SNR","SOM","SOT","SRC","SRN","SSW","SUK","SVK","SWG","SWZ","SYR","TAB","TAH","TAI","TAM","TAT","TCH","TDD","TEL","TET","TGL","TGO","TGR","TGV","TGY","TIB","TIG","TIV","TKL","TKN","TKR","TKT","TLA","TLI","TLM","TLY","TMH","TMN","TMW","TNC","TND","TNE","TNG","TNH","TNI","TNK","TNL","TNM","TNN","TNO","TNP","TNQ","TNR","TNS","TNT","TNU","TNV","TNW","TNX","TNY","TNZ","TOA","TOB","TOC","TOD","TOE","TOF","TOG","TOH","TOI","TOJ","TOK","TOL","TOM","TON","TOO","TOP","TOQ","TOR","TOS","TOT","TOU","TOV","TOW","TOX","TOY","TOZ"],
-    
+    view: 'suit',
+    langs: ["EN","FR","DE","ES","IT","PT","RU","ZH","JA","KO","AR","TR","NL","PL","SV","VI","TH","ID","HI","BN"],
     dict: {
-        EN: { t: "Admin Sign-In", s: "Lawsuit Form", c: "Corporate ID", k: "Security Key", auth: "Authorize", ip: "Entity Name", type: "Claim Type", amt: "Damages", cur: "Currency", lock: "LOCKED: Admin Key Required", p: "Execute Filing", m1: "IP Theft", m2: "Breach", m3: "Defamation", m4: "Asset Seizure", m5: "Interpol Uplink", desc: "Detailed Case Evidence", log: "System Audit Trail", info: "Standard users proceed directly. Admin key unlocks tier-2 protocols." },
-        FR: { t: "Connexion Admin", s: "Formulaire de Procès", c: "ID d'Entreprise", k: "Clé de Sécurité", auth: "Autoriser", ip: "Nom de l'entité", type: "Type de Réclamation", amt: "Dommages", cur: "Devise", lock: "VERROUILLÉ : Clé Admin Requise", p: "Exécuter le dépôt", m1: "Vol de PI", m2: "Brèche", m3: "Diffamation", m4: "Saisie d'actifs", m5: "Liaison Interpol", desc: "Preuve détaillée", log: "Piste d'audit", info: "Les utilisateurs standards procèdent directement." },
-        DE: { t: "Admin-Anmeldung", s: "Klageformular", c: "Unternehmens-ID", k: "Sicherheitsschlüssel", auth: "Autorisieren", ip: "Name der Entität", type: "Anspruchstyp", amt: "Schadenersatz", cur: "Währung", lock: "GESPERRT: Admin-Key erforderlich", p: "Einreichung ausführen", m1: "IP-Diebstahl", m2: "Verstoß", m3: "Verleumdung", m4: "Beschlagnahme", m5: "Interpol-Uplink", desc: "Beweisdetails", log: "Prüfpfad", info: "Standardbenutzer fahren direkt fort." }
-        // Dictionary extends through lang engine logic for remaining 147 identifiers
+        EN: { title: "Lawsuit Form", auth: "Admin Sign-In", entity: "Entity Name", damages: "Damages", type: "Claim Type", cur: "Currency", review: "Review & File", locked: "LOCKED: Admin Key Required", secure: "Security Key", authBtn: "Authorize", error: "Required field", step1: "Verifying...", step2: "Logging..." },
+        FR: { title: "Formulaire de Procès", auth: "Connexion Admin", entity: "Nom de l'entité", damages: "Dommages", type: "Type de réclamation", cur: "Devise", review: "Réviser et Déposer", locked: "VERROUILLÉ : Clé Admin Requise", secure: "Clé de sécurité", authBtn: "Autoriser", error: "Champ requis", step1: "Vérification...", step2: "Enregistrement..." },
+        ZH: { title: "诉讼申请表", auth: "管理员登录", entity: "实体名称", damages: "赔偿金额", type: "索赔类型", cur: "货币", review: "检查并提交", locked: "已锁定：需要管理员密钥", secure: "安全密钥", authBtn: "授权", error: "必填字段", step1: "验证中...", step2: "记录中..." }
     },
 
     init() {
-        document.getElementById('lang-picker').innerHTML = this.langs.map(l => `<option value="${l}">${l}</option>`).join('');
+        const sel = document.getElementById('lang-select');
+        this.langs.forEach(l => sel.add(new Option(l, l)));
         this.render();
     },
 
-    setLang(l) { 
-        this.lang = l; 
-        this.addAudit(`Language changed to ${l}`);
-        this.render(); 
-    },
+    setLang(l) { this.lang = l; this.render(); },
+    route(v) { this.view = v; this.render(); },
 
-    route(v) { 
-        this.view = v; 
-        this.render(); 
-    },
-
-    addAudit(msg, isAlert = false) {
-        const time = new Date().toLocaleTimeString();
-        this.audit.unshift({ time, msg, isAlert });
-        if(this.audit.length > 10) this.audit.pop();
-    },
-
-    handleAuth() {
-        const key = document.getElementById('pass_input').value;
-        if(key === "IQ124578") { 
-            this.isAdmin = true; 
-            this.addAudit("ADMIN ELEVATION SUCCESSFUL", false);
-            alert("ADMIN ACCESS GRANTED: Protocol Tier-2 Unlocked");
+    render() {
+        const d = this.dict[this.lang] || this.dict.EN;
+        const v = document.getElementById('main-view');
+        
+        if (this.view === 'auth') {
+            v.innerHTML = `
+                <div style="max-width:400px;">
+                    <h1 style="font-weight:100; font-size:42px; margin-bottom:30px;">${d.auth}</h1>
+                    <div class="field">
+                        <label>ID</label>
+                        <input type="text" value="95018-USR" disabled style="background:#f9f9f9;">
+                    </div>
+                    <div class="field">
+                        <label>${d.secure}</label>
+                        <input type="password" id="admin-pass" placeholder="••••••••">
+                    </div>
+                    <button class="btn-primary" onclick="CORE.login()">${d.authBtn}</button>
+                </div>`;
         } else {
-            this.isAdmin = false;
-            this.addAudit("STANDARD ACCESS AUTHORIZED", false);
+            v.innerHTML = `
+                <div class="form-container">
+                    <h1 style="font-weight:100; font-size:42px; margin-bottom:40px;">${d.title}</h1>
+                    <div class="grid-2">
+                        <div class="field" id="f-entity">
+                            <label>${d.entity}</label>
+                            <input type="text" id="in-entity" placeholder="Full legal name">
+                            <span class="error-text">${d.error}</span>
+                        </div>
+                        <div class="field" id="f-damages">
+                            <label>${d.damages}</label>
+                            <input type="number" id="in-damages" placeholder="0.00">
+                            <span class="error-text">${d.error}</span>
+                        </div>
+                        <div class="field">
+                            <label>${d.type}</label>
+                            <select id="in-type">
+                                <option>IP Infringement</option>
+                                <option>Unauthorized Uplink</option>
+                                <option>Contract Breach</option>
+                                <option>Data Leak</option>
+                            </select>
+                        </div>
+                        <div class="field" id="f-cur">
+                            <label>${d.cur}</label>
+                            <select id="in-cur">
+                                <option value="">Select...</option>
+                                <option value="USD">USD - Dollar</option>
+                                <option value="EUR">EUR - Euro</option>
+                                <option value="BTC">BTC - Bitcoin</option>
+                            </select>
+                            <span class="error-text">${d.error}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="field ${!this.isAdmin ? 'restricted' : ''}">
+                        <label>Global Asset Seizure</label>
+                        <input type="checkbox" ${!this.isAdmin ? 'disabled' : ''}>
+                        ${!this.isAdmin ? `<div class="lock-info">${d.locked}</div>` : ''}
+                    </div>
+
+                    <button class="btn-primary" onclick="CORE.review()">${d.review}</button>
+                </div>`;
         }
+        
+        document.querySelectorAll('.nav-item').forEach(i => {
+            i.classList.toggle('active', i.innerText.includes(d.title) || i.innerText.includes(d.auth));
+        });
+    },
+
+    login() {
+        const pass = document.getElementById('admin-pass').value;
+        if(pass === "IQ124578") this.isAdmin = true;
         this.route('suit');
     },
 
-    render() {
-        const d = this.dict[this.lang] || this.dict['EN'];
-        const nav = [['auth', d.t], ['suit', d.s]];
+    review() {
+        const entity = document.getElementById('in-entity').value;
+        const damage = document.getElementById('in-damages').value;
+        const cur = document.getElementById('in-cur').value;
         
-        document.getElementById('nav-list').innerHTML = nav.map(n => 
-            `<div class="nav-item ${this.view===n[0]?'active':''}" onclick="CORE.route('${n[0]}')">${n[1]}</div>`
-        ).join('');
+        let valid = true;
+        if(!entity) { document.getElementById('f-entity').classList.add('error'); valid = false; }
+        else { document.getElementById('f-entity').classList.remove('error'); }
         
-        const v = document.getElementById('main-view');
+        if(!damage) { document.getElementById('f-damages').classList.add('error'); valid = false; }
+        else { document.getElementById('f-damages').classList.remove('error'); }
 
-        if(this.view === 'auth') {
-            v.innerHTML = `
-                <div style="max-width:500px; margin:auto; padding-top:10vh;">
-                    <h1 style="font-weight:100; font-size:48px; margin-bottom:15px;">${d.t}</h1>
-                    <p style="font-size:14px; color:#666; margin-bottom:40px; font-weight:400; line-height:1.6;">${d.info}</p>
-                    
-                    <div class="field">
-                        <label>${d.c}</label>
-                        <input type="text" value="95018-USR" style="font-weight:600; color:var(--win-blue);">
-                    </div>
-                    <br>
-                    <div class="field">
-                        <label>${d.k}</label>
-                        <input type="password" id="pass_input" placeholder="••••••••">
-                    </div>
-                    
-                    <button class="btn-primary" onclick="CORE.handleAuth()">${d.auth}</button>
-                    
-                    <div style="margin-top:40px; font-size:11px; color:#aaa; font-weight:600; text-transform:uppercase;">
-                        Enterprise Grade Encryption: AES-256 Enabled
-                    </div>
-                </div>`;
-        } else {
-            v.innerHTML = `
-                <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:40px;">
-                    <h1 style="font-weight:100; font-size:56px;">${d.s}</h1>
-                    <div style="text-align:right;">
-                        <div style="font-size:10px; font-weight:700; color:#999;">AUTH_LEVEL:</div>
-                        <div style="font-size:14px; font-weight:600; color:${this.isAdmin?'var(--success)':'#444'}">
-                            ${this.isAdmin ? 'TIER-2 ADMIN' : 'TIER-1 STANDARD'}
-                        </div>
-                    </div>
-                </div>
+        if(!cur) { document.getElementById('f-cur').classList.add('error'); valid = false; }
+        else { document.getElementById('f-cur').classList.remove('error'); }
 
-                <div class="form-grid">
-                    <div class="field"><label>${d.ip}</label><input type="text" placeholder="Entity / IP Address"></div>
-                    <div class="field"><label>${d.amt}</label><input type="number" placeholder="0.00"></div>
-                    
-                    <div class="field">
-                        <label>${d.type}</label>
-                        <select>
-                            <option>${d.m1}</option>
-                            <option>${d.m2}</option>
-                            <option>${d.m3}</option>
-                            <option>Compliance Failure</option>
-                            <option>Contract Breach</option>
-                        </select>
-                    </div>
-                    
-                    <div class="field">
-                        <label>${d.cur}</label>
-                        <select>
-                            <option>USD - United States Dollar</option>
-                            <option>EUR - Euro</option>
-                            <option>GBP - British Pound</option>
-                            <option>BTC - Bitcoin Core</option>
-                            <option>ETH - Ethereum Ledger</option>
-                        </select>
-                    </div>
+        if(!valid) return;
 
-                    <div class="field" style="grid-column: span 2;">
-                        <label>${d.desc}</label>
-                        <textarea rows="4" placeholder="Enter case details..."></textarea>
-                    </div>
-                    
-                    <div class="field ${!this.isAdmin?'restricted':''}" onclick="${!this.isAdmin?'CORE.lockAlert()':''}">
-                        <label>${d.m4}</label>
-                        <div style="display:flex; align-items:center; gap:10px; padding:12px;">
-                            <input type="checkbox" style="width:20px; height:20px;">
-                            <span style="font-size:13px; font-weight:400;">Enable Worldwide Asset Liquidation</span>
-                        </div>
-                        ${!this.isAdmin?`<span class="lock-tag">${d.lock}</span>`:''}
-                    </div>
+        const summary = [
+            ["Entity", entity],
+            ["Claim Type", document.getElementById('in-type').value],
+            ["Total Price", `${damage} ${cur}`],
+            ["Priority", this.isAdmin ? "High (Admin)" : "Standard"]
+        ];
 
-                    <div class="field ${!this.isAdmin?'restricted':''}" onclick="${!this.isAdmin?'CORE.lockAlert()':''}">
-                        <label>${d.m5}</label>
-                        <div style="display:flex; align-items:center; gap:10px; padding:12px;">
-                            <input type="checkbox" style="width:20px; height:20px;">
-                            <span style="font-size:13px; font-weight:400;">Direct Interpol Notification Uplink</span>
-                        </div>
-                        ${!this.isAdmin?`<span class="lock-tag">${d.lock}</span>`:''}
-                    </div>
-                </div>
+        document.getElementById('summary-list').innerHTML = summary.map(s => `
+            <div class="summary-item">
+                <span style="font-weight:700; color:#666;">${s[0]}</span>
+                <span style="font-weight:400;">${s[1]}</span>
+            </div>
+        `).join('');
 
-                <button class="btn-primary" onclick="CORE.process()">${d.p}</button>
-
-                <div class="audit-container">
-                    <label style="font-size:11px; font-weight:700; color:#999; text-transform:uppercase; letter-spacing:1px;">
-                        ${d.log}
-                    </label>
-                    <div id="audit-log" style="margin-top:15px;">
-                        ${this.audit.map(a => `
-                            <div class="audit-entry ${a.isAlert?'alert':''}">
-                                <span style="font-family:monospace; font-weight:700; margin-right:15px;">[${a.time}]</span>
-                                ${a.msg}
-                            </div>
-                        `).join('')}
-                    </div>
-                </div>`;
-        }
+        document.getElementById('review-modal').style.display = 'flex';
     },
 
-    lockAlert() {
-        this.addAudit("ACCESS DENIED: Attempted usage of Tier-2 Protocol", true);
-        this.render();
-    },
+    closeModal() { document.getElementById('review-modal').style.display = 'none'; },
 
-    process() {
-        const ov = document.getElementById('processing-ov');
-        const msg = document.getElementById('proc-msg');
-        ov.style.display = 'flex';
+    finalize() {
+        this.closeModal();
+        const proc = document.getElementById('processing');
+        const status = document.getElementById('proc-status');
+        const d = this.dict[this.lang] || this.dict.EN;
+        proc.style.display = 'flex';
         
-        let steps = ["Initializing...", "Verifying Signatures...", "Syncing Ledger...", "Finalizing Entry..."];
-        let i = 0;
-        
-        const interval = setInterval(() => {
-            if(i < steps.length) {
-                msg.innerText = steps[i];
-                i++;
-            } else {
-                clearInterval(interval);
-                ov.style.display = 'none';
-                this.addAudit("CASE FILED SUCCESSFULLY", false);
-                alert("Transaction Complete. Case ID: " + Math.random().toString(36).substr(2, 9).toUpperCase());
-                this.route('auth');
-            }
-        }, 800);
+        setTimeout(() => { status.innerText = d.step1; }, 1000);
+        setTimeout(() => { status.innerText = d.step2; }, 2000);
+        setTimeout(() => {
+            proc.style.display = 'none';
+            alert("Entry successfully committed to the global ledger.");
+            this.route('auth');
+        }, 3500);
     }
 };
 
-// INITIALIZATION
-window.onload = () => CORE.init();
-
-/* * ADDITIONAL STYLES FOR ANIMATION 
- */
-const style = document.createElement('style');
-style.innerHTML = `@keyframes spin { to { transform: rotate(360deg); } }`;
-document.head.appendChild(style);
-
+CORE.init();
 </script>
 </body>
 </html>
