@@ -4,22 +4,22 @@
 <meta charset="UTF-8">
 <style>
 @font-face {
-    font-family: 'Segoe UI';
+    font-family: 'Segoe UI Custom';
     src: local('Segoe UI'),
          url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/normal/latest.woff2') format('woff2');
     font-weight: 400;
 }
 @font-face {
-    font-family: 'Segoe UI Semilight';
+    font-family: 'Segoe UI Custom';
+    src: local('Segoe UI Bold'),
+         url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/bold/latest.woff2') format('woff2');
+    font-weight: 700;
+}
+@font-face {
+    font-family: 'Segoe UI Custom';
     src: local('Segoe UI Semilight'),
          url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/semilight/latest.woff2') format('woff2');
     font-weight: 300;
-}
-@font-face {
-    font-family: 'Segoe UI Semibold';
-    src: local('Segoe UI Semibold'),
-         url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/semibold/latest.woff2') format('woff2');
-    font-weight: 600;
 }
 :root {
     --win-blue: #0078d4;
@@ -34,199 +34,36 @@
     margin: 0; 
     padding: 0; 
     box-sizing: border-box; 
-    font-family: "Segoe UI", "Segoe UI Semibold", "Segoe UI Semilight" !important; 
+    font-family: "Segoe UI Custom", "Segoe UI", sans-serif !important; 
     -webkit-font-smoothing: antialiased;
 }
-body { 
-    background: var(--win-white); 
-    display: flex; 
-    height: 100vh; 
-    overflow: hidden; 
-    color: #333; 
-}
-.sidebar { 
-    width: var(--sidebar-w); 
-    background: var(--win-black); 
-    color: white; 
-    display: flex; 
-    flex-direction: column; 
-    flex-shrink: 0; 
-}
-.sidebar-header { 
-    padding: 40px 30px; 
-    font-size: 22px; 
-    font-weight: 300; 
-    letter-spacing: 2px; 
-    border-bottom: 1px solid #222; 
-}
-.nav-group { 
-    padding: 25px 0; 
-    border-bottom: 1px solid #111; 
-}
-.nav-label { 
-    padding: 0 30px 10px; 
-    font-size: 10px; 
-    font-weight: 700; 
-    color: #555; 
-    text-transform: uppercase; 
-}
-.nav-item { 
-    padding: 12px 30px; 
-    color: #999; 
-    cursor: pointer; 
-    font-size: 11px; 
-    font-weight: 600; 
-    text-transform: uppercase; 
-}
-.nav-item:hover { 
-    color: white; 
-    background: #1a1a1a; 
-}
-.nav-item.active { 
-    color: var(--win-blue); 
-    background: #0a0a0a; 
-    border-right: 4px solid var(--win-blue); 
-}
-.viewport { 
-    flex-grow: 1; 
-    display: flex; 
-    flex-direction: column; 
-    background: #fff; 
-}
-.top-bar { 
-    height: 65px; 
-    padding: 0 40px; 
-    display: flex; 
-    align-items: center; 
-    justify-content: space-between; 
-    border-bottom: 1px solid var(--border); 
-}
-.content { 
-    padding: 50px 80px; 
-    overflow-y: auto; 
-    flex-grow: 1; 
-}
-.dashboard-row { 
-    display: grid; 
-    grid-template-columns: repeat(4, 1fr); 
-    gap: 20px; 
-    margin-bottom: 40px; 
-}
-.tile { 
-    padding: 25px; 
-    border: 1px solid var(--border); 
-    border-bottom: 3px solid var(--win-blue); 
-}
-.tile-head { 
-    font-size: 10px; 
-    font-weight: 700; 
-    color: #888; 
-    text-transform: uppercase; 
-    margin-bottom: 8px; 
-}
-.tile-body { 
-    font-size: 28px; 
-    font-weight: 300; 
-    color: #111; 
-}
-.field-grid { 
-    display: grid; 
-    grid-template-columns: 1fr 1fr; 
-    gap: 25px; 
-    margin-bottom: 30px; 
-}
-.field { 
-    display: flex; 
-    flex-direction: column; 
-    gap: 8px; 
-}
-.field label { 
-    font-size: 11px; 
-    font-weight: 700; 
-    color: #444; 
-    text-transform: uppercase; 
-}
-.field input, .field select { 
-    padding: 12px; 
-    border: 1px solid #ccc; 
-    font-size: 14px; 
-    outline: none; 
-}
-.btn-primary { 
-    background: var(--win-blue); 
-    color: white; 
-    border: none; 
-    padding: 18px 50px; 
-    font-size: 12px; 
-    font-weight: 600; 
-    text-transform: uppercase; 
-    cursor: pointer; 
-}
-.overlay { 
-    display: none; 
-    position: fixed; 
-    inset: 0; 
-    background: rgba(255,255,255,0.98); 
-    z-index: 3000; 
-    align-items: center; 
-    justify-content: center; 
-    flex-direction: column; 
-}
-.spinner { 
-    width: 50px; 
-    height: 50px; 
-    border: 3px solid #eee; 
-    border-top: 3px solid var(--win-blue); 
-    border-radius: 50%; 
-    animation: spin 0.8s linear infinite; 
-}
-@keyframes spin { 
-    to { transform: rotate(360deg); } 
-}
-.table-container { 
-    width: 100%; 
-    border-collapse: collapse; 
-    margin-top: 20px; 
-}
-.table-container th { 
-    text-align: left; 
-    padding: 15px; 
-    font-size: 10px; 
-    text-transform: uppercase; 
-    color: #888; 
-    border-bottom: 2px solid #eee; 
-}
-.table-container td { 
-    padding: 15px; 
-    border-bottom: 1px solid #eee; 
-    font-size: 13px; 
-}
-.status-pill { 
-    padding: 4px 8px; 
-    font-size: 9px; 
-    font-weight: 700; 
-    border-radius: 2px; 
-    text-transform: uppercase; 
-}
-.pill-active { 
-    background: #e6f4ea; 
-    color: #107c10; 
-}
-.map-canvas { 
-    background: #111; 
-    height: 400px; 
-    border-radius: 4px; 
-    position: relative; 
-    overflow: hidden; 
-}
-.node { 
-    position: absolute; 
-    width: 8px; 
-    height: 8px; 
-    background: var(--win-blue); 
-    border-radius: 50%; 
-    box-shadow: 0 0 10px var(--win-blue); 
-}
+body { background: var(--win-white); display: flex; height: 100vh; overflow: hidden; color: #333; }
+.sidebar { width: var(--sidebar-w); background: var(--win-black); color: white; display: flex; flex-direction: column; flex-shrink: 0; }
+.sidebar-header { padding: 40px 30px; font-size: 22px; font-weight: 300; letter-spacing: 2px; border-bottom: 1px solid #222; }
+.nav-group { padding: 25px 0; border-bottom: 1px solid #111; }
+.nav-label { padding: 0 30px 10px; font-size: 10px; font-weight: 700; color: #555; text-transform: uppercase; }
+.nav-item { padding: 12px 30px; color: #999; cursor: pointer; font-size: 11px; font-weight: 700; text-transform: uppercase; border-right: 4px solid transparent; }
+.nav-item:hover { color: white; background: #1a1a1a; }
+.nav-item.active { color: var(--win-blue); background: #0a0a0a; border-right-color: var(--win-blue); }
+.viewport { flex-grow: 1; display: flex; flex-direction: column; background: #fff; }
+.top-bar { height: 65px; padding: 0 40px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); }
+.content { padding: 50px 80px; overflow-y: auto; flex-grow: 1; }
+.dashboard-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 40px; }
+.tile { padding: 25px; border: 1px solid var(--border); border-bottom: 3px solid var(--win-blue); }
+.tile-head { font-size: 10px; font-weight: 700; color: #888; text-transform: uppercase; margin-bottom: 8px; }
+.tile-body { font-size: 28px; font-weight: 300; color: #111; }
+.bold-stat { font-weight: 700; color: var(--win-blue); }
+.field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 30px; }
+.field { display: flex; flex-direction: column; gap: 8px; }
+.field label { font-size: 11px; font-weight: 700; color: #444; text-transform: uppercase; }
+.field input { padding: 12px; border: 1px solid #ccc; font-size: 14px; outline: none; }
+.btn-primary { background: var(--win-blue); color: white; border: none; padding: 18px 50px; font-size: 12px; font-weight: 700; text-transform: uppercase; cursor: pointer; }
+.table-container { width: 100%; border-collapse: collapse; margin-top: 20px; }
+.table-container th { text-align: left; padding: 15px; font-size: 10px; font-weight: 700; text-transform: uppercase; color: #888; border-bottom: 2px solid #eee; }
+.table-container td { padding: 15px; border-bottom: 1px solid #eee; font-size: 13px; }
+.status-pill { padding: 4px 8px; font-size: 9px; font-weight: 700; border-radius: 2px; text-transform: uppercase; background: #e6f4ea; color: #107c10; }
+.map-canvas { background: #111; height: 300px; border-radius: 4px; position: relative; overflow: hidden; }
+.node { position: absolute; width: 6px; height: 6px; background: var(--win-blue); border-radius: 50%; box-shadow: 0 0 8px var(--win-blue); }
 </style>
 </head>
 <body>
@@ -236,7 +73,6 @@ body {
         <div class="nav-label" data-key="ops">Global Operations</div>
         <div class="nav-item active" id="nav-dash" onclick="CORE.route('dash')" data-key="nav_dash">Operations Dashboard</div>
         <div class="nav-item" id="nav-form" onclick="CORE.route('form')" data-key="nav_form">Lawsuit Filing</div>
-        <div class="nav-item" id="nav-auth" onclick="CORE.route('auth')" data-key="nav_auth">Access Control</div>
     </div>
     <div class="nav-group">
         <div class="nav-label" data-key="assets">Assets & Intel</div>
@@ -250,91 +86,65 @@ body {
 </aside>
 <main class="viewport">
     <div class="top-bar">
-        <div style="font-size:11px; font-weight:700; color:#999;">UPLINK: <span style="color:var(--success)">SECURE</span> // TIER: <span id="tier-status">STANDARD</span></div>
-        <select id="lang-menu" onchange="CORE.setLang(this.value)" style="padding:6px; font-size:12px; border:1px solid #ddd; width:120px; background:white;">
+        <div style="font-size:11px; font-weight:700; color:#999;">UPLINK: <span style="color:var(--success)">SECURE</span></div>
+        <select id="lang-menu" onchange="CORE.setLang(this.value)" style="padding:6px; font-size:12px; border:1px solid #ddd; width:140px; background:white;">
             <option value="EN">English</option>
             <option value="VI">Tiếng Việt</option>
-            <option value="ZH">中文</option>
-            <option value="RU">Русский</option>
+            <option value="ZH">中文 (Chinese)</option>
+            <option value="RU">Русский (Russian)</option>
+            <option value="JA">日本語 (Japanese)</option>
         </select>
     </div>
     <div class="content" id="view-target"></div>
 </main>
-<div id="loading" class="overlay">
-    <div class="spinner"></div>
-    <h1 style="font-size:24px; margin-top:25px; font-weight:300;" data-key="sync">Syncing...</h1>
-</div>
 <script>
 const CORE = {
-    view: 'dash', lang: 'EN', isAdmin: false,
+    view: 'dash', lang: 'EN',
     dict: {
-        EN: {
-            ops: "Global Operations", nav_dash: "Operations Dashboard", nav_form: "Lawsuit Filing", nav_auth: "Access Control",
-            assets: "Assets & Intel", nav_led: "Ledger Audit", nav_map: "Network Mapping", sys: "System", exit: "Terminal Exit",
-            stat: "Status", nodes: "Nodes", val: "Asset Value", lat: "Latency", sync: "Syncing...",
-            ent: "Entity Name", amt: "Amount", cur: "Currency", process: "Commit Entry", title: "Dashboard"
-        },
-        VI: {
-            ops: "Hoạt động Toàn cầu", nav_dash: "Bảng Điều khiển", nav_form: "Đệ trình Đơn kiện", nav_auth: "Kiểm soát Truy cập",
-            assets: "Tài sản & Tình báo", nav_led: "Kiểm toán Sổ cái", nav_map: "Sơ đồ Mạng", sys: "Hệ thống", exit: "Thoát Hệ thống",
-            stat: "Trạng thái", nodes: "Nút mạng", val: "Giá trị Tài sản", lat: "Độ trễ", sync: "Đang đồng bộ...",
-            ent: "Tên Thực thể", amt: "Số tiền", cur: "Tiền tệ", process: "Gửi Hồ sơ", title: "Bảng Điều khiển"
-        }
+        EN: { ops: "Global Operations", nav_dash: "Operations Dashboard", nav_form: "Lawsuit Filing", assets: "Assets & Intel", nav_led: "Ledger Audit", nav_map: "Network Mapping", sys: "System", exit: "Terminal Exit", stat: "Status", nodes: "Nodes", val: "Asset Value", lat: "Latency", ent: "Entity Name", amt: "Amount", process: "Commit Entry", title: "Dashboard" },
+        VI: { ops: "Hoạt động Toàn cầu", nav_dash: "Bảng Điều khiển", nav_form: "Đệ trình Đơn kiện", assets: "Tài sản & Tình báo", nav_led: "Kiểm toán Sổ cái", nav_map: "Sơ đồ Mạng", sys: "Hệ thống", exit: "Thoát Hệ thống", stat: "Trạng thái", nodes: "Nút mạng", val: "Giá trị Tài sản", lat: "Độ trễ", ent: "Tên Thực thể", amt: "Số tiền", process: "Gửi Hồ sơ", title: "Bảng Điều khiển" },
+        ZH: { ops: "全球运营", nav_dash: "业务仪表板", nav_form: "诉讼申请", assets: "资产与情报", nav_led: "账本审计", nav_map: "网络映射", sys: "系统", exit: "退出终端", stat: "状态", nodes: "节点", val: "资产价值", lat: "延迟", ent: "实体名称", amt: "金额", process: "提交条目", title: "仪表板" },
+        RU: { ops: "Глобальные операции", nav_dash: "Панель управления", nav_form: "Подача иска", assets: "Активы и разведка", nav_led: "Аудит реестра", nav_map: "Карта сети", sys: "Система", exit: "Выход", stat: "Статус", nodes: "Узлы", val: "Стоимость активов", lat: "Задержка", ent: "Имя сущности", amt: "Сумма", process: "Зафиксировать", title: "Панель" },
+        JA: { ops: "グローバルオペレーション", nav_dash: "ダッシュボード", nav_form: "訴訟提起", assets: "資産とインテリジェンス", nav_led: "元帳監査", nav_map: "ネットワークマッピング", sys: "システム", exit: "終了", stat: "ステータス", nodes: "ノード", val: "資産価値", lat: "遅延", ent: "エンティティ名", amt: "金額", process: "エントリをコミット", title: "ダッシュボード" }
     },
-    init() {
-        this.render();
-    },
+    init() { this.render(); },
     setLang(l) { this.lang = l; this.render(); },
     route(v) { this.view = v; this.render(); },
-    translate() {
-        const d = this.dict[this.lang] || this.dict.EN;
-        document.querySelectorAll('[data-key]').forEach(el => {
-            const key = el.getAttribute('data-key');
-            if(d[key]) el.innerText = d[key];
-        });
-    },
     render() {
         const d = this.dict[this.lang] || this.dict.EN;
         const target = document.getElementById('view-target');
         document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-        const navItem = document.getElementById(`nav-${this.view}`);
-        if(navItem) navItem.classList.add('active');
+        document.getElementById(`nav-${this.view}`).classList.add('active');
         
         if(this.view === 'dash') {
             target.innerHTML = `<h1 style="font-weight:300; font-size:48px; margin-bottom:40px;">${d.title}</h1>
                 <div class="dashboard-row">
-                    <div class="tile"><div class="tile-head">${d.stat}</div><div class="tile-body" style="color:var(--success)">OPTIMAL</div></div>
-                    <div class="tile"><div class="tile-head">${d.nodes}</div><div class="tile-body">2,841</div></div>
-                    <div class="tile"><div class="tile-head">${d.val}</div><div class="tile-body">$4.2M</div></div>
-                    <div class="tile"><div class="tile-head">${d.lat}</div><div class="tile-body">9ms</div></div>
-                </div>`;
+                    <div class="tile"><div class="tile-head">${d.stat}</div><div class="tile-body bold-stat">OPTIMAL</div></div>
+                    <div class="tile"><div class="tile-head">${d.nodes}</div><div class="tile-body bold-stat">2,841</div></div>
+                    <div class="tile"><div class="tile-head">${d.val}</div><div class="tile-body bold-stat">$4.2M</div></div>
+                    <div class="tile"><div class="tile-head">${d.lat}</div><div class="tile-body bold-stat">9ms</div></div>
+                </div><div style="padding:20px; border:1px solid #eee;"><h2 style="font-weight:700; margin-bottom:15px;">Live Uplink Integrity</h2><div style="height:100px; background:#f9f9f9; display:flex; align-items:flex-end; gap:2px;">${Array(80).fill(0).map(()=>`<div style="flex:1; background:var(--win-blue); height:${Math.random()*100}%"></div>`).join('')}</div></div>`;
         } else if(this.view === 'form') {
             target.innerHTML = `<h1 style="font-weight:300; font-size:48px; margin-bottom:40px;">${d.nav_form}</h1>
                 <div class="field-grid">
-                    <div class="field"><label>${d.ent}</label><input type="text" id="in-ent"></div>
-                    <div class="field"><label>${d.amt}</label><input type="number" id="in-val"></div>
-                </div>
-                <button class="btn-primary" onclick="CORE.validate()">${d.process}</button>`;
+                    <div class="field"><label>${d.ent}</label><input type="text"></div>
+                    <div class="field"><label>${d.amt}</label><input type="number"></div>
+                </div><button class="btn-primary">${d.process}</button>`;
         } else if(this.view === 'ledger') {
             target.innerHTML = `<h1 style="font-weight:300; font-size:48px; margin-bottom:40px;">${d.nav_led}</h1>
-                <table class="table-container"><thead><tr><th>Time</th><th>Target</th><th>Value</th><th>Status</th></tr></thead>
-                <tbody>${Array(15).fill(0).map((_,i)=>`<tr><td>2026-02-01</td><td>TRX-0${i}</td><td>$${(i*5).toFixed(2)}k</td><td><span class="status-pill pill-active">Verified</span></td></tr>`).join('')}</tbody></table>`;
+                <table class="table-container"><thead><tr><th>Time</th><th>Reference</th><th>Value</th><th>Status</th></tr></thead>
+                <tbody>${Array(12).fill(0).map((_,i)=>`<tr><td>2026-02-01</td><td><b style="font-weight:700">TX-950-${i}</b></td><td>$${(i*12).toFixed(2)}k</td><td><span class="status-pill">Verified</span></td></tr>`).join('')}</tbody></table>`;
         } else if(this.view === 'map') {
             target.innerHTML = `<h1 style="font-weight:300; font-size:48px; margin-bottom:40px;">${d.nav_map}</h1><div class="map-canvas" id="m-can"></div>`;
             const c = document.getElementById('m-can');
-            for(let i=0; i<50; i++) {
+            for(let i=0; i<60; i++) {
                 const n = document.createElement('div'); n.className = 'node';
                 n.style.left = Math.random()*98+'%'; n.style.top = Math.random()*95+'%';
                 c.appendChild(n);
             }
         }
-        this.translate();
-    },
-    validate() {
-        document.getElementById('loading').style.display = 'flex';
-        setTimeout(() => { document.getElementById('loading').style.display = 'none'; this.route('ledger'); }, 1000);
-    },
-    logout() { this.isAdmin = false; this.route('dash'); }
+        document.querySelectorAll('[data-key]').forEach(el => { el.innerText = d[el.getAttribute('data-key')]; });
+    }
 };
 CORE.init();
 </script>
