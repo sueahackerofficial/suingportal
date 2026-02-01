@@ -2,196 +2,186 @@
 <html lang="vi">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>SAH 95018 | LEGACY TERMINAL</title>
+<title>SAH 95018 | COMMAND TERMINAL</title>
 <style type="text/css">
-/* FORCING SEGOE UI VIA DIRECT MS-CDN MAPPING */
+/* THE "NUCLEAR" FONT OPTION: NO FALLBACKS ALLOWED */
 @font-face {
-    font-family: 'Segoe UI';
-    src: local('Segoe UI Bold'), url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/bold/latest.woff2') format('woff2');
+    font-family: 'Segoe UI Custom';
+    src: local('Segoe UI Bold'), 
+         url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/bold/latest.woff2') format('woff2');
     font-weight: 700;
 }
 @font-face {
-    font-family: 'Segoe UI';
-    src: local('Segoe UI Semibold'), url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/semibold/latest.woff2') format('woff2');
-    font-weight: 600;
-}
-@font-face {
-    font-family: 'Segoe UI';
-    src: local('Segoe UI'), url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/normal/latest.woff2') format('woff2');
+    font-family: 'Segoe UI Custom';
+    src: local('Segoe UI'), 
+         url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/normal/latest.woff2') format('woff2');
     font-weight: 400;
 }
-
-:root {
-    --blue: #0078d4;
-    --black: #000000;
-    --white: #ffffff;
-    --grey: #f3f3f3;
+@font-face {
+    font-family: 'Segoe UI Custom';
+    src: local('Segoe UI Semilight'), 
+         url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/semilight/latest.woff2') format('woff2');
+    font-weight: 300;
 }
 
-body, table, td, div, p, span, input, select {
-    font-family: "Segoe UI", "Segoe UI Web (West European)", "Tahoma", "Verdana", sans-serif !important;
-    -webkit-text-size-adjust: 100%;
-    -ms-text-size-adjust: 100%;
+/* Wiping out system fallbacks */
+* { 
+    font-family: 'Segoe UI Custom' !important; 
+    -webkit-font-smoothing: antialiased;
 }
 
-body { margin: 0; padding: 0; background-color: #ffffff; height: 100vh; overflow: hidden; }
+body { margin: 0; padding: 0; background-color: #ffffff; height: 100vh; overflow: hidden; color: #333; }
 
-/* LEGACY LAYOUT ENGINE */
-.sidebar { width: 300px; background-color: #000000; color: #ffffff; vertical-align: top; }
-.sidebar-header { padding: 40px 30px; border-bottom: 1px solid #222222; }
-.nav-item { padding: 15px 30px; cursor: pointer; color: #999999; font-size: 11px; text-transform: uppercase; font-weight: 700; letter-spacing: 1px; }
-.nav-item:hover { background-color: #111111; color: #ffffff; }
-.nav-item-active { background-color: #0a0a0a; color: #0078d4; border-right: 4px solid #0078d4; }
+/* THE CORE LAYOUT */
+.sidebar { width: 300px; background-color: #000000; color: #ffffff; vertical-align: top; height: 100vh; }
+.sidebar-header { padding: 45px 30px; border-bottom: 1px solid #222; font-size: 24px; font-weight: 300; letter-spacing: 2px; }
+.nav-group-label { padding: 30px 30px 10px; font-size: 10px; font-weight: 700; color: #555; text-transform: uppercase; }
+.nav-item { padding: 15px 30px; cursor: pointer; color: #999; font-size: 11px; font-weight: 700; text-transform: uppercase; transition: 0.1s; }
+.nav-item:hover { background-color: #111; color: #fff; }
+.nav-item.active { background-color: #0a0a0a; color: #0078d4; border-right: 4px solid #0078d4; }
 
-.viewport { background-color: #ffffff; vertical-align: top; }
-.top-bar { height: 65px; border-bottom: 1px solid #e0e0e0; padding: 0 40px; }
+.viewport { background-color: #ffffff; vertical-align: top; position: relative; }
+.top-bar { height: 65px; border-bottom: 1px solid #e0e0e0; padding: 0 40px; background: #fff; }
 
-/* BOLDNESS ENFORCEMENT */
-b, strong, .bold { font-family: "Segoe UI", sans-serif !important; font-weight: 700 !important; }
+/* FORM RESTORATION */
+.form-container { max-width: 800px; }
+.field-row { display: flex; gap: 20px; margin-bottom: 25px; }
+.field-box { flex: 1; display: flex; flex-direction: column; }
+.field-box label { font-size: 11px; font-weight: 700; color: #666; text-transform: uppercase; margin-bottom: 8px; }
+.field-box input, .field-box select, .field-box textarea { 
+    padding: 12px; border: 1px solid #ccc; font-size: 14px; outline: none; background: #fff;
+}
+.field-box input:focus { border-color: #0078d4; }
 
-/* THE TILE ENGINE */
-.tile-container { padding: 20px; }
-.tile { border: 1px solid #e0e0e0; border-bottom: 3px solid #0078d4; padding: 25px; background: #fff; }
-.tile-val { font-size: 32px; font-weight: 400; color: #000; margin-top: 10px; }
+.btn-commit { 
+    background-color: #0078d4; color: #fff; border: none; padding: 20px 60px; 
+    font-size: 12px; font-weight: 700; text-transform: uppercase; cursor: pointer; margin-top: 20px;
+}
 
-/* DATA TABLES */
-.data-table { width: 100%; border-collapse: collapse; }
-.data-table th { background-color: #fafafa; border-bottom: 2px solid #eeeeee; padding: 15px; text-align: left; font-size: 10px; font-weight: 700; color: #666; text-transform: uppercase; }
-.data-table td { padding: 15px; border-bottom: 1px solid #eeeeee; font-size: 13px; }
+/* DATA VISUALS */
+.ledger-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+.ledger-table th { text-align: left; padding: 15px; font-size: 10px; font-weight: 700; color: #888; text-transform: uppercase; border-bottom: 2px solid #eee; }
+.ledger-table td { padding: 15px; border-bottom: 1px solid #eee; font-size: 13px; }
 
-.status-verified { color: #107c10; font-weight: 700; background: #e6f4ea; padding: 4px 8px; border-radius: 2px; }
+.pill { padding: 4px 10px; font-size: 10px; font-weight: 700; border-radius: 2px; }
+.pill-green { background: #e6f4ea; color: #107c10; }
+.pill-red { background: #fde7e9; color: #a80000; }
 
-/* ANIMATION BLOCKS */
-.pulse { width: 10px; height: 10px; background-color: #107c10; border-radius: 50%; display: inline-block; margin-right: 10px; }
+.loading-overlay { 
+    display: none; position: fixed; inset: 0; background: rgba(255,255,255,0.95); 
+    z-index: 9999; flex-direction: column; align-items: center; justify-content: center; 
+}
 </style>
 </head>
-
 <body>
 
 <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
     <tr>
-        <td class="sidebar" width="300">
-            <div class="sidebar-header">
-                <font size="5" color="#ffffff" style="font-weight: 300; letter-spacing: 2px;">SAH 95018</font>
-            </div>
-            
-            <div style="padding: 30px 0 10px 30px;">
-                <font color="#555555" size="1"><b>GLOBAL OPERATIONS</b></font>
-            </div>
-            <div class="nav-item nav-item-active" onclick="CORE.route('dash')">Operations Dashboard</div>
-            <div class="nav-item" onclick="CORE.route('form')">Lawsuit Filing</div>
-            <div class="nav-item" onclick="CORE.route('auth')">Access Control</div>
-            
-            <div style="padding: 30px 0 10px 30px;">
-                <font color="#555555" size="1"><b>ASSETS & INTEL</b></font>
-            </div>
-            <div class="nav-item" onclick="CORE.route('ledger')">Ledger Audit</div>
-            <div class="nav-item" onclick="CORE.route('map')">Network Mapping</div>
-            <div class="nav-item" onclick="CORE.route('explorer')">Entity Explorer</div>
-
-            <div style="padding: 100px 30px 20px 30px;">
-                <font color="#d83b01" size="1" style="cursor: pointer;" onclick="CORE.exit()"><b>TERMINAL EXIT</b></font>
-            </div>
+        <td class="sidebar">
+            <div class="sidebar-header">SAH 95018</div>
+            <div class="nav-group-label" data-key="ops">Global Operations</div>
+            <div class="nav-item active" id="n-dash" onclick="CORE.route('dash')" data-key="n_dash">Dashboard</div>
+            <div class="nav-item" id="n-form" onclick="CORE.route('form')" data-key="n_form">Lawsuit Filing</div>
+            <div class="nav-group-label" data-key="intel">Assets & Intel</div>
+            <div class="nav-item" id="n-led" onclick="CORE.route('led')" data-key="n_led">Ledger Audit</div>
+            <div class="nav-item" id="n-map" onclick="CORE.route('map')" data-key="n_map">Network Map</div>
+            <div style="margin-top: 100px;" class="nav-item" onclick="CORE.exit()" data-key="exit">Exit Terminal</div>
         </td>
-
         <td class="viewport">
             <div class="top-bar">
                 <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
                     <tr>
-                        <td>
-                            <span class="pulse"></span>
-                            <font size="1" color="#999999"><b>UPLINK: <font color="#107c10">SECURE</font> // ENCRYPTION: 256-AES</b></font>
-                        </td>
+                        <td><b style="font-size: 10px; color: #999;">SYSTEM STATUS: <span style="color:#107c10">ENCRYPTED</span></b></td>
                         <td align="right">
-                            <select id="lang-menu" onchange="CORE.setLang(this.value)" style="padding: 5px; font-size: 12px; font-family: 'Segoe UI'; font-weight: 600;">
-                                <option value="EN">English (US)</option>
+                            <select id="l-select" onchange="CORE.setLang(this.value)" style="font-weight:700; padding:5px;">
+                                <option value="EN">English</option>
                                 <option value="VI">Tiếng Việt</option>
-                                <option value="ZH">中文 (简体)</option>
-                                <option value="RU">Русский</option>
-                                <option value="AR">العربية</option>
                             </select>
                         </td>
                     </tr>
                 </table>
             </div>
-
-            <div id="view-target" style="padding: 50px 80px; overflow-y: auto;">
-                </div>
+            <div id="root" style="padding: 50px 80px; overflow-y: auto;"></div>
         </td>
     </tr>
 </table>
 
+<div id="loader" class="loading-overlay">
+    <div style="width: 40px; height: 40px; border: 4px solid #f3f3f3; border-top: 4px solid #0078d4; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+    <h2 style="margin-top: 20px; font-weight: 300;" data-key="sync">Synchronizing Ledger...</h2>
+</div>
+
 <script type="text/javascript">
 var CORE = {
-    view: 'dash',
-    lang: 'EN',
+    view: 'dash', lang: 'EN',
     dict: {
-        EN: { title: "Operations Dashboard", nodes: "Network Nodes", value: "Asset Value", status: "System Status", entity: "Entity Name", amount: "Filing Amount", submit: "Commit Entry", ledger: "Financial Ledger" },
-        VI: { title: "Bảng Điều Khiển", nodes: "Nút Mạng", value: "Giá Trị Tài Sản", status: "Trạng Thái", entity: "Tên Thực Thể", amount: "Số Tiền", submit: "Gửi Hồ Sơ", ledger: "Sổ Cái Tài Chính" },
-        ZH: { title: "业务仪表板", nodes: "网络节点", value: "资产价值", status: "系统状态", entity: "实体名称", amount: "申报金额", submit: "提交记录", ledger: "财务账本" }
+        EN: { ops: "Global Operations", n_dash: "Dashboard", n_form: "Lawsuit Filing", intel: "Assets & Intel", n_led: "Ledger Audit", n_map: "Network Map", exit: "Exit Terminal", sync: "Synchronizing Ledger...", ent: "Entity Name", val: "Claim Value", cur: "Currency", jur: "Jurisdiction", sev: "Severity Level", submit: "Commit Lawsuit", desc: "Case Description" },
+        VI: { ops: "Hoạt động Toàn cầu", n_dash: "Bảng Điều khiển", n_form: "Đệ trình Đơn kiện", intel: "Tài sản & Tình báo", n_led: "Kiểm toán Sổ cái", n_map: "Sơ đồ Mạng", exit: "Thoát Hệ thống", sync: "Đang đồng bộ Sổ cái...", ent: "Tên Thực thể", val: "Giá trị Khiếu nại", cur: "Tiền tệ", jur: "Quyền hạn Pháp lý", sev: "Mức độ Nghiêm trọng", submit: "Gửi Hồ sơ Kiện", desc: "Mô tả Vụ việc" }
     },
-
-    init: function() {
-        this.render();
-    },
-
-    setLang: function(l) {
-        this.lang = l;
-        this.render();
-    },
-
-    route: function(v) {
-        this.view = v;
-        this.render();
-    },
-
+    init: function() { this.render(); },
+    route: function(v) { this.view = v; this.render(); },
+    setLang: function(l) { this.lang = l; this.render(); },
     render: function() {
-        var d = this.dict[this.lang] || this.dict.EN;
-        var target = document.getElementById('view-target');
-        
-        if (this.view === 'dash') {
-            target.innerHTML = '<h1 style="font-weight: 300; font-size: 48px; color: #000; margin-bottom: 40px;">' + d.title + '</h1>' +
-                '<table width="100%" border="0" cellpadding="0" cellspacing="20">' +
-                '<tr>' +
-                '<td width="25%"><div class="tile"><font size="1" color="#888888"><b>' + d.status + '</b></font><div class="tile-val"><b style="color:#107c10">SECURE</b></div></div></td>' +
-                '<td width="25%"><div class="tile"><font size="1" color="#888888"><b>' + d.nodes + '</b></font><div class="tile-val"><b style="color:#0078d4">4,812</b></div></div></td>' +
-                '<td width="25%"><div class="tile"><font size="1" color="#888888"><b>' + d.value + '</b></font><div class="tile-val"><b style="color:#000">$8.42M</b></div></div></td>' +
-                '<td width="25%"><div class="tile"><font size="1" color="#888888"><b>LATENCY</b></font><div class="tile-val"><b>14ms</b></div></div></td>' +
-                '</tr>' +
-                '</table>' +
-                '<div style="margin-top:40px; border:1px solid #eee; padding:30px;">' +
-                '<font size="4"><b>Real-time Uplink Activity</b></font><br><br>' +
-                '<div style="height:150px; background:#f9f9f9; display:flex; align-items:flex-end; gap:4px; padding:10px;">' +
-                this.genGraph() +
-                '</div></div>';
-        } else if (this.view === 'ledger') {
-            target.innerHTML = '<h1 style="font-weight: 300; font-size: 48px; color: #000; margin-bottom: 40px;">' + d.ledger + '</h1>' +
-                '<table class="data-table"><thead><tr><th>Timestamp</th><th>Reference ID</th><th>Valuation</th><th>Status</th></tr></thead><tbody>' +
-                this.genLedgerRows() +
-                '</tbody></table>';
-        }
-    },
+        var d = this.dict[this.lang];
+        var root = document.getElementById('root');
+        document.querySelectorAll('.nav-item').forEach(function(el){ el.className = 'nav-item'; });
+        var activeNav = document.getElementById('n-' + this.view);
+        if(activeNav) activeNav.className = 'nav-item active';
 
-    genGraph: function() {
-        var html = '';
-        for(var i=0; i<60; i++) {
-            var h = Math.floor(Math.random() * 100) + 10;
-            html += '<div style="flex:1; background:#0078d4; height:' + h + '%; opacity:0.7;"></div>';
+        if(this.view === 'dash') {
+            root.innerHTML = '<h1 style="font-weight:300; font-size:48px; margin-bottom:40px;">Dashboard</h1>' +
+                '<div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:20px;">' +
+                '<div class="field-box" style="border:1px solid #eee; padding:20px;"><b>SYSTEM</b><br><span style="font-size:24px; color:#107c10">OPTIMAL</span></div>' +
+                '<div class="field-box" style="border:1px solid #eee; padding:20px;"><b>NODES</b><br><span style="font-size:24px;">2,841</span></div>' +
+                '<div class="field-box" style="border:1px solid #eee; padding:20px;"><b>LEDGER</b><br><span style="font-size:24px;">$4.2M</span></div>' +
+                '<div class="field-box" style="border:1px solid #eee; padding:20px;"><b>LATENCY</b><br><span style="font-size:24px;">9ms</span></div>' +
+                '</div>';
+        } else if(this.view === 'form') {
+            root.innerHTML = '<h1 style="font-weight:300; font-size:48px; margin-bottom:40px;">'+d.n_form+'</h1>' +
+                '<div class="form-container">' +
+                '<div class="field-row">' +
+                '<div class="field-box"><label>'+d.ent+'</label><input type="text" placeholder="Full Legal Entity Name"></div>' +
+                '<div class="field-box"><label>'+d.val+'</label><input type="number" placeholder="0.00"></div>' +
+                '</div>' +
+                '<div class="field-row">' +
+                '<div class="field-box"><label>'+d.cur+'</label><select><option>USD</option><option>VND</option><option>EUR</option></select></div>' +
+                '<div class="field-box"><label>'+d.jur+'</label><input type="text" value="International Court" disabled></div>' +
+                '</div>' +
+                '<div class="field-row">' +
+                '<div class="field-box"><label>'+d.sev+'</label><select><option>Level 1 - Minor</option><option>Level 2 - Material</option><option>Level 3 - Critical</option></select></div>' +
+                '</div>' +
+                '<div class="field-box"><label>'+d.desc+'</label><textarea rows="5"></textarea></div>' +
+                '<button class="btn-commit" onclick="CORE.commit()">'+d.submit+'</button>' +
+                '</div>';
+        } else if(this.view === 'led') {
+            root.innerHTML = '<h1 style="font-weight:300; font-size:48px; margin-bottom:40px;">'+d.n_led+'</h1>' +
+                '<table class="ledger-table"><thead><tr><th>Timestamp</th><th>Reference</th><th>Value</th><th>Status</th></tr></thead>' +
+                '<tbody>' + this.getRows() + '</tbody></table>';
         }
-        return html;
+        this.translate();
     },
-
-    genLedgerRows: function() {
-        var html = '';
-        for(var i=1; i<=15; i++) {
-            html += '<tr><td>2026-02-01 16:' + (i < 10 ? '0'+i : i) + '</td><td><b style="font-weight:700">SAH-REF-00' + i + '</b></td><td>$' + (i*1250).toLocaleString() + '.00</td><td><span class="status-verified">VERIFIED</span></td></tr>';
+    getRows: function() {
+        var h = '';
+        for(var i=0; i<10; i++) {
+            h += '<tr><td>2026-02-01 16:45</td><td><b>TX-950-0'+i+'</b></td><td>$'+(i*1500).toLocaleString()+'.00</td><td><span class="pill pill-green">VERIFIED</span></td></tr>';
         }
-        return html;
-    }
+        return h;
+    },
+    commit: function() {
+        document.getElementById('loader').style.display = 'flex';
+        setTimeout(function(){ document.getElementById('loader').style.display = 'none'; CORE.route('led'); }, 1500);
+    },
+    translate: function() {
+        var d = this.dict[this.lang];
+        document.querySelectorAll('[data-key]').forEach(function(el){
+            var k = el.getAttribute('data-key');
+            if(d[k]) el.innerText = d[k];
+        });
+    },
+    exit: function() { window.location.reload(); }
 };
-
 window.onload = function() { CORE.init(); };
 </script>
-
+<style>@keyframes spin { to { transform: rotate(360deg); } }</style>
 </body>
 </html>
