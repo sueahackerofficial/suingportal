@@ -7,33 +7,9 @@
 <style>
 @font-face {
     font-family: 'Segoe UI';
-    src: url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/light/latest.woff2') format('woff2');
-    font-weight: 100;
-}
-@font-face {
-    font-family: 'Segoe UI';
-    src: url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/semilight/latest.woff2') format('woff2');
-    font-weight: 200;
-}
-@font-face {
-    font-family: 'Segoe UI';
-    src: url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/semilight/latest.woff2') format('woff2');
-    font-weight: 300;
-}
-@font-face {
-    font-family: 'Segoe UI';
-    src: url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/normal/latest.woff2') format('woff2');
-    font-weight: 400;
-}
-@font-face {
-    font-family: 'Segoe UI';
-    src: url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/semibold/latest.woff2') format('woff2');
-    font-weight: 600;
-}
-@font-face {
-    font-family: 'Segoe UI';
-    src: url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/bold/latest.woff2') format('woff2');
-    font-weight: 700;
+    src: url('https://db.onlinewebfonts.com/t/42698664687d7b001d812239634d0b13.woff2') format('woff2');
+    font-weight: 100 700;
+    font-display: swap;
 }
 
 :root {
@@ -50,7 +26,7 @@
     margin: 0; 
     padding: 0; 
     box-sizing: border-box; 
-    font-family: "Segoe UI", "Segoe UI Web", sans-serif !important; 
+    font-family: "Segoe UI", sans-serif !important; 
     -webkit-font-smoothing: antialiased;
 }
 
@@ -103,7 +79,7 @@ body { background: var(--win-white); display: flex; height: 100vh; overflow: hid
 .dashboard-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 40px; }
 .tile { padding: 25px; border: 1px solid var(--border); border-bottom: 3px solid var(--win-blue); }
 .tile-head { font-size: 10px; font-weight: 700; color: #888; text-transform: uppercase; }
-.tile-body { font-size: 28px; font-weight: 200; margin-top: 8px; }
+.tile-body { font-size: 28px; font-weight: 100; margin-top: 8px; }
 
 .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 30px; }
 .field { display: flex; flex-direction: column; gap: 8px; }
@@ -173,21 +149,25 @@ body { background: var(--win-white); display: flex; height: 100vh; overflow: hid
 
 <div id="loading" class="overlay">
     <div style="width:50px; height:50px; border:3px solid #eee; border-top:3px solid var(--win-blue); border-radius:50%; animation: spin 1s linear infinite;"></div>
-    <h1 style="font-size:24px; margin-top:20px; font-weight:100;">Updating Ledger...</h1>
+    <h1 style="font-size:24px; margin-top:20px; font-weight:100;">Writing to Ledger...</h1>
 </div>
 
 <script>
 const CORE = {
     view: 'dash', lang: 'EN', isAdmin: false,
-    langs: ["EN","EL","RU","VI","AF","SQ","AM","AR","HY","AZ","EU","BE","BN","BS","BG","CA","CEB","NY","ZH","CO","HR","CS","DA","NL","EO","ET","TL","FI","FR","FY","GL","KA","DE","GU","HT","HA","HAW","IW","HI","HMN","HU","IS","IG","ID","GA","IT","JA","JW","KN","KK","KM","KO","KU","KY","LO","LA","LV","LT","LB","MK","MG","MS","ML","MT","MI","MR","MN","MY","NE","NO","PS","FA","PL","PT","PA","RO","SM","GD","SR","ST","SN","SD","SI","SK","SL","SO","ES","SU","SW","SV","TG","TA","TE","TH","TR","UK","UR","UZ","CY","XH","YI","YO","ZU","EU","GL","KA","GU","HT","HA","HAW","IW","HI","HMN","HU","IS","IG","ID","GA"],
+    langs: ["EN","EL","RU","VI","AF","SQ","AM","AR","HY","AZ","EU","BE","BN","BS","BG","CA","CEB","NY","ZH","CO","HR","CS","DA","NL","EO","ET","TL","FI","FR","FY","GL","KA","DE","GU","HT","HA","HAW","IW","HI","HMN","HU","IS","IG","ID","GA","IT","JA","JW","KN","KK","KM","KO","KU","KY","LO","LA","LV","LT","LB","MK","MG","MS","ML","MT","MI","MR","MN","MY","NE","NO","PS","FA","PL","PT","PA","RO","SM","GD","SR","ST","SN","SD","SI","SK","SL","SO","ES","SU","SW","SV","TG","TA","TE","TH","TR","UK","UR","UZ","CY","XH","YI","YO","ZU"],
     
     dict: {
         EN: { t: "Dashboard", f: "Lawsuit Entry", a: "Admin Auth", ent: "Entity Name", val: "Asset Value", cur: "Currency", pass: "Security Key", auth: "Authorize", err: "Required", process: "Commit Entry", seize: "Enable Global Asset Seizure" },
         EL: { t: "Πίνακας Ελέγχου", f: "Καταχώρηση Αγωγής", a: "Εξουσιοδότηση", ent: "Οντότητα", val: "Αξία", cur: "Νόμισμα", pass: "Κωδικός", auth: "Εξουσιοδότηση", err: "Απαραίτητο", process: "Υποβολή", seize: "Ενεργοποίηση Κατάσχεσης" },
         RU: { t: "Панель", f: "Форма иска", a: "Авторизация", ent: "Субъект", val: "Стоимость", cur: "Валюта", pass: "Ключ", auth: "Авторизовать", err: "Обязательно", process: "Выполнить", seize: "Изъятие активов" },
         VI: { t: "Bảng điều khiển", f: "Mẫu đơn kiện", a: "Xác thực", ent: "Tên thực thể", val: "Giá trị", cur: "Tiền tệ", pass: "Khóa", auth: "Ủy quyền", err: "Bắt buộc", process: "Gửi hồ sơ", seize: "Tịch thu tài sản" },
-        FR: { t: "Tableau", f: "Saisie de procès", a: "Authentification", ent: "Nom de l'entité", val: "Valeur", cur: "Devise", pass: "Clé", auth: "Autoriser", err: "Obligatoire", process: "Valider", seize: "Saisie d'actifs" },
-        DE: { t: "Dashboard", f: "Klageeinreichung", a: "Admin-Auth", ent: "Name", val: "Vermögenswert", cur: "Währung", pass: "Sicherheitsschlüssel", auth: "Autorisieren", err: "Erforderlich", process: "Einreichen", seize: "Globale Beschlagnahme" }
+        AF: { t: "Dashboard", f: "Regsaksie Inskrywing", a: "Admin Magtiging", ent: "Entiteit Naam", val: "Batewaarde", cur: "Geldeenheid", pass: "Sleutel", auth: "Magtig", err: "Vereis", process: "Dien in", seize: "Beslaglegging" },
+        SQ: { t: "Paneli", f: "Hyrja e Padisë", a: "Autorizimi", ent: "Emri i Subjektit", val: "Vlera e Aktivit", cur: "Valuta", pass: "Çelësi", auth: "Autorizo", err: "Kërkohet", process: "Dërgo", seize: "Sekuestro" },
+        AM: { t: "ዳሽቦርድ", f: "የክስ ማስገቢያ", a: "ማረጋገጫ", ent: "የድርጅት ስም", val: "የንብረት ዋጋ", cur: "ምንዛሬ", pass: "ቁልፍ", auth: "ፍቀድ", err: "ያስፈልጋል", process: "አስገባ", seize: "መውረስ" },
+        AR: { t: "لوحة القيادة", f: "إدخال دعوى", a: "تفويض المشرف", ent: "اسم الكيان", val: "قيمة الأصل", cur: "العملة", pass: "مفتاح الأمان", auth: "تفويض", err: "مطلوب", process: "تأكيد", seize: "مصادرة" },
+        HY: { t: "Վահանակ", f: "Հայցի մուտքագրում", a: "Մուտք", ent: "Անվանում", val: "Արժեք", cur: "Արժույթ", pass: "Բանալի", auth: "Լիազորել", err: "Պարտադիր", process: "Հաստատել", seize: "Առգրավում" },
+        AZ: { t: "Panel", f: "İddia Girişi", a: "Avtorizasiya", ent: "Müəssisə Adı", val: "Dəyər", cur: "Valyuta", pass: "Açar", auth: "Təsdiqlə", err: "Tələb olunur", process: "Göndər", seize: "Müsadirə" }
     },
 
     init() {
@@ -209,17 +189,18 @@ const CORE = {
         if(this.view === 'dash') {
             target.innerHTML = `<h1 style="font-weight:100; font-size:48px; margin-bottom:40px;">${d.t}</h1>
                 <div class="dashboard-row">
-                    <div class="tile"><div class="tile-head">Integrity</div><div class="tile-body" style="color:var(--success)">99.9%</div></div>
-                    <div class="tile"><div class="tile-head">Nodes</div><div class="tile-body">2,841</div></div>
-                    <div class="tile"><div class="tile-head">Active Val</div><div class="tile-body">$4.2M</div></div>
-                    <div class="tile"><div class="tile-head">Latency</div><div class="tile-body">8ms</div></div>
+                    <div class="tile"><div class="tile-head">Status</div><div class="tile-body" style="color:var(--success)">OPTIMAL</div></div>
+                    <div class="tile"><div class="tile-head">Nodes Online</div><div class="tile-body">2,841</div></div>
+                    <div class="tile"><div class="tile-head">Asset Val</div><div class="tile-body">$4.2M</div></div>
+                    <div class="tile"><div class="tile-head">Latency</div><div class="tile-body">9ms</div></div>
                 </div>`;
         } else if(this.view === 'form') {
             target.innerHTML = `<div class="form-container"><h1 style="font-weight:100; font-size:48px; margin-bottom:40px;">${d.f}</h1>
                 <div class="field-grid">
-                    <div class="field" id="v-ent"><label>${d.ent}</label><input type="text" id="in-ent" placeholder="Name"><span class="err-msg">${d.err}</span></div>
+                    <div class="field" id="v-ent"><label>${d.ent}</label><input type="text" id="in-ent" placeholder="Legal Entity Name"><span class="err-msg">${d.err}</span></div>
                     <div class="field" id="v-val"><label>${d.val}</label><input type="number" id="in-val" placeholder="0.00"><span class="err-msg">${d.err}</span></div>
                     <div class="field" id="v-cur"><label>${d.cur}</label><select id="in-cur"><option value="">- Select -</option><option>USD</option><option>EUR</option><option>BTC</option><option>VND</option></select><span class="err-msg">${d.err}</span></div>
+                    <div class="field"><label>Claim Type</label><select><option>Corporate Espionage</option><option>Data Breach</option></select></div>
                 </div>
                 <div class="access-module"><label style="font-size:11px; font-weight:700; color:var(--success); text-transform:uppercase;">${d.seize}</label><br>
                 <input type="checkbox" id="in-seize" style="margin-top:10px; width:18px; height:18px;"></div>
