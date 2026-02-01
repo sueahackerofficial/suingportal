@@ -1,34 +1,40 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html lang="vi">
+<html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>SAH 95018 | CONTROL</title>
+<title>SAH 95018 | COMMAND TERMINAL</title>
 <style type="text/css">
 @font-face {
-    font-family: 'SegoeUI_Master';
+    font-family: 'SegoeUI_Core';
     src: local('Segoe UI Bold'), 
          url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/bold/latest.woff2') format('woff2');
     font-weight: 700;
 }
 @font-face {
-    font-family: 'SegoeUI_Master';
-    src: local('Segoe UI Semilight'), 
-         url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/semilight/latest.woff2') format('woff2');
-    font-weight: 300;
+    font-family: 'SegoeUI_Core';
+    src: local('Segoe UI Semibold'), 
+         url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/semibold/latest.woff2') format('woff2');
+    font-weight: 600;
 }
 @font-face {
-    font-family: 'SegoeUI_Master';
+    font-family: 'SegoeUI_Core';
     src: local('Segoe UI'), 
          url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/normal/latest.woff2') format('woff2');
     font-weight: 400;
 }
+@font-face {
+    font-family: 'SegoeUI_Core';
+    src: local('Segoe UI Semilight'), 
+         url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/semilight/latest.woff2') format('woff2');
+    font-weight: 300;
+}
 
 * { 
-    font-family: 'SegoeUI_Master' !important; 
+    font-family: 'SegoeUI_Core' !important; 
     -webkit-font-smoothing: antialiased;
 }
 
-body { margin: 0; padding: 0; background-color: #ffffff; height: 100vh; overflow: hidden; }
+body { margin: 0; padding: 0; background-color: #ffffff; height: 100vh; overflow: hidden; color: #333; }
 
 .sidebar { width: 300px; background-color: #000; color: #fff; vertical-align: top; height: 100vh; }
 .sidebar-header { padding: 45px 30px; border-bottom: 1px solid #222; font-size: 24px; font-weight: 300; letter-spacing: 2px; }
@@ -40,31 +46,28 @@ body { margin: 0; padding: 0; background-color: #ffffff; height: 100vh; overflow
 .viewport { background-color: #fff; vertical-align: top; }
 .top-bar { height: 65px; border-bottom: 1px solid #e0e0e0; padding: 0 40px; }
 
-select, option, b, strong { font-weight: 700 !important; }
+.tile-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.stat-tile { border: 1px solid #e0e0e0; padding: 30px; border-bottom: 3px solid #0078d4; }
+.stat-label { font-size: 10px; font-weight: 700; color: #888; text-transform: uppercase; }
+.stat-value { font-size: 32px; font-weight: 300; margin-top: 10px; }
 
-.tile-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; padding: 20px 0; }
-.tile { border: 1px solid #e0e0e0; padding: 30px; border-bottom: 3px solid #0078d4; background: #fff; }
-.tile-label { font-size: 10px; font-weight: 700; color: #888; text-transform: uppercase; }
-.tile-val { font-size: 32px; font-weight: 300; margin-top: 10px; color: #444; }
-
-.form-box { max-width: 900px; padding-top: 20px; }
-.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 25px; }
-.input-wrap { display: flex; flex-direction: column; }
-.input-wrap label { font-size: 11px; font-weight: 700; color: #666; text-transform: uppercase; margin-bottom: 10px; }
-.input-wrap input, .input-wrap select, .input-wrap textarea { 
-    padding: 15px; border: 1px solid #ccc; font-size: 14px; outline: none; background: #fff;
+.form-wrap { max-width: 1000px; padding-top: 20px; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px; }
+.input-group { display: flex; flex-direction: column; gap: 10px; }
+.input-group label { font-size: 11px; font-weight: 700; color: #444; text-transform: uppercase; }
+.input-group input, .input-group select, .input-group textarea { 
+    padding: 14px; border: 1px solid #ccc; font-size: 14px; outline: none; background: #fff;
 }
+
 .btn-submit { 
     background: #0078d4; color: #fff; border: none; padding: 20px 80px; 
     font-size: 12px; font-weight: 700; text-transform: uppercase; cursor: pointer;
 }
 
-.loader { 
-    display: none; position: fixed; inset: 0; background: rgba(255,255,255,0.98); 
-    z-index: 1000; flex-direction: column; align-items: center; justify-content: center; 
-}
+.pill { padding: 5px 12px; font-size: 10px; font-weight: 700; border-radius: 2px; text-transform: uppercase; background: #e6f4ea; color: #107c10; }
 
 @keyframes spin { to { transform: rotate(360deg); } }
+.loader { display: none; position: fixed; inset: 0; background: rgba(255,255,255,0.98); z-index: 999; flex-direction: column; align-items: center; justify-content: center; }
 </style>
 </head>
 <body>
@@ -73,98 +76,94 @@ select, option, b, strong { font-weight: 700 !important; }
     <tr>
         <td class="sidebar">
             <div class="sidebar-header">SAH 95018</div>
-            <div class="nav-group" data-key="g_ops">Global Operations</div>
-            <div class="nav-item active" id="m-dash" onclick="CORE.route('dash')" data-key="n_dash">Dashboard</div>
-            <div class="nav-item" id="m-form" onclick="CORE.route('form')" data-key="n_form">Lawsuit Filing</div>
-            <div class="nav-group" data-key="g_asset">Assets & Intel</div>
-            <div class="nav-item" id="m-led" onclick="CORE.route('led')" data-key="n_led">Ledger Audit</div>
-            <div class="nav-item" id="m-map" onclick="CORE.route('map')" data-key="n_map">Network Mapping</div>
-            <div style="margin-top: 150px;" class="nav-item" onclick="location.reload()" style="color:#d83b01" data-key="exit">Terminal Exit</div>
+            <div class="nav-group">GLOBAL OPERATIONS</div>
+            <div class="nav-item active" id="m-dash" onclick="CORE.route('dash')">Operations Dashboard</div>
+            <div class="nav-item" id="m-form" onclick="CORE.route('form')">Lawsuit Filing</div>
+            <div class="nav-item" id="m-access" onclick="CORE.route('dash')">Access Control</div>
+            <div class="nav-group">ASSETS & INTEL</div>
+            <div class="nav-item" id="m-ent" onclick="CORE.route('dash')">Entity Explorer</div>
+            <div class="nav-item" id="m-led" onclick="CORE.route('led')">Ledger Audit</div>
+            <div class="nav-item" id="m-map" onclick="CORE.route('dash')">Network Mapping</div>
+            <div style="margin-top: 150px; color: #d83b01;" class="nav-item" onclick="location.reload()">Terminal Exit</div>
         </td>
         <td class="viewport">
             <div class="top-bar">
                 <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
                     <tr>
-                        <td><b style="font-size: 10px; color: #999;">UPLINK: <span style="color:#107c10">SECURE</span></b></td>
+                        <td><b style="font-size: 10px; color: #999;">UPLINK: <span style="color:#107c10">SECURE</span> // TIER: STANDARD</b></td>
                         <td align="right">
-                            <select id="lang-menu" onchange="CORE.setLang(this.value)">
+                            <select id="l-select" onchange="CORE.setLang(this.value)" style="font-weight:700;">
                                 <option value="EN">EN</option>
-                                <option value="VI">VI</option>
-                                <option value="RU">RU</option>
+                                <option value="VI">Tiếng Việt</option>
+                                <option value="RU">Русский</option>
                             </select>
                         </td>
                     </tr>
                 </table>
             </div>
-            <div id="content-root" style="padding: 50px 80px; overflow-y: auto;"></div>
+            <div id="root" style="padding: 50px 80px; overflow-y: auto;"></div>
         </td>
     </tr>
 </table>
 
-<div id="overlay" class="loader">
+<div id="loading" class="loader">
     <div style="width: 50px; height: 50px; border: 4px solid #eee; border-top-color: #0078d4; border-radius: 50%; animation: spin 0.8s linear infinite;"></div>
-    <h1 style="font-weight: 300; margin-top: 25px;" data-key="sync">Syncing...</h1>
 </div>
 
 <script type="text/javascript">
 var CORE = {
     view: 'dash', lang: 'EN',
     dict: {
-        EN: { n_dash: "Dashboard", n_form: "Lawsuit Filing", n_led: "Ledger Audit", n_map: "Network Mapping", exit: "Terminal Exit", sync: "Syncing...", ent: "Entity Name", val: "Claim Value", cur: "Currency", jur: "Jurisdiction", sub: "Commit Entry", desc: "Description", g_ops: "Global Operations", g_asset: "Assets & Intel" },
-        VI: { n_dash: "Bảng Điều khiển", n_form: "Đệ trình Đơn kiện", n_led: "Kiểm toán Sổ cái", n_map: "Sơ đồ Mạng", exit: "Thoát Hệ thống", sync: "Đang đồng bộ...", ent: "Tên Thực thể", val: "Giá trị Khiếu nại", cur: "Tiền tệ", jur: "Thẩm quyền", sub: "Gửi Hồ sơ", desc: "Mô tả", g_ops: "Hoạt động Toàn cầu", g_asset: "Tài sản & Tình báo" },
-        RU: { n_dash: "Панель", n_form: "Подача иска", n_led: "Аудит", n_map: "Карта", exit: "Выход", sync: "Синхронизация...", ent: "Имя", val: "Сумма", cur: "Валюта", jur: "Юрисдикция", sub: "Отправить", desc: "Описание", g_ops: "Операции", g_asset: "Активы" }
+        EN: { dash: "Dashboard", lawsuit: "Lawsuit Filing", status: "SYSTEM STATUS", nodes: "NODES ONLINE", value: "ASSET VALUE", time: "RESPONSE TIME", ent: "ENTITY NAME", val: "CLAIM VALUE", cur: "CURRENCY", jur: "JURISDICTION", sev: "SEVERITY", sub: "COMMIT ENTRY", desc: "CASE NOTES" },
+        VI: { dash: "Bảng Điều khiển", lawsuit: "Đệ trình Đơn kiện", status: "TRẠNG THÁI", nodes: "NÚT MẠNG", value: "GIÁ TRỊ TÀI SẢN", time: "ĐỘ TRỄ", ent: "TÊN THỰC THỂ", val: "GIÁ TRỊ KHIẾU NẠI", cur: "TIỀN TỆ", jur: "THẨM QUYỀN", sev: "MỨC ĐỘ", sub: "GỬI HỒ SƠ", desc: "GHI CHÚ VỤ VIỆC" },
+        RU: { dash: "Панель", lawsuit: "Подача иска", status: "СТАТУС", nodes: "УЗЛЫ", value: "СУММА", time: "ОТКЛИК", ent: "ИМЯ", val: "СУММА КЛЕЙМА", cur: "ВАЛЮТА", jur: "ЮРИСДИКЦИЯ", sev: "ВАЖНОСТЬ", sub: "ОТПРАВИТЬ", desc: "ЗАМЕТКИ" }
     },
     init: function() { this.render(); },
     route: function(v) { this.view = v; this.render(); },
     setLang: function(l) { this.lang = l; this.render(); },
     render: function() {
         var d = this.dict[this.lang];
-        var root = document.getElementById('content-root');
+        var root = document.getElementById('root');
         document.querySelectorAll('.nav-item').forEach(function(n){ n.className = 'nav-item'; });
-        document.getElementById('m-' + this.view).className = 'nav-item active';
+        var active = document.getElementById('m-' + this.view);
+        if(active) active.className = 'nav-item active';
 
         if(this.view === 'dash') {
-            root.innerHTML = '<h1 style="font-weight:300; font-size:48px; margin-bottom:40px;">'+d.n_dash+'</h1>' +
+            root.innerHTML = '<h1 style="font-weight:300; font-size:48px; margin-bottom:40px;">'+d.dash+'</h1>' +
                 '<div class="tile-grid">' +
-                '<div class="tile"><div class="tile-label">STATUS</div><div class="tile-val" style="color:#107c10; font-weight:700;">OPTIMAL</div></div>' +
-                '<div class="tile"><div class="tile-label">NODES</div><div class="tile-val" style="font-weight:700;">2,841</div></div>' +
-                '<div class="tile"><div class="tile-label">ASSET VALUE</div><div class="tile-val" style="font-weight:700;">$4.2M</div></div>' +
-                '<div class="tile"><div class="tile-label">RESPONSE TIME</div><div class="tile-val" style="font-weight:700;">9ms</div></div>' +
+                '<div class="stat-tile"><div class="stat-label">'+d.status+'</div><div class="stat-value" style="color:#107c10; font-weight:700;">OPTIMAL</div></div>' +
+                '<div class="stat-tile"><div class="stat-label">'+d.nodes+'</div><div class="stat-value" style="font-weight:700;">2,841</div></div>' +
+                '<div class="stat-tile"><div class="stat-label">'+d.value+'</div><div class="stat-value" style="font-weight:700;">$4.2M</div></div>' +
+                '<div class="stat-tile"><div class="stat-label">'+d.time+'</div><div class="stat-value" style="font-weight:700;">9ms</div></div>' +
                 '</div>';
         } else if(this.view === 'form') {
-            root.innerHTML = '<h1 style="font-weight:300; font-size:48px; margin-bottom:40px;">'+d.n_form+'</h1>' +
-                '<div class="form-box">' +
-                '<div class="field-row">' +
-                '<div class="input-wrap"><label>'+d.ent+'</label><input type="text"></div>' +
-                '<div class="input-wrap"><label>'+d.val+'</label><input type="number"></div>' +
+            root.innerHTML = '<h1 style="font-weight:300; font-size:48px; margin-bottom:40px;">'+d.lawsuit+'</h1>' +
+                '<div class="form-wrap">' +
+                '<div class="form-grid">' +
+                '<div class="input-group"><label>'+d.ent+'</label><input type="text"></div>' +
+                '<div class="input-group"><label>'+d.val+'</label><input type="text"></div>' +
+                '<div class="input-group"><label>'+d.cur+'</label><select><option>USD</option><option>VND</option></select></div>' +
+                '<div class="input-group"><label>'+d.jur+'</label><input type="text" value="Global/Standard" disabled></div>' +
+                '<div class="input-group"><label>'+d.sev+'</label><select><option>Low</option><option>High</option></select></div>' +
                 '</div>' +
-                '<div class="field-row">' +
-                '<div class="input-wrap"><label>'+d.cur+'</label><select><option>USD</option><option>VND</option></select></div>' +
-                '<div class="input-wrap"><label>'+d.jur+'</label><input type="text" value="International" disabled></div>' +
-                '</div>' +
-                '<div class="input-wrap"><label>'+d.desc+'</label><textarea rows="6"></textarea></div>' +
-                '<button class="btn-submit" onclick="CORE.commit()">'+d.sub+'</button>' +
+                '<div class="input-group" style="margin-top:30px;"><label>'+d.desc+'</label><textarea rows="8"></textarea></div>' +
+                '<button class="btn-submit" style="margin-top:30px;" onclick="CORE.commit()">'+d.sub+'</button>' +
                 '</div>';
         } else if(this.view === 'led') {
-            root.innerHTML = '<h1 style="font-weight:300; font-size:48px; margin-bottom:40px;">'+d.n_led+'</h1>' +
+            root.innerHTML = '<h1 style="font-weight:300; font-size:48px; margin-bottom:40px;">Ledger Audit</h1>' +
                 '<table width="100%" border="0" cellpadding="15" style="border-collapse:collapse;">' +
-                '<tr style="border-bottom:2px solid #eee; text-align:left;"><th style="font-size:10px; color:#888;">TIME</th><th style="font-size:10px; color:#888;">REFERENCE</th><th style="font-size:10px; color:#888;">STATUS</th></tr>' +
-                this.getRows() + '</table>';
+                '<tr style="border-bottom:2px solid #eee; text-align:left;"><th style="font-size:10px; color:#888;">TIME</th><th style="font-size:10px; color:#888;">REF ID</th><th style="font-size:10px; color:#888;">STATUS</th></tr>' +
+                this.rows() + '</table>';
         }
-        this.translate();
     },
-    getRows: function() {
-        var r = '';
-        for(var i=0; i<10; i++) r += '<tr style="border-bottom:1px solid #eee;"><td>2026-02-01</td><td><b>TX-0'+i+'</b></td><td style="color:#107c10; font-weight:700;">VERIFIED</td></tr>';
-        return r;
+    rows: function() {
+        var h = '';
+        for(var i=0; i<10; i++) h += '<tr style="border-bottom:1px solid #eee;"><td>2026-02-01</td><td><b>TX-0'+i+'</b></td><td><span class="pill">VERIFIED</span></td></tr>';
+        return h;
     },
     commit: function() {
-        document.getElementById('overlay').style.display = 'flex';
-        setTimeout(function(){ document.getElementById('overlay').style.display = 'none'; CORE.route('led'); }, 1200);
-    },
-    translate: function() {
-        var d = this.dict[this.lang];
-        document.querySelectorAll('[data-key]').forEach(function(el){ el.innerText = d[el.getAttribute('data-key')]; });
+        document.getElementById('loading').style.display = 'flex';
+        setTimeout(function(){ document.getElementById('loading').style.display = 'none'; CORE.route('led'); }, 1200);
     }
 };
 window.onload = function() { CORE.init(); };
