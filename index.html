@@ -5,10 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SAH ENTERPRISE | COMMAND 95018</title>
 <style>
-/* BMP Range U+0000 to U+FFFF 
-   Primary: Segoe UI 
-   Secondary Fallback: System Unicode Stack (No Tofu)
-*/
 :root {
     --win-blue: #0078d4;
     --win-black: #000;
@@ -18,110 +14,42 @@
     --success: #107c10;
     --sidebar-w: 300px;
 }
-
 * { 
     margin: 0; 
     padding: 0; 
     box-sizing: border-box; 
-    /* Force high-quality system rendering for the full BMP range */
-    font-family: "Segoe UI", "Segoe UI Web (West European)", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif !important; 
+    font-family: "Segoe UI", "Segoe UI Web (West European)", -apple-system, BlinkMacSystemFont, Roboto, sans-serif !important; 
     -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
 }
-
 body { background: var(--win-white); display: flex; height: 100vh; overflow: hidden; color: #333; }
-
-.sidebar { 
-    width: var(--sidebar-w); 
-    background: var(--win-black); 
-    color: white; 
-    display: flex; 
-    flex-direction: column; 
-    flex-shrink: 0; 
-}
-
-.sidebar-header { 
-    padding: 40px 30px; 
-    font-size: 22px; 
-    font-weight: 100; 
-    letter-spacing: 2px; 
-    border-bottom: 1px solid #222; 
-}
-
+.sidebar { width: var(--sidebar-w); background: var(--win-black); color: white; display: flex; flex-direction: column; flex-shrink: 0; }
+.sidebar-header { padding: 40px 30px; font-size: 22px; font-weight: 100; letter-spacing: 2px; border-bottom: 1px solid #222; }
 .nav-group { padding: 25px 0; border-bottom: 1px solid #111; }
 .nav-label { padding: 0 30px 10px; font-size: 10px; font-weight: 700; color: #555; text-transform: uppercase; }
-
-.nav-item { 
-    padding: 12px 30px; 
-    color: #999; 
-    cursor: pointer; 
-    font-size: 11px; 
-    font-weight: 600; 
-    text-transform: uppercase; 
-}
-
+.nav-item { padding: 12px 30px; color: #999; cursor: pointer; font-size: 11px; font-weight: 600; text-transform: uppercase; }
 .nav-item:hover { color: white; background: #1a1a1a; }
 .nav-item.active { color: var(--win-blue); background: #0a0a0a; border-right: 4px solid var(--win-blue); }
-
 .viewport { flex-grow: 1; display: flex; flex-direction: column; }
-.top-bar { 
-    height: 65px; 
-    padding: 0 40px; 
-    display: flex; 
-    align-items: center; 
-    justify-content: space-between; 
-    border-bottom: 1px solid var(--border); 
-}
-
+.top-bar { height: 65px; padding: 0 40px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); }
 .content { padding: 50px 80px; overflow-y: auto; flex-grow: 1; }
-
 .dashboard-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 40px; }
 .tile { padding: 25px; border: 1px solid var(--border); border-bottom: 3px solid var(--win-blue); }
 .tile-head { font-size: 10px; font-weight: 700; color: #888; text-transform: uppercase; }
 .tile-body { font-size: 28px; font-weight: 100; margin-top: 8px; }
-
 .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 30px; }
 .field { display: flex; flex-direction: column; gap: 8px; }
 .field label { font-size: 11px; font-weight: 700; color: #444; text-transform: uppercase; }
-
-.field input, .field select { 
-    padding: 12px; 
-    border: 1px solid #ccc; 
-    font-size: 14px; 
-}
-
+.field input, .field select { padding: 12px; border: 1px solid #ccc; font-size: 14px; }
 .field.error input { border-color: var(--error); background: #fff8f8; }
 .err-msg { font-size: 10px; color: var(--error); font-weight: 700; display: none; margin-top: 4px; }
 .field.error .err-msg { display: block; }
-
-.access-module { 
-    border: 1px solid var(--success); 
-    padding: 20px; 
-    margin: 20px 0; 
-    background: #f0fff4;
-}
-
-.btn-primary { 
-    background: var(--win-blue); 
-    color: white; 
-    border: none; 
-    padding: 16px 45px; 
-    font-size: 12px; 
-    font-weight: 600; 
-    text-transform: uppercase; 
-    cursor: pointer; 
-}
-
-.overlay { 
-    display: none; position: fixed; inset: 0; background: white; 
-    z-index: 3000; align-items: center; justify-content: center; flex-direction: column; 
-}
-
+.access-module { border: 1px solid var(--success); padding: 20px; margin: 20px 0; background: #f0fff4; }
+.btn-primary { background: var(--win-blue); color: white; border: none; padding: 16px 45px; font-size: 12px; font-weight: 600; text-transform: uppercase; cursor: pointer; }
+.overlay { display: none; position: fixed; inset: 0; background: white; z-index: 3000; align-items: center; justify-content: center; flex-direction: column; }
 @keyframes spin { to { transform: rotate(360deg); } }
 </style>
 </head>
 <body>
-
 <aside class="sidebar">
     <div class="sidebar-header">SAH 95018</div>
     <div class="nav-group">
@@ -136,60 +64,155 @@ body { background: var(--win-white); display: flex; height: 100vh; overflow: hid
         <div class="nav-item">Ledger Audit</div>
         <div class="nav-item">Network Mapping</div>
     </div>
+    <div class="nav-group">
+        <div class="nav-label">System Settings</div>
+        <div class="nav-item">Uplink Config</div>
+        <div class="nav-item">Audit Trail</div>
+        <div class="nav-item" style="color:var(--error)" onclick="CORE.logout()">Terminal Exit</div>
+    </div>
 </aside>
-
 <main class="viewport">
     <div class="top-bar">
-        <div style="font-size:11px; font-weight:700; color:#999;">
-            UPLINK: <span style="color:var(--success)">SECURE</span> // TIER: <span id="tier-status">STANDARD</span>
-        </div>
+        <div style="font-size:11px; font-weight:700; color:#999;">UPLINK: <span style="color:var(--success)">SECURE</span> // TIER: <span id="tier-status">STANDARD</span></div>
         <select id="lang-menu" onchange="CORE.setLang(this.value)" style="padding:4px; font-size:12px; width: 120px;"></select>
     </div>
     <div class="content" id="view-target"></div>
 </main>
-
 <div id="loading" class="overlay">
     <div style="width:50px; height:50px; border:3px solid #eee; border-top:3px solid var(--win-blue); border-radius:50%; animation: spin 1s linear infinite;"></div>
     <h1 style="font-size:24px; margin-top:20px; font-weight:100;">Writing to Ledger...</h1>
 </div>
-
 <script>
 const CORE = {
     view: 'dash', lang: 'EN', isAdmin: false,
-    langs: ["EN","EL","RU","VI","AF","SQ","AM","AR","HY","AZ","EU","BE","BN","BS","BG","CA","CEB","NY","ZH","CO","HR","CS","DA","NL","EO","ET","TL","FI","FR","FY","GL","KA","DE","GU","HT","HA","HAW","IW","HI","HMN","HU","IS","IG","ID","GA","IT","JA","JW","KN","KK","KM","KO","KU","KY","LO","LA","LV","LT","LB","MK","MG","MS","ML","MT","MI","MR","MN","MY","NE","NO","PS","FA","PL","PT","PA","RO","SM","GD","SR","ST","SN","SD","SI","SK","SL","SO","ES","SU","SW","SV","TG","TA","TE","TH","TR","UK","UR","UZ","CY","XH","YI","YO","ZU"],
-    
+    langs: ["AF","SQ","AM","AR","HY","AZ","EU","BE","BN","BS","BG","CA","CEB","NY","ZH","CO","HR","CS","DA","NL","EN","EO","ET","TL","FI","FR","FY","GL","KA","DE","EL","GU","HT","HA","HAW","IW","HI","HMN","HU","IS","IG","ID","GA","IT","JA","JW","KN","KK","KM","KO","KU","KY","LO","LA","LV","LT","LB","MK","MG","MS","ML","MT","MI","MR","MN","MY","NE","NO","OR","PS","FA","PL","PT","PA","RO","RU","SM","GD","SR","ST","SN","SD","SI","SK","SL","SO","ES","SU","SW","SV","TG","TA","TE","TH","TR","UK","UR","UZ","VI","CY","XH","YI","YO","ZU"],
     dict: {
         EN: { t: "Dashboard", f: "Lawsuit Entry", a: "Admin Auth", ent: "Entity Name", val: "Asset Value", cur: "Currency", pass: "Security Key", auth: "Authorize", err: "Required", process: "Commit Entry", seize: "Enable Global Asset Seizure" },
         VI: { t: "Bảng điều khiển", f: "Mẫu đơn kiện", a: "Xác thực", ent: "Tên thực thể", val: "Giá trị", cur: "Tiền tệ", pass: "Khóa", auth: "Ủy quyền", err: "Bắt buộc", process: "Gửi hồ sơ", seize: "Tịch thu tài sản" },
         EL: { t: "Πίνακας Ελέγχου", f: "Καταχώρηση Αγωγής", a: "Εξουσιοδότηση", ent: "Οντότητα", val: "Αξία", cur: "Νόμισμα", pass: "Κωδικός", auth: "Εξουσιοδότηση", err: "Απαραίτητο", process: "Υποβολή", seize: "Ενεργοποίηση Κατάσχεσης" },
         RU: { t: "Панель", f: "Форма иска", a: "Авторизация", ent: "Субъект", val: "Стоимость", cur: "Валюта", pass: "Ключ", auth: "Авторизовать", err: "Обязательно", process: "Выполнить", seize: "Изъятие активов" },
-        AF: { t: "Dashboard", f: "Regsaksie Inskrywing", a: "Magtiging", ent: "Entiteit Naam", val: "Waarde", cur: "Geldeenheid", pass: "Sleutel", auth: "Magtig", err: "Vereis", process: "Dien in", seize: "Beslaglegging" }
-        /* Dictionary logic ensures no placeholders for remaining languages */
+        AF: { t: "Dashboard", f: "Regsaksie Inskrywing", a: "Magtiging", ent: "Entiteit Naam", val: "Waarde", cur: "Geldeenheid", pass: "Sleutel", auth: "Magtig", err: "Vereis", process: "Dien in", seize: "Beslaglegging" },
+        SQ: { t: "Paneli", f: "Padia", a: "Autorizimi", ent: "Subjekti", val: "Vlera", cur: "Valuta", pass: "Çelësi", auth: "Autorizo", err: "Kërkohet", process: "Dërgo", seize: "Sekuestro" },
+        AM: { t: "ዳሽቦርድ", f: "ክስ", a: "ማረጋገጫ", ent: "ስም", val: "ዋጋ", cur: "ምንዛሬ", pass: "ቁልፍ", auth: "ፍቀድ", err: "ያስፈልጋል", process: "አስገባ", seize: "መውረስ" },
+        AR: { t: "لوحة القيادة", f: "الدعوى", a: "تفويض", ent: "الكيان", val: "القيمة", cur: "العملة", pass: "المفتاح", auth: "تفويض", err: "مطلوب", process: "تأكيد", seize: "مصادرة" },
+        HY: { t: "Վահանակ", f: "Հայց", a: "Մուտք", ent: "Անվանում", val: "Արժեք", cur: "Արժույթ", pass: "Բանալի", auth: "Լիազորել", err: "Պարտադիր", process: "Հաստատել", seize: "Առգրավում" },
+        AZ: { t: "Panel", f: "İddia", a: "Giriş", ent: "Müəssisə", val: "Dəyər", cur: "Valyuta", pass: "Açar", auth: "Təsdiqlə", err: "Tələb", process: "Göndər", seize: "Müsadirə" },
+        EU: { t: "Arbeid", f: "Salaketa", a: "Baimena", ent: "Entitatea", val: "Balioa", cur: "Moneta", pass: "Gakoa", auth: "Baimendu", err: "Beharrezkoa", process: "Bidali", seize: "Konfiskatu" },
+        BE: { t: "Панэль", f: "Пазоў", a: "Аўтарызацыя", ent: "Аб'ект", val: "Кошт", cur: "Валюта", pass: "Ключ", auth: "Дазволіць", err: "Абавязкова", process: "Выканаць", seize: "Канфіскацыя" },
+        BN: { t: "ড্যাশবোর্ড", f: "মামলা", a: "অনুমোদন", ent: "সত্তা", val: "মান", cur: "মুদ্রা", pass: "কী", auth: "অনুমোদন", err: "প্রয়োজন", process: "জমা", seize: "বাজেয়াপ্ত" },
+        BS: { t: "Kontrolna ploča", f: "Tužba", a: "Autorizacija", ent: "Subjekt", val: "Vrijednost", cur: "Valuta", pass: "Ključ", auth: "Autorizuj", err: "Obavezno", process: "Pošalji", seize: "Zapljena" },
+        BG: { t: "Табло", f: "Иск", a: "Оторизация", ent: "Субект", val: "Стойност", cur: "Валута", pass: "Ключ", auth: "Оторизирай", err: "Задължително", process: "Изпрати", seize: "Конфискация" },
+        CA: { t: "Tauler", f: "Demanda", a: "Autorització", ent: "Entitat", val: "Valor", cur: "Divisa", pass: "Clau", auth: "Autoritzar", err: "Requerit", process: "Enviar", seize: "Confiscació" },
+        CEB: { t: "Dashboard", f: "Kiha", a: "Awtorisasyon", ent: "Ngalan", val: "Bili", cur: "Kwarta", pass: "Yawi", auth: "Tugot", err: "Kinahanglan", process: "Isumite", seize: "Sakmiton" },
+        NY: { t: "Dashboard", f: "Mlandu", a: "Chilolezo", ent: "Dzina", val: "Mtengo", cur: "Ndalama", pass: "Chinsinsi", auth: "Lola", err: "Funidwa", process: "Tumizani", seize: "Kulanda" },
+        ZH: { t: "控制台", f: "诉讼输入", a: "管理授权", ent: "实体名称", val: "资产价值", cur: "货币", pass: "安全密钥", auth: "授权", err: "必填", process: "提交记录", seize: "启用全球资产没收" },
+        CO: { t: "Dashboard", f: "Azzione", a: "Autorizazione", ent: "Entità", val: "Valore", cur: "Valuta", pass: "Chjave", auth: "Autorizà", err: "Richiestu", process: "Mandà", seize: "Sequestru" },
+        HR: { t: "Upravljačka ploča", f: "Tužba", a: "Autorizacija", ent: "Subjekt", val: "Vrijednost", cur: "Valuta", pass: "Ključ", auth: "Autoriziraj", err: "Obavezno", process: "Pošalji", seize: "Zapljena" },
+        CS: { t: "Nástěnka", f: "Žaloba", a: "Autorizace", ent: "Subjekt", val: "Hodnota", cur: "Měna", pass: "Klíč", auth: "Autorizovat", err: "Povinné", process: "Odeslat", seize: "Zabavení" },
+        DA: { t: "Oversigt", f: "Søgsmål", a: "Autorisation", ent: "Enhed", val: "Værdi", cur: "Valuta", pass: "Nøgle", auth: "Autoriser", err: "Påkrævet", process: "Indsend", seize: "Beslaglæggelse" },
+        NL: { t: "Overzicht", f: "Rechtszaak", a: "Autorisatie", ent: "Entiteit", val: "Waarde", cur: "Valuta", pass: "Sleutel", auth: "Autoriseren", err: "Vereist", process: "Indienen", seize: "Beslaglegging" },
+        EO: { t: "Stelaro", f: "Proceso", a: "Rajtigo", ent: "Ento", val: "Valoro", cur: "Valuto", pass: "Ŝlosilo", auth: "Rajtigi", err: "Bezonata", process: "Sendi", seize: "Konfiski" },
+        ET: { t: "Töölaud", f: "Hagi", a: "Autoriseerimine", ent: "Üksus", val: "Väärtus", cur: "Valuuta", pass: "Võti", auth: "Autoriseeri", err: "Kohustuslik", process: "Esita", seize: "Arestimine" },
+        TL: { t: "Dashboard", f: "Kaso", a: "Awtorisasyon", ent: "Entidad", val: "Halaga", cur: "Salapi", pass: "Susi", auth: "Pahintulutan", err: "Kailangan", process: "Isumite", seize: "Samsamin" },
+        FI: { t: "Ohjauspaneeli", f: "Kanne", a: "Valtuutus", ent: "Yhteisö", val: "Arvo", cur: "Valuutta", pass: "Avain", auth: "Valtuuta", err: "Vaaditaan", process: "Lähetä", seize: "Takavarikko" },
+        FR: { t: "Tableau de bord", f: "Saisie de procès", a: "Authentification", ent: "Nom de l'entité", val: "Valeur de l'actif", cur: "Devise", pass: "Clé de sécurité", auth: "Autoriser", err: "Requis", process: "Valider la saisie", seize: "Saisie d'actifs mondiale" },
+        FY: { t: "Dashboard", f: "Rjochtsaak", a: "Autorisaasje", ent: "Entiteit", val: "Wearde", cur: "Faluta", pass: "Sleutel", auth: "Autorisearje", err: "Nedich", process: "Yntsjinje", seize: "Beslach" },
+        GL: { t: "Panel", f: "Demanda", a: "Autorización", ent: "Entidade", val: "Valor", cur: "Moeda", pass: "Chave", auth: "Autorizar", err: "Obrigatorio", process: "Enviar", seize: "Confiscación" },
+        KA: { t: "პანელი", f: "სარჩელი", a: "ავტორიზაცია", ent: "ობიექტი", val: "ღირებულება", cur: "ვალუტა", pass: "გასაღები", auth: "ავტორიზება", err: "აუცილებელი", process: "გაგზავნა", seize: "ჩამორთმევა" },
+        DE: { t: "Dashboard", f: "Klageeinreichung", a: "Admin-Auth", ent: "Name der Entität", val: "Vermögenswert", cur: "Währung", pass: "Sicherheitsschlüssel", auth: "Autorisieren", err: "Erforderlich", process: "Eintrag bestätigen", seize: "Globale Beschlagnahme" },
+        GU: { t: "ડેશબોર્ડ", f: "દાવો", a: "અધિકૃતતા", ent: "સંસ્થા", val: "મૂલ્ય", cur: "ચલણ", pass: "ચાવી", auth: "અધિકૃત કરો", err: "જરૂરી", process: "સબમિટ", seize: "જપ્તી" },
+        HT: { t: "Dachbo", f: "Pwosè", a: "Otorigasyon", ent: "Antite", val: "Valè", cur: "Lajan", pass: "Kle", auth: "Otorize", err: "Obligatwa", process: "Voye", seize: "Sezi" },
+        HA: { t: "Dashboard", f: "Shari'a", a: "Izini", ent: "Suna", val: "Daraja", cur: "Kudi", pass: "Makubli", auth: "Ba da izini", err: "Dole", process: "Aika", seize: "Kwace" },
+        HAW: { t: "Papapihi", f: "Hoʻopiʻi", a: "Mana", ent: "Inoa", val: "Waiwai", cur: "Kālā", pass: "Kī", auth: "Hoʻomana", err: "Pono", process: "Waiho", seize: "Lāʻau" },
+        IW: { t: "לוח בקרה", f: "תביעה", a: "אישור", ent: "שותפות", val: "ערך", cur: "מטבע", pass: "מפתח", auth: "אשר", err: "חובה", process: "שלח", seize: "החרמה" },
+        HI: { t: "डैशबोर्ड", f: "मुकदमा", a: "प्राधिकरण", ent: "संस्था", val: "मूल्य", cur: "मुद्रा", pass: "कुंजी", auth: "प्राधिकृत", err: "आवश्यक", process: "जमा करें", seize: "जब्ती" },
+        HMN: { t: "Dashboard", f: "Teeb meem", a: "Tso cai", ent: "Lub npe", val: "Nqi", cur: "Nyiaj", pass: "Tseem ceeb", auth: "Tso cai", err: "Yuav tsum", process: "Xa", seize: "Txeeb" },
+        HU: { t: "Vezérlőpult", f: "Kereset", a: "Engedélyezés", ent: "Szervezet", val: "Érték", cur: "Pénznem", pass: "Kulcs", auth: "Engedélyez", err: "Kötelező", process: "Beküldés", seize: "Lefoglalás" },
+        IS: { t: "Stjórnborð", f: "Málshöfðun", a: "Heimild", ent: "Aðili", val: "Virði", cur: "Gjaldmiðill", pass: "Lykill", auth: "Heimila", err: "Nauðsynlegt", process: "Staðfesta", seize: "Eignarnám" },
+        IG: { t: "Dashboard", f: "Ikpe", a: "Ikike", ent: "Aha", val: "Uru", cur: "Ego", pass: "Igodo", auth: "Nye ikike", err: "Dị mkpa", process: "Ziga", seize: "Iweghara" },
+        ID: { t: "Dasbor", f: "Gugatan", a: "Otorisasi", ent: "Entitas", val: "Nilai", cur: "Mata Uang", pass: "Kunci", auth: "Otorisasi", err: "Wajib", process: "Kirim", seize: "Penyitaan" },
+        GA: { t: "Painéal", f: "Cás Dlí", a: "Údarú", ent: "Eintiteas", val: "Luach", cur: "Airgeadra", pass: "Eochair", auth: "Údaraigh", err: "Riachtanach", process: "Seol", seize: "Seizid" },
+        IT: { t: "Pannello", f: "Causa", a: "Autorizzazione", ent: "Entità", val: "Valore", cur: "Valuta", pass: "Chiave", auth: "Autorizza", err: "Richiesto", process: "Invia", seize: "Sequestro" },
+        JA: { t: "ダッシュボード", f: "訴訟入力", a: "承認", ent: "組織名", val: "資産価値", cur: "通貨", pass: "キー", auth: "承認する", err: "必須", process: "送信", seize: "資産差押" },
+        JW: { t: "Dasbor", f: "Gugatan", a: "Otoritas", ent: "Jeneng", val: "Aji", cur: "Dhuwit", pass: "Kunci", auth: "Otoritas", err: "Penting", process: "Kirim", seize: "Sita" },
+        KN: { t: "ಡ್ಯಾಶ್‌ಬೋರ್ಡ್", f: "ದಾವೆ", a: "ದೃಢೀಕರಣ", ent: "ಹೆಸರು", val: "ಮೌಲ್ಯ", cur: "ಕರೆನ್ಸಿ", pass: "ಕೀಲಿ", auth: "ದೃಢೀಕರಿಸಿ", err: "ಅಗತ್ಯವಿದೆ", process: "ಸಲ್ಲಿಸಿ", seize: "ಜಪ್ತಿ" },
+        KK: { t: "Панель", f: "Талап", a: "Рұқсат", ent: "Атауы", val: "Құны", cur: "Валюта", pass: "Кілт", auth: "Рұқсат ету", err: "Міндетті", process: "Жіберу", seize: "Тәркілеу" },
+        KM: { t: "ផ្ទាំងគ្រប់គ្រង", f: "បណ្តឹង", a: "ការអនុញ្ញាត", ent: "ឈ្មោះ", val: "តម្លៃ", cur: "រូបិយប័ណ្ណ", pass: "សោ", auth: "អនុញ្ញាត", err: "ចាំបាច់", process: "បញ្ជូន", seize: "រឹបអូស" },
+        KO: { t: "대시보드", f: "소송 입력", a: "관리자 인증", ent: "엔티티 이름", val: "자산 가치", cur: "통화", pass: "보안 키", auth: "승인", err: "필수", process: "제출", seize: "글로벌 자산 압류" },
+        KU: { t: "Dashboard", f: "Doz", a: "Destûr", ent: "Nav", val: "Nirx", cur: "Pere", pass: "Mifte", auth: "Destûr bide", err: "Pêویست", process: "Bişîne", seize: "Desteser" },
+        KY: { t: "Панель", f: "Доо", a: "Уруксат", ent: "Аталышы", val: "Баасы", cur: "Валюта", pass: "Ачкыч", auth: "Уруксат берүү", err: "Милдеттүү", process: "Жөнөтүү", seize: "Конфискация" },
+        LO: { t: "ແຜງຄວບຄຸມ", f: "ຟ້ອງຮ້ອງ", a: "ອະນຸຍາດ", ent: "ຊື່", val: "ມູນຄ່າ", cur: "ເງິນ", pass: "ກະແຈ", auth: "ອະນຸຍາດ", err: "ຈຳເປັນ", process: "ສົ່ງ", seize: "ຢຶດຊັບ" },
+        LA: { t: "Tabula", f: "Lis", a: "Auctoritas", ent: "Nomen", val: "Pretium", cur: "Moneta", pass: "Clavis", auth: "Auctorare", err: "Oportet", process: "Mittere", seize: "Publicatio" },
+        LV: { t: "Panelis", f: "Prasība", a: "Autorizācija", ent: "Subjekts", val: "Vērtība", cur: "Valūta", pass: "Atslēga", auth: "Autorizēt", err: "Obligāts", process: "Iesniegt", seize: "Konfiskācija" },
+        LT: { t: "Skydas", f: "Ieškinys", a: "Autorizacija", ent: "Subjektas", val: "Vertė", cur: "Valiuta", pass: "Raktas", auth: "Autorizuoti", err: "Būtina", process: "Siųsti", seize: "Konfiskavimas" },
+        LB: { t: "Dashboard", f: "Klo", a: "Autorisatioun", ent: "Numm", val: "Wäert", cur: "Währung", pass: "Schlëssel", auth: "Autoriséieren", err: "Néideg", process: "Schécken", seize: "Saisir" },
+        MK: { t: "Табла", f: "Тужба", a: "Авторизација", ent: "Субјект", val: "Вредност", cur: "Валута", pass: "Клуч", auth: "Авторизирај", err: "Задолжително", process: "Испрати", seize: "Конфискација" },
+        MG: { t: "Dashboard", f: "Fitoriana", a: "Fahazoan-dalana", ent: "Anarana", val: "Sanda", cur: "Vola", pass: "Lakile", auth: "Hanaiky", err: "Ilaina", process: "Handefa", seize: "Hulonana" },
+        MS: { t: "Papan Pemuka", f: "Saman", a: "Kebenaran", ent: "Entiti", val: "Nilai", cur: "Mata Wang", pass: "Kunci", auth: "Benarkan", err: "Diperlukan", process: "Hantar", seize: "Rampasan" },
+        ML: { t: "ഡാഷ്‌ബോർഡ്", f: "കേസ്", a: "അനുമതി", ent: "പേര്", val: "മൂല്യം", cur: "നാണയം", pass: "താക്കോൽ", auth: "അനുവദിക്കുക", err: "ആവശ്യമാണ്", process: "അയക്കുക", seize: "കണ്ടുകെട്ടൽ" },
+        MT: { t: "Dashboard", f: "Kawża", a: "Awtorizzazzjoni", ent: "Isem", val: "Valur", cur: "Munita", pass: "Chiavi", auth: "Awtorizza", err: "Meħtieġ", process: "Ibgħat", seize: "Sekwestru" },
+        MI: { t: "Papatuhi", f: "Kooti", a: "Whakamana", ent: "Ingoa", val: "Utu", cur: "Moni", pass: "Kī", auth: "Whakamana", err: "Hiahia", process: "Tuku", seize: "Murua" },
+        MR: { t: "डॅशबोर्ड", f: "खटला", a: "प्राधिकरण", ent: "नाव", val: "मूल्य", cur: "चलन", pass: "किल्ली", auth: "प्राधिकृत", err: "आवश्यक", process: "सबमिट", seize: "जप्ती" },
+        MN: { t: "Хянах талбар", f: "Нэхэмжлэл", a: "Зөвшөөрөл", ent: "Нэр", val: "Үнэ", cur: "Валют", pass: "Түлхүүр", auth: "Зөвшөөрөх", err: "Шаардлагатай", process: "Илгээх", seize: "Хураах" },
+        MY: { t: "ဒိုင်ခွက်", f: "တရားစွဲဆိုမှု", a: "ခွင့်ပြုချက်", ent: "အမည်", val: "တန်ဖိုး", cur: "ငွေကြေး", pass: "သော့", auth: "ခွင့်ပြုသည်", err: "လိုအပ်သည်", process: "တင်သွင်း", seize: "သိမ်းဆည်း" },
+        NE: { t: "ड्यासबોર્ड", f: "मुद्दा", a: "अनुमति", ent: "नाम", val: "मूल्य", cur: "मुद्रा", pass: "कुञ्जी", auth: "अनुमति दिनुहोस्", err: "आवश्यक", process: "पेश", seize: "जफत" },
+        NO: { t: "Oversikt", f: "Søksmål", a: "Autorisasjon", ent: "Enhet", val: "Verdi", cur: "Valuta", pass: "Nøkkel", auth: "Autoriser", err: "Påkrevd", process: "Send", seize: "Beslag" },
+        OR: { t: "ଡ୍ୟାସବୋର୍ଡ", f: "ମାମଲା", a: "ଅନୁମୋଦନ", ent: "ନାମ", val: "ମୂଲ୍ୟ", cur: "ମୁଦ୍ରା", pass: "ଚାବି", auth: "ଅନୁମୋଦନ", err: "ଆବଶ୍ୟକ", process: "ପଠାନ୍ତୁ", seize: "ଜବତ" },
+        PS: { t: "ډشبورډ", f: "دعوه", a: "اجازه", ent: "نوم", val: "ارزښت", cur: "پيسې", pass: "کیلي", auth: "اجازه ورکول", err: "لازمي", process: "لیږل", seize: "ضبط" },
+        FA: { t: "داشبورد", f: "شکایت", a: "احراز هویت", ent: "نام نهاد", val: "ارزش", cur: "واحد پول", pass: "کلید", auth: "تایید", err: "اجباری", process: "ارسال", seize: "توقیف" },
+        PL: { t: "Panel", f: "Pozew", a: "Autoryzacja", ent: "Podmiot", val: "Wartość", cur: "Waluta", pass: "Klucz", auth: "Autoryzuj", err: "Wymagane", process: "Wyślij", seize: "Zajęcie" },
+        PT: { t: "Painel", f: "Processo", a: "Autorização", ent: "Entidade", val: "Valor", cur: "Moeda", pass: "Chave", auth: "Autorizar", err: "Obrigatório", process: "Enviar", seize: "Confisco" },
+        PA: { t: "ਡੈਸ਼ਬੋਰਡ", f: "ਮੁਕੱਦਮਾ", a: "ਪ੍ਰਮਾਣਿਕਤਾ", ent: "ਨਾਂ", val: "ਮੁੱਲ", cur: "ਕਰੰਸੀ", pass: "ਕੁੰਜੀ", auth: "ਪ੍ਰਮਾਣਿਤ ਕਰੋ", err: "ਲੋੜੀਂਦਾ", process: "ਭੇਜੋ", seize: "ਜ਼ਬਤੀ" },
+        RO: { t: "Panou", f: "Proces", a: "Autorizare", ent: "Entitate", val: "Valoare", cur: "Valută", pass: "Cheie", auth: "Autorizează", err: "Obligatoriu", process: "Trimite", seize: "Confiscare" },
+        SM: { t: "Dashboard", f: "Tagi", a: "Pule", ent: "Igoa", val: "Taua", cur: "Tupe", pass: "Ki", auth: "Faataga", err: "Manaomia", process: "Auina", seize: "Faamaonia" },
+        GD: { t: "Dashboard", f: "Cùis", a: "Ùghdarras", ent: "Ainm", val: "Luach", cur: "Airgead", pass: "Iuchair", auth: "Ùghdarraich", err: "Feumail", process: "Cuir", seize: "Glacadh" },
+        SR: { t: "Табла", f: "Тужба", a: "Ауторизација", ent: "Субјект", val: "Вредност", cur: "Валута", pass: "Кључ", auth: "Ауторизуј", err: "Обавезно", process: "Пошаљи", seize: "Заплена" },
+        ST: { t: "Dashboard", f: "Nyeoe", a: "Tumello", ent: "Lebitso", val: "Boleng", cur: "Chelete", pass: "Senotlolo", auth: "Lumella", err: "Hlokahala", process: "Romela", seize: "Ho nka" },
+        SN: { t: "Dashboard", f: "Mhosva", a: "Mvumo", ent: "Zita", val: "Kukosha", cur: "Mari", pass: "Kiyi", auth: "Tendera", err: "Inodiwa", process: "Tumira", seize: "Kutora" },
+        SD: { t: "ڊيش بورڊ", f: "دعويٰ", a: "اختيار", ent: "نالو", val: "قدر", cur: "ڪرنسي", pass: "ڪنجي", auth: "اختيار ڏيو", err: "لازمي", process: "موڪليو", seize: "ضبطي" },
+        SI: { t: "දර්ශක පුවරුව", f: "නඩුව", a: "අවසරය", ent: "නම", val: "අගය", cur: "මුදල්", pass: "යතුර", auth: "අවසර දෙන්න", err: "අවශ්‍යයි", process: "යොමු කරන්න", seize: "රාජසන්තක" },
+        SK: { t: "Nástenka", f: "Žaloba", a: "Autorizácia", ent: "Subjekt", val: "Hodnota", cur: "Mena", pass: "Kľúč", auth: "Autorizovať", err: "Povinné", process: "Odeslať", seize: "Zabavenie" },
+        SL: { t: "Nadzorna plošča", f: "Tožba", a: "Avtorizacija", ent: "Subjekt", val: "Vrednost", cur: "Valuta", pass: "Ključ", auth: "Avtoriziraj", err: "Obvezno", process: "Pošlji", seize: "Zaseg" },
+        SO: { t: "Dashboard", f: "Dacwad", a: "Oggolaansho", ent: "Magaca", val: "Qiimaha", cur: "Lacagta", pass: "Fure", auth: "Oggolow", err: "Loo baahan yahay", process: "Gudbi", seize: "Lalasho" },
+        ES: { t: "Panel", f: "Demanda", a: "Autorización", ent: "Entidad", val: "Valor", cur: "Moneda", pass: "Clave", auth: "Autorizar", err: "Requerido", process: "Enviar", seize: "Confiscación" },
+        SU: { t: "Dasbor", f: "Gugatan", a: "Otoritas", ent: "Ngaran", val: "Aji", cur: "Duit", pass: "Konci", auth: "Otoritas", err: "Penting", process: "Kirim", seize: "Sita" },
+        SW: { t: "Dashibodi", f: "Kesi", a: "Idhini", ent: "Jina", val: "Thamani", cur: "Fedha", pass: "Ufunguo", auth: "Idhinisha", err: "Inahitajika", process: "Wasilisha", seize: "Utaifishaji" },
+        SV: { t: "Översikt", f: "Stämning", a: "Auktorisering", ent: "Enhet", val: "Värde", cur: "Valuta", pass: "Nyckel", auth: "Auktorisera", err: "Krävs", process: "Skicka", seize: "Beslag" },
+        TG: { t: "Панел", f: "Даъво", a: "Иҷозат", ent: "Ном", val: "Арзиш", cur: "Асъор", pass: "Калид", auth: "Иҷозат додан", err: "Зарур", process: "Фиристодан", seize: "Мусодира" },
+        TA: { t: "டாஷ்போர்டு", f: "வழக்கு", a: "அங்கீகாரம்", ent: "பெயர்", val: "மதிப்பு", cur: "நாணயம்", pass: "சாவி", auth: "அங்கீகரி", err: "தேவை", process: "சமர்ப்பி", seize: "பறிமுதல்" },
+        TE: { t: "డాష్‌బోర్డ్", f: "దావా", a: "అధికారం", ent: "పేరు", val: "విలువ", cur: "కరెన్సీ", pass: "కీ", auth: "అధికారం ఇవ్వు", err: "అవసరం", process: "పంపించు", seize: "జప్తు" },
+        TH: { t: "แดชบอร์ด", f: "ยื่นฟ้อง", a: "อนุญาต", ent: "ชื่อ", val: "มูลค่า", cur: "สกุลเงิน", pass: "รหัส", auth: "อนุญาต", err: "จำเป็น", process: "ส่ง", seize: "ยึดทรัพย์" },
+        TR: { t: "Panel", f: "Dava", a: "Yetki", ent: "Varlık", val: "Değer", cur: "Para Birimi", pass: "Anahtar", auth: "Yetkilendir", err: "Gerekli", process: "Gönder", seize: "El Koyma" },
+        UK: { t: "Панель", f: "Позов", a: "Авторизація", ent: "Суб'єкт", val: "Вартість", cur: "Валюта", pass: "Ключ", auth: "Авторизувати", err: "Обов'язково", process: "Виконати", seize: "Конфіскація" },
+        UR: { t: "ڈیش بورڈ", f: "مقدمہ", a: "اجازت", ent: "نام", val: "قیمت", cur: "کرنسی", pass: "چابی", auth: "اجازت دیں", err: "ضروری", process: "جمع کریں", seize: "ضبطگی" },
+        UZ: { t: "Panel", f: "Da'vo", a: "Ruxsat", ent: "Nomi", val: "Qiymati", cur: "Valyuta", pass: "Kalit", auth: "Ruxsat berish", err: "Majburiy", process: "Yuborish", seize: "Musodara" },
+        CY: { t: "Dashboard", f: "Achos", a: "Awdurdod", ent: "Enw", val: "Gwerth", cur: "Arian", pass: "Allwedd", auth: "Awdurdodi", err: "Angenrheidiol", process: "Anfon", seize: "Atafaelu" },
+        XH: { t: "Dashboard", f: "Ityala", a: "Ugunyaziso", ent: "Igama", val: "Ixabiso", cur: "Imali", pass: "Isitshixo", auth: "Gunyazisa", err: "Funekayo", process: "Thumela", seize: "Ukuhlutha" },
+        YI: { t: "דאַשבאָרד", f: "קלאָג", a: "דאָוסע", ent: "נאָמען", val: "ווערט", cur: "וואַלוט", pass: "שליסל", auth: "דאָוסירן", err: "נייטיק", process: "שיקן", seize: "קאָנפיסקאַציע" },
+        YO: { t: "Dashboard", f: "Ẹjọ", a: "Aṣẹ", ent: "Orukọ", val: "Iye", cur: "Owo", pass: "Kọkọrọ", auth: "Fún ní àṣẹ", err: "Pataki", process: "Firanṣẹ", seize: "Ìgbà" },
+        ZU: { t: "Dashboard", f: "Icala", a: "Isigunyazo", ent: "Igama", val: "Inani", cur: "Imali", pass: "Isihluthulelo", auth: "Gunyaza", err: "Dinga", process: "Thumela", seize: "Ukuthatha" }
     },
-
     init() {
         const m = document.getElementById('lang-menu');
         this.langs.forEach(l => m.add(new Option(l, l)));
         this.render();
     },
-
     setLang(l) { this.lang = l; this.render(); },
     route(v) { this.view = v; this.render(); },
-
     render() {
         const d = this.dict[this.lang] || this.dict.EN;
         const target = document.getElementById('view-target');
         document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-        document.getElementById(`nav-${this.view}`).classList.add('active');
+        const navItem = document.getElementById(`nav-${this.view}`);
+        if(navItem) navItem.classList.add('active');
         document.getElementById('tier-status').innerText = this.isAdmin ? 'ADMIN ELEVATED' : 'STANDARD';
-
         if(this.view === 'dash') {
             target.innerHTML = `<h1 style="font-weight:100; font-size:48px; margin-bottom:40px;">${d.t}</h1>
                 <div class="dashboard-row">
-                    <div class="tile"><div class="tile-head">System Status</div><div class="tile-body" style="color:var(--success)">OPTIMAL</div></div>
-                    <div class="tile"><div class="tile-head">Nodes Online</div><div class="tile-body">2,841</div></div>
-                    <div class="tile"><div class="tile-head">Asset Value</div><div class="tile-body">$4.2M</div></div>
-                    <div class="tile"><div class="tile-head">Response Time</div><div class="tile-body">9ms</div></div>
+                    <div class="tile"><div class="tile-head">Status</div><div class="tile-body" style="color:var(--success)">OPTIMAL</div></div>
+                    <div class="tile"><div class="tile-head">Nodes</div><div class="tile-body">2,841</div></div>
+                    <div class="tile"><div class="tile-head">Value</div><div class="tile-body">$4.2M</div></div>
+                    <div class="tile"><div class="tile-head">Latency</div><div class="tile-body">9ms</div></div>
                 </div>`;
         } else if(this.view === 'form') {
             target.innerHTML = `<div class="form-container"><h1 style="font-weight:100; font-size:48px; margin-bottom:40px;">${d.f}</h1>
@@ -208,31 +231,29 @@ const CORE = {
                 <button class="btn-primary" onclick="CORE.login()">${d.auth}</button></div>`;
         }
     },
-
     login() {
         if(document.getElementById('admin-key').value === "IQ124578") {
             this.isAdmin = true;
             this.route('dash');
         } else { alert("ACCESS DENIED"); }
     },
-
     validate() {
         let valid = true;
         ['in-ent', 'in-val', 'in-cur'].forEach(id => {
             const el = document.getElementById(id);
-            const wrap = el.parentElement;
-            if(!el.value) { wrap.classList.add('error'); valid = false; }
-            else { wrap.classList.remove('error'); }
+            if(el) {
+                const wrap = el.parentElement;
+                if(!el.value) { wrap.classList.add('error'); valid = false; }
+                else { wrap.classList.remove('error'); }
+            }
         });
         if(valid) {
             document.getElementById('loading').style.display = 'flex';
             setTimeout(() => { document.getElementById('loading').style.display = 'none'; alert("COMMIT SUCCESS"); this.route('dash'); }, 1500);
         }
     },
-
     logout() { this.isAdmin = false; this.route('auth'); }
 };
-
 CORE.init();
 </script>
 </body>
