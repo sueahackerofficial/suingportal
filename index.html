@@ -22,7 +22,7 @@
     margin: 0; 
     padding: 0; 
     box-sizing: border-box; 
-    font-family: "Segoe UI", "Segoe UI Web (West European)", sans-serif !important; 
+    font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI Symbol", sans-serif !important; 
     -webkit-font-smoothing: antialiased;
 }
 
@@ -127,7 +127,6 @@ body { background: var(--win-white); display: flex; height: 100vh; overflow: hid
     background: white;
     padding: 40px;
     width: 500px;
-    border-radius: 2px;
 }
 
 .summary-row {
@@ -163,8 +162,9 @@ body { background: var(--win-white); display: flex; height: 100vh; overflow: hid
         <div class="nav-item">Network Mapping</div>
     </div>
     <div class="nav-group">
-        <div class="nav-label">System</div>
-        <div class="nav-item">Uplink Settings</div>
+        <div class="nav-label">System Settings</div>
+        <div class="nav-item">Uplink Config</div>
+        <div class="nav-item">Audit Trail</div>
         <div class="nav-item" style="color:var(--error)" onclick="CORE.logout()">Terminal Exit</div>
     </div>
 </aside>
