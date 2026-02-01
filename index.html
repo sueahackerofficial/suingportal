@@ -7,13 +7,23 @@
 <style>
 @font-face {
     font-family: 'Segoe UI';
-    src: url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/normal/latest.woff2') format('woff2');
-    font-weight: 400;
+    src: url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/light/latest.woff2') format('woff2');
+    font-weight: 100;
 }
 @font-face {
     font-family: 'Segoe UI';
-    src: url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/light/latest.woff2') format('woff2');
-    font-weight: 100;
+    src: url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/semilight/latest.woff2') format('woff2');
+    font-weight: 200;
+}
+@font-face {
+    font-family: 'Segoe UI';
+    src: url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/semilight/latest.woff2') format('woff2');
+    font-weight: 300;
+}
+@font-face {
+    font-family: 'Segoe UI';
+    src: url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/normal/latest.woff2') format('woff2');
+    font-weight: 400;
 }
 @font-face {
     font-family: 'Segoe UI';
@@ -34,7 +44,6 @@
     --error: #d83b01;
     --success: #107c10;
     --sidebar-w: 300px;
-    --locked-bg: #f9f9f9;
 }
 
 * { 
@@ -74,9 +83,6 @@ body { background: var(--win-white); display: flex; height: 100vh; overflow: hid
     font-size: 11px; 
     font-weight: 600; 
     text-transform: uppercase; 
-    display: flex; 
-    align-items: center; 
-    gap: 12px;
 }
 
 .nav-item:hover { color: white; background: #1a1a1a; }
@@ -99,21 +105,17 @@ body { background: var(--win-white); display: flex; height: 100vh; overflow: hid
 .tile-head { font-size: 10px; font-weight: 700; color: #888; text-transform: uppercase; }
 .tile-body { font-size: 28px; font-weight: 200; margin-top: 8px; }
 
-.form-container { max-width: 950px; }
 .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 30px; }
 .field { display: flex; flex-direction: column; gap: 8px; }
 .field label { font-size: 11px; font-weight: 700; color: #444; text-transform: uppercase; }
 
-.field input, .field select, .field textarea { 
+.field input, .field select { 
     padding: 12px; 
     border: 1px solid #ccc; 
     font-size: 14px; 
-    font-weight: 400; 
-    outline: none; 
 }
 
-.field input:focus { border-color: var(--win-blue); }
-.field.error input, .field.error select { border-color: var(--error); background: #fff8f8; }
+.field.error input { border-color: var(--error); background: #fff8f8; }
 .err-msg { font-size: 10px; color: var(--error); font-weight: 700; display: none; margin-top: 4px; }
 .field.error .err-msg { display: block; }
 
@@ -124,9 +126,6 @@ body { background: var(--win-white); display: flex; height: 100vh; overflow: hid
     background: #f0fff4;
 }
 
-.locked { background: var(--locked-bg); border: 1px dashed #ccc !important; opacity: 0.6; pointer-events: none; }
-.lock-text { font-size: 9px; color: var(--error); font-weight: 700; margin-top: 5px; }
-
 .btn-primary { 
     background: var(--win-blue); 
     color: white; 
@@ -136,26 +135,6 @@ body { background: var(--win-white); display: flex; height: 100vh; overflow: hid
     font-weight: 600; 
     text-transform: uppercase; 
     cursor: pointer; 
-}
-
-.modal-summary {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.85);
-    z-index: 2000;
-    align-items: center;
-    justify-content: center;
-}
-
-.modal-box { background: white; padding: 40px; width: 500px; }
-
-.summary-row {
-    display: flex;
-    justify-content: space-between;
-    padding: 12px 0;
-    border-bottom: 1px solid #eee;
-    font-size: 14px;
 }
 
 .overlay { 
@@ -172,21 +151,12 @@ body { background: var(--win-white); display: flex; height: 100vh; overflow: hid
     <div class="sidebar-header">SAH 95018</div>
     <div class="nav-group">
         <div class="nav-label">Global Operations</div>
-        <div class="nav-item active" id="nav-dash" onclick="CORE.route('dash')">Operations Dashboard</div>
+        <div class="nav-item active" id="nav-dash" onclick="CORE.route('dash')">Dashboard</div>
         <div class="nav-item" id="nav-form" onclick="CORE.route('form')">Lawsuit Filing</div>
         <div class="nav-item" id="nav-auth" onclick="CORE.route('auth')">Access Control</div>
     </div>
     <div class="nav-group">
-        <div class="nav-label">Assets & Intel</div>
-        <div class="nav-item">Entity Explorer</div>
-        <div class="nav-item">Ledger Audit</div>
-        <div class="nav-item">Network Mapping</div>
-    </div>
-    <div class="nav-group">
-        <div class="nav-label">System Management</div>
-        <div class="nav-item">Uplink Config</div>
-        <div class="nav-item">Security Logs</div>
-        <div class="nav-item">API Tokens</div>
+        <div class="nav-label">System</div>
         <div class="nav-item" style="color:var(--error)" onclick="CORE.logout()">Terminal Exit</div>
     </div>
 </aside>
@@ -196,36 +166,28 @@ body { background: var(--win-white); display: flex; height: 100vh; overflow: hid
         <div style="font-size:11px; font-weight:700; color:#999;">
             UPLINK: <span style="color:var(--success)">SECURE</span> // TIER: <span id="tier-status">STANDARD</span>
         </div>
-        <select id="lang-menu" onchange="CORE.setLang(this.value)" style="padding:4px; font-size:12px;"></select>
+        <select id="lang-menu" onchange="CORE.setLang(this.value)" style="padding:4px; font-size:12px; width: 120px;"></select>
     </div>
     <div class="content" id="view-target"></div>
 </main>
 
-<div id="summary-modal" class="modal-summary">
-    <div class="modal-box">
-        <h2 style="font-weight:100; font-size:28px; margin-bottom:20px;">Review Settlement</h2>
-        <div id="summary-content"></div>
-        <div style="margin-top:30px; display:flex; gap:10px;">
-            <button class="btn-primary" onclick="CORE.execute()">Confirm & Commit</button>
-            <button style="background:#eee; border:none; padding:16px 20px; font-size:12px; cursor:pointer;" onclick="CORE.closeModal()">Back</button>
-        </div>
-    </div>
-</div>
-
 <div id="loading" class="overlay">
     <div style="width:50px; height:50px; border:3px solid #eee; border-top:3px solid var(--win-blue); border-radius:50%; animation: spin 1s linear infinite;"></div>
-    <h1 style="font-weight:100; font-size:32px; margin-top:20px;">Writing to Ledger...</h1>
+    <h1 style="font-size:24px; margin-top:20px; font-weight:100;">Updating Ledger...</h1>
 </div>
 
 <script>
 const CORE = {
     view: 'dash', lang: 'EN', isAdmin: false,
-    langs: ["EN","EL","RU","VI","FR","DE","ES","ZH","JA","KO"],
+    langs: ["EN","EL","RU","VI","AF","SQ","AM","AR","HY","AZ","EU","BE","BN","BS","BG","CA","CEB","NY","ZH","CO","HR","CS","DA","NL","EO","ET","TL","FI","FR","FY","GL","KA","DE","GU","HT","HA","HAW","IW","HI","HMN","HU","IS","IG","ID","GA","IT","JA","JW","KN","KK","KM","KO","KU","KY","LO","LA","LV","LT","LB","MK","MG","MS","ML","MT","MI","MR","MN","MY","NE","NO","PS","FA","PL","PT","PA","RO","SM","GD","SR","ST","SN","SD","SI","SK","SL","SO","ES","SU","SW","SV","TG","TA","TE","TH","TR","UK","UR","UZ","CY","XH","YI","YO","ZU","EU","GL","KA","GU","HT","HA","HAW","IW","HI","HMN","HU","IS","IG","ID","GA"],
+    
     dict: {
-        EN: { t: "Dashboard", f: "Lawsuit Entry", a: "Admin Auth", ent: "Entity Name", val: "Asset Value", cur: "Currency", pass: "Security Key", auth: "Authorize", err: "Field Required", lock: "ADMIN ONLY", process: "Review Settlement", seize: "Enable Global Asset Seizure" },
-        EL: { t: "Πίνακας Ελέγχου", f: "Καταχώρηση Αγωγής", a: "Εξουσιοδότηση", ent: "Όνομα Οντότητας", val: "Αξία Περιουσιακών", cur: "Νόμισμα", pass: "Κωδικός", auth: "Εξουσιοδότηση", err: "Απαιτούμενο", lock: "ΜΟΝΟ ADMIN", process: "Επανεξέταση", seize: "Ενεργοποίηση Κατάσχεσης" },
-        RU: { t: "Панель", f: "Форма иска", a: "Авторизация", ent: "Имя субъекта", val: "Стоимость", cur: "Валюта", pass: "Ключ", auth: "Авторизовать", err: "Обязательно", lock: "ТОЛЬКО АДМИН", process: "Проверить", seize: "Изъятие активов" },
-        VI: { t: "Bảng điều khiển", f: "Mẫu đơn kiện", a: "Xác thực", ent: "Tên thực thể", val: "Giá trị", cur: "Tiền tệ", pass: "Khóa", auth: "Ủy quyền", err: "Bắt buộc", lock: "CHỈ QUẢN TRỊ", process: "Xem lại hồ sơ", seize: "Tịch thu tài sản" }
+        EN: { t: "Dashboard", f: "Lawsuit Entry", a: "Admin Auth", ent: "Entity Name", val: "Asset Value", cur: "Currency", pass: "Security Key", auth: "Authorize", err: "Required", process: "Commit Entry", seize: "Enable Global Asset Seizure" },
+        EL: { t: "Πίνακας Ελέγχου", f: "Καταχώρηση Αγωγής", a: "Εξουσιοδότηση", ent: "Οντότητα", val: "Αξία", cur: "Νόμισμα", pass: "Κωδικός", auth: "Εξουσιοδότηση", err: "Απαραίτητο", process: "Υποβολή", seize: "Ενεργοποίηση Κατάσχεσης" },
+        RU: { t: "Панель", f: "Форма иска", a: "Авторизация", ent: "Субъект", val: "Стоимость", cur: "Валюта", pass: "Ключ", auth: "Авторизовать", err: "Обязательно", process: "Выполнить", seize: "Изъятие активов" },
+        VI: { t: "Bảng điều khiển", f: "Mẫu đơn kiện", a: "Xác thực", ent: "Tên thực thể", val: "Giá trị", cur: "Tiền tệ", pass: "Khóa", auth: "Ủy quyền", err: "Bắt buộc", process: "Gửi hồ sơ", seize: "Tịch thu tài sản" },
+        FR: { t: "Tableau", f: "Saisie de procès", a: "Authentification", ent: "Nom de l'entité", val: "Valeur", cur: "Devise", pass: "Clé", auth: "Autoriser", err: "Obligatoire", process: "Valider", seize: "Saisie d'actifs" },
+        DE: { t: "Dashboard", f: "Klageeinreichung", a: "Admin-Auth", ent: "Name", val: "Vermögenswert", cur: "Währung", pass: "Sicherheitsschlüssel", auth: "Autorisieren", err: "Erforderlich", process: "Einreichen", seize: "Globale Beschlagnahme" }
     },
 
     init() {
@@ -247,23 +209,20 @@ const CORE = {
         if(this.view === 'dash') {
             target.innerHTML = `<h1 style="font-weight:100; font-size:48px; margin-bottom:40px;">${d.t}</h1>
                 <div class="dashboard-row">
-                    <div class="tile"><div class="tile-head">Asset Val</div><div class="tile-body">$4,290,025</div></div>
-                    <div class="tile"><div class="tile-head">Active Nodes</div><div class="tile-body">1,024</div></div>
-                    <div class="tile"><div class="tile-head">Integrity</div><div class="tile-body" style="color:var(--success)">99.8%</div></div>
-                    <div class="tile"><div class="tile-head">Latency</div><div class="tile-body">12ms</div></div>
+                    <div class="tile"><div class="tile-head">Integrity</div><div class="tile-body" style="color:var(--success)">99.9%</div></div>
+                    <div class="tile"><div class="tile-head">Nodes</div><div class="tile-body">2,841</div></div>
+                    <div class="tile"><div class="tile-head">Active Val</div><div class="tile-body">$4.2M</div></div>
+                    <div class="tile"><div class="tile-head">Latency</div><div class="tile-body">8ms</div></div>
                 </div>`;
         } else if(this.view === 'form') {
             target.innerHTML = `<div class="form-container"><h1 style="font-weight:100; font-size:48px; margin-bottom:40px;">${d.f}</h1>
                 <div class="field-grid">
-                    <div class="field" id="v-ent"><label>${d.ent}</label><input type="text" id="in-ent" placeholder="Legal Entity Name"><span class="err-msg">${d.err}</span></div>
+                    <div class="field" id="v-ent"><label>${d.ent}</label><input type="text" id="in-ent" placeholder="Name"><span class="err-msg">${d.err}</span></div>
                     <div class="field" id="v-val"><label>${d.val}</label><input type="number" id="in-val" placeholder="0.00"><span class="err-msg">${d.err}</span></div>
                     <div class="field" id="v-cur"><label>${d.cur}</label><select id="in-cur"><option value="">- Select -</option><option>USD</option><option>EUR</option><option>BTC</option><option>VND</option></select><span class="err-msg">${d.err}</span></div>
-                    <div class="field"><label>Claim Type</label><select><option>Corporate Espionage</option><option>Data Breach</option></select></div>
                 </div>
                 <div class="access-module"><label style="font-size:11px; font-weight:700; color:var(--success); text-transform:uppercase;">${d.seize}</label><br>
                 <input type="checkbox" id="in-seize" style="margin-top:10px; width:18px; height:18px;"></div>
-                <div class="field ${!this.isAdmin ? 'locked' : ''}" style="margin-bottom:30px;"><label>Interpol Uplink</label><input type="checkbox">
-                ${!this.isAdmin ? `<div class="lock-text">${d.lock}</div>` : ''}</div>
                 <button class="btn-primary" onclick="CORE.validate()">${d.process}</button></div>`;
         } else if(this.view === 'auth') {
             target.innerHTML = `<div style="max-width:400px; padding-top:50px;"><h1 style="font-weight:100; font-size:42px; margin-bottom:30px;">${d.a}</h1>
@@ -276,38 +235,22 @@ const CORE = {
     login() {
         if(document.getElementById('admin-key').value === "IQ124578") {
             this.isAdmin = true;
-            alert("SYSTEM ELEVATED TO ADMIN");
             this.route('dash');
-        } else {
-            alert("INVALID KEY");
-        }
+        } else { alert("ACCESS DENIED"); }
     },
 
     validate() {
         let valid = true;
-        const fields = [['in-ent', 'v-ent'], ['in-val', 'v-val'], ['in-cur', 'v-cur']];
-        fields.forEach(f => {
-            const el = document.getElementById(f[0]);
-            const wrapper = document.getElementById(f[1]);
-            if(!el.value) { wrapper.classList.add('error'); valid = false; }
-            else { wrapper.classList.remove('error'); }
+        ['in-ent', 'in-val', 'in-cur'].forEach(id => {
+            const el = document.getElementById(id);
+            const wrap = el.parentElement;
+            if(!el.value) { wrap.classList.add('error'); valid = false; }
+            else { wrap.classList.remove('error'); }
         });
         if(valid) {
-            const d = this.dict[this.lang] || this.dict.EN;
-            document.getElementById('summary-content').innerHTML = `
-                <div class="summary-row"><span>Entity</span><span>${document.getElementById('in-ent').value}</span></div>
-                <div class="summary-row"><span>Price</span><span>${document.getElementById('in-val').value} ${document.getElementById('in-cur').value}</span></div>
-                <div class="summary-row"><span>Tier</span><span>${this.isAdmin ? 'Admin' : 'Standard'}</span></div>`;
-            document.getElementById('summary-modal').style.display = 'flex';
+            document.getElementById('loading').style.display = 'flex';
+            setTimeout(() => { document.getElementById('loading').style.display = 'none'; alert("COMMIT SUCCESS"); this.route('dash'); }, 1500);
         }
-    },
-
-    closeModal() { document.getElementById('summary-modal').style.display = 'none'; },
-
-    execute() {
-        this.closeModal();
-        document.getElementById('loading').style.display = 'flex';
-        setTimeout(() => { document.getElementById('loading').style.display = 'none'; alert("LEDGER UPDATED"); this.route('dash'); }, 2000);
     },
 
     logout() { this.isAdmin = false; this.route('auth'); }
