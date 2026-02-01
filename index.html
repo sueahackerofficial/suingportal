@@ -20,6 +20,7 @@
     box-sizing: border-box; 
     font-family: "Segoe UI", "Segoe UI Web (West European)", -apple-system, BlinkMacSystemFont, Roboto, sans-serif !important; 
     -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
 }
 body { background: var(--win-white); display: flex; height: 100vh; overflow: hidden; color: #333; }
 .sidebar { width: var(--sidebar-w); background: var(--win-black); color: white; display: flex; flex-direction: column; flex-shrink: 0; }
@@ -125,7 +126,7 @@ const CORE = {
         HA: { t: "Dashboard", f: "Shari'a", a: "Izini", ent: "Suna", val: "Daraja", cur: "Kudi", pass: "Makubli", auth: "Ba da izini", err: "Dole", process: "Aika", seize: "Kwace" },
         HAW: { t: "Papapihi", f: "Hoʻopiʻi", a: "Mana", ent: "Inoa", val: "Waiwai", cur: "Kālā", pass: "Kī", auth: "Hoʻomana", err: "Pono", process: "Waiho", seize: "Lāʻau" },
         IW: { t: "לוח בקרה", f: "תביעה", a: "אישור", ent: "שותפות", val: "ערך", cur: "מטבע", pass: "מפתח", auth: "אשר", err: "חובה", process: "שלח", seize: "החרמה" },
-        HI: { t: "डैशबोर्ड", f: "मुकदमा", a: "प्राधिकरण", ent: "संस्था", val: "मूल्य", cur: "मुद्रा", pass: "कुंजी", auth: "प्राधिकृत", err: "आवश्यक", process: "जमा करें", seize: "जब्ती" },
+        HI: { t: "डैशबोर्ड", f: "मुकदमा", a: "प्राधिकरण", ent: "संस्था", val: "मूलय", cur: "मुद्रा", pass: "कुंजी", auth: "प्राधिकृत", err: "आवश्यक", process: "जमा करें", seize: "जब्ती" },
         HMN: { t: "Dashboard", f: "Teeb meem", a: "Tso cai", ent: "Lub npe", val: "Nqi", cur: "Nyiaj", pass: "Tseem ceeb", auth: "Tso cai", err: "Yuav tsum", process: "Xa", seize: "Txeeb" },
         HU: { t: "Vezérlőpult", f: "Kereset", a: "Engedélyezés", ent: "Szervezet", val: "Érték", cur: "Pénznem", pass: "Kulcs", auth: "Engedélyez", err: "Kötelező", process: "Beküldés", seize: "Lefoglalás" },
         IS: { t: "Stjórnborð", f: "Málshöfðun", a: "Heimild", ent: "Aðili", val: "Virði", cur: "Gjaldmiðill", pass: "Lykill", auth: "Heimila", err: "Nauðsynlegt", process: "Staðfesta", seize: "Eignarnám" },
@@ -141,7 +142,7 @@ const CORE = {
         KO: { t: "대시보드", f: "소송 입력", a: "관리자 인증", ent: "엔티티 이름", val: "자산 가치", cur: "통화", pass: "보안 키", auth: "승인", err: "필수", process: "제출", seize: "글로벌 자산 압류" },
         KU: { t: "Dashboard", f: "Doz", a: "Destûr", ent: "Nav", val: "Nirx", cur: "Pere", pass: "Mifte", auth: "Destûr bide", err: "Pêویست", process: "Bişîne", seize: "Desteser" },
         KY: { t: "Панель", f: "Доо", a: "Уруксат", ent: "Аталышы", val: "Баасы", cur: "Валюта", pass: "Ачкыч", auth: "Уруксат берүү", err: "Милдеттүү", process: "Жөнөтүү", seize: "Конфискация" },
-        LO: { t: "ແຜງຄວບຄຸມ", f: "ຟ້ອງຮ້ອງ", a: "ອະນຸຍາດ", ent: "ຊື່", val: "ມູນຄ່າ", cur: "ເງິນ", pass: "ກະແຈ", auth: "ອະນຸຍາດ", err: "ຈຳເປັນ", process: "ສົ່ງ", seize: "ຢຶດຊັບ" },
+        LO: { t: "ແຜງຄວບຄຸມ", f: "ຟ້ອງຮ້ອງ", a: "ອະນຸຍาด", ent: "ຊື່", val: "ມູນຄ່າ", cur: "ເງິນ", pass: "ກະແຈ", auth: "ອະນຸຍາດ", err: "ຈຳເປັນ", process: "ສົ່ງ", seize: "ຢຶດຊັບ" },
         LA: { t: "Tabula", f: "Lis", a: "Auctoritas", ent: "Nomen", val: "Pretium", cur: "Moneta", pass: "Clavis", auth: "Auctorare", err: "Oportet", process: "Mittere", seize: "Publicatio" },
         LV: { t: "Panelis", f: "Prasība", a: "Autorizācija", ent: "Subjekts", val: "Vērtība", cur: "Valūta", pass: "Atslēga", auth: "Autorizēt", err: "Obligāts", process: "Iesniegt", seize: "Konfiskācija" },
         LT: { t: "Skydas", f: "Ieškinys", a: "Autorizacija", ent: "Subjektas", val: "Vertė", cur: "Valiuta", pass: "Raktas", auth: "Autorizuoti", err: "Būtina", process: "Siųsti", seize: "Konfiskavimas" },
@@ -157,7 +158,7 @@ const CORE = {
         MY: { t: "ဒိုင်ခွက်", f: "တရားစွဲဆိုမှု", a: "ခွင့်ပြုချက်", ent: "အမည်", val: "တန်ဖိုး", cur: "ငွေကြေး", pass: "သော့", auth: "ခွင့်ပြုသည်", err: "လိုအပ်သည်", process: "တင်သွင်း", seize: "သိမ်းဆည်း" },
         NE: { t: "ड्यासबોર્ड", f: "मुद्दा", a: "अनुमति", ent: "नाम", val: "मूल्य", cur: "मुद्रा", pass: "कुञ्जी", auth: "अनुमति दिनुहोस्", err: "आवश्यक", process: "पेश", seize: "जफत" },
         NO: { t: "Oversikt", f: "Søksmål", a: "Autorisasjon", ent: "Enhet", val: "Verdi", cur: "Valuta", pass: "Nøkkel", auth: "Autoriser", err: "Påkrevd", process: "Send", seize: "Beslag" },
-        OR: { t: "ଡ୍ୟାସବୋର୍ଡ", f: "ମାମଲା", a: "ଅନୁମୋଦନ", ent: "ନାମ", val: "ମୂଲ୍ୟ", cur: "ମୁଦ୍ରା", pass: "ଚାବି", auth: "ଅନୁମୋଦନ", err: "ଆବଶ୍ୟକ", process: "ପଠାନ୍ତୁ", seize: "ଜବତ" },
+        OR: { t: "ଡ୍ୟାସବୋର୍ଡ", f: "ମାମଲା", a: "ଅନୁମୋଦନ", ent: "ନାମ", val: "ମୂଲ୍ୟ", cur: "ମୁଦ୍ରା", pass: "ଚାବି", auth: "ଅନୁମୋଦନ", err: "ଆବଶ୍ୟක", process: "ପଠାନ୍ତୁ", seize: "ଜବତ" },
         PS: { t: "ډشبورډ", f: "دعوه", a: "اجازه", ent: "نوم", val: "ارزښت", cur: "پيسې", pass: "کیلي", auth: "اجازه ورکول", err: "لازمي", process: "لیږل", seize: "ضبط" },
         FA: { t: "داشبورد", f: "شکایت", a: "احراز هویت", ent: "نام نهاد", val: "ارزش", cur: "واحد پول", pass: "کلید", auth: "تایید", err: "اجباری", process: "ارسال", seize: "توقیف" },
         PL: { t: "Panel", f: "Pozew", a: "Autoryzacja", ent: "Podmiot", val: "Wartość", cur: "Waluta", pass: "Klucz", auth: "Autoryzuj", err: "Wymagane", process: "Wyślij", seize: "Zajęcie" },
@@ -168,7 +169,7 @@ const CORE = {
         GD: { t: "Dashboard", f: "Cùis", a: "Ùghdarras", ent: "Ainm", val: "Luach", cur: "Airgead", pass: "Iuchair", auth: "Ùghdarraich", err: "Feumail", process: "Cuir", seize: "Glacadh" },
         SR: { t: "Табла", f: "Тужба", a: "Ауторизација", ent: "Субјект", val: "Вредност", cur: "Валута", pass: "Кључ", auth: "Ауторизуј", err: "Обавезно", process: "Пошаљи", seize: "Заплена" },
         ST: { t: "Dashboard", f: "Nyeoe", a: "Tumello", ent: "Lebitso", val: "Boleng", cur: "Chelete", pass: "Senotlolo", auth: "Lumella", err: "Hlokahala", process: "Romela", seize: "Ho nka" },
-        SN: { t: "Dashboard", f: "Mhosva", a: "Mvumo", ent: "Zita", val: "Kukosha", cur: "Mari", pass: "Kiyi", auth: "Tendera", err: "Inodiwa", process: "Tumira", seize: "Kutora" },
+        SN: { t: "Dashboard", f: "Mhosva", a: "Mvumo", ent: "Zita", val: "Kukosha", cur: "Mari", pass: "Kiyi", auth: "Tendera", err: "Inodiwa", process: "Tumira", seize: "Kiyi" },
         SD: { t: "ڊيش بورڊ", f: "دعويٰ", a: "اختيار", ent: "نالو", val: "قدر", cur: "ڪرنسي", pass: "ڪنجي", auth: "اختيار ڏيو", err: "لازمي", process: "موڪليو", seize: "ضبطي" },
         SI: { t: "දර්ශක පුවරුව", f: "නඩුව", a: "අවසරය", ent: "නම", val: "අගය", cur: "මුදල්", pass: "යතුර", auth: "අවසර දෙන්න", err: "අවශ්‍යයි", process: "යොමු කරන්න", seize: "රාජසන්තක" },
         SK: { t: "Nástenka", f: "Žaloba", a: "Autorizácia", ent: "Subjekt", val: "Hodnota", cur: "Mena", pass: "Kľúč", auth: "Autorizovať", err: "Povinné", process: "Odeslať", seize: "Zabavenie" },
@@ -186,6 +187,7 @@ const CORE = {
         UK: { t: "Панель", f: "Позов", a: "Авторизація", ent: "Суб'єкт", val: "Вартість", cur: "Валюта", pass: "Ключ", auth: "Авторизувати", err: "Обов'язково", process: "Виконати", seize: "Конфіскація" },
         UR: { t: "ڈیش بورڈ", f: "مقدمہ", a: "اجازت", ent: "نام", val: "قیمت", cur: "کرنسی", pass: "چابی", auth: "اجازت دیں", err: "ضروری", process: "جمع کریں", seize: "ضبطگی" },
         UZ: { t: "Panel", f: "Da'vo", a: "Ruxsat", ent: "Nomi", val: "Qiymati", cur: "Valyuta", pass: "Kalit", auth: "Ruxsat berish", err: "Majburiy", process: "Yuborish", seize: "Musodara" },
+        VI: { t: "Bảng điều khiển", f: "Mẫu đơn kiện", a: "Xác thực", ent: "Tên thực thể", val: "Giá trị", cur: "Tiền tệ", pass: "Khóa", auth: "Ủy quyền", err: "Bắt buộc", process: "Gửi hồ sơ", seize: "Tịch thu tài sản" },
         CY: { t: "Dashboard", f: "Achos", a: "Awdurdod", ent: "Enw", val: "Gwerth", cur: "Arian", pass: "Allwedd", auth: "Awdurdodi", err: "Angenrheidiol", process: "Anfon", seize: "Atafaelu" },
         XH: { t: "Dashboard", f: "Ityala", a: "Ugunyaziso", ent: "Igama", val: "Ixabiso", cur: "Imali", pass: "Isitshixo", auth: "Gunyazisa", err: "Funekayo", process: "Thumela", seize: "Ukuhlutha" },
         YI: { t: "דאַשבאָרד", f: "קלאָג", a: "דאָוסע", ent: "נאָמען", val: "ווערט", cur: "וואַלוט", pass: "שליסל", auth: "דאָוסירן", err: "נייטיק", process: "שיקן", seize: "קאָנפיסקאַציע" },
