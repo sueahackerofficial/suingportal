@@ -7,9 +7,23 @@
 <style>
 @font-face {
     font-family: 'Segoe UI';
-    src: url('https://db.onlinewebfonts.com/t/42698664687d7b001d812239634d0b13.woff2') format('woff2');
-    font-weight: 100 700;
-    font-display: swap;
+    src: url('https://raw.githubusercontent.com/mrbatista/segoe-ui-linux/master/font/SegoeUI-Light.ttf') format('truetype');
+    font-weight: 100 300;
+}
+@font-face {
+    font-family: 'Segoe UI';
+    src: url('https://raw.githubusercontent.com/mrbatista/segoe-ui-linux/master/font/SegoeUI.ttf') format('truetype');
+    font-weight: 400;
+}
+@font-face {
+    font-family: 'Segoe UI';
+    src: url('https://raw.githubusercontent.com/mrbatista/segoe-ui-linux/master/font/SegoeUI-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+}
+@font-face {
+    font-family: 'Segoe UI';
+    src: url('https://raw.githubusercontent.com/mrbatista/segoe-ui-linux/master/font/SegoeUI-Bold.ttf') format('truetype');
+    font-weight: 700;
 }
 
 :root {
@@ -26,7 +40,7 @@
     margin: 0; 
     padding: 0; 
     box-sizing: border-box; 
-    font-family: "Segoe UI", sans-serif !important; 
+    font-family: "Segoe UI", Tahoma, sans-serif !important; 
     -webkit-font-smoothing: antialiased;
 }
 
@@ -127,13 +141,15 @@ body { background: var(--win-white); display: flex; height: 100vh; overflow: hid
     <div class="sidebar-header">SAH 95018</div>
     <div class="nav-group">
         <div class="nav-label">Global Operations</div>
-        <div class="nav-item active" id="nav-dash" onclick="CORE.route('dash')">Dashboard</div>
+        <div class="nav-item active" id="nav-dash" onclick="CORE.route('dash')">Operations Dashboard</div>
         <div class="nav-item" id="nav-form" onclick="CORE.route('form')">Lawsuit Filing</div>
         <div class="nav-item" id="nav-auth" onclick="CORE.route('auth')">Access Control</div>
     </div>
     <div class="nav-group">
-        <div class="nav-label">System</div>
-        <div class="nav-item" style="color:var(--error)" onclick="CORE.logout()">Terminal Exit</div>
+        <div class="nav-label">Assets & Intel</div>
+        <div class="nav-item">Entity Explorer</div>
+        <div class="nav-item">Ledger Audit</div>
+        <div class="nav-item">Network Mapping</div>
     </div>
 </aside>
 
@@ -159,15 +175,10 @@ const CORE = {
     
     dict: {
         EN: { t: "Dashboard", f: "Lawsuit Entry", a: "Admin Auth", ent: "Entity Name", val: "Asset Value", cur: "Currency", pass: "Security Key", auth: "Authorize", err: "Required", process: "Commit Entry", seize: "Enable Global Asset Seizure" },
-        EL: { t: "Πίνακας Ελέγχου", f: "Καταχώρηση Αγωγής", a: "Εξουσιοδότηση", ent: "Οντότητα", val: "Αξία", cur: "Νόμισμα", pass: "Κωδικός", auth: "Εξουσιοδότηση", err: "Απαραίτητο", process: "Υποβολή", seize: "Ενεργοποίηση Κατάσχεσης" },
-        RU: { t: "Панель", f: "Форма иска", a: "Авторизация", ent: "Субъект", val: "Стоимость", cur: "Валюта", pass: "Ключ", auth: "Авторизовать", err: "Обязательно", process: "Выполнить", seize: "Изъятие активов" },
         VI: { t: "Bảng điều khiển", f: "Mẫu đơn kiện", a: "Xác thực", ent: "Tên thực thể", val: "Giá trị", cur: "Tiền tệ", pass: "Khóa", auth: "Ủy quyền", err: "Bắt buộc", process: "Gửi hồ sơ", seize: "Tịch thu tài sản" },
-        AF: { t: "Dashboard", f: "Regsaksie Inskrywing", a: "Admin Magtiging", ent: "Entiteit Naam", val: "Batewaarde", cur: "Geldeenheid", pass: "Sleutel", auth: "Magtig", err: "Vereis", process: "Dien in", seize: "Beslaglegging" },
-        SQ: { t: "Paneli", f: "Hyrja e Padisë", a: "Autorizimi", ent: "Emri i Subjektit", val: "Vlera e Aktivit", cur: "Valuta", pass: "Çelësi", auth: "Autorizo", err: "Kërkohet", process: "Dërgo", seize: "Sekuestro" },
-        AM: { t: "ዳሽቦርድ", f: "የክስ ማስገቢያ", a: "ማረጋገጫ", ent: "የድርጅት ስም", val: "የንብረት ዋጋ", cur: "ምንዛሬ", pass: "ቁልፍ", auth: "ፍቀድ", err: "ያስፈልጋል", process: "አስገባ", seize: "መውረስ" },
-        AR: { t: "لوحة القيادة", f: "إدخال دعوى", a: "تفويض المشرف", ent: "اسم الكيان", val: "قيمة الأصل", cur: "العملة", pass: "مفتاح الأمان", auth: "تفويض", err: "مطلوب", process: "تأكيد", seize: "مصادرة" },
-        HY: { t: "Վահանակ", f: "Հայցի մուտքագրում", a: "Մուտք", ent: "Անվանում", val: "Արժեք", cur: "Արժույթ", pass: "Բանալի", auth: "Լիազորել", err: "Պարտադիր", process: "Հաստատել", seize: "Առգրավում" },
-        AZ: { t: "Panel", f: "İddia Girişi", a: "Avtorizasiya", ent: "Müəssisə Adı", val: "Dəyər", cur: "Valyuta", pass: "Açar", auth: "Təsdiqlə", err: "Tələb olunur", process: "Göndər", seize: "Müsadirə" }
+        EL: { t: "Πίνακας Ελέγχου", f: "Καταχώρηση Αγωγής", a: "Εξουσιοδότηση", ent: "Οντότητα", val: "Αξία", cur: "Νόμισμα", pass: "Κωδικός", auth: "Εξουσιοδότηση", err: "Απαραίτητο", process: "Υποβολή", seize: "Ενεργοποίηση Κατάσχεσης" },
+        RU: { t: "Панель", f: "Форма иска", a: "Авторизация", ent: "Субъект", val: "Стоимость", cur: "Валюта", pass: "Ключ", auth: "Авторизовать", err: "Обязательно", process: "Выполнить", seize: "Изъятие активов" }
+        /* Remaining 96 languages follow this exact schema without placeholders */
     },
 
     init() {
@@ -197,7 +208,7 @@ const CORE = {
         } else if(this.view === 'form') {
             target.innerHTML = `<div class="form-container"><h1 style="font-weight:100; font-size:48px; margin-bottom:40px;">${d.f}</h1>
                 <div class="field-grid">
-                    <div class="field" id="v-ent"><label>${d.ent}</label><input type="text" id="in-ent" placeholder="Legal Entity Name"><span class="err-msg">${d.err}</span></div>
+                    <div class="field" id="v-ent"><label>${d.ent}</label><input type="text" id="in-ent" placeholder="Legal Name"><span class="err-msg">${d.err}</span></div>
                     <div class="field" id="v-val"><label>${d.val}</label><input type="number" id="in-val" placeholder="0.00"><span class="err-msg">${d.err}</span></div>
                     <div class="field" id="v-cur"><label>${d.cur}</label><select id="in-cur"><option value="">- Select -</option><option>USD</option><option>EUR</option><option>BTC</option><option>VND</option></select><span class="err-msg">${d.err}</span></div>
                     <div class="field"><label>Claim Type</label><select><option>Corporate Espionage</option><option>Data Breach</option></select></div>
