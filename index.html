@@ -2,30 +2,21 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>SAH 95018 | COMMAND TERMINAL</title>
+<title>SAH 95018 | TERMINAL</title>
 <style type="text/css">
 @font-face {
     font-family: 'SegoeUI_Core';
-    src: local('Segoe UI Bold'), 
-         url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/bold/latest.woff2') format('woff2');
+    src: local('Segoe UI Bold'), url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/bold/latest.woff2') format('woff2');
     font-weight: 700;
 }
 @font-face {
     font-family: 'SegoeUI_Core';
-    src: local('Segoe UI Semibold'), 
-         url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/semibold/latest.woff2') format('woff2');
-    font-weight: 600;
-}
-@font-face {
-    font-family: 'SegoeUI_Core';
-    src: local('Segoe UI'), 
-         url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/normal/latest.woff2') format('woff2');
+    src: local('Segoe UI'), url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/normal/latest.woff2') format('woff2');
     font-weight: 400;
 }
 @font-face {
     font-family: 'SegoeUI_Core';
-    src: local('Segoe UI Semilight'), 
-         url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/semilight/latest.woff2') format('woff2');
+    src: local('Segoe UI Semilight'), url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/semilight/latest.woff2') format('woff2');
     font-weight: 300;
 }
 
@@ -55,16 +46,9 @@ body { margin: 0; padding: 0; background-color: #ffffff; height: 100vh; overflow
 .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px; }
 .input-group { display: flex; flex-direction: column; gap: 10px; }
 .input-group label { font-size: 11px; font-weight: 700; color: #444; text-transform: uppercase; }
-.input-group input, .input-group select, .input-group textarea { 
-    padding: 14px; border: 1px solid #ccc; font-size: 14px; outline: none; background: #fff;
-}
+.input-group input, .input-group select, .input-group textarea { padding: 14px; border: 1px solid #ccc; font-size: 14px; outline: none; background: #fff; }
 
-.btn-submit { 
-    background: #0078d4; color: #fff; border: none; padding: 20px 80px; 
-    font-size: 12px; font-weight: 700; text-transform: uppercase; cursor: pointer;
-}
-
-.pill { padding: 5px 12px; font-size: 10px; font-weight: 700; border-radius: 2px; text-transform: uppercase; background: #e6f4ea; color: #107c10; }
+.btn-submit { background: #0078d4; color: #fff; border: none; padding: 20px 80px; font-size: 12px; font-weight: 700; text-transform: uppercase; cursor: pointer; }
 
 @keyframes spin { to { transform: rotate(360deg); } }
 .loader { display: none; position: fixed; inset: 0; background: rgba(255,255,255,0.98); z-index: 999; flex-direction: column; align-items: center; justify-content: center; }
@@ -77,14 +61,14 @@ body { margin: 0; padding: 0; background-color: #ffffff; height: 100vh; overflow
         <td class="sidebar">
             <div class="sidebar-header">SAH 95018</div>
             <div class="nav-group">GLOBAL OPERATIONS</div>
-            <div class="nav-item active" id="m-dash" onclick="CORE.route('dash')">Operations Dashboard</div>
-            <div class="nav-item" id="m-form" onclick="CORE.route('form')">Lawsuit Filing</div>
-            <div class="nav-item" id="m-access" onclick="CORE.route('dash')">Access Control</div>
+            <div class="nav-item active" id="m-dash" onclick="CORE.route('dash')">OPERATIONS DASHBOARD</div>
+            <div class="nav-item" id="m-form" onclick="CORE.route('form')">LAWSUIT FILING</div>
+            <div class="nav-item" id="m-access" onclick="CORE.route('dash')">ACCESS CONTROL</div>
             <div class="nav-group">ASSETS & INTEL</div>
-            <div class="nav-item" id="m-ent" onclick="CORE.route('dash')">Entity Explorer</div>
-            <div class="nav-item" id="m-led" onclick="CORE.route('led')">Ledger Audit</div>
-            <div class="nav-item" id="m-map" onclick="CORE.route('dash')">Network Mapping</div>
-            <div style="margin-top: 150px; color: #d83b01;" class="nav-item" onclick="location.reload()">Terminal Exit</div>
+            <div class="nav-item" id="m-ent" onclick="CORE.route('dash')">ENTITY EXPLORER</div>
+            <div class="nav-item" id="m-led" onclick="CORE.route('led')">LEDGER AUDIT</div>
+            <div class="nav-item" id="m-map" onclick="CORE.route('dash')">NETWORK MAPPING</div>
+            <div style="margin-top: 150px; color: #d83b01;" class="nav-item" onclick="location.reload()">TERMINAL EXIT</div>
         </td>
         <td class="viewport">
             <div class="top-bar">
@@ -94,8 +78,8 @@ body { margin: 0; padding: 0; background-color: #ffffff; height: 100vh; overflow
                         <td align="right">
                             <select id="l-select" onchange="CORE.setLang(this.value)" style="font-weight:700;">
                                 <option value="EN">EN</option>
-                                <option value="VI">Tiếng Việt</option>
-                                <option value="RU">Русский</option>
+                                <option value="VI">VI</option>
+                                <option value="RU">RU</option>
                             </select>
                         </td>
                     </tr>
@@ -158,7 +142,7 @@ var CORE = {
     },
     rows: function() {
         var h = '';
-        for(var i=0; i<10; i++) h += '<tr style="border-bottom:1px solid #eee;"><td>2026-02-01</td><td><b>TX-0'+i+'</b></td><td><span class="pill">VERIFIED</span></td></tr>';
+        for(var i=0; i<10; i++) h += '<tr style="border-bottom:1px solid #eee;"><td>2026-02-01</td><td><b>TX-0'+i+'</b></td><td><span style="background:#e6f4ea; color:#107c10; padding:5px 12px; font-size:10px; font-weight:700; border-radius:2px;">VERIFIED</span></td></tr>';
         return h;
     },
     commit: function() {
