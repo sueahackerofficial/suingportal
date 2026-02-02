@@ -1,41 +1,41 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html lang="vi">
+<html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>SAH 95018 | MULTI-VERSION TERMINAL</title>
+<title>SAH 95018 | ENTERPRISE MULTI-ENGINE TERMINAL</title>
 <style type="text/css">
-/* FORCING SEGOE UI FOR ALL SCRIPTS BY SPECIFIC HANDLE */
+/* --- COMPOSITE FONT MAPPING: PREVENTING FALLBACKS --- */
 @font-face {
-    font-family: 'SegoeUI_Master';
-    src: local('Segoe UI Bold'), 
-         url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/bold/latest.woff2') format('woff2');
+    font-family: 'SegoeUI_Global';
+    src: local('Segoe UI Bold');
     font-weight: 700;
+    /* Cyrillic & Vietnamese Ranges */
+    unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+01A0-01A1, U+01AF-01B0, U+1EA0-1EF9, U+0400-04FF;
 }
 @font-face {
-    font-family: 'SegoeUI_Master';
-    src: local('Segoe UI Semilight'), 
-         url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/semilight/latest.woff2') format('woff2');
+    font-family: 'SegoeUI_Global';
+    src: local('Segoe UI Semilight');
     font-weight: 300;
+    unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+01A0-01A1, U+01AF-01B0, U+1EA0-1EF9, U+0400-04FF;
 }
 @font-face {
-    font-family: 'SegoeUI_Master';
-    src: local('Segoe UI'), 
-         url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/normal/latest.woff2') format('woff2');
+    font-family: 'SegoeUI_Global';
+    src: local('Segoe UI');
     font-weight: 400;
 }
 
-/* NO FALLBACKS ALLOWED */
+/* --- CORE INTERFACE RESET --- */
 * { 
-    font-family: 'SegoeUI_Master' !important; 
+    font-family: 'SegoeUI_Global', 'Segoe UI', sans-serif !important; 
     -webkit-font-smoothing: antialiased;
 }
 
 body { margin: 0; padding: 0; background-color: #ffffff; height: 100vh; overflow: hidden; color: #333; }
 
-/* THE SIDEBAR STRUCTURE YOU LIKE */
-.sidebar { width: 300px; background-color: #000; color: #fff; vertical-align: top; height: 100vh; }
+/* --- NAVIGATION & SIDEBAR (STRICT LAYOUT) --- */
+.sidebar { width: 300px; background-color: #000; color: #fff; vertical-align: top; height: 100vh; transition: all 0.2s; }
 .sidebar-header { padding: 45px 30px; border-bottom: 1px solid #222; font-size: 24px; font-weight: 300; letter-spacing: 2px; }
-.nav-group { padding: 30px 30px 10px; font-size: 10px; font-weight: 700; color: #555; text-transform: uppercase; }
+.nav-group { padding: 30px 30px 10px; font-size: 10px; font-weight: 700; color: #555; text-transform: uppercase; letter-spacing: 1px; }
 .nav-item { padding: 15px 30px; cursor: pointer; color: #999; font-size: 11px; font-weight: 700; text-transform: uppercase; border-right: 4px solid transparent; }
 .nav-item:hover { background-color: #111; color: #fff; }
 .nav-item.active { background-color: #0a0a0a; color: #0078d4; border-right-color: #0078d4; }
@@ -43,130 +43,159 @@ body { margin: 0; padding: 0; background-color: #ffffff; height: 100vh; overflow
 .viewport { background-color: #fff; vertical-align: top; }
 .top-bar { height: 65px; border-bottom: 1px solid #e0e0e0; padding: 0 40px; }
 
-/* ENGINE SELECTOR BUTTONS */
+/* --- ENGINE SELECTOR UI --- */
+.engine-switcher { display: inline-flex; background: #f0f0f0; padding: 4px; border-radius: 4px; margin-right: 20px; }
 .engine-btn { 
-    background: #f3f3f3; border: 1px solid #ccc; padding: 5px 12px; font-size: 10px; 
-    font-weight: 700; cursor: pointer; margin-right: 5px; color: #666;
+    border: none; padding: 6px 12px; font-size: 10px; font-weight: 700; 
+    cursor: pointer; background: transparent; color: #666; border-radius: 2px;
 }
-.engine-btn.active { background: #0078d4; color: #fff; border-color: #0078d4; }
+.engine-btn.active { background: #fff; color: #000; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
 
-/* MODERN TILES */
+/* --- MODERN HTML5 RENDERING STYLES --- */
 .tile-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
 .stat-tile { border: 1px solid #e0e0e0; padding: 30px; border-bottom: 3px solid #0078d4; }
 .stat-label { font-size: 10px; font-weight: 700; color: #888; text-transform: uppercase; }
 .stat-value { font-size: 32px; font-weight: 300; margin-top: 10px; }
 
-/* LAWSUIT FORM AS SEEN IN SCREENSHOT */
 .form-wrap { max-width: 1000px; padding-top: 20px; }
 .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px; }
 .input-group { display: flex; flex-direction: column; gap: 10px; }
 .input-group label { font-size: 11px; font-weight: 700; color: #444; text-transform: uppercase; }
-.input-group input, .input-group select, .input-group textarea { padding: 14px; border: 1px solid #ccc; font-size: 14px; outline: none; background: #fff; }
+.input-group input, .input-group select, .input-group textarea { 
+    padding: 14px; border: 1px solid #ccc; font-size: 14px; outline: none; background: #fff; 
+}
 .btn-submit { background: #0078d4; color: #fff; border: none; padding: 20px 80px; font-size: 12px; font-weight: 700; text-transform: uppercase; cursor: pointer; }
 
+/* --- ANIMATION & LOADERS --- */
 @keyframes spin { to { transform: rotate(360deg); } }
 .loader { display: none; position: fixed; inset: 0; background: rgba(255,255,255,0.98); z-index: 999; flex-direction: column; align-items: center; justify-content: center; }
 </style>
 </head>
-<body>
+<body id="body-main">
 
 <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
     <tr>
-        <td class="sidebar">
+        <td class="sidebar" id="sidebar-node">
             <div class="sidebar-header">SAH 95018</div>
-            <div class="nav-group">GLOBAL OPERATIONS</div>
-            <div class="nav-item active" id="m-dash" onclick="CORE.route('dash')">Operations Dashboard</div>
-            <div class="nav-item" id="m-form" onclick="CORE.route('form')">Lawsuit Filing</div>
-            <div class="nav-group">ASSETS & INTEL</div>
-            <div class="nav-item" id="m-led" onclick="CORE.route('led')">Ledger Audit</div>
-            <div class="nav-item" id="m-map" onclick="CORE.route('dash')">Network Mapping</div>
-            <div style="margin-top: 150px; color: #d83b01;" class="nav-item" onclick="location.reload()">Terminal Exit</div>
+            <div class="nav-group" id="lbl-g1">OPERATIONS</div>
+            <div class="nav-item active" id="m-dash" onclick="CORE.route('dash')">DASHBOARD</div>
+            <div class="nav-item" id="m-form" onclick="CORE.route('form')">LAWSUIT FILING</div>
+            <div class="nav-group" id="lbl-g2">ASSETS</div>
+            <div class="nav-item" id="m-led" onclick="CORE.route('led')">LEDGER AUDIT</div>
+            <div style="margin-top: 200px; color: #d83b01;" class="nav-item" onclick="location.reload()">TERMINAL EXIT</div>
         </td>
         <td class="viewport">
             <div class="top-bar">
                 <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
                     <tr>
                         <td>
-                            <button class="engine-btn active" id="btn-h5" onclick="CORE.setEngine('HTML5')">HTML5</button>
-                            <button class="engine-btn" id="btn-h4" onclick="CORE.setEngine('HTML4')">HTML 4.01</button>
-                            <button class="engine-btn" id="btn-h3" onclick="CORE.setEngine('HTML3')">HTML 3.2</button>
+                            <div class="engine-switcher">
+                                <button class="engine-btn active" id="e-h5" onclick="CORE.setEngine('H5')">HTML5</button>
+                                <button class="engine-btn" id="e-h4" onclick="CORE.setEngine('H4')">4.01</button>
+                                <button class="engine-btn" id="e-h3" onclick="CORE.setEngine('H3')">3.2</button>
+                            </div>
+                            <b style="font-size: 10px; color: #999;">UPLINK: <span style="color:#107c10">SECURE</span></b>
                         </td>
                         <td align="right">
-                            <select id="l-select" onchange="CORE.setLang(this.value)" style="font-weight:700;">
-                                <option value="EN">EN</option>
-                                <option value="VI">Tiếng Việt</option>
-                                <option value="RU">Русский</option>
+                            <select id="lang-select" onchange="CORE.setLang(this.value)" style="font-weight:700; padding:5px;">
+                                <option value="EN">EN - English</option>
+                                <option value="VI">VI - Tiếng Việt</option>
+                                <option value="RU">RU - Русский</option>
+                                <option value="JA">JA - 日本語</option>
+                                <option value="AR">AR - العربية</option>
                             </select>
                         </td>
                     </tr>
                 </table>
             </div>
-            <div id="root" style="padding: 50px 80px; overflow-y: auto;"></div>
+            <div id="content-area" style="padding: 50px 80px; overflow-y: auto;"></div>
         </td>
     </tr>
 </table>
 
+<div id="loader" class="loader">
+    <div style="width: 40px; height: 40px; border: 3px solid #f3f3f3; border-top-color: #0078d4; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+</div>
+
 <script type="text/javascript">
 var CORE = {
-    view: 'dash', lang: 'EN', engine: 'HTML5',
+    state: { view: 'dash', lang: 'EN', engine: 'H5' },
     dict: {
-        EN: { dash: "Dashboard", lawsuit: "Lawsuit Filing", status: "STATUS", nodes: "NODES", value: "ASSET VALUE", time: "RESPONSE", ent: "ENTITY NAME", val: "CLAIM VALUE", cur: "CURRENCY", jur: "JURISDICTION", sev: "SEVERITY", sub: "GỬI HỒ SƠ", desc: "GHI CHÚ VỤ VIỆC" },
-        VI: { dash: "Bảng Điều khiển", lawsuit: "Đệ trình Đơn kiện", status: "TRẠNG THÁI", nodes: "NÚT MẠNG", value: "GIÁ TRỊ TÀI SẢN", time: "ĐỘ TRỄ", ent: "TÊN THỰC THỂ", val: "GIÁ TRỊ KHIẾU NẠI", cur: "TIỀN TỆ", jur: "THẨM QUYỀN", sev: "MỨC ĐỘ", sub: "GỬI HỒ SƠ", desc: "GHI CHÚ VỤ VIỆC" },
-        RU: { dash: "Панель", lawsuit: "Подача иска", status: "СТАТУС", nodes: "УЗЛЫ", value: "СУММА", time: "ОТКЛИК", ent: "ИМЯ", val: "СУММА", cur: "ВАЛЮТА", jur: "ЮРИСДИКЦИЯ", sev: "ВАЖНОСТЬ", sub: "ОТПРАВИТЬ", desc: "ЗАМЕТКИ" }
+        EN: { g1: "Global Operations", g2: "Assets & Intel", dash: "Dashboard", lawsuit: "Lawsuit Filing", ledger: "Ledger Audit", ent: "Entity Name", val: "Claim Value", cur: "Currency", jur: "Jurisdiction", sub: "Commit Entry", stat: "Status", nodes: "Nodes", asset: "Value", time: "Latency" },
+        VI: { g1: "Hoạt động Toàn cầu", g2: "Tài sản & Tình báo", dash: "Bảng Điều khiển", lawsuit: "Đệ trình Đơn kiện", ledger: "Kiểm toán Sổ cái", ent: "Tên Thực thể", val: "Giá trị Khiếu nại", cur: "Tiền tệ", jur: "Thẩm quyền", sub: "Gửi Hồ sơ", stat: "Trạng thái", nodes: "Nút mạng", asset: "Giá trị", time: "Độ trễ" },
+        RU: { g1: "Глобальные операции", g2: "Активы", dash: "Панель", lawsuit: "Подача иска", ledger: "Аудит", ent: "Имя объекта", val: "Сумма иска", cur: "Валюта", jur: "Юрисдикция", sub: "Отправить", stat: "Статус", nodes: "Узлы", asset: "Сумма", time: "Задержка" },
+        JA: { g1: "グローバル運用", g2: "資産と情報", dash: "ダッシュボード", lawsuit: "訴訟提起", ledger: "元帳監査", ent: "エンティティ名", val: "請求額", cur: "通貨", jur: "管轄権", sub: "エントリを確定する", stat: "状態", nodes: "ノード", asset: "資産価値", time: "遅延" },
+        AR: { g1: "العمليات العالمية", g2: "الأصول والاستخبارات", dash: "لوحة القيادة", lawsuit: "رفع دعوى قضائية", ledger: "تدقيق الحسابات", ent: "اسم الكيان", val: "قيمة المطالبة", cur: "العملة", jur: "الاختصاص القضائي", sub: "التزام بالدخو", stat: "الحالة", nodes: "العقد", asset: "القيمة", time: "زمن الوصول" }
     },
-    setEngine: function(e) {
-        this.engine = e;
-        document.querySelectorAll('.engine-btn').forEach(function(b){ b.className='engine-btn'; });
-        document.getElementById('btn-' + e.toLowerCase()).className='engine-btn active';
-        this.render();
-    },
-    route: function(v) { this.view = v; this.render(); },
-    setLang: function(l) { this.lang = l; this.render(); },
+    init: function() { this.render(); },
+    setEngine: function(e) { this.state.engine = e; this.render(); },
+    setLang: function(l) { this.state.lang = l; this.render(); },
+    route: function(v) { this.state.view = v; this.render(); },
     render: function() {
-        var d = this.dict[this.lang];
-        var root = document.getElementById('root');
-        document.querySelectorAll('.nav-item').forEach(function(n){ n.className = 'nav-item'; });
-        if(document.getElementById('m-' + this.view)) document.getElementById('m-' + this.view).className = 'nav-item active';
+        var d = this.dict[this.state.lang];
+        var root = document.getElementById('content-area');
+        
+        // Update Sidebar Labels & Classes
+        document.getElementById('lbl-g1').innerText = d.g1;
+        document.getElementById('lbl-g2').innerText = d.g2;
+        document.querySelectorAll('.nav-item').forEach(function(i){ i.className = 'nav-item'; });
+        document.getElementById('m-' + this.state.view).className = 'nav-item active';
+        document.getElementById('m-dash').innerText = d.dash;
+        document.getElementById('m-form').innerText = d.lawsuit;
+        document.getElementById('m-led').innerText = d.ledger;
+        
+        // Update Engine Buttons
+        document.querySelectorAll('.engine-btn').forEach(function(b){ b.className = 'engine-btn'; });
+        document.getElementById('e-' + this.state.engine.toLowerCase()).className = 'engine-btn active';
 
-        if(this.engine === 'HTML3') {
-            this.renderH3(root, d);
-        } else if(this.engine === 'HTML4') {
-            this.renderH4(root, d);
-        } else {
-            this.renderH5(root, d);
-        }
+        // RTL Support for Arabic
+        document.getElementById('body-main').dir = (this.state.lang === 'AR') ? 'rtl' : 'ltr';
+
+        if (this.state.engine === 'H5') this.drawH5(root, d);
+        else if (this.state.engine === 'H4') this.drawH4(root, d);
+        else this.drawH3(root, d);
     },
-    renderH5: function(root, d) {
-        if(this.view === 'dash') {
+    drawH5: function(root, d) {
+        if(this.state.view === 'dash') {
             root.innerHTML = '<h1 style="font-weight:300; font-size:48px; margin-bottom:40px;">'+d.dash+'</h1>' +
                 '<div class="tile-grid">' +
-                '<div class="stat-tile"><div class="stat-label">'+d.status+'</div><div class="stat-value" style="color:#107c10; font-weight:700;">OPTIMAL</div></div>' +
+                '<div class="stat-tile"><div class="stat-label">'+d.stat+'</div><div class="stat-value" style="color:#107c10; font-weight:700;">OPTIMAL</div></div>' +
                 '<div class="stat-tile"><div class="stat-label">'+d.nodes+'</div><div class="stat-value" style="font-weight:700;">2,841</div></div>' +
-                '<div class="stat-tile"><div class="stat-label">'+d.value+'</div><div class="stat-value" style="font-weight:700;">$4.2M</div></div>' +
+                '<div class="stat-tile"><div class="stat-label">'+d.asset+'</div><div class="stat-value" style="font-weight:700;">$4.2M</div></div>' +
                 '<div class="stat-tile"><div class="stat-label">'+d.time+'</div><div class="stat-value" style="font-weight:700;">9ms</div></div>' +
                 '</div>';
-        } else if(this.view === 'form') {
+        } else if(this.state.view === 'form') {
             root.innerHTML = '<h1 style="font-weight:300; font-size:48px; margin-bottom:40px;">'+d.lawsuit+'</h1>' +
                 '<div class="form-wrap"><div class="form-grid">' +
                 '<div class="input-group"><label>'+d.ent+'</label><input type="text"></div>' +
                 '<div class="input-group"><label>'+d.val+'</label><input type="text"></div>' +
-                '<div class="input-group"><label>'+d.cur+'</label><select><option>USD</option></select></div>' +
-                '<div class="input-group"><label>'+d.jur+'</label><input type="text" value="Global/Standard" disabled></div>' +
-                '<div class="input-group"><label>'+d.sev+'</label><select><option>Low</option></select></div>' +
-                '</div><div class="input-group" style="margin-top:30px;"><label>'+d.desc+'</label><textarea rows="8"></textarea></div>' +
-                '<button class="btn-submit" style="margin-top:30px;">'+d.sub+'</button></div>';
+                '<div class="input-group"><label>'+d.cur+'</label><select><option>USD</option><option>VND</option></select></div>' +
+                '<div class="input-group"><label>'+d.jur+'</label><input type="text" value="International" disabled></div>' +
+                '</div><div class="input-group" style="margin-top:30px;"><label>'+d.sub+'</label><textarea rows="6"></textarea></div>' +
+                '<button class="btn-submit" style="margin-top:30px;" onclick="CORE.commit()">'+d.sub+'</button></div>';
         }
     },
-    renderH4: function(root, d) {
+    drawH4: function(root, d) {
         root.innerHTML = '<table width="100%" border="0"><tr><td><font size="6"><b>'+d.dash+'</b></font></td></tr>' +
-            '<tr><td><table width="100%" border="1" cellpadding="20">' +
-            '<tr><td><b>'+d.status+'</b><br>OPTIMAL</td><td><b>'+d.nodes+'</b><br>2841</td><td><b>'+d.value+'</b><br>$4.2M</td></tr>' +
+            '<tr><td height="20"></td></tr><tr><td>' +
+            '<table width="100%" border="1" bordercolor="#eee" cellpadding="20" cellspacing="0">' +
+            '<tr><td><b>'+d.stat+'</b><br><font size="5" color="green">ONLINE</font></td>' +
+            '<td><b>'+d.nodes+'</b><br><font size="5">2,841</font></td>' +
+            '<td><b>'+d.asset+'</b><br><font size="5">$4.2M</font></td></tr>' +
             '</table></td></tr></table>';
     },
-    renderH3: function(root, d) {
-        root.innerHTML = '<center><h1><u>'+d.dash+'</u></h1></center><hr>' +
-            '<table width="100%" bgcolor="#000000"><tr><td><table width="100%" bgcolor="#ffffff"><tr>' +
-            '<td>'+d.status+': OK</td><td>'+d.nodes+': 2841</td></tr></table></td></tr></table>';
+    drawH3: function(root, d) {
+        root.innerHTML = '<center><h1><u>'+d.dash+'</u></h1></center>' +
+            '<table width="100%" bgcolor="#cccccc" cellpadding="10"><tr><td bgcolor="#ffffff">' +
+            '<b>'+d.stat+'</b>: OK | <b>'+d.nodes+'</b>: 2841 | <b>'+d.asset+'</b>: $4.2M' +
+            '</td></tr></table>';
+    },
+    commit: function() {
+        document.getElementById('loader').style.display = 'flex';
+        setTimeout(function(){ 
+            document.getElementById('loader').style.display = 'none'; 
+            alert('Entry Logged Successfully.'); 
+        }, 1200);
     }
 };
 window.onload = function() { CORE.init(); };
