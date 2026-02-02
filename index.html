@@ -2,31 +2,37 @@
 <html lang="vi">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>SAH 95018 | MULTI-ENGINE TERMINAL</title>
+<title>SAH 95018 | MULTI-VERSION TERMINAL</title>
 <style type="text/css">
+/* FORCING SEGOE UI FOR ALL SCRIPTS BY SPECIFIC HANDLE */
 @font-face {
-    font-family: 'SegoeUI_Core';
-    src: local('Segoe UI Bold'), url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/bold/latest.woff2') format('woff2');
+    font-family: 'SegoeUI_Master';
+    src: local('Segoe UI Bold'), 
+         url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/bold/latest.woff2') format('woff2');
     font-weight: 700;
 }
 @font-face {
-    font-family: 'SegoeUI_Core';
-    src: local('Segoe UI'), url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/normal/latest.woff2') format('woff2');
-    font-weight: 400;
-}
-@font-face {
-    font-family: 'SegoeUI_Core';
-    src: local('Segoe UI Semilight'), url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/semilight/latest.woff2') format('woff2');
+    font-family: 'SegoeUI_Master';
+    src: local('Segoe UI Semilight'), 
+         url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/semilight/latest.woff2') format('woff2');
     font-weight: 300;
 }
+@font-face {
+    font-family: 'SegoeUI_Master';
+    src: local('Segoe UI'), 
+         url('https://c.s-microsoft.com/static/fonts/segoe-ui/west-european/normal/latest.woff2') format('woff2');
+    font-weight: 400;
+}
 
+/* NO FALLBACKS ALLOWED */
 * { 
-    font-family: 'SegoeUI_Core' !important; 
+    font-family: 'SegoeUI_Master' !important; 
     -webkit-font-smoothing: antialiased;
 }
 
 body { margin: 0; padding: 0; background-color: #ffffff; height: 100vh; overflow: hidden; color: #333; }
 
+/* THE SIDEBAR STRUCTURE YOU LIKE */
 .sidebar { width: 300px; background-color: #000; color: #fff; vertical-align: top; height: 100vh; }
 .sidebar-header { padding: 45px 30px; border-bottom: 1px solid #222; font-size: 24px; font-weight: 300; letter-spacing: 2px; }
 .nav-group { padding: 30px 30px 10px; font-size: 10px; font-weight: 700; color: #555; text-transform: uppercase; }
@@ -37,20 +43,26 @@ body { margin: 0; padding: 0; background-color: #ffffff; height: 100vh; overflow
 .viewport { background-color: #fff; vertical-align: top; }
 .top-bar { height: 65px; border-bottom: 1px solid #e0e0e0; padding: 0 40px; }
 
+/* ENGINE SELECTOR BUTTONS */
+.engine-btn { 
+    background: #f3f3f3; border: 1px solid #ccc; padding: 5px 12px; font-size: 10px; 
+    font-weight: 700; cursor: pointer; margin-right: 5px; color: #666;
+}
+.engine-btn.active { background: #0078d4; color: #fff; border-color: #0078d4; }
+
+/* MODERN TILES */
 .tile-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
 .stat-tile { border: 1px solid #e0e0e0; padding: 30px; border-bottom: 3px solid #0078d4; }
 .stat-label { font-size: 10px; font-weight: 700; color: #888; text-transform: uppercase; }
 .stat-value { font-size: 32px; font-weight: 300; margin-top: 10px; }
 
+/* LAWSUIT FORM AS SEEN IN SCREENSHOT */
 .form-wrap { max-width: 1000px; padding-top: 20px; }
 .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px; }
 .input-group { display: flex; flex-direction: column; gap: 10px; }
 .input-group label { font-size: 11px; font-weight: 700; color: #444; text-transform: uppercase; }
 .input-group input, .input-group select, .input-group textarea { padding: 14px; border: 1px solid #ccc; font-size: 14px; outline: none; background: #fff; }
-
 .btn-submit { background: #0078d4; color: #fff; border: none; padding: 20px 80px; font-size: 12px; font-weight: 700; text-transform: uppercase; cursor: pointer; }
-
-.mode-tag { background: #333; color: #fff; padding: 2px 6px; font-size: 9px; margin-left: 10px; vertical-align: middle; }
 
 @keyframes spin { to { transform: rotate(360deg); } }
 .loader { display: none; position: fixed; inset: 0; background: rgba(255,255,255,0.98); z-index: 999; flex-direction: column; align-items: center; justify-content: center; }
@@ -62,24 +74,22 @@ body { margin: 0; padding: 0; background-color: #ffffff; height: 100vh; overflow
     <tr>
         <td class="sidebar">
             <div class="sidebar-header">SAH 95018</div>
-            <div class="nav-group">RENDER ENGINE</div>
-            <div class="nav-item active" id="e-h5" onclick="CORE.setEngine('HTML5')">HTML5 (MODERN)</div>
-            <div class="nav-item" id="e-h4" onclick="CORE.setEngine('HTML4')">HTML 4.01 (LEGACY)</div>
-            <div class="nav-item" id="e-h3" onclick="CORE.setEngine('HTML3')">HTML 3.2 (LITE)</div>
-            
-            <div class="nav-group">OPERATIONS</div>
-            <div class="nav-item" id="m-dash" onclick="CORE.route('dash')">DASHBOARD</div>
-            <div class="nav-item" id="m-form" onclick="CORE.route('form')">LAWSUIT FILING</div>
-            <div class="nav-item" id="m-led" onclick="CORE.route('led')">LEDGER AUDIT</div>
-            <div style="margin-top: 150px; color: #d83b01;" class="nav-item" onclick="location.reload()">TERMINAL EXIT</div>
+            <div class="nav-group">GLOBAL OPERATIONS</div>
+            <div class="nav-item active" id="m-dash" onclick="CORE.route('dash')">Operations Dashboard</div>
+            <div class="nav-item" id="m-form" onclick="CORE.route('form')">Lawsuit Filing</div>
+            <div class="nav-group">ASSETS & INTEL</div>
+            <div class="nav-item" id="m-led" onclick="CORE.route('led')">Ledger Audit</div>
+            <div class="nav-item" id="m-map" onclick="CORE.route('dash')">Network Mapping</div>
+            <div style="margin-top: 150px; color: #d83b01;" class="nav-item" onclick="location.reload()">Terminal Exit</div>
         </td>
         <td class="viewport">
             <div class="top-bar">
                 <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
                     <tr>
                         <td>
-                            <b style="font-size: 10px; color: #999;">UPLINK: <span style="color:#107c10">SECURE</span></b>
-                            <span id="engine-tag" class="mode-tag">HTML5</span>
+                            <button class="engine-btn active" id="btn-h5" onclick="CORE.setEngine('HTML5')">HTML5</button>
+                            <button class="engine-btn" id="btn-h4" onclick="CORE.setEngine('HTML4')">HTML 4.01</button>
+                            <button class="engine-btn" id="btn-h3" onclick="CORE.setEngine('HTML3')">HTML 3.2</button>
                         </td>
                         <td align="right">
                             <select id="l-select" onchange="CORE.setLang(this.value)" style="font-weight:700;">
@@ -96,102 +106,67 @@ body { margin: 0; padding: 0; background-color: #ffffff; height: 100vh; overflow
     </tr>
 </table>
 
-<div id="loading" class="loader">
-    <div style="width: 50px; height: 50px; border: 4px solid #eee; border-top-color: #0078d4; border-radius: 50%; animation: spin 0.8s linear infinite;"></div>
-</div>
-
 <script type="text/javascript">
 var CORE = {
-    view: 'dash', 
-    lang: 'EN',
-    engine: 'HTML5',
+    view: 'dash', lang: 'EN', engine: 'HTML5',
     dict: {
-        EN: { dash: "Dashboard", lawsuit: "Lawsuit Filing", status: "SYSTEM STATUS", nodes: "NODES ONLINE", value: "ASSET VALUE", time: "RESPONSE TIME", ent: "ENTITY NAME", val: "CLAIM VALUE", cur: "CURRENCY", jur: "JURISDICTION", sev: "SEVERITY", sub: "COMMIT ENTRY", desc: "CASE NOTES" },
+        EN: { dash: "Dashboard", lawsuit: "Lawsuit Filing", status: "STATUS", nodes: "NODES", value: "ASSET VALUE", time: "RESPONSE", ent: "ENTITY NAME", val: "CLAIM VALUE", cur: "CURRENCY", jur: "JURISDICTION", sev: "SEVERITY", sub: "GỬI HỒ SƠ", desc: "GHI CHÚ VỤ VIỆC" },
         VI: { dash: "Bảng Điều khiển", lawsuit: "Đệ trình Đơn kiện", status: "TRẠNG THÁI", nodes: "NÚT MẠNG", value: "GIÁ TRỊ TÀI SẢN", time: "ĐỘ TRỄ", ent: "TÊN THỰC THỂ", val: "GIÁ TRỊ KHIẾU NẠI", cur: "TIỀN TỆ", jur: "THẨM QUYỀN", sev: "MỨC ĐỘ", sub: "GỬI HỒ SƠ", desc: "GHI CHÚ VỤ VIỆC" },
-        RU: { dash: "Панель", lawsuit: "Подача иска", status: "СТАТУС", nodes: "УЗЛЫ", value: "СУММА", time: "ОТКЛИК", ent: "ИМЯ", val: "СУММА КЛЕЙМА", cur: "ВАЛЮТА", jur: "ЮРИСДИКЦИЯ", sev: "ВАЖНОСТЬ", sub: "ОТПРАВИТЬ", desc: "ЗАМЕТКИ" }
+        RU: { dash: "Панель", lawsuit: "Подача иска", status: "СТАТУС", nodes: "УЗЛЫ", value: "СУММА", time: "ОТКЛИК", ent: "ИМЯ", val: "СУММА", cur: "ВАЛЮТА", jur: "ЮРИСДИКЦИЯ", sev: "ВАЖНОСТЬ", sub: "ОТПРАВИТЬ", desc: "ЗАМЕТКИ" }
     },
-    init: function() { this.render(); },
-    setEngine: function(e) { 
-        this.engine = e; 
-        document.getElementById('engine-tag').innerText = e;
-        document.querySelectorAll('[id^="e-"]').forEach(function(n){ n.className = 'nav-item'; });
-        document.getElementById('e-' + e.toLowerCase()).className = 'nav-item active';
-        this.render(); 
+    setEngine: function(e) {
+        this.engine = e;
+        document.querySelectorAll('.engine-btn').forEach(function(b){ b.className='engine-btn'; });
+        document.getElementById('btn-' + e.toLowerCase()).className='engine-btn active';
+        this.render();
     },
     route: function(v) { this.view = v; this.render(); },
     setLang: function(l) { this.lang = l; this.render(); },
     render: function() {
         var d = this.dict[this.lang];
         var root = document.getElementById('root');
-        
-        if (this.engine === 'HTML3') {
+        document.querySelectorAll('.nav-item').forEach(function(n){ n.className = 'nav-item'; });
+        if(document.getElementById('m-' + this.view)) document.getElementById('m-' + this.view).className = 'nav-item active';
+
+        if(this.engine === 'HTML3') {
             this.renderH3(root, d);
-        } else if (this.engine === 'HTML4') {
+        } else if(this.engine === 'HTML4') {
             this.renderH4(root, d);
         } else {
             this.renderH5(root, d);
         }
     },
     renderH5: function(root, d) {
-        root.innerHTML = '<h1 style="font-weight:300; font-size:48px; margin-bottom:40px;">'+d.dash+'</h1>' +
-            '<div class="tile-grid">' +
-            '<div class="stat-tile"><div class="stat-label">'+d.status+'</div><div class="stat-value" style="color:#107c10; font-weight:700;">OPTIMAL</div></div>' +
-            '<div class="stat-tile"><div class="stat-label">'+d.nodes+'</div><div class="stat-value" style="font-weight:700;">2,841</div></div>' +
-            '<div class="stat-tile"><div class="stat-label">'+d.value+'</div><div class="stat-value" style="font-weight:700;">$4.2M</div></div>' +
-            '<div class="stat-tile"><div class="stat-label">'+d.time+'</div><div class="stat-value" style="font-weight:700;">9ms</div></div>' +
-            '</div>';
-        if(this.view === 'form') this.renderFormH5(root, d);
+        if(this.view === 'dash') {
+            root.innerHTML = '<h1 style="font-weight:300; font-size:48px; margin-bottom:40px;">'+d.dash+'</h1>' +
+                '<div class="tile-grid">' +
+                '<div class="stat-tile"><div class="stat-label">'+d.status+'</div><div class="stat-value" style="color:#107c10; font-weight:700;">OPTIMAL</div></div>' +
+                '<div class="stat-tile"><div class="stat-label">'+d.nodes+'</div><div class="stat-value" style="font-weight:700;">2,841</div></div>' +
+                '<div class="stat-tile"><div class="stat-label">'+d.value+'</div><div class="stat-value" style="font-weight:700;">$4.2M</div></div>' +
+                '<div class="stat-tile"><div class="stat-label">'+d.time+'</div><div class="stat-value" style="font-weight:700;">9ms</div></div>' +
+                '</div>';
+        } else if(this.view === 'form') {
+            root.innerHTML = '<h1 style="font-weight:300; font-size:48px; margin-bottom:40px;">'+d.lawsuit+'</h1>' +
+                '<div class="form-wrap"><div class="form-grid">' +
+                '<div class="input-group"><label>'+d.ent+'</label><input type="text"></div>' +
+                '<div class="input-group"><label>'+d.val+'</label><input type="text"></div>' +
+                '<div class="input-group"><label>'+d.cur+'</label><select><option>USD</option></select></div>' +
+                '<div class="input-group"><label>'+d.jur+'</label><input type="text" value="Global/Standard" disabled></div>' +
+                '<div class="input-group"><label>'+d.sev+'</label><select><option>Low</option></select></div>' +
+                '</div><div class="input-group" style="margin-top:30px;"><label>'+d.desc+'</label><textarea rows="8"></textarea></div>' +
+                '<button class="btn-submit" style="margin-top:30px;">'+d.sub+'</button></div>';
+        }
     },
     renderH4: function(root, d) {
-        root.innerHTML = '<table width="100%" border="0" cellspacing="0" cellpadding="0">' +
-            '<tr><td><font size="7"><b>'+d.dash+'</b></font></td></tr>' +
-            '<tr><td height="40"></td></tr>' +
-            '<tr><td><table width="100%" border="1" bordercolor="#eeeeee" cellpadding="20" cellspacing="0">' +
-            '<tr><td width="25%"><b>'+d.status+'</b><br><font size="6" color="#107c10">OPTIMAL</font></td>' +
-            '<td width="25%"><b>'+d.nodes+'</b><br><font size="6">2,841</font></td>' +
-            '<td width="25%"><b>'+d.value+'</b><br><font size="6">$4.2M</font></td>' +
-            '<td width="25%"><b>'+d.time+'</b><br><font size="6">9ms</font></td></tr>' +
+        root.innerHTML = '<table width="100%" border="0"><tr><td><font size="6"><b>'+d.dash+'</b></font></td></tr>' +
+            '<tr><td><table width="100%" border="1" cellpadding="20">' +
+            '<tr><td><b>'+d.status+'</b><br>OPTIMAL</td><td><b>'+d.nodes+'</b><br>2841</td><td><b>'+d.value+'</b><br>$4.2M</td></tr>' +
             '</table></td></tr></table>';
-        if(this.view === 'form') this.renderFormH4(root, d);
     },
     renderH3: function(root, d) {
-        root.innerHTML = '<center><h1><u>'+d.dash+'</u></h1></center>' +
-            '<table width="100%" bgcolor="#000000" cellpadding="1">' +
-            '<tr><td><table width="100%" bgcolor="#ffffff" cellpadding="10">' +
-            '<tr><td align="center"><b>'+d.status+'</b><br>OPTIMAL</td>' +
-            '<td align="center"><b>'+d.nodes+'</b><br>2,841</td>' +
-            '<td align="center"><b>'+d.value+'</b><br>$4.2M</td>' +
-            '<td align="center"><b>'+d.time+'</b><br>9ms</td></tr>' +
-            '</table></td></tr></table>';
-        if(this.view === 'form') this.renderFormH3(root, d);
-    },
-    renderFormH5: function(root, d) {
-        root.innerHTML = '<h1 style="font-weight:300; font-size:48px; margin-bottom:40px;">'+d.lawsuit+'</h1>' +
-            '<div class="form-wrap"><div class="form-grid">' +
-            '<div class="input-group"><label>'+d.ent+'</label><input type="text"></div>' +
-            '<div class="input-group"><label>'+d.val+'</label><input type="text"></div>' +
-            '<div class="input-group"><label>'+d.cur+'</label><select><option>USD</option></select></div>' +
-            '<div class="input-group"><label>'+d.jur+'</label><input type="text" value="Global" disabled></div>' +
-            '</div><div class="input-group" style="margin-top:30px;"><label>'+d.desc+'</label><textarea rows="8"></textarea></div>' +
-            '<button class="btn-submit" style="margin-top:30px;" onclick="CORE.commit()">'+d.sub+'</button></div>';
-    },
-    renderFormH4: function(root, d) {
-        root.innerHTML = '<h2>'+d.lawsuit+'</h2><table width="100%" cellpadding="10">' +
-            '<tr><td><b>'+d.ent+'</b><br><input type="text" size="40"></td><td><b>'+d.val+'</b><br><input type="text" size="40"></td></tr>' +
-            '<tr><td><b>'+d.cur+'</b><br><select><option>USD</option></select></td><td><b>'+d.jur+'</b><br><input type="text" value="Global" disabled></td></tr>' +
-            '<tr><td colspan="2"><b>'+d.desc+'</b><br><textarea cols="80" rows="10"></textarea></td></tr>' +
-            '<tr><td><input type="button" value="'+d.sub+'" onclick="CORE.commit()"></td></tr></table>';
-    },
-    renderFormH3: function(root, d) {
-        root.innerHTML = '<center><h2>'+d.lawsuit+'</h2></center><hr>' +
-            '<b>'+d.ent+'</b>: <input type="text"><br><b>'+d.val+'</b>: <input type="text"><br>' +
-            '<b>'+d.cur+'</b>: <select><option>USD</option></select><br><hr>' +
-            '<b>'+d.desc+'</b>:<br><textarea rows="5" cols="40"></textarea><br>' +
-            '<input type="submit" value="'+d.sub+'" onclick="CORE.commit()">';
-    },
-    commit: function() {
-        document.getElementById('loading').style.display = 'flex';
-        setTimeout(function(){ document.getElementById('loading').style.display = 'none'; alert('Entry Committed'); }, 1000);
+        root.innerHTML = '<center><h1><u>'+d.dash+'</u></h1></center><hr>' +
+            '<table width="100%" bgcolor="#000000"><tr><td><table width="100%" bgcolor="#ffffff"><tr>' +
+            '<td>'+d.status+': OK</td><td>'+d.nodes+': 2841</td></tr></table></td></tr></table>';
     }
 };
 window.onload = function() { CORE.init(); };
