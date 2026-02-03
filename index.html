@@ -2,206 +2,162 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>SAH 95018 | VERSION CONTROL TERMINAL</title>
+<title>SAH 95018 | LITIGATION MANAGEMENT SYSTEM</title>
 <style type="text/css">
 @font-face {
-    font-family: 'StrictSegoe';
+    font-family: 'SegoeForced';
     src: local('Segoe UI Bold');
     font-weight: 700;
     unicode-range: U+0400-04FF, U+0102-0103, U+0110-0111, U+1EA0-1EF9;
 }
 @font-face {
-    font-family: 'StrictSegoe';
-    src: local('Segoe UI Semilight');
-    font-weight: 300;
-    unicode-range: U+0400-04FF, U+0102-0103, U+0110-0111, U+1EA0-1EF9;
-}
-@font-face {
-    font-family: 'StrictSegoe';
+    font-family: 'SegoeForced';
     src: local('Segoe UI');
     font-weight: 400;
+    unicode-range: U+0400-04FF, U+0102-0103, U+0110-0111, U+1EA0-1EF9;
 }
 
-* { 
-    font-family: 'StrictSegoe', 'Segoe UI' !important; 
-    -webkit-font-smoothing: antialiased;
-}
+* { font-family: 'SegoeForced', 'Segoe UI' !important; }
 
-body { margin: 0; padding: 0; background-color: #ffffff; height: 100vh; overflow: hidden; color: #333; }
+body { margin: 0; padding: 0; background-color: #ffffff; color: #1a1a1a; height: 100vh; overflow: hidden; }
 
-.sidebar { width: 300px; background-color: #000; color: #fff; vertical-align: top; height: 100vh; }
-.sidebar-header { padding: 45px 30px; border-bottom: 1px solid #222; font-size: 24px; font-weight: 300; letter-spacing: 2px; }
-.nav-group { padding: 30px 30px 10px; font-size: 10px; font-weight: 700; color: #555; text-transform: uppercase; }
-.nav-item { padding: 15px 30px; cursor: pointer; color: #999; font-size: 11px; font-weight: 700; text-transform: uppercase; border-right: 4px solid transparent; }
-.nav-item:hover { background-color: #111; color: #fff; }
-.nav-item.active { background-color: #0a0a0a; color: #0078d4; border-right-color: #0078d4; }
+.sidebar { width: 280px; background-color: #000; color: #fff; vertical-align: top; height: 100vh; }
+.sb-head { padding: 40px 25px; border-bottom: 1px solid #333; font-size: 18px; font-weight: 700; letter-spacing: 1px; color: #0078d4; }
+.sb-link { padding: 15px 25px; cursor: pointer; color: #ccc; font-size: 11px; text-transform: uppercase; display: block; text-decoration: none; border-left: 3px solid transparent; }
+.sb-link:hover { background: #111; color: #fff; }
+.sb-link.active { background: #1a1a1a; color: #fff; border-left-color: #0078d4; font-weight: 700; }
 
 .viewport { background-color: #fff; vertical-align: top; }
-.top-bar { height: 65px; border-bottom: 1px solid #e0e0e0; padding: 0 40px; }
+.top-nav { height: 60px; border-bottom: 1px solid #eee; padding: 0 30px; background: #fafafa; }
 
-.v-switcher { display: inline-block; background: #f4f4f4; padding: 4px; border-radius: 4px; margin-right: 25px; border: 1px solid #ddd; }
-.v-btn { border: 1px solid transparent; padding: 5px 14px; font-size: 10px; font-weight: 700; cursor: pointer; background: transparent; color: #777; }
-.v-btn.active { background: #fff; color: #000; border-color: #ccc; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+.engine-links { font-size: 11px; font-weight: 700; }
+.engine-links a { color: #888; text-decoration: none; margin-right: 15px; padding: 5px 0; border-bottom: 2px solid transparent; }
+.engine-links a.active { color: #000; border-bottom-color: #000; }
 
-.tile-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-.stat-tile { border: 1px solid #e0e0e0; padding: 25px; border-bottom: 3px solid #0078d4; }
-.stat-label { font-size: 10px; font-weight: 700; color: #888; text-transform: uppercase; }
-.stat-value { font-size: 32px; font-weight: 300; margin-top: 10px; }
+.case-card { border: 1px solid #e1e1e1; padding: 25px; margin-bottom: 20px; transition: border 0.2s; }
+.case-card:hover { border-color: #0078d4; }
+.case-id { font-size: 10px; color: #888; font-weight: 700; margin-bottom: 5px; }
+.case-title { font-size: 18px; font-weight: 400; margin-bottom: 15px; }
+.case-meta { font-size: 12px; color: #555; }
 
-.form-wrap { max-width: 900px; padding-top: 20px; }
-.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 25px; }
-.input-group { display: flex; flex-direction: column; gap: 8px; }
-.input-group label { font-size: 11px; font-weight: 700; color: #444; text-transform: uppercase; }
-.input-group input, .input-group select, .input-group textarea { padding: 12px; border: 1px solid #ccc; font-size: 14px; outline: none; }
-.btn-submit { background: #0078d4; color: #fff; border: none; padding: 18px 60px; font-size: 12px; font-weight: 700; text-transform: uppercase; cursor: pointer; }
+.lit-form { max-width: 800px; }
+.lit-row { display: table; width: 100%; margin-bottom: 20px; border-spacing: 15px 0; }
+.lit-cell { display: table-cell; width: 50%; }
+.lit-label { display: block; font-size: 11px; font-weight: 700; color: #666; margin-bottom: 8px; text-transform: uppercase; }
+.lit-input { width: 100%; padding: 12px; border: 1px solid #ccc; font-size: 14px; box-sizing: border-box; }
+.lit-area { width: 100%; padding: 12px; border: 1px solid #ccc; font-size: 14px; height: 150px; box-sizing: border-box; }
+.lit-sub { background: #000; color: #fff; border: none; padding: 15px 40px; cursor: pointer; font-weight: 700; text-transform: uppercase; }
 
-.h4-lite { font-weight: 400 !important; color: #666 !important; border-color: #ddd !important; background: transparent !important; }
-.h3-lite { font-size: 13px !important; color: #888 !important; border: 1px solid #eee !important; box-shadow: none !important; }
+.h4-lite .case-card { border-style: double; border-width: 3px; background: #f9f9f9; }
+.h4-lite .lit-input { background: #fff; border: 1px solid #999; }
+.h4-lite .sb-head { color: #555; }
 
-@keyframes spin { to { transform: rotate(360deg); } }
-.loader { display: none; position: fixed; inset: 0; background: rgba(255,255,255,0.95); z-index: 999; flex-direction: column; align-items: center; justify-content: center; }
+.h3-lite .case-card { border: 1px solid #999; background: none; }
+.h3-lite .sb-link { text-transform: none; font-size: 13px; }
+.h3-lite .lit-sub { background: #eee; color: #000; border: 1px solid #ccc; }
+
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+.content-anim { animation: fade 0.3s ease-in; }
 </style>
 </head>
-<body id="b-root">
+<body id="app-body">
 
 <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
     <tr>
-        <td class="sidebar">
-            <div class="sidebar-header">SAH 95018</div>
-            <div class="nav-group" id="l-g1">Global Operations</div>
-            <div class="nav-item active" id="r-dash" onclick="CORE.route('dash')">Dashboard</div>
-            <div class="nav-item" id="r-form" onclick="CORE.route('form')">Lawsuit Filing</div>
-            <div class="nav-group" id="l-g2">Assets & Intel</div>
-            <div class="nav-item" id="r-led" onclick="CORE.route('led')">Ledger Audit</div>
-            <div style="margin-top: 180px; color: #d83b01;" class="nav-item" onclick="location.reload()">Terminal Exit</div>
+        <td class="sidebar" id="sb-container">
+            <div class="sb-head">LITIGATION CENTER</div>
+            <a href="javascript:void(0)" class="sb-link active" id="n-cases" onclick="CORE.route('cases')">Active Dossiers</a>
+            <a href="javascript:void(0)" class="sb-link" id="n-file" onclick="CORE.route('file')">New Filing</a>
+            <a href="javascript:void(0)" class="sb-link" id="n-arch" onclick="CORE.route('arch')">Legal Archive</a>
+            <div style="padding: 30px 25px; font-size: 10px; color: #444; font-weight: 700; border-top: 1px solid #222; margin-top: 40px;">COURT UPLINK v9.5</div>
         </td>
         <td class="viewport">
-            <div class="top-bar">
+            <div class="top-nav">
                 <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
                     <tr>
-                        <td>
-                            <div class="v-switcher">
-                                <button class="v-btn active" id="v-h5" onclick="CORE.setEng('H5')">HTML5</button>
-                                <button class="v-btn" id="v-h4" onclick="CORE.setEng('H4')">4.01</button>
-                                <button class="v-btn" id="v-h3" onclick="CORE.setEng('H3')">3.2</button>
-                            </div>
-                            <b style="font-size: 10px; color: #999;">UPLINK: <span style="color:#107c10">SECURE</span></b>
+                        <td class="engine-links">
+                            <a href="javascript:void(0)" id="l-h5" class="active" onclick="CORE.setEng('H5')">HTML 5</a>
+                            <a href="javascript:void(0)" id="l-h4" onclick="CORE.setEng('H4')">4.01</a>
+                            <a href="javascript:void(0)" id="l-h3" onclick="CORE.setEng('H3')">3.2</a>
                         </td>
                         <td align="right">
-                            <select id="lang-sel" onchange="CORE.setLang(this.value)" style="font-weight:700; padding:4px;">
+                            <select id="lang-trigger" onchange="CORE.setLang(this.value)" style="padding: 5px;">
                                 <option value="EN">English</option>
                                 <option value="VI">Tiếng Việt</option>
                                 <option value="RU">Русский</option>
-                                <option value="JA">日本語</option>
-                                <option value="AR">العربية</option>
                             </select>
                         </td>
                     </tr>
                 </table>
             </div>
-            <div id="main-view" style="padding: 50px 80px; overflow-y: auto;"></div>
+            <div id="main-content" style="padding: 40px 60px; overflow-y: auto; height: calc(100vh - 60px);"></div>
         </td>
     </tr>
 </table>
 
-<div id="loading" class="loader">
-    <div style="width: 30px; height: 30px; border: 2px solid #eee; border-top-color: #0078d4; border-radius: 50%; animation: spin 0.8s linear infinite;"></div>
-</div>
-
 <script type="text/javascript">
 var CORE = {
-    state: { view: 'dash', eng: 'H5', lang: 'EN' },
+    state: { view: 'cases', eng: 'H5', lang: 'EN' },
     dict: {
-        EN: { g1: "Global Operations", g2: "Assets & Intel", dash: "Dashboard", lawsuit: "Lawsuit Filing", ledger: "Ledger Audit", ent: "Entity Name", val: "Claim Value", cur: "Currency", jur: "Jurisdiction", sev: "Severity", sub: "Commit Entry", stat: "Status", nodes: "Nodes", val_label: "Value", notes: "Case Notes" },
-        VI: { g1: "Hoạt động Toàn cầu", g2: "Tài sản & Tình báo", dash: "Bảng Điều khiển", lawsuit: "Đệ trình Đơn kiện", ledger: "Kiểm toán Sổ cái", ent: "Tên Thực thể", val: "Giá trị Khiếu nại", cur: "Tiền tệ", jur: "Thẩm quyền", sev: "Mức độ", sub: "Gửi Hồ sơ", stat: "Trạng thái", nodes: "Nút mạng", val_label: "Giá trị", notes: "Ghi chú Vụ việc" },
-        RU: { g1: "Глобальные операции", g2: "Активы", dash: "Панель", lawsuit: "Подача иска", ledger: "Аудит", ent: "Имя объекта", val: "Сумма иска", cur: "Валюта", jur: "Юрисдикция", sev: "Важность", sub: "Отправить", stat: "Статус", nodes: "Узлы", val_label: "Сумма", notes: "Заметки" },
-        JA: { g1: "運用", g2: "情報", dash: "ダッシュボード", lawsuit: "訴訟提起", ledger: "元帳監査", ent: "名", val: "金額", cur: "通貨", jur: "管轄", sev: "重要", sub: "送信", stat: "状態", nodes: "点", val_label: "価値", notes: "ノート" },
-        AR: { g1: "العمليات", g2: "الأصول", dash: "لوحة القيادة", lawsuit: "دعوى قضائية", ledger: "التدقيق", ent: "الكيان", val: "القيمة", cur: "عملة", jur: "الاختصاص", sev: "خطورة", sub: "إرسال", stat: "الحالة", nodes: "العقد", val_label: "القيمة", notes: "ملاحظات" }
+        EN: { cases: "Active Dossiers", filing: "New Filing", archive: "Legal Archive", ent: "Respondent Entity", val: "Claim Amount", jur: "Jurisdiction", sub: "Submit to Court", notes: "Evidence Summary", status: "Docket Status" },
+        VI: { cases: "Hồ sơ Đang hoạt động", filing: "Đệ trình Mới", archive: "Lưu trữ Pháp lý", ent: "Thực thể bị kiện", val: "Số tiền Khiếu nại", jur: "Thẩm quyền", sub: "Gửi lên Tòa án", notes: "Tóm tắt Chứng cứ", status: "Trạng thái Hồ sơ" },
+        RU: { cases: "Активные досье", filing: "Новый иск", archive: "Юридический архив", ent: "Ответчик", val: "Сумма иска", jur: "Юрисдикция", sub: "Подать в суд", notes: "Сводка доказательств", status: "Статус дела" }
     },
 
     init: function() { this.render(); },
-    setEng: function(e) { this.state.eng = e; this.render(); },
+
+    setEng: function(e) {
+        this.state.eng = e;
+        var links = ['h5', 'h4', 'h3'];
+        for(var i=0; i<links.length; i++){
+            document.getElementById('l-' + links[i]).className = (e.toLowerCase() === links[i] ? 'active' : '');
+        }
+        this.render();
+    },
+
     setLang: function(l) { this.state.lang = l; this.render(); },
-    route: function(v) { this.state.view = v; this.render(); },
+
+    route: function(v) {
+        this.state.view = v;
+        var navs = { cases: 'n-cases', file: 'n-file', arch: 'n-arch' };
+        for(var k in navs) { document.getElementById(navs[k]).className = 'sb-link' + (v === k ? ' active' : ''); }
+        this.render();
+    },
 
     render: function() {
         var d = this.dict[this.state.lang];
-        var root = document.getElementById('main-view');
+        var root = document.getElementById('main-content');
+        var body = document.getElementById('app-body');
         
-        document.getElementById('l-g1').innerText = d.g1;
-        document.getElementById('l-g2').innerText = d.g2;
-        document.getElementById('r-dash').innerText = d.dash;
-        document.getElementById('r-form').innerText = d.lawsuit;
-        document.getElementById('r-led').innerText = d.ledger;
+        document.getElementById('n-cases').innerText = d.cases;
+        document.getElementById('n-file').innerText = d.filing;
+        document.getElementById('n-arch').innerText = d.archive;
+
+        body.className = (this.state.eng === 'H4' ? 'h4-lite' : (this.state.eng === 'H3' ? 'h3-lite' : ''));
         
-        var navs = ['r-dash', 'r-form', 'r-led'];
-        for(var i=0; i<navs.length; i++) {
-            document.getElementById(navs[i]).className = 'nav-item' + (this.state.view === navs[i].split('-')[1] ? ' active' : '');
-        }
-
-        var engs = ['v-h5', 'v-h4', 'v-h3'];
-        for(var j=0; j<engs.length; j++) {
-            document.getElementById(engs[j]).className = 'v-btn' + (this.state.eng === engs[j].split('-')[1].toUpperCase() ? ' active' : '');
-        }
-
-        document.getElementById('b-root').dir = (this.state.lang === 'AR') ? 'rtl' : 'ltr';
-
-        if(this.state.eng === 'H5') this.drawH5(root, d);
-        else if(this.state.eng === 'H4') this.drawH4(root, d);
-        else this.drawH3(root, d);
+        root.innerHTML = '<div class="content-anim">' + (this.state.view === 'cases' ? this.drawCases(d) : this.drawForm(d)) + '</div>';
     },
 
-    drawH5: function(root, d) {
-        if(this.state.view === 'dash') {
-            root.innerHTML = '<h1 style="font-weight:300; font-size:48px; margin-bottom:40px;">'+d.dash+'</h1>' +
-                '<div class="tile-grid">' +
-                '<div class="stat-tile"><div class="stat-label">'+d.stat+'</div><div class="stat-value" style="color:#107c10; font-weight:700;">ONLINE</div></div>' +
-                '<div class="stat-tile"><div class="stat-label">'+d.nodes+'</div><div class="stat-value" style="font-weight:700;">2,841</div></div>' +
-                '<div class="stat-tile"><div class="stat-label">'+d.val_label+'</div><div class="stat-value" style="font-weight:700;">$4.2M</div></div>' +
-                '</div>';
-        } else if(this.state.view === 'form') {
-            root.innerHTML = '<h1 style="font-weight:300; font-size:48px; margin-bottom:40px;">'+d.lawsuit+'</h1>' +
-                '<div class="form-wrap"><div class="form-grid">' +
-                '<div class="input-group"><label>'+d.ent+'</label><input type="text"></div>' +
-                '<div class="input-group"><label>'+d.val+'</label><input type="text"></div>' +
-                '<div class="input-group"><label>'+d.cur+'</label><select><option>USD</option></select></div>' +
-                '<div class="input-group"><label>'+d.jur+'</label><input type="text" value="Standard" disabled></div>' +
-                '</div><div class="input-group" style="margin-top:25px;"><label>'+d.notes+'</label><textarea rows="6"></textarea></div>' +
-                '<button class="btn-submit" style="margin-top:25px;" onclick="CORE.commit()">'+d.sub+'</button></div>';
-        } else { root.innerHTML = '<h1 style="font-weight:300; font-size:48px;">'+d.ledger+'</h1>'; }
-    },
-
-    drawH4: function(root, d) {
-        var html = '<h2 class="h4-lite">'+d.dash+'</h2>' +
-            '<table width="100%" border="1" cellpadding="15" class="h4-lite" style="border-collapse:collapse;"><tr>' +
-            '<td>'+d.stat+'<br><b>ONLINE</b></td><td>'+d.nodes+'<br><b>2841</b></td><td>'+d.val_label+'<br><b>$4.2M</b></td>' +
-            '</tr></table>';
-        if(this.state.view === 'form') {
-            html = '<h2 class="h4-lite">'+d.lawsuit+'</h2>' +
-                '<table width="100%" cellpadding="8" class="h4-lite"><tr><td>'+d.ent+'<br><input type="text"></td>' +
-                '<td>'+d.val+'<br><input type="text"></td></tr></table>' +
-                '<br><input type="button" value="'+d.sub+'" class="h4-lite" style="padding:10px 30px;">';
+    drawCases: function(d) {
+        var cases = [
+            { id: 'SAH-901-B', title: 'Antitrust Allegation: Global Core', val: '$1.2M', stat: 'PENDING' },
+            { id: 'SAH-772-X', title: 'Data Sovereignty Breach', val: '$500K', stat: 'IN REVIEW' }
+        ];
+        var html = '<h1>' + d.cases + '</h1>';
+        for(var i=0; i<cases.length; i++) {
+            html += '<div class="case-card"><div class="case-id">' + cases[i].id + '</div>' +
+                    '<div class="case-title">' + cases[i].title + '</div>' +
+                    '<div class="case-meta">' + d.status + ': <b>' + cases[i].stat + '</b> | ' + d.val + ': ' + cases[i].val + '</div></div>';
         }
-        root.innerHTML = html;
+        return html;
     },
 
-    drawH3: function(root, d) {
-        var html = '<center><h3>'+d.dash+'</h3></center>' +
-            '<table width="100%" bgcolor="#eeeeee" cellspacing="1" cellpadding="10" class="h3-lite"><tr>' +
-            '<td bgcolor="#ffffff">'+d.stat+': OK</td><td bgcolor="#ffffff">'+d.nodes+': 2841</td>' +
-            '<td bgcolor="#ffffff">'+d.val_label+': $4.2M</td></tr></table>';
-        if(this.state.view === 'form') {
-            html = '<center><h3>'+d.lawsuit+'</h3></center>' +
-                '<table width="100%" class="h3-lite"><tr><td>'+d.ent+': <input type="text"></td></tr>' +
-                '<tr><td>'+d.val+': <input type="text"></td></tr></table>' +
-                '<center><input type="submit" value="'+d.sub+'"></center>';
-        }
-        root.innerHTML = html;
-    },
-
-    commit: function() {
-        document.getElementById('loading').style.display = 'flex';
-        setTimeout(function(){ document.getElementById('loading').style.display = 'none'; }, 800);
+    drawForm: function(d) {
+        return '<h1>' + d.filing + '</h1><div class="lit-form">' +
+            '<div class="lit-row"><div class="lit-cell"><label class="lit-label">'+d.ent+'</label><input type="text" class="lit-input"></div>' +
+            '<div class="lit-cell"><label class="lit-label">'+d.val+'</label><input type="text" class="lit-input"></div></div>' +
+            '<div style="padding:0 15px;"><label class="lit-label">'+d.notes+'</label><textarea class="lit-area"></textarea>' +
+            '<br><br><button class="lit-sub">'+d.sub+'</button></div></div>';
     }
 };
 window.onload = function() { CORE.init(); };
